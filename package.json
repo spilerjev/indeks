@@ -4,9 +4,16 @@
   "private": true,
   "scripts": {
     "build:data": "node build.js",
-    "build:web": "esbuild dist/preview-entry.jsx --bundle --loader:.jsx=jsx --format=iife --outfile=docs/preview.js --jsx=automatic --define:process.env.NODE_ENV=\"production\" --minify",
+    "build:web": "node build-web.js",
     "build": "npm run build:data && npm run build:web"
   },
-  "devDependencies": { "esbuild": "^0.21.0" }
+  "devDependencies": {
+    "esbuild": "^0.21.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.111.0",
+    "lucide-react": "^1.28.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
 }
-

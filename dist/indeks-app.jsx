@@ -1,9 +1,10 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
-  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator
+  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Mail
 } from "lucide-react";
+import { createClient } from "@supabase/supabase-js";
 
 /* =========================================================================
    semester -> predmet -> parts (kolokviji + izpit)
@@ -32,6 +33,125 @@ const store = (() => {
 })();
 const STATS_KEY = "indeks.stats.v1";
 const MIX_KEY = "indeks.mixuse.v1";
+
+/* ---- Supabase: računi + oblačna statistika ---- */
+const SUPABASE_URL = "https://fdcnkqjbuatsisznqcos.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkY25rcWpidWF0c2lzem5xY29zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1OTY2NDQsImV4cCI6MjEwMTE3MjY0NH0.WVm1CEcJAq_V4yYJPHYo6nYUJA6xlwokjLoWDhZF5NE";
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+function useAuth() {
+  const [session, setSession] = useState(undefined); // undefined = nalagam, null = odjavljen
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSession(data.session || null));
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s || null));
+    return () => sub.subscription.unsubscribe();
+  }, []);
+  const signOut = useCallback(() => supabase.auth.signOut(), []);
+  return { session: session === undefined ? null : session, loading: session === undefined, signOut };
+}
+
+/* Statistika: lokalni cache (po uporabniku) + sinhronizacija v oblak (debounce). */
+function useCloudStats(userId) {
+  const [stats, setStats] = useState({});
+  const timer = useRef(null);
+  const localKey = userId ? "indeks.stats." + userId : STATS_KEY;
+  useEffect(() => {
+    const cached = store.get(localKey, {});
+    setStats(cached);
+    if (!userId) return;
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await supabase
+        .from("user_stats").select("stats").eq("user_id", userId).maybeSingle();
+      if (cancelled || error) return;
+      const cloud = (data && data.stats) || null;
+      if (cloud && Object.keys(cloud).length) {
+        setStats(cloud);
+        store.set(localKey, cloud);
+      } else if (cached && Object.keys(cached).length) {
+        // prvič: obstoječi lokalni napredek prenesi v oblak
+        supabase.from("user_stats").upsert({ user_id: userId, stats: cached, updated_at: new Date().toISOString() });
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [userId, localKey]);
+
+  const record = useCallback((key, res) => {
+    setStats((prev) => {
+      const cur = prev[key] || { attempts: [] };
+      const next = { ...prev, [key]: { attempts: [...cur.attempts, { t: Date.now(), ...res }] } };
+      store.set(localKey, next);
+      if (userId) {
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(() => {
+          supabase.from("user_stats").upsert({ user_id: userId, stats: next, updated_at: new Date().toISOString() });
+        }, 1000);
+      }
+      return next;
+    });
+  }, [userId, localKey]);
+
+  return { stats, record };
+}
+
+function Login() {
+  const [email, setEmail] = useState("");
+  const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const submit = async (e) => {
+    e.preventDefault();
+    const addr = email.trim();
+    if (!addr) return;
+    setErr(""); setBusy(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email: addr,
+      options: { shouldCreateUser: false, emailRedirectTo: window.location.origin + window.location.pathname },
+    });
+    setBusy(false);
+    if (error) {
+      const m = (error.message || "").toLowerCase();
+      if (m.includes("not allowed") || m.includes("signup") || m.includes("not authorized") || m.includes("disabled"))
+        setErr("Ta e-naslov ni na seznamu. Za dostop prosi skrbnika.");
+      else setErr(error.message || "Napaka pri pošiljanju povezave.");
+      return;
+    }
+    setSent(true);
+  };
+  return (
+    <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
+      <div className="ix-card" style={{ padding: 24 }}>
+        {sent ? (
+          <div style={{ textAlign: "center" }}>
+            <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--paper2)", display: "grid", placeItems: "center", margin: "0 auto 14px" }}>
+              <Mail size={22} />
+            </div>
+            <div style={{ fontWeight: 700, fontSize: 17, marginBottom: 6 }}>Poglej v e-pošto</div>
+            <div style={{ color: "var(--ink2)", fontSize: 14, lineHeight: 1.5 }}>
+              Prijavno povezavo smo poslali na <b>{email.trim()}</b>. Odpri jo na tej napravi in prijavljen si.
+            </div>
+            <button onClick={() => { setSent(false); setErr(""); }} className="ix-chip" style={{ marginTop: 16, cursor: "pointer", border: "none" }}>Nazaj</button>
+          </div>
+        ) : (
+          <form onSubmit={submit}>
+            <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>Prijava</div>
+            <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
+              Vpiši svoj e-naslov. Poslali ti bomo povezavo za prijavo - brez gesla.
+            </div>
+            <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
+              placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off"
+              style={{ width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" }} />
+            {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
+            <button type="submit" disabled={busy}
+              style={{ width: "100%", marginTop: 14, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
+              {busy ? "Pošiljam..." : "Pošlji prijavno povezavo"}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
 
 // stabilen id vprašanja iz besedila (za sledenje uporabe v mešanih kvizih)
 function qid(q) {
@@ -375,36 +495,43 @@ function aggregate(stats) {
 
 export default function App() {
   const [route, setRoute] = useState({ view: "home" });
-  const [stats, setStats] = useState(() => store.get(STATS_KEY, {}));
   const [dark, setDark] = useState(() => store.get("indeks.theme", "light") === "dark");
   const toggleTheme = () => setDark((d) => { const nd = !d; store.set("indeks.theme", nd ? "dark" : "light"); return nd; });
 
-  const record = (key, res) => setStats((prev) => {
-    const cur = prev[key] || { attempts: [] };
-    const next = { ...prev, [key]: { attempts: [...cur.attempts, { t: Date.now(), ...res }] } };
-    store.set(STATS_KEY, next);
-    return next;
-  });
+  const { session, loading: authLoading, signOut } = useAuth();
+  const { stats, record } = useCloudStats(session && session.user && session.user.id);
+
+  // ob odjavi ali menjavi računa nazaj na domačo stran
+  useEffect(() => { setRoute({ view: "home" }); }, [session && session.user && session.user.id]);
 
   return (
     <div className={"ix-root" + (dark ? " ix-dark" : "")} style={{ minHeight: "100vh" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
-        <Header onHome={() => setRoute({ view: "home" })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme} />
-        {route.view === "home" && <Home go={setRoute} stats={stats} />}
-        {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} />}
-        {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
-        {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} />}
-        {route.view === "notes" && <NotesView route={route} go={setRoute} />}
-        {route.view === "quiz" && <QuizView route={route} go={setRoute} record={record} />}
-        {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
-        {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} />}
+        <Header onHome={() => setRoute({ view: "home" })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme}
+          user={session && session.user} onSignOut={signOut} />
+        {authLoading ? (
+          <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
+        ) : !session ? (
+          <Login />
+        ) : (
+          <>
+            {route.view === "home" && <Home go={setRoute} stats={stats} />}
+            {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} />}
+            {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
+            {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} />}
+            {route.view === "notes" && <NotesView route={route} go={setRoute} />}
+            {route.view === "quiz" && <QuizView route={route} go={setRoute} record={record} />}
+            {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
+            {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} />}
+          </>
+        )}
       </div>
     </div>
   );
 }
 
-function Header({ onHome, home, dark, onToggleTheme }) {
+function Header({ onHome, home, dark, onToggleTheme, user, onSignOut }) {
   return (
     <header style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: home ? 26 : 18 }}>
       <button onClick={onHome} className="ix-serif"
@@ -416,11 +543,19 @@ function Header({ onHome, home, dark, onToggleTheme }) {
           indeks<span style={{ color: "var(--terra)" }}>.</span>
         </span>
       </button>
-      <span className="ix-chip" style={{ marginLeft: "auto" }}>1. letnik · EF · UPEŠ</span>
+      {user
+        ? <span className="ix-chip" style={{ marginLeft: "auto", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={user.email}>{user.email}</span>
+        : <span className="ix-chip" style={{ marginLeft: "auto" }}>1. letnik · EF · UPEŠ</span>}
       <button onClick={onToggleTheme} aria-label="Preklopi temo"
         style={{ background: "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: "var(--ink)" }}>
         {dark ? <Sun size={17} /> : <Moon size={17} />}
       </button>
+      {user && (
+        <button onClick={onSignOut} aria-label="Odjava" title="Odjava"
+          style={{ background: "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: "var(--ink)" }}>
+          <LogOut size={17} />
+        </button>
+      )}
     </header>
   );
 }
