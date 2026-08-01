@@ -38,7 +38,6 @@ const MIX_KEY = "indeks.mixuse.v1";
 const SUPABASE_URL = "https://fdcnkqjbuatsisznqcos.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkY25rcWpidWF0c2lzem5xY29zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1OTY2NDQsImV4cCI6MjEwMTE3MjY0NH0.WVm1CEcJAq_V4yYJPHYo6nYUJA6xlwokjLoWDhZF5NE";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
-const ALLOWED_DOMAIN = "@student.uni-lj.si"; // dostop samo za študentske e-naslove UL
 
 function useAuth() {
   const [session, setSession] = useState(undefined); // undefined = nalagam, null = odjavljen
@@ -102,23 +101,18 @@ function Login() {
   const [err, setErr] = useState("");
   const submit = async (e) => {
     e.preventDefault();
-    const addr = email.trim().toLowerCase();
+    const addr = email.trim();
     if (!addr) return;
-    if (!addr.endsWith(ALLOWED_DOMAIN)) {
-      setErr("Dostop imajo samo študentski e-naslovi (" + ALLOWED_DOMAIN + ").");
-      return;
-    }
     setErr(""); setBusy(true);
     const { error } = await supabase.auth.signInWithOtp({
       email: addr,
-      options: { shouldCreateUser: true, emailRedirectTo: window.location.origin + window.location.pathname },
+      options: { shouldCreateUser: false, emailRedirectTo: window.location.origin + window.location.pathname },
     });
     setBusy(false);
     if (error) {
       const m = (error.message || "").toLowerCase();
-      if (m.includes("not allowed") || m.includes("signup") || m.includes("not authorized") ||
-          m.includes("disabled") || m.includes("database error"))
-        setErr("Dostop imajo samo študentski e-naslovi (" + ALLOWED_DOMAIN + ").");
+      if (m.includes("not allowed") || m.includes("signup") || m.includes("not authorized") || m.includes("disabled"))
+        setErr("Ta e-naslov ni na seznamu. Za dostop prosi skrbnika.");
       else setErr(error.message || "Napaka pri pošiljanju povezave.");
       return;
     }
@@ -142,10 +136,10 @@ function Login() {
           <form onSubmit={submit}>
             <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>Prijava</div>
             <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
-              Uporabi svoj študentski e-naslov (<b>{ALLOWED_DOMAIN}</b>). Poslali ti bomo povezavo za prijavo - brez gesla.
+              Vpiši svoj e-naslov. Poslali ti bomo povezavo za prijavo - brez gesla.
             </div>
             <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
-              placeholder={"ime.priimek" + ALLOWED_DOMAIN} autoCapitalize="none" autoCorrect="off"
+              placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off"
               style={{ width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" }} />
             {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
             <button type="submit" disabled={busy}
