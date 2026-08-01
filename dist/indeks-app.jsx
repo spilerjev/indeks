@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
-  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Mail
+  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 
@@ -96,58 +96,47 @@ function useCloudStats(userId) {
 
 function Login() {
   const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
+  const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  const inputStyle = { width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" };
   const submit = async (e) => {
     e.preventDefault();
     const addr = email.trim();
-    if (!addr) return;
+    if (!addr || !password) return;
     setErr(""); setBusy(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      email: addr,
-      options: { shouldCreateUser: false, emailRedirectTo: window.location.origin + window.location.pathname },
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email: addr, password });
     setBusy(false);
     if (error) {
       const m = (error.message || "").toLowerCase();
-      if (m.includes("not allowed") || m.includes("signup") || m.includes("not authorized") || m.includes("disabled"))
-        setErr("Ta e-naslov ni na seznamu. Za dostop prosi skrbnika.");
-      else setErr(error.message || "Napaka pri pošiljanju povezave.");
+      if (m.includes("invalid") || m.includes("credentials"))
+        setErr("Napačen e-naslov ali geslo.");
+      else if (m.includes("not confirmed") || m.includes("confirm"))
+        setErr("Račun še ni potrjen. Obrni se na skrbnika.");
+      else setErr(error.message || "Napaka pri prijavi.");
       return;
     }
-    setSent(true);
+    // uspeh: onAuthStateChange v useAuth poskrbi za vstop
   };
   return (
     <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
       <div className="ix-card" style={{ padding: 24 }}>
-        {sent ? (
-          <div style={{ textAlign: "center" }}>
-            <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--paper2)", display: "grid", placeItems: "center", margin: "0 auto 14px" }}>
-              <Mail size={22} />
-            </div>
-            <div style={{ fontWeight: 700, fontSize: 17, marginBottom: 6 }}>Poglej v e-pošto</div>
-            <div style={{ color: "var(--ink2)", fontSize: 14, lineHeight: 1.5 }}>
-              Prijavno povezavo smo poslali na <b>{email.trim()}</b>. Odpri jo na tej napravi in prijavljen si.
-            </div>
-            <button onClick={() => { setSent(false); setErr(""); }} className="ix-chip" style={{ marginTop: 16, cursor: "pointer", border: "none" }}>Nazaj</button>
+        <form onSubmit={submit}>
+          <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>Prijava</div>
+          <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
+            Vpiši svoj e-naslov in geslo. Če ju še nimaš, ti dostop dodeli skrbnik.
           </div>
-        ) : (
-          <form onSubmit={submit}>
-            <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>Prijava</div>
-            <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
-              Vpiši svoj e-naslov. Poslali ti bomo povezavo za prijavo - brez gesla.
-            </div>
-            <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
-              placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off"
-              style={{ width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" }} />
-            {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
-            <button type="submit" disabled={busy}
-              style={{ width: "100%", marginTop: 14, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
-              {busy ? "Pošiljam..." : "Pošlji prijavno povezavo"}
-            </button>
-          </form>
-        )}
+          <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
+            placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off" autoComplete="username"
+            style={{ ...inputStyle, marginBottom: 10 }} />
+          <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
+            placeholder="Geslo" autoComplete="current-password" style={inputStyle} />
+          {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
+          <button type="submit" disabled={busy}
+            style={{ width: "100%", marginTop: 14, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
+            {busy ? "Prijavljam…" : "Prijava"}
+          </button>
+        </form>
       </div>
     </div>
   );
