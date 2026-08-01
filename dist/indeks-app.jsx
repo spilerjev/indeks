@@ -50,6 +50,21 @@ function useAuth() {
   return { session: session === undefined ? null : session, loading: session === undefined, signOut };
 }
 
+/* Odobritev računa: skrbnik v Supabase označi profiles.approved = true. */
+function useProfile(userId) {
+  const [approved, setApproved] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const refresh = useCallback(async () => {
+    if (!userId) { setApproved(false); setLoading(false); return; }
+    setLoading(true);
+    const { data } = await supabase.from("profiles").select("approved").eq("id", userId).maybeSingle();
+    setApproved(!!(data && data.approved));
+    setLoading(false);
+  }, [userId]);
+  useEffect(() => { refresh(); }, [refresh]);
+  return { approved, profileLoading: loading, refreshProfile: refresh };
+}
+
 /* Statistika: lokalni cache (po uporabniku) + sinhronizacija v oblak (debounce). */
 function useCloudStats(userId) {
   const [stats, setStats] = useState({});
@@ -94,49 +109,105 @@ function useCloudStats(userId) {
   return { stats, record };
 }
 
+function mapAuthErr(error) {
+  const m = (error.message || "").toLowerCase();
+  if (m.includes("already registered") || m.includes("already exists") || m.includes("user already"))
+    return "Ta e-naslov je že registriran. Prijavi se.";
+  if (m.includes("invalid") || m.includes("credentials"))
+    return "Napačen e-naslov ali geslo.";
+  if (m.includes("not confirmed") || m.includes("confirm"))
+    return "Račun še ni potrjen. Obrni se na skrbnika.";
+  if (m.includes("weak") || m.includes("at least") || m.includes("password"))
+    return "Geslo je prešibko (vsaj 6 znakov).";
+  if (m.includes("signups") || m.includes("not allowed") || m.includes("disabled"))
+    return "Registracija je trenutno zaprta. Obrni se na skrbnika.";
+  return error.message || "Napaka. Poskusi znova.";
+}
+
 function Login() {
+  const [mode, setMode] = useState("in"); // "in" = prijava, "up" = registracija
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  const [info, setInfo] = useState("");
   const inputStyle = { width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" };
   const submit = async (e) => {
     e.preventDefault();
     const addr = email.trim();
     if (!addr || !password) return;
-    setErr(""); setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword({ email: addr, password });
-    setBusy(false);
-    if (error) {
-      const m = (error.message || "").toLowerCase();
-      if (m.includes("invalid") || m.includes("credentials"))
-        setErr("Napačen e-naslov ali geslo.");
-      else if (m.includes("not confirmed") || m.includes("confirm"))
-        setErr("Račun še ni potrjen. Obrni se na skrbnika.");
-      else setErr(error.message || "Napaka pri prijavi.");
+    setErr(""); setInfo("");
+    if (mode === "up" && password.length < 6) { setErr("Geslo naj ima vsaj 6 znakov."); return; }
+    setBusy(true);
+    if (mode === "up") {
+      const { data, error } = await supabase.auth.signUp({ email: addr, password });
+      setBusy(false);
+      if (error) { setErr(mapAuthErr(error)); return; }
+      if (!data.session) {
+        // če je potrditev e-pošte vklopljena: ni takojšnje seje
+        setInfo("Registracija oddana. Ko jo skrbnik odobri, se lahko prijaviš.");
+        setMode("in"); setPassword("");
+        return;
+      }
+      // seja obstaja -> App pokaže zaslon "čaka na odobritev"
       return;
     }
+    const { error } = await supabase.auth.signInWithPassword({ email: addr, password });
+    setBusy(false);
+    if (error) { setErr(mapAuthErr(error)); return; }
     // uspeh: onAuthStateChange v useAuth poskrbi za vstop
   };
+  const up = mode === "up";
   return (
     <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
       <div className="ix-card" style={{ padding: 24 }}>
         <form onSubmit={submit}>
-          <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>Prijava</div>
+          <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>{up ? "Registracija" : "Prijava"}</div>
           <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
-            Vpiši svoj e-naslov in geslo. Če ju še nimaš, ti dostop dodeli skrbnik.
+            {up
+              ? "Ustvari račun s svojim e-naslovom in geslom. Skrbnik ga nato odobri."
+              : "Vpiši svoj e-naslov in geslo."}
           </div>
           <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
             placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off" autoComplete="username"
             style={{ ...inputStyle, marginBottom: 10 }} />
           <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
-            placeholder="Geslo" autoComplete="current-password" style={inputStyle} />
+            placeholder="Geslo" autoComplete={up ? "new-password" : "current-password"} style={inputStyle} />
           {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
+          {info && <div style={{ color: "var(--teal)", fontSize: 13, marginTop: 10 }}>{info}</div>}
           <button type="submit" disabled={busy}
             style={{ width: "100%", marginTop: 14, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
-            {busy ? "Prijavljam…" : "Prijava"}
+            {busy ? "Trenutek…" : up ? "Ustvari račun" : "Prijava"}
           </button>
         </form>
+        <div style={{ marginTop: 16, textAlign: "center", fontSize: 13, color: "var(--ink2)" }}>
+          {up ? "Že imaš račun? " : "Nimaš računa? "}
+          <button onClick={() => { setMode(up ? "in" : "up"); setErr(""); setInfo(""); }}
+            style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--terra)", fontWeight: 700, textDecoration: "underline" }}>
+            {up ? "Prijava" : "Registriraj se"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Pending({ email, onRefresh, onSignOut, busy }) {
+  return (
+    <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
+      <div className="ix-card" style={{ padding: 24, textAlign: "center" }}>
+        <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--paper)", display: "grid", placeItems: "center", margin: "0 auto 14px", color: "var(--terra)" }}>
+          <Lock size={22} />
+        </div>
+        <div className="ix-serif" style={{ fontWeight: 800, fontSize: 20, marginBottom: 6 }}>Čaka na odobritev</div>
+        <div style={{ color: "var(--ink2)", fontSize: 14, lineHeight: 1.5 }}>
+          Tvoj račun (<b>{email}</b>) je ustvarjen in čaka, da ga skrbnik odobri. Ko te odobri, klikni Preveri znova.
+        </div>
+        <button onClick={onRefresh} disabled={busy}
+          style={{ width: "100%", marginTop: 16, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
+          {busy ? "Preverjam…" : "Preveri znova"}
+        </button>
+        <button onClick={onSignOut} className="ix-chip" style={{ marginTop: 12, cursor: "pointer", border: "none" }}>Odjava</button>
       </div>
     </div>
   );
@@ -252,6 +323,7 @@ const CSS = `
   --okbg:#1e3a30; --badbg:#3a2422; --back2:#2a2520;
 }
 .ix-root, .ix-root *{transition:background-color .5s ease, color .5s ease, border-color .5s ease;}
+.ix-root button{color:inherit;}
 .ix-root{font-family:'Spline Sans',system-ui,sans-serif;color:var(--ink);background:
   radial-gradient(120% 80% at 100% 0%, #f7f1e6 0%, transparent 55%),
   radial-gradient(120% 90% at 0% 100%, #ece2cf 0%, transparent 50%), var(--paper);
@@ -488,21 +560,27 @@ export default function App() {
   const toggleTheme = () => setDark((d) => { const nd = !d; store.set("indeks.theme", nd ? "dark" : "light"); return nd; });
 
   const { session, loading: authLoading, signOut } = useAuth();
-  const { stats, record } = useCloudStats(session && session.user && session.user.id);
+  const userId = session && session.user && session.user.id;
+  const { approved, profileLoading, refreshProfile } = useProfile(userId);
+  const { stats, record } = useCloudStats(approved ? userId : null);
 
   // ob odjavi ali menjavi računa nazaj na domačo stran
-  useEffect(() => { setRoute({ view: "home" }); }, [session && session.user && session.user.id]);
+  useEffect(() => { setRoute({ view: "home" }); }, [userId]);
 
   return (
     <div className={"ix-root" + (dark ? " ix-dark" : "")} style={{ minHeight: "100vh" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
         <Header onHome={() => setRoute({ view: "home" })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme}
-          user={session && session.user} onSignOut={signOut} />
+          user={approved ? session && session.user : null} onSignOut={signOut} />
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
         ) : !session ? (
           <Login />
+        ) : profileLoading ? (
+          <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
+        ) : !approved ? (
+          <Pending email={session.user.email} onRefresh={refreshProfile} onSignOut={signOut} busy={profileLoading} />
         ) : (
           <>
             {route.view === "home" && <Home go={setRoute} stats={stats} />}
