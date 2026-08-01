@@ -1,0 +1,12 @@
+{
+  "name": "indeks",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:data": "node build.js",
+    "build:web": "esbuild dist/preview-entry.jsx --bundle --loader:.jsx=jsx --format=iife --outfile=docs/preview.js --jsx=automatic --define:process.env.NODE_ENV=\"production\" --minify",
+    "build": "npm run build:data && npm run build:web"
+  },
+  "devDependencies": { "esbuild": "^0.21.0" }
+}
+
