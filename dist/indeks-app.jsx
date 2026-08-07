@@ -340,7 +340,7 @@ const CSS = `
 .ix-tier{font-family:'Fraunces',serif;font-weight:900;font-size:13px;line-height:1;
   width:30px;height:30px;display:grid;place-items:center;border-radius:9px;}
 .ix-chip{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink2);}
-.ix-opt{text-align:left;width:100%;background:var(--paper2);border:1.5px solid var(--line);
+.ix-opt{text-align:left;width:100%;background:var(--paper2);border:1.5px solid transparent;
   border-radius:13px;padding:14px 16px;cursor:pointer;transition:all .14s;font-size:15px;}
 .ix-opt:hover:not(:disabled){border-color:var(--ink);transform:translateX(3px);}
 .ix-opt:disabled{cursor:default;}
