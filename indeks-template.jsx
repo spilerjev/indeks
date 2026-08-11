@@ -65,46 +65,79 @@ function useProfile(userId) {
   return { approved, profileLoading: loading, refreshProfile: refresh };
 }
 
-/* Statistika: lokalni cache (po uporabniku) + sinhronizacija v oblak (debounce). */
+/* Združi dve statistiki: za vsak deck poveže poskuse in odstrani dvojnike. */
+function mergeStats(a, b) {
+  const out = {};
+  const keys = new Set([...Object.keys(a || {}), ...Object.keys(b || {})]);
+  keys.forEach((k) => {
+    const aa = (a && a[k] && a[k].attempts) || [];
+    const bb = (b && b[k] && b[k].attempts) || [];
+    const seen = new Set();
+    const attempts = [];
+    [...aa, ...bb].forEach((at) => {
+      const id = JSON.stringify(at);
+      if (seen.has(id)) return;
+      seen.add(id);
+      attempts.push(at);
+    });
+    attempts.sort((x, y) => (x.t || 0) - (y.t || 0));
+    out[k] = { attempts };
+  });
+  return out;
+}
+
+/* Statistika: lokalni cache (po uporabniku) + sinhronizacija v oblak.
+   Zapisi in nalaganja se ZDRUŽUJEJO (ne prepisujejo), da nič ne izgine med napravami. */
 function useCloudStats(userId) {
   const [stats, setStats] = useState({});
+  const ref = useRef({});
   const timer = useRef(null);
   const localKey = userId ? "indeks.stats." + userId : STATS_KEY;
+  const apply = useCallback((next) => { ref.current = next; setStats(next); store.set(localKey, next); }, [localKey]);
+  const fetchCloud = useCallback(async () => {
+    const { data, error } = await supabase.from("user_stats").select("stats").eq("user_id", userId).maybeSingle();
+    if (error) { console.warn("indeks stats: napaka pri branju:", error.message); return null; }
+    return (data && data.stats) || {};
+  }, [userId]);
+
+  // Prvo nalaganje + osvežitev, ko se zavihek spet aktivira (računalnik dobi telefonove poskuse in obratno).
   useEffect(() => {
     const cached = store.get(localKey, {});
-    setStats(cached);
+    ref.current = cached; setStats(cached);
     if (!userId) return;
     let cancelled = false;
-    (async () => {
-      const { data, error } = await supabase
-        .from("user_stats").select("stats").eq("user_id", userId).maybeSingle();
-      if (cancelled || error) return;
-      const cloud = (data && data.stats) || null;
-      if (cloud && Object.keys(cloud).length) {
-        setStats(cloud);
-        store.set(localKey, cloud);
-      } else if (cached && Object.keys(cached).length) {
-        // prvič: obstoječi lokalni napredek prenesi v oblak
-        supabase.from("user_stats").upsert({ user_id: userId, stats: cached, updated_at: new Date().toISOString() });
+    const sync = async () => {
+      const cloud = await fetchCloud();
+      if (cancelled || cloud == null) return;
+      const merged = mergeStats(ref.current, cloud);
+      apply(merged);
+      if (JSON.stringify(merged) !== JSON.stringify(cloud)) {
+        const { error } = await supabase.from("user_stats").upsert({ user_id: userId, stats: merged, updated_at: new Date().toISOString() });
+        if (error) console.warn("indeks stats: napaka pri zapisu (uskladitev):", error.message);
       }
-    })();
-    return () => { cancelled = true; };
-  }, [userId, localKey]);
+    };
+    sync();
+    const onVis = () => { if (document.visibilityState === "visible") sync(); };
+    document.addEventListener("visibilitychange", onVis);
+    return () => { cancelled = true; document.removeEventListener("visibilitychange", onVis); };
+  }, [userId, localKey, fetchCloud, apply]);
 
   const record = useCallback((key, res) => {
-    setStats((prev) => {
-      const cur = prev[key] || { attempts: [] };
-      const next = { ...prev, [key]: { attempts: [...cur.attempts, { t: Date.now(), ...res }] } };
-      store.set(localKey, next);
-      if (userId) {
-        if (timer.current) clearTimeout(timer.current);
-        timer.current = setTimeout(() => {
-          supabase.from("user_stats").upsert({ user_id: userId, stats: next, updated_at: new Date().toISOString() });
-        }, 1000);
-      }
-      return next;
-    });
-  }, [userId, localKey]);
+    const prev = ref.current;
+    const cur = prev[key] || { attempts: [] };
+    const next = { ...prev, [key]: { attempts: [...cur.attempts, { t: Date.now(), ...res }] } };
+    apply(next);
+    if (!userId) return;
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(async () => {
+      // preberi-združi-zapiši, da ne povozimo poskusov z druge naprave
+      const cloud = await fetchCloud();
+      const merged = mergeStats(cloud || {}, ref.current);
+      const { error } = await supabase.from("user_stats").upsert({ user_id: userId, stats: merged, updated_at: new Date().toISOString() });
+      if (error) console.warn("indeks stats: napaka pri shranjevanju:", error.message);
+      else apply(merged);
+    }, 1000);
+  }, [userId, apply, fetchCloud]);
 
   return { stats, record };
 }
