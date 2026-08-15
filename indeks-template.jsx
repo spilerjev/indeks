@@ -591,6 +591,12 @@ export default function App() {
   const [route, setRoute] = useState({ view: "home" });
   const [dark, setDark] = useState(() => store.get("indeks.theme", "light") === "dark");
   const toggleTheme = () => setDark((d) => { const nd = !d; store.set("indeks.theme", nd ? "dark" : "light"); return nd; });
+  // zunanje ozadje (rob/overscroll) naj sledi temi, da ni belega roba okrog
+  useEffect(() => {
+    const bg = dark ? "#1a1714" : "#efe7d8";
+    document.documentElement.style.background = bg;
+    document.body.style.background = bg;
+  }, [dark]);
 
   const { session, loading: authLoading, signOut } = useAuth();
   const userId = session && session.user && session.user.id;
