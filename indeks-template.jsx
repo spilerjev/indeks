@@ -560,6 +560,7 @@ const GLOSSARY = [
   { t: "ZASP", s: "zasp", b: 1, subj: "pravo", d: "Zakon o avtorski in sorodnih pravicah." },
   { t: "ZIL-1", s: "zil", b: 1, subj: "pravo", d: "Zakon o industrijski lastnini - patent, model, znamka, geografska označba." },
   { t: "AJPES", s: "ajpes", b: 1, subj: "pravo", d: "Agencija za javnopravne evidence in storitve - vodi PRS, objavlja podatke sodnega registra in letna poročila." },
+  { t: "Arbitraža", s: "arbitraž", subj: "pravo", d: "Reševanje spora pred zasebnim razsodiščem (arbitri), o katerem se stranke dogovorijo z arbitražno klavzulo - namesto rednega sodišča. Arbitražna odločba je za stranke zavezujoča in izvršljiva; postopek je hitrejši in zaupen, a praviloma brez pritožbe." },
 ];
 
 function mixDecksOf(p) {
