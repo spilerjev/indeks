@@ -561,6 +561,8 @@ const GLOSSARY = [
   { t: "ZIL-1", s: "zil", b: 1, subj: "pravo", d: "Zakon o industrijski lastnini - patent, model, znamka, geografska označba." },
   { t: "AJPES", s: "ajpes", b: 1, subj: "pravo", d: "Agencija za javnopravne evidence in storitve - vodi PRS, objavlja podatke sodnega registra in letna poročila." },
   { t: "Arbitraža", s: "arbitraž", subj: "pravo", d: "Reševanje spora pred zasebnim razsodiščem (arbitri), o katerem se stranke dogovorijo z arbitražno klavzulo - namesto rednega sodišča. Arbitražna odločba je za stranke zavezujoča in izvršljiva; postopek je hitrejši in zaupen, a praviloma brez pritožbe." },
+  { t: "Alikvotni del", s: "alikvotn", subj: "pravo", d: "Sorazmerni del celote. Delnica je alikvotni (sorazmerni) del osnovnega kapitala d.d. - vsaka delnica predstavlja enak delež OK glede na skupno število delnic." },
+  { t: "Imenske delnice", s: "imensk", subj: "pravo", d: "Delnice, ki se glasijo na ime določenega imetnika (za razliko od prinosniških). Prenašajo se z vpisom v centralni register (KDD). Samo imenske delnice so lahko vinkulirane - njihov prenos se lahko omeji s soglasjem družbe." },
 ];
 
 function mixDecksOf(p) {
