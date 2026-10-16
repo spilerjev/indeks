@@ -52,21 +52,6 @@ function useAuth() {
   return { session: session === undefined ? null : session, loading: session === undefined, signOut };
 }
 
-/* Odobritev računa: skrbnik v Supabase označi profiles.approved = true. */
-function useProfile(userId) {
-  const [approved, setApproved] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const refresh = useCallback(async () => {
-    if (!userId) { setApproved(false); setLoading(false); return; }
-    setLoading(true);
-    const { data } = await supabase.from("profiles").select("approved").eq("id", userId).maybeSingle();
-    setApproved(!!(data && data.approved));
-    setLoading(false);
-  }, [userId]);
-  useEffect(() => { refresh(); }, [refresh]);
-  return { approved, profileLoading: loading, refreshProfile: refresh };
-}
-
 /* Združi dve statistiki: za vsak deck poveže poskuse in odstrani dvojnike. */
 function mergeStats(a, b) {
   const out = {};
@@ -151,11 +136,11 @@ function mapAuthErr(error) {
   if (m.includes("invalid") || m.includes("credentials"))
     return "Napačen e-naslov ali geslo.";
   if (m.includes("not confirmed") || m.includes("confirm"))
-    return "Račun še ni potrjen. Obrni se na skrbnika.";
+    return "Račun še ni potrjen. Klikni povezavo v e-pošti.";
   if (m.includes("weak") || m.includes("at least") || m.includes("password"))
     return "Geslo je prešibko (vsaj 6 znakov).";
   if (m.includes("signups") || m.includes("not allowed") || m.includes("disabled"))
-    return "Registracija je trenutno zaprta. Obrni se na skrbnika.";
+    return "Registracija je trenutno zaprta.";
   return error.message || "Napaka. Poskusi znova.";
 }
 
@@ -175,16 +160,16 @@ function Login() {
     if (mode === "up" && password.length < 6) { setErr("Geslo naj ima vsaj 6 znakov."); return; }
     setBusy(true);
     if (mode === "up") {
-      const { data, error } = await supabase.auth.signUp({ email: addr, password });
+      const { data, error } = await supabase.auth.signUp({ email: addr, password, options: { emailRedirectTo: window.location.origin + window.location.pathname } });
       setBusy(false);
       if (error) { setErr(mapAuthErr(error)); return; }
       if (!data.session) {
         // če je potrditev e-pošte vklopljena: ni takojšnje seje
-        setInfo("Registracija oddana. Ko jo skrbnik odobri, se lahko prijaviš.");
+        setInfo("Račun je ustvarjen. Potrdi e-naslov (povezava v e-pošti), nato se prijavi.");
         setMode("in"); setPassword("");
         return;
       }
-      // seja obstaja -> App pokaže zaslon "čaka na odobritev"
+      // seja obstaja -> onAuthStateChange v useAuth poskrbi za vstop
       return;
     }
     const { error } = await supabase.auth.signInWithPassword({ email: addr, password });
@@ -200,7 +185,7 @@ function Login() {
           <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>{up ? "Registracija" : "Prijava"}</div>
           <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
             {up
-              ? "Ustvari račun s svojim e-naslovom in geslom. Skrbnik ga nato odobri."
+              ? "Ustvari brezplačen račun s svojim e-naslovom in geslom."
               : "Vpiši svoj e-naslov in geslo."}
           </div>
           <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
@@ -222,27 +207,6 @@ function Login() {
             {up ? "Prijava" : "Registriraj se"}
           </button>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Pending({ email, onRefresh, onSignOut, busy }) {
-  return (
-    <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
-      <div className="ix-card" style={{ padding: 24, textAlign: "center" }}>
-        <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--paper)", display: "grid", placeItems: "center", margin: "0 auto 14px", color: "var(--terra)" }}>
-          <Lock size={22} />
-        </div>
-        <div className="ix-serif" style={{ fontWeight: 800, fontSize: 20, marginBottom: 6 }}>Čaka na odobritev</div>
-        <div style={{ color: "var(--ink2)", fontSize: 14, lineHeight: 1.5 }}>
-          Tvoj račun (<b>{email}</b>) je ustvarjen in čaka, da ga skrbnik odobri. Ko te odobri, klikni Preveri znova.
-        </div>
-        <button onClick={onRefresh} disabled={busy}
-          style={{ width: "100%", marginTop: 16, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
-          {busy ? "Preverjam…" : "Preveri znova"}
-        </button>
-        <button onClick={onSignOut} className="ix-chip" style={{ marginTop: 12, cursor: "pointer", border: "none" }}>Odjava</button>
       </div>
     </div>
   );
@@ -398,6 +362,13 @@ const CSS = `
 .ix-notes p{margin:8px 0;color:var(--ink2);}
 .ix-notes .tip,.ix-notes .warn{margin-top:10px;padding:9px 12px;border-radius:9px;font-size:14px;background:var(--paper);border-left:3px solid var(--teal);}
 .ix-notes .warn{border-left-color:var(--red);}
+.ix-notes .tbl{overflow-x:auto;margin:10px 0;}
+.ix-notes table{border-collapse:collapse;font-size:14px;min-width:100%;}
+.ix-notes th,.ix-notes td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+.ix-notes th{background:var(--paper);font-weight:700;}
+.ix-notes pre{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:12.5px;overflow-x:auto;line-height:1.45;}
+.ix-notes ol{margin:6px 0;padding-left:22px;}
+.ix-notes em{font-style:italic;}
 .ix-notes b{color:var(--ink);}
 .ix-notes i{color:var(--teal);font-style:normal;font-weight:600;}
 .ix-flip{perspective:1400px;height:280px;width:100%;}
@@ -614,8 +585,7 @@ export default function App() {
 
   const { session, loading: authLoading, signOut } = useAuth();
   const userId = session && session.user && session.user.id;
-  const { approved, profileLoading, refreshProfile } = useProfile(userId);
-  const { stats, record } = useCloudStats(approved ? userId : null);
+  const { stats, record } = useCloudStats(userId || null);
 
   // ob odjavi ali menjavi računa nazaj na domačo stran
   useEffect(() => { setRoute({ view: "home" }); }, [userId]);
@@ -625,15 +595,11 @@ export default function App() {
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
         <Header onHome={() => setRoute({ view: "home" })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme}
-          user={approved ? session && session.user : null} onSignOut={signOut} />
+          user={session && session.user} onSignOut={signOut} />
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
         ) : !session ? (
           <Login />
-        ) : profileLoading ? (
-          <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
-        ) : !approved ? (
-          <Pending email={session.user.email} onRefresh={refreshProfile} onSignOut={signOut} busy={profileLoading} />
         ) : (
           <>
             {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} />}
