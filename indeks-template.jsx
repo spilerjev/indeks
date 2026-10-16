@@ -7,12 +7,14 @@ import {
 import { createClient } from "@supabase/supabase-js";
 
 /* =========================================================================
-   semester -> predmet -> parts (kolokviji + izpit)
+   semester {id, year, name, subjects} -> predmet -> parts (kolokviji + izpit)
    part: { id, name, type, notes?, decks:[{id,name,questions}], flashcards:[{id,name,cards}] }
    Vprašanje: { q, options:[...], correct:<index>, explanation }
    Kartica:   { front, back }
    ========================================================================= */
 const DATA = __DATA_JSON__;
+
+const YEARS = [...new Set(DATA.map((s) => s.year))].sort();
 
 const TIER = {
   S: { label: "S", bg: "var(--terra)", fg: "#fff" },
@@ -380,6 +382,11 @@ const CSS = `
 .ix-bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;}
 .ix-bar>span{display:block;height:100%;background:var(--terra);transition:width .4s ease;}
 .ix-btn{font-weight:600;border-radius:12px;cursor:pointer;}
+.ix-seg{display:inline-flex;gap:4px;padding:4px;background:var(--paper2);border:1px solid var(--line);border-radius:13px;}
+.ix-seg button{font-family:'Fraunces',serif;font-weight:600;font-size:15px;border:none;background:none;color:var(--ink2);
+  padding:7px 16px;border-radius:9px;cursor:pointer;transition:background .15s, color .15s;}
+.ix-seg button:hover{color:var(--ink);}
+.ix-seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);}
 .ix-sec{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:11px;}
 .ix-notes{font-size:15px;line-height:1.62;color:var(--ink);}
 .ix-notes h2{font-family:'Fraunces',serif;font-size:21px;font-weight:900;margin:28px 0 12px;color:var(--terra);letter-spacing:-.01em;}
@@ -389,6 +396,8 @@ const CSS = `
 .ix-notes ul{margin:6px 0;padding-left:20px;}
 .ix-notes li{margin:5px 0;}
 .ix-notes p{margin:8px 0;color:var(--ink2);}
+.ix-notes .tip,.ix-notes .warn{margin-top:10px;padding:9px 12px;border-radius:9px;font-size:14px;background:var(--paper);border-left:3px solid var(--teal);}
+.ix-notes .warn{border-left-color:var(--red);}
 .ix-notes b{color:var(--ink);}
 .ix-notes i{color:var(--teal);font-style:normal;font-weight:600;}
 .ix-flip{perspective:1400px;height:280px;width:100%;}
@@ -572,9 +581,9 @@ function mixDecksOf(p) {
   return out;
 }
 
-function aggregate(stats) {
+function aggregate(stats, year) {
   const items = [];
-  DATA.forEach((sem) => sem.subjects.forEach((su) => su.parts.forEach((p) => {
+  DATA.filter((sem) => !year || sem.year === year).forEach((sem) => sem.subjects.forEach((su) => su.parts.forEach((p) => {
     p.decks.forEach((d) => { const ds = deckStats(stats, `${sem.id}/${su.id}/${p.id}/${d.id}`); if (ds) items.push({ semId: sem.id, subjId: su.id, partId: p.id, deckId: d.id, view: "quiz", cat: p.type, kind: "Kviz", subj: su.name, part: p.name, name: d.name, ds }); });
     mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${su.id}/${p.id}/${d.id}`); if (ds) items.push({ semId: sem.id, subjId: su.id, partId: p.id, deckId: d.id, view: "quiz", cat: p.type, kind: "Mešani", subj: su.name, part: p.name, name: d.name, ds }); });
     (p.flashcards || []).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${su.id}/${p.id}/${d.id}`); if (ds) items.push({ semId: sem.id, subjId: su.id, partId: p.id, deckId: d.id, view: "cards", cat: "kartice", kind: "Kartice", subj: su.name, part: p.name, name: d.name, ds }); });
@@ -593,6 +602,8 @@ function aggregate(stats) {
 export default function App() {
   const [route, setRoute] = useState({ view: "home" });
   const [dark, setDark] = useState(() => store.get("indeks.theme", "light") === "dark");
+  const [year, setYearState] = useState(() => { const y = store.get("indeks.year", YEARS[YEARS.length - 1]); return YEARS.includes(y) ? y : YEARS[YEARS.length - 1]; });
+  const setYear = (y) => { setYearState(y); store.set("indeks.year", y); };
   const toggleTheme = () => setDark((d) => { const nd = !d; store.set("indeks.theme", nd ? "dark" : "light"); return nd; });
   // zunanje ozadje (rob/overscroll) naj sledi temi, da ni belega roba okrog
   useEffect(() => {
@@ -625,8 +636,8 @@ export default function App() {
           <Pending email={session.user.email} onRefresh={refreshProfile} onSignOut={signOut} busy={profileLoading} />
         ) : (
           <>
-            {route.view === "home" && <Home go={setRoute} stats={stats} />}
-            {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} />}
+            {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} />}
+            {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} />}
             {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
             {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} />}
             {route.view === "notes" && <NotesView route={route} go={setRoute} />}
@@ -654,7 +665,7 @@ function Header({ onHome, home, dark, onToggleTheme, user, onSignOut }) {
       </button>
       {user
         ? <span className="ix-chip" style={{ marginLeft: "auto", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={user.email}>{user.email}</span>
-        : <span className="ix-chip" style={{ marginLeft: "auto" }}>1. letnik · EF · UPEŠ</span>}
+        : <span className="ix-chip" style={{ marginLeft: "auto" }}>EF · UPEŠ</span>}
       <button onClick={onToggleTheme} aria-label="Preklopi temo"
         style={{ background: "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: "var(--ink)" }}>
         {dark ? <Sun size={17} /> : <Moon size={17} />}
@@ -669,8 +680,19 @@ function Header({ onHome, home, dark, onToggleTheme, user, onSignOut }) {
   );
 }
 
-function Home({ go, stats }) {
-  const agg = aggregate(stats);
+function YearSwitch({ year, setYear }) {
+  return (
+    <div className="ix-seg" role="group" aria-label="Letnik">
+      {YEARS.map((y) => (
+        <button key={y} aria-pressed={y === year} onClick={() => setYear(y)}>{y}. letnik</button>
+      ))}
+    </div>
+  );
+}
+
+function Home({ go, stats, year, setYear }) {
+  const agg = aggregate(stats, year);
+  const sems = DATA.filter((s) => s.year === year);
   return (
     <div>
       <div className="ix-fade" style={{ marginBottom: 30 }}>
@@ -682,9 +704,11 @@ function Home({ go, stats }) {
         </p>
       </div>
 
+      {YEARS.length > 1 && <div className="ix-fade" style={{ marginBottom: 22 }}><YearSwitch year={year} setYear={setYear} /></div>}
+
       <OverallBanner agg={agg} onOpen={() => go({ view: "allstats" })} />
 
-      {DATA.map((sem, si) => (
+      {sems.map((sem, si) => (
         <section key={sem.id} className="ix-fade" style={{ marginBottom: 34, animationDelay: `${si * 80}ms` }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 14 }}>
             <h2 className="ix-serif" style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>{sem.name}</h2>
@@ -744,7 +768,7 @@ function SubjectView({ route, stats, go }) {
         <span className="ix-tier" style={{ width: 40, height: 40, fontSize: 16, background: TIER[subj.tier].bg, color: TIER[subj.tier].fg }}>{subj.tier}</span>
         <div style={{ flex: 1 }}>
           <h1 className="ix-serif" style={{ fontSize: 26, fontWeight: 900, margin: 0, lineHeight: 1.08, letterSpacing: "-.02em" }}>{subj.name}</h1>
-          <span className="ix-chip">{sem.name}</span>
+          <span className="ix-chip">{sem.year}. letnik · {sem.name}</span>
         </div>
       </div>
 
@@ -1573,8 +1597,8 @@ function CatPill({ label, v }) {
   );
 }
 
-function OverallStatsView({ stats, go }) {
-  const agg = aggregate(stats);
+function OverallStatsView({ stats, go, year }) {
+  const agg = aggregate(stats, year);
   const [open, setOpen] = useState({});
   const toggle = (k) => setOpen((o) => ({ ...o, [k]: !o[k] }));
 
@@ -1594,7 +1618,7 @@ function OverallStatsView({ stats, go }) {
       </button>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
         <BarChart3 size={22} color="var(--teal)" />
-        <h1 className="ix-serif" style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Skupna statistika</h1>
+        <h1 className="ix-serif" style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Skupna statistika · {year}. letnik</h1>
       </div>
 
       <div style={{ display: "flex", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
