@@ -43,4 +43,13 @@ for (const mod of MODULES) {
   console.log(`${subj.name}: ${q} vprašanj, ${c} kartic, zapiski: ${subj.parts.filter((p) => p.notes).map((p) => p.id).join(', ') || '-'}`);
 }
 
+// Težji odgovori (letnik2-src/harden/<predmet>*.js, glej harden-lib.js)
+const { applyHarden } = require('./harden-lib');
+for (const subj of sem.subjects) {
+  const dir = path.join(__dirname, 'letnik2-src/harden');
+  const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f === subj.id + '.js' || f.startsWith(subj.id + '-')) : [];
+  const qs = subj.parts.flatMap((p) => (p.decks || []).flatMap((d) => d.questions));
+  for (const f of files) applyHarden(qs, require(path.join(dir, f)), f);
+}
+
 fs.writeFileSync(DATA_PATH, JSON.stringify(data));
