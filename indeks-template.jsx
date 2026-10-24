@@ -735,11 +735,64 @@ function aggregate(stats, year) {
   };
 }
 
+/* ---- Usmerjanje prek #hash: gumb Nazaj/Naprej v brskalniku deluje med stranmi ---- */
+const storedYear = () => { const y = store.get("indeks.year", YEARS[YEARS.length - 1]); return YEARS.includes(y) ? y : YEARS[YEARS.length - 1]; };
+function routeToHash(r, fallbackYear) {
+  const yr = (r.year || fallbackYear || storedYear());
+  if (r.view === "home") return "#/letnik-" + yr;
+  if (r.view === "allstats") return "#/letnik-" + yr + "/statistika";
+  const base = "#/" + r.sem + "/" + r.subj;
+  if (r.view === "subject") return base;
+  if (r.view === "stats") return base + "/statistika";
+  const pb = base + "/" + r.part;
+  if (r.view === "part") return pb;
+  if (r.view === "notes") return pb + "/zapiski";
+  if (r.view === "quiz") return pb + "/kviz/" + r.deck;
+  if (r.view === "cards") return pb + "/kartice/" + r.deck;
+  return "#/letnik-" + yr;
+}
+function hashToRoute(hash) {
+  const home = { view: "home", year: storedYear() };
+  const seg = (hash || "").replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent);
+  if (!seg.length) return home;
+  const ym = /^letnik-(\d+)$/.exec(seg[0]);
+  if (ym) { const y = +ym[1]; if (!YEARS.includes(y)) return home; return seg[1] === "statistika" ? { view: "allstats", year: y } : { view: "home", year: y }; }
+  const sem = DATA.find((x) => x.id === seg[0]);
+  const subj = sem && sem.subjects.find((x) => x.id === seg[1]);
+  if (!subj) return home;
+  const r = { sem: sem.id, subj: subj.id, year: sem.year };
+  if (!seg[2]) return { ...r, view: "subject" };
+  if (seg[2] === "statistika") return { ...r, view: "stats" };
+  const part = subj.parts.find((x) => x.id === seg[2]);
+  if (!part) return { ...r, view: "subject" };
+  r.part = part.id;
+  if (!seg[3]) return { ...r, view: "part" };
+  if (seg[3] === "zapiski") return { ...r, view: "notes" };
+  if ((seg[3] === "kviz" || seg[3] === "kartice") && seg[4]) return { ...r, view: seg[3] === "kviz" ? "quiz" : "cards", deck: seg[4] };
+  return { ...r, view: "part" };
+}
+
 export default function App() {
-  const [route, setRoute] = useState({ view: "home" });
+  const [route, setRouteState] = useState(() => hashToRoute(window.location.hash));
+  const routeRef = useRef(route);
+  routeRef.current = route;
+  useEffect(() => {
+    const onHash = () => { setRouteState(hashToRoute(window.location.hash)); window.scrollTo(0, 0); };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+  // go(...): nova stran → nov vnos v zgodovini brskalnika (Nazaj te vrne na prejšnjo stran)
+  const setRoute = useCallback((r) => {
+    const cur = routeRef.current;
+    const yr = r.year || cur.year;
+    const h = routeToHash(r, yr);
+    if (h === window.location.hash) { setRouteState(hashToRoute(h)); window.scrollTo(0, 0); }
+    else window.location.hash = h;
+  }, []);
   const [dark, setDark] = useState(() => store.get("indeks.theme", "light") === "dark");
-  const [year, setYearState] = useState(() => { const y = store.get("indeks.year", YEARS[YEARS.length - 1]); return YEARS.includes(y) ? y : YEARS[YEARS.length - 1]; });
-  const setYear = (y) => { setYearState(y); store.set("indeks.year", y); };
+  const year = route.year || storedYear();
+  useEffect(() => { if (route.year) store.set("indeks.year", route.year); }, [route.year]);
+  const setYear = (y) => setRoute({ view: "home", year: y });
   const [gloss, setGloss] = useState(() => store.get("indeks.gloss", true) !== false);
   const toggleGloss = () => setGloss((g) => { store.set("indeks.gloss", !g); return !g; });
   const toggleTheme = () => setDark((d) => { const nd = !d; store.set("indeks.theme", nd ? "dark" : "light"); return nd; });
@@ -756,13 +809,17 @@ export default function App() {
   const comm = useCommunity(userId || null);
 
   // ob odjavi ali menjavi računa nazaj na domačo stran
-  useEffect(() => { setRoute({ view: "home" }); }, [userId]);
+  const prevUser = useRef(userId);
+  useEffect(() => {
+    if (prevUser.current && prevUser.current !== userId) setRoute({ view: "home" });
+    prevUser.current = userId;
+  }, [userId, setRoute]);
 
   return (
     <div className={"ix-root" + (dark ? " ix-dark" : "")} style={{ minHeight: "100vh" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
-        <Header onHome={() => setRoute({ view: "home" })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss}
+        <Header onHome={() => setRoute({ view: "home", year })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss}
           user={session && session.user} onSignOut={signOut} />
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
