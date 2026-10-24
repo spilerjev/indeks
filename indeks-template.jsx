@@ -355,13 +355,30 @@ const CSS = `
 }
 .ix-root, .ix-root *{transition:background-color .5s ease, color .5s ease, border-color .5s ease;}
 .ix-root button{color:inherit;}
-.ix-root{font-family:'Spline Sans',system-ui,sans-serif;color:var(--ink);background:
+.ix-root{font-family:'Spline Sans',system-ui,sans-serif;color:var(--ink);position:relative;background:
+  radial-gradient(70% 55% at 100% 0%, rgba(179,71,31,.17) 0%, transparent 62%),
+  radial-gradient(65% 55% at 0% 100%, rgba(31,111,92,.16) 0%, transparent 62%),
+  radial-gradient(50% 40% at 85% 95%, rgba(214,170,80,.14) 0%, transparent 65%),
   radial-gradient(120% 80% at 100% 0%, #f7f1e6 0%, transparent 55%),
   radial-gradient(120% 90% at 0% 100%, #ece2cf 0%, transparent 50%), var(--paper);
+  background-attachment:fixed;
   transition:background .5s ease, color .5s ease;}
 .ix-dark.ix-root{background:
+  radial-gradient(70% 55% at 100% 0%, rgba(224,121,79,.16) 0%, transparent 62%),
+  radial-gradient(65% 55% at 0% 100%, rgba(91,191,163,.13) 0%, transparent 62%),
+  radial-gradient(50% 40% at 85% 95%, rgba(214,170,80,.09) 0%, transparent 65%),
   radial-gradient(120% 80% at 100% 0%, #2a241d 0%, transparent 55%),
-  radial-gradient(120% 90% at 0% 100%, #15120f 0%, transparent 50%), var(--paper);}
+  radial-gradient(120% 90% at 0% 100%, #15120f 0%, transparent 50%), var(--paper);
+  background-attachment:fixed;}
+/* nežen vzorec simbolov (Σ % € § π ∫ …), bolj viden ob robovih kot za vsebino */
+.ix-root::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.055;
+  background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22260%22%20height%3D%22260%22%3E%3Ctext%20x%3D%2234%22%20y%3D%2246%22%20transform%3D%22rotate%28-12%2034%2046%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2230%22%20fill%3D%22%23191712%22%3E%CE%A3%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%2230%22%20transform%3D%22rotate%2810%20150%2030%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20fill%3D%22%23191712%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22214%22%20y%3D%2292%22%20transform%3D%22rotate%28-8%20214%2092%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2230%22%20fill%3D%22%23191712%22%3E%E2%82%AC%3C%2Ftext%3E%3Ctext%20x%3D%2278%22%20y%3D%22118%22%20transform%3D%22rotate%2814%2078%20118%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2232%22%20fill%3D%22%23191712%22%3E%C2%A7%3C%2Ftext%3E%3Ctext%20x%3D%22176%22%20y%3D%22168%22%20transform%3D%22rotate%28-14%20176%20168%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2230%22%20fill%3D%22%23191712%22%3E%CF%80%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22196%22%20transform%3D%22rotate%288%2030%20196%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2234%22%20fill%3D%22%23191712%22%3E%E2%88%AB%3C%2Ftext%3E%3Ctext%20x%3D%22118%22%20y%3D%22222%22%20transform%3D%22rotate%28-6%20118%20222%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20fill%3D%22%23191712%22%3E%C2%B6%3C%2Ftext%3E%3Ctext%20x%3D%22232%22%20y%3D%22226%22%20transform%3D%22rotate%2812%20232%20226%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20fill%3D%22%23191712%22%3E%CE%94%3C%2Ftext%3E%3Ctext%20x%3D%2296%22%20y%3D%2270%22%20transform%3D%22rotate%280%2096%2070%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2222%22%20fill%3D%22%23191712%22%3E%E2%89%88%3C%2Ftext%3E%3Ctext%20x%3D%2212%22%20y%3D%22120%22%20transform%3D%22rotate%28-10%2012%20120%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2224%22%20fill%3D%22%23191712%22%3E%E2%88%9A%3C%2Ftext%3E%3C%2Fsvg%3E');background-size:260px 260px;
+  -webkit-mask-image:radial-gradient(ellipse 55% 70% at 50% 35%, rgba(0,0,0,.25) 0%, #000 85%);
+  mask-image:radial-gradient(ellipse 55% 70% at 50% 35%, rgba(0,0,0,.25) 0%, #000 85%);}
+.ix-dark.ix-root::before{opacity:.06;background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22260%22%20height%3D%22260%22%3E%3Ctext%20x%3D%2234%22%20y%3D%2246%22%20transform%3D%22rotate%28-12%2034%2046%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2230%22%20fill%3D%22%23f0e9da%22%3E%CE%A3%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%2230%22%20transform%3D%22rotate%2810%20150%2030%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20fill%3D%22%23f0e9da%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22214%22%20y%3D%2292%22%20transform%3D%22rotate%28-8%20214%2092%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2230%22%20fill%3D%22%23f0e9da%22%3E%E2%82%AC%3C%2Ftext%3E%3Ctext%20x%3D%2278%22%20y%3D%22118%22%20transform%3D%22rotate%2814%2078%20118%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2232%22%20fill%3D%22%23f0e9da%22%3E%C2%A7%3C%2Ftext%3E%3Ctext%20x%3D%22176%22%20y%3D%22168%22%20transform%3D%22rotate%28-14%20176%20168%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2230%22%20fill%3D%22%23f0e9da%22%3E%CF%80%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22196%22%20transform%3D%22rotate%288%2030%20196%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2234%22%20fill%3D%22%23f0e9da%22%3E%E2%88%AB%3C%2Ftext%3E%3Ctext%20x%3D%22118%22%20y%3D%22222%22%20transform%3D%22rotate%28-6%20118%20222%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20fill%3D%22%23f0e9da%22%3E%C2%B6%3C%2Ftext%3E%3Ctext%20x%3D%22232%22%20y%3D%22226%22%20transform%3D%22rotate%2812%20232%20226%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20fill%3D%22%23f0e9da%22%3E%CE%94%3C%2Ftext%3E%3Ctext%20x%3D%2296%22%20y%3D%2270%22%20transform%3D%22rotate%280%2096%2070%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2222%22%20fill%3D%22%23f0e9da%22%3E%E2%89%88%3C%2Ftext%3E%3Ctext%20x%3D%2212%22%20y%3D%22120%22%20transform%3D%22rotate%28-10%2012%20120%29%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2224%22%20fill%3D%22%23f0e9da%22%3E%E2%88%9A%3C%2Ftext%3E%3C%2Fsvg%3E');}
+.ix-root > div{position:relative;z-index:1;}
+@media (prefers-reduced-motion:no-preference){.ix-root::before{animation:ixDrift 90s linear infinite;}}
+@keyframes ixDrift{to{background-position:260px 260px;}}
 .ix-serif{font-family:'Fraunces',Georgia,serif;}
 .ix-fade{opacity:0;transform:translateY(10px);animation:ixIn .5s cubic-bezier(.2,.7,.2,1) forwards;}
 @keyframes ixIn{to{opacity:1;transform:none;}}
