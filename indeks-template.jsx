@@ -1,8 +1,8 @@
-import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
-  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut
+  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 
@@ -127,6 +127,38 @@ function useCloudStats(userId) {
   }, [userId, apply, fetchCloud]);
 
   return { stats, record };
+}
+
+/* Slovarček: globalno vklopljen/izklopljen (shranjeno v brskalniku). */
+const GlossCtx = React.createContext(true);
+
+/* Povprečja vseh uporabnikov (anonimno, agregat iz Supabase funkcije community_stats).
+   Če funkcija še ne obstaja, ostane null in primerjava se ne prikaže. */
+function useCommunity(userId) {
+  const [comm, setComm] = useState(null);
+  useEffect(() => {
+    if (!userId) { setComm(null); return; }
+    let cancelled = false;
+    const load = async () => {
+      const { data, error } = await supabase.rpc("community_stats");
+      if (error) { console.warn("indeks skupnost: " + error.message); return; }
+      if (!cancelled && data) setComm(data);
+    };
+    load();
+    const onVis = () => { if (document.visibilityState === "visible") load(); };
+    document.addEventListener("visibilitychange", onVis);
+    return () => { cancelled = true; document.removeEventListener("visibilitychange", onVis); };
+  }, [userId]);
+  return comm;
+}
+const commDeck = (comm, key) => (comm && comm.decks && comm.decks[key]) || null;
+/* Povprečje skupnosti za podan letnik (ponderirano s številom uporabnikov pri posameznem kompletu). */
+function commYearAvg(comm, year) {
+  if (!comm || !comm.decks) return null;
+  const sems = new Set(DATA.filter((s) => !year || s.year === year).map((s) => s.id));
+  let w = 0, sum = 0;
+  Object.keys(comm.decks).forEach((k) => { if (sems.has(k.split("/")[0])) { const d = comm.decks[k]; w += d.users; sum += d.users * d.avg; } });
+  return w ? Math.round(sum / w) : null;
 }
 
 function mapAuthErr(error) {
@@ -708,6 +740,8 @@ export default function App() {
   const [dark, setDark] = useState(() => store.get("indeks.theme", "light") === "dark");
   const [year, setYearState] = useState(() => { const y = store.get("indeks.year", YEARS[YEARS.length - 1]); return YEARS.includes(y) ? y : YEARS[YEARS.length - 1]; });
   const setYear = (y) => { setYearState(y); store.set("indeks.year", y); };
+  const [gloss, setGloss] = useState(() => store.get("indeks.gloss", true) !== false);
+  const toggleGloss = () => setGloss((g) => { store.set("indeks.gloss", !g); return !g; });
   const toggleTheme = () => setDark((d) => { const nd = !d; store.set("indeks.theme", nd ? "dark" : "light"); return nd; });
   // zunanje ozadje (rob/overscroll) naj sledi temi, da ni belega roba okrog
   useEffect(() => {
@@ -719,6 +753,7 @@ export default function App() {
   const { session, loading: authLoading, signOut } = useAuth();
   const userId = session && session.user && session.user.id;
   const { stats, record } = useCloudStats(userId || null);
+  const comm = useCommunity(userId || null);
 
   // ob odjavi ali menjavi računa nazaj na domačo stran
   useEffect(() => { setRoute({ view: "home" }); }, [userId]);
@@ -727,7 +762,7 @@ export default function App() {
     <div className={"ix-root" + (dark ? " ix-dark" : "")} style={{ minHeight: "100vh" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
-        <Header onHome={() => setRoute({ view: "home" })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme}
+        <Header onHome={() => setRoute({ view: "home" })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss}
           user={session && session.user} onSignOut={signOut} />
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
@@ -735,14 +770,14 @@ export default function App() {
           <Login />
         ) : (
           <>
-            {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} />}
-            {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} />}
+            {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} />}
+            {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} comm={comm} />}
             {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
             {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} />}
             {route.view === "notes" && <NotesView route={route} go={setRoute} />}
-            {route.view === "quiz" && <QuizView route={route} go={setRoute} record={record} />}
+            {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView route={route} go={setRoute} record={record} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
-            {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} />}
+            {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
           </>
         )}
       </div>
@@ -750,7 +785,7 @@ export default function App() {
   );
 }
 
-function Header({ onHome, home, dark, onToggleTheme, user, onSignOut }) {
+function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, user, onSignOut }) {
   return (
     <header style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: home ? 26 : 18 }}>
       <button onClick={onHome} className="ix-serif"
@@ -765,6 +800,12 @@ function Header({ onHome, home, dark, onToggleTheme, user, onSignOut }) {
       {user
         ? <span className="ix-chip" style={{ marginLeft: "auto", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={user.email}>{user.email}</span>
         : <span className="ix-chip" style={{ marginLeft: "auto" }}>EF · UPEŠ</span>}
+      {user && (
+        <button onClick={onToggleGloss} aria-label="Slovarček" aria-pressed={gloss} title={gloss ? "Slovarček je vklopljen (klik za izklop)" : "Slovarček je izklopljen (klik za vklop)"}
+          style={{ background: gloss ? "var(--ink)" : "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: gloss ? "var(--paper)" : "var(--ink2)" }}>
+          <BookOpen size={17} />
+        </button>
+      )}
       <button onClick={onToggleTheme} aria-label="Preklopi temo"
         style={{ background: "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: "var(--ink)" }}>
         {dark ? <Sun size={17} /> : <Moon size={17} />}
@@ -789,7 +830,7 @@ function YearSwitch({ year, setYear }) {
   );
 }
 
-function Home({ go, stats, year, setYear }) {
+function Home({ go, stats, year, setYear, comm }) {
   const agg = aggregate(stats, year);
   const sems = DATA.filter((s) => s.year === year);
   return (
@@ -805,7 +846,7 @@ function Home({ go, stats, year, setYear }) {
 
       {YEARS.length > 1 && <div className="ix-fade" style={{ marginBottom: 22 }}><YearSwitch year={year} setYear={setYear} /></div>}
 
-      <OverallBanner agg={agg} onOpen={() => go({ view: "allstats" })} />
+      <OverallBanner agg={agg} comm={comm} year={year} onOpen={() => go({ view: "allstats" })} />
 
       {sems.map((sem, si) => (
         <section key={sem.id} className="ix-fade" style={{ marginBottom: 34, animationDelay: `${si * 80}ms` }}>
@@ -1070,6 +1111,7 @@ function Empty({ text }) {
 }
 
 function QuizView({ route, go, record }) {
+  const glossOn = React.useContext(GlossCtx);
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const part = subj.parts.find((p) => p.id === route.part);
@@ -1160,7 +1202,7 @@ function QuizView({ route, go, record }) {
   const restLow = ((q.options ? q.options.join(" ") : (q.pairs ? q.pairs.map((p) => p.term + " " + p.def).join(" ") : "")) + " " + (q.explanation || "") + " " + (q.more || "")).toLowerCase();
   const inTxt = (g, t) => (g.b ? new RegExp("\\b" + g.s + "\\b").test(t) : t.includes(g.s));
   const defQ = /\bkaj (pomeni|je|prikazuje|opisuje|označuje|razumemo)\b|\bkako (opredelimo|definiramo)\b|\bopredeli\b|definicij|\bkateri je\b[\s\S]*\bprimer\b|\bkatere vrste\b|\bkateri tip\b|\bza kaj se uporablja\b/.test(stemLow);
-  const gloss = (q.type === "match" || q.type === "grid") ? [] : GLOSSARY.filter((g) => {
+  const gloss = (!glossOn || q.type === "match" || q.type === "grid") ? [] : GLOSSARY.filter((g) => {
     if (g.subj && g.subj !== subj.id) return false;
     const inRest = inTxt(g, restLow), inStem = inTxt(g, stemLow);
     if (!inRest && !inStem) return false;
@@ -1591,15 +1633,15 @@ function FlashcardsView({ route, go, record }) {
   );
 }
 
-function StatsView({ route, stats, go }) {
+function StatsView({ route, stats, go, comm }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
 
   const rows = [];
   subj.parts.forEach((p) => {
-    p.decks.forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kviz", ds }); });
-    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Mešani", ds }); });
-    (p.flashcards || []).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kartice", ds }); });
+    p.decks.forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kviz", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
+    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Mešani", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
+    (p.flashcards || []).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kartice", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
   });
   const totalAttempts = rows.reduce((n, r) => n + r.ds.n, 0);
   const overallAvg = rows.length ? Math.round(rows.reduce((s, r) => s + r.ds.avg, 0) / rows.length) : 0;
@@ -1638,7 +1680,7 @@ function StatsView({ route, stats, go }) {
                 <div className="ix-spark" style={{ flex: 1 }}>
                   {r.ds.recent.map((v, j) => (<i key={j} style={{ height: `${Math.max(8, v)}%`, opacity: 0.4 + 0.6 * (j + 1) / r.ds.recent.length }} title={v + "%"} />))}
                 </div>
-                <div className="ix-chip">povp. {r.ds.avg}% · zadnji {r.ds.last}%</div>
+                <div className="ix-chip">povp. {r.ds.avg}% · zadnji {r.ds.last}%{r.c ? ` · vsi ${r.c.avg}% (${r.c.users})` : ""}</div>
               </div>
             </div>
           ))}
@@ -1657,8 +1699,9 @@ function Stat({ big, label }) {
   );
 }
 
-function OverallBanner({ agg, onOpen }) {
+function OverallBanner({ agg, comm, year, onOpen }) {
   const has = agg.practiced > 0;
+  const cAvg = commYearAvg(comm, year);
   return (
     <button className="ix-card ix-fade" onClick={onOpen}
       style={{ width: "100%", textAlign: "left", padding: "16px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: 16, marginBottom: 30, borderLeft: "3px solid var(--teal)", flexWrap: "wrap" }}>
@@ -1680,6 +1723,12 @@ function OverallBanner({ agg, onOpen }) {
             <div className="ix-serif" style={{ fontSize: 32, fontWeight: 900, color: "var(--teal)" }}>{agg.overallAvg}%</div>
             <div className="ix-chip">povprečje</div>
           </div>
+          {cAvg != null && (
+            <div style={{ textAlign: "center" }}>
+              <div className="ix-serif" style={{ fontSize: 32, fontWeight: 900, color: "var(--ink2)" }}>{cAvg}%</div>
+              <div className="ix-chip">vsi</div>
+            </div>
+          )}
         </div>
       ) : <ChevronRight size={18} color="var(--ink2)" />}
     </button>
@@ -1696,8 +1745,36 @@ function CatPill({ label, v }) {
   );
 }
 
-function OverallStatsView({ stats, go, year }) {
+function CommunityCard({ comm, year, mine, mineAll, practiced, myAttempts }) {
+  if (!comm) return null;
+  const cAvg = commYearAvg(comm, year);
+  const avgs = Array.isArray(comm.user_avgs) ? comm.user_avgs : [];
+  const below = practiced > 0 && avgs.length >= 3 ? Math.round(100 * avgs.filter((x) => x < mineAll).length / avgs.length) : null;
+  const perUser = comm.active ? Math.round(comm.attempts / comm.active) : 0;
+  const diff = cAvg != null && mine ? mine - cAvg : null;
+  return (
+    <div className="ix-card" style={{ padding: "16px 18px", marginBottom: 24, borderLeft: "3px solid var(--terra)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 12 }}>
+        <Users size={18} color="var(--terra)" />
+        <div style={{ fontWeight: 600, fontSize: 15 }}>Ti proti ostalim</div>
+        <span className="ix-chip" style={{ marginLeft: "auto" }}>{comm.active} aktivnih od {comm.registered} registriranih</span>
+      </div>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <Stat big={mine ? mine + "%" : "–"} label={`ti · ${year}. letnik`} />
+        <Stat big={cAvg != null ? cAvg + "%" : "–"} label="povprečje vseh" />
+        <Stat big={diff == null ? "–" : (diff > 0 ? "+" : "") + diff} label="razlika (o. t.)" />
+      </div>
+      <div className="ix-chip" style={{ marginTop: 12, lineHeight: 1.6 }}>
+        {below != null && <>Skupno si boljši od {below} % uporabnikov. </>}
+        Povprečen uporabnik: {perUser} poskusov{myAttempts ? `, ti: ${myAttempts}` : ""}. Povprečja so izračunana iz uspešnosti po kompletih, da množični reševalci ne prevladajo.
+      </div>
+    </div>
+  );
+}
+
+function OverallStatsView({ stats, go, year, comm }) {
   const agg = aggregate(stats, year);
+  const aggAll = aggregate(stats, 0);
   const [open, setOpen] = useState({});
   const toggle = (k) => setOpen((o) => ({ ...o, [k]: !o[k] }));
 
@@ -1730,6 +1807,8 @@ function OverallStatsView({ stats, go, year }) {
         <Stat big={agg.byCat.izpit.n ? agg.byCat.izpit.avg + "%" : "–"} label={`izpiti (${agg.byCat.izpit.n})`} />
         <Stat big={agg.byCat.kartice.n ? agg.byCat.kartice.avg + "%" : "–"} label={`kartice (${agg.byCat.kartice.n})`} />
       </div>
+
+      <CommunityCard comm={comm} year={year} mine={agg.overallAvg} mineAll={aggAll.overallAvg} practiced={aggAll.practiced} myAttempts={aggAll.totalAttempts} />
 
       {agg.items.length === 0 ? (
         <div className="ix-card" style={{ padding: 16 }}><span className="ix-chip">Še ni poskusov. Reši kak kviz ali komplet kartic, pa se bo tukaj prikazal napredek.</span></div>
@@ -1764,7 +1843,7 @@ function OverallStatsView({ stats, go, year }) {
                               {r.view === "cards" ? <Brain size={15} color="var(--teal)" /> : (r.deckId && r.deckId.indexOf("__mix") === 0 ? <Shuffle size={15} color="var(--terra)" /> : <FileText size={15} color="var(--ink)" />)}
                               <div style={{ flex: 1 }}>
                                 <div style={{ fontWeight: 600, fontSize: 14 }}>{r.name}</div>
-                                <div className="ix-chip" style={{ marginTop: 2 }}>{r.part} · najboljši {r.ds.best}% · povp. {r.ds.avg}% · {r.ds.n}×</div>
+                                <div className="ix-chip" style={{ marginTop: 2 }}>{r.part} · najboljši {r.ds.best}% · povp. {r.ds.avg}% · {r.ds.n}×{commDeck(comm, `${r.semId}/${r.subjId}/${r.partId}/${r.deckId}`) ? ` · vsi ${commDeck(comm, `${r.semId}/${r.subjId}/${r.partId}/${r.deckId}`).avg}%` : ""}</div>
                               </div>
                               <ChevronRight size={16} color="var(--ink2)" />
                             </button>
