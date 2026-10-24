@@ -1966,6 +1966,9 @@ function processQuestion(q) {
     const _pool = shuffle(blanks.map((b, idx) => ({ id: idx, val: b.val })));
     return { ...q, _blanks: blanks, _pool };
   }
+  // možnosti, ki se sklicujejo na druge možnosti (A in B, nič od naštetega, ...), obdržijo vrstni red
+  const refsOptions = q.fixedOrder || q.options.some((o) => /(\bvse\s+(od\s+)?(zgoraj|naštet\w*)|\bnič\s+od\s+naštet\w*|\b(nobeden|nobena|nobeno)\s+od\s+naštet\w*|\bvsi\s+našteti|\b[A-D]\s+in\s+[A-D]\b|\b[A-D]\s*,\s*[A-D]\b|odgovor\w*\s+[A-D]\b)/i.test(o));
+  if (refsOptions) return { ...q };
   const order = shuffle(q.options.map((_, idx) => idx));
   return { ...q, options: order.map((idx) => q.options[idx]), correct: order.indexOf(q.correct) };
 }
