@@ -230,6 +230,8 @@ const kartice = [
   ['3 tržni deleži', 'Celotni (prodaja / prodaja trga), na ciljnem trgu, relativni (glede na največjega konkurenta; > 100 % = vodja).'],
 ];
 
+const p4 = require('./trz-p4');
+
 module.exports = {
   id: 'trz',
   parts: [
@@ -247,8 +249,11 @@ module.exports = {
         { id: 'trz-okolje', name: 'Trženjsko okolje', questions: okolje },
         { id: 'trz-raziskave', name: 'Trženjske raziskave', questions: raziskave },
         { id: 'trz-povprasevanje', name: 'Merjenje povpraševanja in tržni delež', questions: povprasevanje },
+        { id: 'trz-glass', name: '1. vaja: Google Glass (kviz 2)', questions: p4.glass },
+        { id: 'trz-vedenje', name: 'Nakupno vedenje porabnikov (4. predavanje)', questions: p4.vedenje },
       ],
-      flashcards: [{ id: 'trz-c-1', name: 'Ključni pojmi (predavanja 1-3)', cards: kartice.map(([front, back]) => ({ front, back })) }],
+      flashcards: [{ id: 'trz-c-1', name: 'Ključni pojmi (predavanja 1-3)', cards: kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'trz-c-2', name: 'Google Glass in nakupno vedenje', cards: p4.kartice.map(([front, back]) => ({ front, back })) }],
     },
     {
       id: 'izpit', name: 'Izpit', type: 'izpit',

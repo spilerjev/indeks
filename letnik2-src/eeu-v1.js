@@ -1,0 +1,61 @@
+/* Ekonomika EU in Slovenija - dodatek: 1. vaje (19. 10. 2026) - zgodovina in nastanek EU
+   Vir: School/.../Ekonomika EU in Slovenija/ZAPISKI.md (razdelek V01) */
+const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
+
+const vaje1 = [
+  Q('Katere države so podpirale FEDERALNI (nadnacionalni) pristop k integraciji?', ['VB, Skandinavija, Švica, Avstrija, Portugalska', 'Francija, ZRN, Italija in Beneluks (šesterica)', 'Samo Francija in VB', 'ZDA in Kanada'], 1,
+    'Šesterica je ustanovila ESPJ (1951) in EGS (1957). Medvladni pristop (OEEC, Svet Evrope, EFTA) so podpirale VB, skandinavske države, Švica, Avstrija in Portugalska.'),
+  Q('Koliko članic je imela EGS ob ustanovitvi in koliko EFTA?', ['EGS 6, EFTA 7', 'EGS 7, EFTA 6', 'EGS 9, EFTA 7', 'EGS 6, EFTA 6'], 0,
+    'EGS: Francija, ZRN, Italija, Belgija, Nizozemska, Luksemburg. EFTA: VB, Danska, Norveška, Švedska, Avstrija, Švica, Portugalska.'),
+  Q('Kdaj je bila podpisana in kdaj je začela veljati Rimska pogodba (EGS)?', ['Podpis 25. 3. 1957, velja od 1. 1. 1958', 'Podpis 18. 4. 1951, velja od 1952', 'Podpis 7. 2. 1992, velja od 1. 11. 1993', 'Podpis 4. 1. 1960, velja od maja 1960'], 0,
+    '18. 4. 1951 je Pariška pogodba (ESPJ), 7. 2. 1992 Maastricht, 4. 1. 1960 Stockholmska konvencija (EFTA).'),
+  Q('Kaj je glavna razlika med EGS in EFTA?', ['EGS je območje proste trgovine, EFTA carinska unija', 'EGS je carinska unija s skupno zunanjo carino, vključuje kmetijstvo in ima nadnacionalne institucije; EFTA je območje proste trgovine samo za industrijske izdelke z medvladnim odločanjem', 'Obe sta carinski uniji', 'EFTA je politična unija'], 1,
+    'Pri EFTA ima vsaka država svoje carine do tretjih držav, zato so potrebna pravila o poreklu. EGS ima tudi politični cilj (vse tesnejša zveza).'),
+  Q('Zakaj je bila ustanovljena EFTA?', ['Kot odgovor VB in drugih na diskriminacijo zaradi EGS - brez nadnacionalnosti in skupne zunanje carine', 'Za dokončanje enotnega trga', 'Za uvedbo skupne valute', 'Za ustanovitev Sveta Evrope'], 0,
+    'VB je predlagala veliko območje proste trgovine za vse OEEC (Maudling), Francija ga je 1958 zavrnila. VB je hotela ohraniti preference za Commonwealth.'),
+  Q('Kaj je pomenilo "dva prekrivajoča se koncentrična kroga" po 1973?', ['EGS in EFTA sta se združila', 'Notranji krog EGS-9 (carinska unija) in zunanji krog (prosta trgovina z industrijskimi izdelki za EGS in EFTA prek bilateralnih sporazumov)', 'Dve ločeni carinski uniji', 'EGS in Comecon'], 1,
+    'Do 1973 sta bila kroga ločena (neprekrivajoča). Prekrivata se, ker je EGS v obeh; koncentrična sta, ker je notranji krog bolj integriran.'),
+  Q('Kaj je bil mehanizem učinka domin (Baldwin)?', ['Nečlanice se vedno združijo v svoj blok', 'Preferencialna liberalizacija diskriminira nečlanice (preusmeritev trgovine), izvozniki lobirajo za vstop, blok se širi in diskriminacija raste', 'Članice izstopajo po vrsti', 'Cene padajo zaporedno'], 1,
+    'Domino 1: EGS → EFTA → prošnja VB 1961 → širitev 1973. Domino 2: EC92 → EEA 1994 → širitev 1995. Sproži ga tudi poglabljanje, ne samo širjenje.'),
+  Q('Kateri dejavniki so povzročili evropesimizem 1975-1986?', ['Samo naftna šoka', 'Naftna šoka 1973 in 1979, stagflacija, propad Bretton Woodsa, protekcionizem z necarinskimi ovirami, luksemburški kompromis in proračunski spor z VB', 'Padec komunizma', 'Uvedba eura'], 1,
+    'Politično: luksemburški kompromis (1966) = veto, zato ni bilo odločitev; Thatcher "I want my money back" (rešeno v Fontainebleauju 1984). Svetle točke: EMS 1979, prve neposredne volitve v EP 1979, Cassis de Dijon.'),
+  Q('Kaj so tehnične ovire v trgovini?', ['Carine na uvoz', 'Različni nacionalni standardi, tehnični predpisi, zahteve za testiranje, certificiranje in označevanje izdelkov', 'Količinske omejitve', 'Davki na dodano vrednost'], 1,
+    'Necarinske ovire: proizvajalec mora izdelek prilagoditi vsakemu trgu posebej.'),
+  Q('Kaj je razsodilo Sodišče ES v zadevi Cassis de Dijon (1979)?', ['Nemčija sme prepovedati vsa tuja žganja', 'Izdelka, ki je zakonito proizveden in v prometu v eni članici, druga članica ne sme prepovedati (razen iz nujnih razlogov) - načelo vzajemnega priznavanja', 'Vse standarde je treba harmonizirati', 'Alkohol je izvzet iz notranjega trga'], 1,
+    'Nemčija je zahtevala vsaj 25 % alkohola, Cassis ima 15-20 %. Rešitev: vzajemno priznavanje, harmonizirajo se samo bistvene zahteve ("novi pristop").'),
+  Q('Kaj je bila Bela knjiga Komisije pod Delorsom (1985)?', ['Poročilo o EMU', 'Okoli 300 ukrepov (279) za dokončanje notranjega trga do 31. 12. 1992', 'Predlog ustave', 'Seznam kandidatk za širitev'], 1,
+    'Cockfield. Enotni evropski akt (1986, velja 1987) je uvedel kvalificirano večino za ukrepe notranjega trga. EC92: odprava fizičnih, tehničnih in davčnih ovir; štiri svoboščine.'),
+  Q('Katere so tri vrste ovir, ki jih odpravlja program EC92?', ['Carinske, količinske, valutne', 'Fizične (mejne kontrole), tehnične (standardi, javna naročila) in davčne (DDV, trošarine)', 'Politične, ekonomske, pravne', 'Kmetijske, industrijske, storitvene'], 1,
+    'Cilj: štiri svoboščine - blago, storitve, kapital, ljudje.'),
+  Q('Kaj so tri stebri Maastrichtske pogodbe (podpis 7. 2. 1992, velja od 1. 11. 1993)?', ['ES, skupna zunanja in varnostna politika, pravosodje in notranje zadeve', 'EGS, ESPJ, Euratom', 'Komisija, Svet, Parlament', 'Carinska unija, EMU, schengen'], 0,
+    'Maastricht še: EMU in euro s konvergenčnimi kriteriji, državljanstvo EU, soodločanje EP, subsidiarnost, kohezijski sklad, socialno poglavje (opt-out VB).'),
+  Q('Katera pogodba NIKOLI ni začela veljati?', ['Amsterdam', 'Nica', 'Pogodba o ustavi za Evropo (zavrnjena na referendumih v Franciji in na Nizozemskem 2005)', 'Lizbona'], 2,
+    'Amsterdam 1997 → 1999, Nica 2001 → 2003, Lizbona 2007 → 1. 12. 2009. Zdaj velja Lizbonska pogodba (PEU + PDEU).'),
+  Q('Kaj je prinesla Lizbonska pogodba (velja od 1. 12. 2009)?', ['Uvedbo eura', 'Ukinitev stebrov, pravno osebnost EU, stalnega predsednika Evropskega sveta, visokega predstavnika, dvojno večino, Listino temeljnih pravic in čl. 50 (izstop)', 'Schengen', 'Kopenhagenske kriterije'], 1,
+    'Schengen je v pravni red EU prišel z Amsterdamsko pogodbo.'),
+  Q('Kateri so kopenhagenski kriteriji (1993)?', ['Politični (demokracija, pravna država, človekove pravice, manjšine), ekonomski (delujoče tržno gospodarstvo) in pravni (prevzem acquis)', 'Samo ekonomski', 'Inflacija, proračunski primanjkljaj, dolg', 'Geografski, kulturni, verski'], 0,
+    'Pred padcem komunizma kriteriji niso bili formalizirani, ker so zahodne prosilke večinoma že izpolnjevale. Izpolnjevati jih morajo tudi sedanje kandidatke.'),
+  Q('Koliko širitev je bilo in kdaj je vstopila Slovenija?', ['7 širitev; Slovenija 2004', '5 širitev; Slovenija 2007', '7 širitev; Slovenija 2007', '4 širitve; Slovenija 2004'], 0,
+    '1973 (VB, DK, IE), 1981 (GR), 1986 (ES, PT), 1995 (AT, FI, SE), 2004 (10 držav), 2007 (BG, RO), 2013 (HR). VB je izstopila 2020 → EU-27.'),
+  Q('Kdo je avtor Schumanove deklaracije (9. 5. 1950) in kaj je predlagala?', ['Jean Monnet; skupno valuto', 'Robert Schuman; skupni nadzor nad premogom in jeklom, iz česar je nastala ESPJ', 'Churchill; Združene države Evrope', 'De Gaulle; Evropo narodov'], 1,
+    '9. maj je dan Evrope. Monnet je avtor načrta in prvi predsednik Visoke oblasti. Churchill: govor v Zürichu 1946.'),
+  Q('Katera osebnost je povezana z Delorsovim poročilom (1989)?', ['Predlog EMU v treh fazah, ki je vodil k Maastrichtu', 'Spaakovo poročilo', 'Draghijevo poročilo', 'Maudlingov načrt'], 0,
+    'Delors (predsednik Komisije 1985-95): EC92, Enotni evropski akt, Delorsovo poročilo o EMU. De Gaulle: veto VB 1963 in 1967, politika praznega stola 1965.'),
+  Q('Zakaj je bila trgovina med državami po vojni bilateralna?', ['Zaradi nekonvertibilnih valut: prejete lire nisem mogel uporabiti za plačilo uvoza iz Nemčije, zato je bila trgovina z vsako državo posebej uravnotežena', 'Zaradi carin', 'Zaradi prepovedi izvoza', 'Zaradi Marshallovega načrta'], 0,
+    'EPU je to rešila z multilateralnim kliringom neto saldov.'),
+  Q('Kdo je ob ustanovitvi OEEC (1948) zavrnil Marshallovo pomoč in zato ni bil v OEEC?', ['Vzhodni blok (na pritisk SZ)', 'VB', 'Francija', 'Turčija'], 0,
+    'OEEC: 16 držav + zahodne okupacijske cone Nemčije. ZRN polnopravna od 1949, Španija od 1959. ZDA in Kanada postaneta polnopravni v OECD 1961.'),
+  Q('Kaj pomeni federalizem pri evropski integraciji?', ['Države prenesejo del suverenosti na skupne (nadnacionalne) institucije, ki sprejemajo zavezujoče odločitve tudi z večino', 'Sodelovanje s soglasjem brez prenosa suverenosti', 'Skupna vojska', 'Notranja ureditev držav članic'], 0,
+    'Ne zamešaj s federalnimi državami (ZRN, Avstrija, Švica, Belgija, ZDA). EU ni federacija: nadnacionalna pri trgovinski in konkurenčni politiki ter monetarni (ECB), medvladna pri zunanji in varnostni politiki.'),
+];
+
+const kartice = [
+  ['EGS vs. EFTA', 'EGS: carinska unija, skupna zunanja carina, kmetijstvo, nadnacionalna, 6 članic (1957/58). EFTA: območje proste trgovine, samo industrija, medvladna, 7 članic (1960).'],
+  ['Evropesimizem 1975-86', 'Naftna šoka, stagflacija, luksemburški kompromis (veto), proračunski spor z VB. Svetle točke: EMS, EP volitve 1979, Cassis de Dijon.'],
+  ['Cassis de Dijon (1979)', 'Vzajemno priznavanje: kar je zakonito v eni članici, velja povsod. Harmonizirajo se le bistvene zahteve.'],
+  ['EC92', 'Bela knjiga (~300 ukrepov), Enotni evropski akt (QMV). Odprava fizičnih, tehničnih in davčnih ovir.'],
+  ['Pogodbe', 'Maastricht 1992/93 (3 stebri, EMU), Amsterdam 1997/99, Nica 2001/03, Ustava 2004 (zavrnjena 2005), Lizbona 2007/2009.'],
+  ['Širitve EU', '1973 (3), 1981 GR, 1986 ES PT, 1995 AT FI SE, 2004 (10), 2007 BG RO, 2013 HR; 2020 izstop VB → EU-27.'],
+];
+
+module.exports = { vaje1, kartice };

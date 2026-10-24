@@ -70,6 +70,8 @@ const kartice = [
   ['Kritična pot', 'Najdaljša pot v mrežnem diagramu; določa najkrajši čas projekta.'],
 ];
 
+const v2 = require('./mpsp-v2');
+
 module.exports = {
   id: 'mpsp',
   parts: [
@@ -82,8 +84,11 @@ module.exports = {
       decks: [
         { id: 'mpsp-yg', name: 'Vaje 1: YG - strategija in procesi', questions: strategija },
         { id: 'mpsp-rac', name: 'Računske: Littlov zakon in prispevek za kritje', calc: true, questions: rac },
+        { id: 'mpsp-v2-teorija', name: 'Vaje 2: zmogljivost, ozko grlo, TPČ', questions: v2.teorija },
+        { id: 'mpsp-v2-rac', name: 'Računske: Vaje 2 (ortodont, delavci, urgenca)', calc: true, questions: v2.rac },
       ],
-      flashcards: [{ id: 'mpsp-c-1', name: 'Pojmi z vaj', cards: kartice.map(([front, back]) => ({ front, back })) }],
+      flashcards: [{ id: 'mpsp-c-1', name: 'Pojmi z vaj', cards: kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'mpsp-c-2', name: 'Analiza procesa (Vaje 2)', cards: v2.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij' },
     { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Stara izpitna vprašanja', questions: izpit }] },

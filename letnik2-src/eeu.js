@@ -181,6 +181,8 @@ const kartice = [
   ['Pravila o poreklu', 'V FTA preprečijo uvoz prek članice z najnižjo carino (trade deflection).'],
 ];
 
+const v1 = require('./eeu-v1');
+
 module.exports = {
   id: 'eeu',
   parts: [
@@ -196,9 +198,11 @@ module.exports = {
         { id: 'eeu-krogi', name: 'EFTA, širitve, evropesimizem, enotni trg', questions: krogi },
         { id: 'eeu-vzhod', name: 'Padec komunizma, Kopenhagen, širitve po 2004', questions: vzhod },
         { id: 'eeu-integracije', name: 'Integracije in WTO (stari kolokviji)', questions: integracije },
+        { id: 'eeu-vaje1', name: '1. vaje: nastanek EU, pogodbe, širitve', questions: v1.vaje1 },
         { id: 'eeu-rac-carine', name: 'Računske: prosta trgovina, carine, FTA', calc: true, questions: racCarine },
       ],
-      flashcards: [{ id: 'eeu-c-zgodovina', name: 'Letnice in pojmi', cards: kartice.map(([front, back]) => ({ front, back })) }],
+      flashcards: [{ id: 'eeu-c-zgodovina', name: 'Letnice in pojmi', cards: kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'eeu-c-vaje1', name: '1. vaje: EGS, EFTA, pogodbe', cards: v1.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'izpit', name: 'Delni / celotni izpit', type: 'izpit', decks: [] },
   ],

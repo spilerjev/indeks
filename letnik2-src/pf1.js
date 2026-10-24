@@ -154,6 +154,8 @@ const kartice = [
   ['P/E in P/B', 'P/E = cena / EPS (EPS = ČD / št. delnic); P/B = cena / BVPS (BVPS = LK / št. delnic).'],
 ];
 
+const p3 = require('./pf1-p3');
+
 module.exports = {
   id: 'pf1',
   parts: [
@@ -175,10 +177,21 @@ module.exports = {
         { id: 'pf1-izkazi2', name: 'Izkazi in FCF: poglobljeno', questions: izkazi },
         { id: 'pf1-rac-vrednost', name: 'Računske: vrednost, FCF in WACC', calc: true, questions: racVrednost },
         { id: 'pf1-rac-kazalniki', name: 'Računske: kazalniki in DuPont', calc: true, questions: racKazalniki },
+        { id: 'pf1-tvm', name: 'Časovna vrednost denarja (P03, V02)', questions: p3.tvm },
+        { id: 'pf1-rac-tvm', name: 'Računske: časovna vrednost denarja', calc: true, questions: p3.tvmRac },
       ],
       flashcards: [{ id: 'pf1-c-k1', name: 'Pojmi in formule', cards: kartice.map(([front, back]) => ({ front, back })) }],
     },
-    { id: 'k2', name: '2. kolokvij', type: 'kolokvij' },
+    {
+      id: 'k2', name: '2. kolokvij', type: 'kolokvij',
+      decks: [
+        { id: 'pf1-obveznice', name: 'Vrednotenje obveznic (P04)', questions: p3.obveznice },
+        { id: 'pf1-rac-obveznice', name: 'Računske: obveznice', calc: true, questions: p3.obvRac },
+        { id: 'pf1-delnice', name: 'Vrednotenje delnic (P05)', questions: p3.delnice },
+        { id: 'pf1-rac-delnice', name: 'Računske: delnice', calc: true, questions: p3.delRac },
+      ],
+      flashcards: [{ id: 'pf1-c-tvm-vfi', name: 'Časovna vrednost, obveznice, delnice', cards: p3.kartice.map(([front, back]) => ({ front, back })) }],
+    },
     { id: 'izpit', name: 'Izpit', type: 'izpit' },
   ],
 };

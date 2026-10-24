@@ -237,6 +237,8 @@ const kartice = [
   ['Diskretne porazdelitve', 'Bernoullijeva (1 poskus, p in q), binomska (z vračanjem), hipergeometrična (brez vračanja), Poissonova (dogodki na enoto, λ).'],
 ];
 
+const p03 = require('./stana-p03');
+
 module.exports = {
   id: 'stana',
   parts: [
@@ -250,8 +252,11 @@ module.exports = {
         { id: 'stana-stari', name: 'Iz starih kolokvijev (tudi vzorčenje)', questions: stariKolokviji },
         { id: 'stana-rac-normalna', name: 'Računske naloge: normalna porazdelitev', calc: true, questions: racNormalna },
         { id: 'stana-rac-opisna', name: 'Računske naloge: opisna statistika', calc: true, questions: racOpisna },
+        { id: 'stana-vzorcenje', name: 'Vzorčenje: načini izbire, cenilke, SE (P03)', questions: [...p03.vzorcenje, ...p03.pravilnoNe] },
+        { id: 'stana-rac-vzorcenje', name: 'Računske naloge: vzorčenje in V03', calc: true, questions: p03.racVzorcenje },
       ],
-      flashcards: [{ id: 'stana-c-k1', name: 'Pojmi in formule (1. kolokvij)', cards: kartice.map(([front, back]) => ({ front, back })) }],
+      flashcards: [{ id: 'stana-c-k1', name: 'Pojmi in formule (1. kolokvij)', cards: kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'stana-c-p03', name: 'Vzorčenje (P03)', cards: p03.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij', decks: [] },
     { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [] },
