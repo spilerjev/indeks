@@ -725,6 +725,20 @@ const GLOSSARY = [
   { t: "Dejavniki zmagovanja", s: "zmagovanj", subj: "mpsp", d: "Lastnosti, po katerih podjetje pridobi stranke pred konkurenti. Kvalificiranja: morajo biti le dovolj dobri." },
   { t: "KNN", s: "knn", b: 1, subj: "mpsp", d: "Kumulativna napaka v napovedi (vsota napak, lahko + ali −); kaže smer odklanjanja." },
   { t: "Prispevek za kritje", s: "prispevek za kritje", subj: "mpsp", d: "Prihodki − variabilni stroški; pokriva stalne stroške in dobiček." },
+  { t: "Beta (β)", s: "beta", b: 1, subj: "pf1", d: "Občutljivost donosa naložbe na donos tržnega portfelja: β = Cov(r_i, r_m)/Var(r_m) = ρ · σ_i/σ_m. Tržni portfelj β = 1, netvegana naložba β = 0; beta portfelja je tehtano povprečje bet." },
+  { t: "CAPM", s: "capm", b: 1, subj: "pf1", d: "Model vrednotenja kapitalskih naložb: zahtevana donosnost = r_f + β · (E(r_m) − r_f). Plača samo sistematično tveganje." },
+  { t: "SML", s: "sml", b: 1, subj: "pf1", d: "Premica trga vrednostnih papirjev: zahtevana donosnost v odvisnosti od bete. Naložbe nad SML so podcenjene, pod njo precenjene." },
+  { t: "Tržna premija za tveganje", s: "tržna premija", subj: "pf1", d: "E(r_m) − r_f: dodatna donosnost, ki jo trg zahteva za tveganje tržnega portfelja." },
+  { t: "Sistematično tveganje", s: "sistematičn", subj: "pf1", d: "Tržno tveganje, ki zadeva vse naložbe in ga z razpršitvijo ni mogoče odpraviti; meri ga beta." },
+  { t: "Nesistematično tveganje", s: "nesistematičn", subj: "pf1", d: "Specifično tveganje posameznega podjetja; z diverzifikacijo ga odpravimo, zato ga trg ne nagradi." },
+  { t: "Diverzifikacija", s: "diverzifikacij", subj: "pf1", d: "Razpršitev naložb po več vrednostnih papirjih; zmanjša nesistematično tveganje. Večja pri nižji ali negativni korelaciji." },
+  { t: "Razpršitev (diverzifikacija)", s: "razpršitev", subj: "pf1", d: "Razpršitev naložb po več vrednostnih papirjih; zmanjša nesistematično tveganje." },
+  { t: "Korelacija (ρ)", s: "korelacij", subj: "pf1", d: "Mera sočasnega gibanja dveh donosnosti (−1 do +1). Cov = ρ · σ₁ · σ₂. Nižja korelacija → večja diverzifikacija." },
+  { t: "Kovarianca", s: "kovarianc", subj: "pf1", d: "Mera skupnega gibanja dveh donosnosti: Cov(A, B) = Σ p (r_A − E_A)(r_B − E_B)." },
+  { t: "Koeficient variacije", s: "koeficient variacij", subj: "pf1", d: "σ/E: tveganje na enoto pričakovane donosnosti. Pri E = 0 ni definiran." },
+  { t: "Flotacijski stroški", s: "flotacij", subj: "pf1", d: "Stroški izdaje novih delnic (F). Strošek novih delnic: D₁/(P₀(1 − F)) + g - dražji od zadržanega dobička." },
+  { t: "Mejni strošek kapitala (MCC)", s: "mejni strošek kapitala", subj: "pf1", d: "Strošek zadnjega evra novega kapitala; narašča po stopnjah: zadržan dobiček, nove delnice, dražji dolg." },
+  { t: "Alfa", s: "alfa", b: 1, subj: "pf1", d: "Razlika med pričakovano in zahtevano (CAPM) donosnostjo. Alfa > 0: podcenjena delnica; alfa < 0: precenjena." },
 ];
 
 function mixDecksOf(p) {
