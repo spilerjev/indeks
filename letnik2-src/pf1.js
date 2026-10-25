@@ -155,6 +155,7 @@ const kartice = [
 ];
 
 const p3 = require('./pf1-p3');
+const v36 = require('./pf1-vaje36');
 
 module.exports = {
   id: 'pf1',
@@ -189,8 +190,15 @@ module.exports = {
         { id: 'pf1-rac-obveznice', name: 'Računske: obveznice', calc: true, questions: p3.obvRac },
         { id: 'pf1-delnice', name: 'Vrednotenje delnic (P05)', questions: p3.delnice },
         { id: 'pf1-rac-delnice', name: 'Računske: delnice', calc: true, questions: p3.delRac },
+        { id: 'pf1-v3', name: 'Vaje 3: obveznice (računske)', calc: true, questions: v36.v3 },
+        { id: 'pf1-v4', name: 'Vaje 4: delnice (računske)', calc: true, questions: v36.v4 },
+        { id: 'pf1-tveganje', name: 'Tveganje in donosnost (teorija)', questions: v36.teor5 },
+        { id: 'pf1-v5', name: 'Vaje 5: tveganje, beta, CAPM (računske)', calc: true, questions: v36.v5 },
+        { id: 'pf1-capm-teorija', name: 'CAPM in stroški kapitala (teorija)', questions: v36.teor6 },
+        { id: 'pf1-v6', name: 'Vaje 6: stroški kapitala in WACC (računske)', calc: true, questions: v36.v6 },
       ],
-      flashcards: [{ id: 'pf1-c-tvm-vfi', name: 'Časovna vrednost, obveznice, delnice', cards: p3.kartice.map(([front, back]) => ({ front, back })) }],
+      flashcards: [{ id: 'pf1-c-tvm-vfi', name: 'Časovna vrednost, obveznice, delnice', cards: p3.kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'pf1-c-tveganje', name: 'Tveganje, CAPM, stroški kapitala', cards: v36.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'izpit', name: 'Izpit', type: 'izpit' },
   ],
