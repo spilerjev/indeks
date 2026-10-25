@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect, useCallback } from "react"
 import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
-  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users
+  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 
@@ -13,6 +13,7 @@ import { createClient } from "@supabase/supabase-js";
    Kartica:   { front, back }
    ========================================================================= */
 const DATA = __DATA_JSON__;
+const FORMULAS = __FORMULAS_JSON__;
 
 const YEARS = [...new Set(DATA.map((s) => s.year))].sort();
 
@@ -379,6 +380,21 @@ const CSS = `
 .ix-root > div{position:relative;z-index:1;}
 @media (prefers-reduced-motion:no-preference){.ix-root::before{animation:ixDrift 90s linear infinite;}}
 @keyframes ixDrift{to{background-position:260px 260px;}}
+/* plošča Formule */
+.ix-root .ix-formbtn{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:7px;padding:10px 15px;border-radius:999px;border:1px solid var(--line);background:var(--ink);color:var(--paper);font-weight:700;font-size:13.5px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.22);}
+.ix-root .ix-formpanel{position:fixed;right:14px;top:14px;bottom:14px;width:min(380px,calc(100vw - 28px));z-index:60;display:flex;flex-direction:column;background:var(--paper2);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.28);overflow:hidden;}
+.ix-formhead{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;}
+.ix-root .ix-formx{background:none;border:none;cursor:pointer;color:var(--ink2);display:grid;place-items:center;padding:4px;border-radius:8px;}
+.ix-root .ix-formx:hover{background:var(--paper);}
+.ix-formsearch{display:flex;align-items:center;gap:7px;margin:10px 12px 4px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--paper);}
+.ix-formsearch input{flex:1;border:none;outline:none;background:transparent;color:var(--ink);font-size:13.5px;min-width:0;}
+.ix-formbody{flex:1;overflow-y:auto;padding:6px 14px 18px;-webkit-overflow-scrolling:touch;}
+.ix-formgroup{margin:14px 0 6px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--terra);}
+.ix-formitem{padding:8px 0;border-bottom:1px dashed var(--line);}
+.ix-formname{font-size:12.5px;color:var(--ink2);font-weight:600;}
+.ix-formf{margin-top:2px;font-family:'Spline Sans',system-ui,sans-serif;font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.45;word-break:break-word;}
+.ix-formd{margin-top:2px;font-size:12px;color:var(--ink2);line-height:1.4;}
+@media (max-width:760px){.ix-formpanel{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:58vh;}.ix-root .ix-formbtn{right:12px;bottom:12px;}}
 .ix-serif{font-family:'Fraunces',Georgia,serif;}
 .ix-fade{opacity:0;transform:translateY(10px);animation:ixIn .5s cubic-bezier(.2,.7,.2,1) forwards;}
 @keyframes ixIn{to{opacity:1;transform:none;}}
@@ -825,6 +841,8 @@ export default function App() {
   useEffect(() => { if (route.year) store.set("indeks.year", route.year); }, [route.year]);
   const setYear = (y) => setRoute({ view: "home", year: y });
   const [gloss, setGloss] = useState(() => store.get("indeks.gloss", true) !== false);
+  const [formulas, setFormulas] = useState(() => store.get("indeks.formule", true) !== false);
+  const toggleFormulas = () => setFormulas((g) => { store.set("indeks.formule", !g); return !g; });
   const toggleGloss = () => setGloss((g) => { store.set("indeks.gloss", !g); return !g; });
   const toggleTheme = () => setDark((d) => { const nd = !d; store.set("indeks.theme", nd ? "dark" : "light"); return nd; });
   // zunanje ozadje (rob/overscroll) naj sledi temi, da ni belega roba okrog
@@ -850,7 +868,7 @@ export default function App() {
     <div className={"ix-root" + (dark ? " ix-dark" : "")} style={{ minHeight: "100vh" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
-        <Header onHome={() => setRoute({ view: "home", year })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss}
+        <Header onHome={() => setRoute({ view: "home", year })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss} formulas={formulas} onToggleFormulas={toggleFormulas}
           user={session && session.user} onSignOut={signOut} />
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
@@ -866,6 +884,7 @@ export default function App() {
             {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView route={route} go={setRoute} record={record} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
             {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
+            {formulas && route.subj && ["quiz", "cards", "notes", "part", "subject"].indexOf(route.view) >= 0 && <FormulaDock key={route.subj} subjId={route.subj} />}
           </>
         )}
       </div>
@@ -873,7 +892,57 @@ export default function App() {
   );
 }
 
-function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, user, onSignOut }) {
+/* Plavajoč gumb »Formule« + plošča z (iskalnimi) formulami predmeta. Brez ozadja, da lahko še naprej odgovarjaš. */
+function FormulaDock({ subjId }) {
+  const groups = FORMULAS[subjId];
+  const [open, setOpen] = useState(() => { try { return sessionStorage.getItem("indeks.formOpen") === "1"; } catch (e) { return false; } });
+  const [q, setQ] = useState("");
+  const setO = (v) => { setOpen(v); try { sessionStorage.setItem("indeks.formOpen", v ? "1" : "0"); } catch (e) {} };
+  if (!groups || !groups.length) return null;
+  const ql = q.trim().toLowerCase();
+  const shown = groups.map((g) => ({ g: g.g, items: g.items.filter((it) => !ql || (it.n + " " + it.f + " " + (it.d || "")).toLowerCase().indexOf(ql) >= 0) })).filter((g) => g.items.length);
+  const total = groups.reduce((n, g) => n + g.items.length, 0);
+  return (
+    <>
+      {!open && (
+        <button onClick={() => setO(true)} className="ix-formbtn" aria-label="Odpri formule">
+          <Sigma size={16} /> Formule
+        </button>
+      )}
+      {open && (
+        <aside className="ix-formpanel" role="complementary" aria-label="Formule">
+          <div className="ix-formhead">
+            <Sigma size={16} color="var(--teal)" />
+            <b style={{ flex: 1 }}>Formule · {total}</b>
+            <button onClick={() => setO(false)} aria-label="Zapri formule" className="ix-formx"><X size={16} /></button>
+          </div>
+          <div className="ix-formsearch">
+            <Search size={14} color="var(--ink2)" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Išči (npr. ROE, kv, beta, carina)…" />
+            {q && <button onClick={() => setQ("")} aria-label="Počisti iskanje" className="ix-formx"><X size={13} /></button>}
+          </div>
+          <div className="ix-formbody">
+            {shown.length === 0 && <div className="ix-chip" style={{ padding: 8 }}>Ni zadetkov.</div>}
+            {shown.map((g) => (
+              <section key={g.g}>
+                <div className="ix-formgroup">{g.g}</div>
+                {g.items.map((it) => (
+                  <div key={it.n} className="ix-formitem">
+                    <div className="ix-formname">{it.n}</div>
+                    <div className="ix-formf">{it.f}</div>
+                    {it.d && <div className="ix-formd">{it.d}</div>}
+                  </div>
+                ))}
+              </section>
+            ))}
+          </div>
+        </aside>
+      )}
+    </>
+  );
+}
+
+function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formulas, onToggleFormulas, user, onSignOut }) {
   return (
     <header style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: home ? 26 : 18 }}>
       <button onClick={onHome} className="ix-serif"
@@ -892,6 +961,12 @@ function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, user,
         <button onClick={onToggleGloss} aria-label="Slovarček" aria-pressed={gloss} title={gloss ? "Slovarček je vklopljen (klik za izklop)" : "Slovarček je izklopljen (klik za vklop)"}
           style={{ background: gloss ? "var(--ink)" : "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: gloss ? "var(--paper)" : "var(--ink2)" }}>
           <BookOpen size={17} />
+        </button>
+      )}
+      {user && (
+        <button onClick={onToggleFormulas} aria-label="Formule" aria-pressed={formulas} title={formulas ? "Formule so vklopljene (klik za izklop)" : "Formule so izklopljene (klik za vklop)"}
+          style={{ background: formulas ? "var(--ink)" : "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: formulas ? "var(--paper)" : "var(--ink2)" }}>
+          <Sigma size={17} />
         </button>
       )}
       <button onClick={onToggleTheme} aria-label="Preklopi temo"
