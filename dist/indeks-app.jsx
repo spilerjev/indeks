@@ -177,7 +177,7 @@ function mapAuthErr(error) {
   return error.message || "Napaka. Poskusi znova.";
 }
 
-function Login() {
+function Login({ year, onBack }) {
   const [mode, setMode] = useState("in"); // "in" = prijava, "up" = registracija
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -213,7 +213,14 @@ function Login() {
   const up = mode === "up";
   return (
     <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
+      {onBack && (
+        <button onClick={onBack} className="ix-chip"
+          style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14 }}>
+          <ChevronLeft size={15} /> Uvodna stran
+        </button>
+      )}
       <div className="ix-card" style={{ padding: 24 }}>
+        {year && <div className="ix-chip" style={{ color: "var(--terra)", marginBottom: 8 }}>{year}. letnik</div>}
         <form onSubmit={submit}>
           <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>{up ? "Registracija" : "Prijava"}</div>
           <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
@@ -985,6 +992,7 @@ function aggregate(stats, year) {
 /* ---- Usmerjanje prek #hash: gumb Nazaj/Naprej v brskalniku deluje med stranmi ---- */
 const storedYear = () => { const y = store.get("indeks.year", YEARS[YEARS.length - 1]); return YEARS.includes(y) ? y : YEARS[YEARS.length - 1]; };
 function routeToHash(r, fallbackYear) {
+  if (r.view === "welcome") return "#/";
   const yr = (r.year || fallbackYear || storedYear());
   if (r.view === "home") return "#/letnik-" + yr;
   if (r.view === "allstats") return "#/letnik-" + yr + "/statistika";
@@ -1001,7 +1009,7 @@ function routeToHash(r, fallbackYear) {
 function hashToRoute(hash) {
   const home = { view: "home", year: storedYear() };
   const seg = (hash || "").replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent);
-  if (!seg.length) return home;
+  if (!seg.length) return { view: "welcome" };
   const ym = /^letnik-(\d+)$/.exec(seg[0]);
   if (ym) { const y = +ym[1]; if (!YEARS.includes(y)) return home; return seg[1] === "statistika" ? { view: "allstats", year: y } : { view: "home", year: y }; }
   const sem = DATA.find((x) => x.id === seg[0]);
@@ -1068,12 +1076,14 @@ export default function App() {
     <div className={"ix-root" + (dark ? " ix-dark" : "")} style={{ minHeight: "100vh" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
-        <Header onHome={() => setRoute({ view: "home", year })} home={route.view === "home"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss} formulas={formulas} onToggleFormulas={toggleFormulas}
+        <Header onHome={() => setRoute({ view: "welcome" })} home={route.view === "home" || route.view === "welcome"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss} formulas={formulas} onToggleFormulas={toggleFormulas}
           user={session && session.user} onSignOut={signOut} />
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
+        ) : route.view === "welcome" ? (
+          <Welcome user={session && session.user} go={setRoute} />
         ) : !session ? (
-          <Login />
+          <Login year={route.view === "home" ? route.year : null} onBack={() => setRoute({ view: "welcome" })} />
         ) : (
           <>
             {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} />}
@@ -1087,6 +1097,7 @@ export default function App() {
             {formulas && route.subj && ["quiz", "cards", "notes", "part", "subject"].indexOf(route.view) >= 0 && <FormulaDock key={route.subj} subjId={route.subj} />}
           </>
         )}
+        <Footer />
       </div>
     </div>
   );
@@ -1139,6 +1150,83 @@ function FormulaDock({ subjId }) {
         </aside>
       )}
     </>
+  );
+}
+
+/* ---- UVODNA STRAN: pozdrav, izbira letnika, viri, avtorske pravice (vidna tudi brez prijave) ---- */
+const YEAR_INFO = {
+  1: { title: "1. letnik", sub: "UPEŠ · 2025/26", sources: "predavanja in vaje 1. letnika UPEŠ (2025/26), lastni zapiski in rešene naloge z vaj" },
+  2: { title: "2. letnik", sub: "UPEŠ · 2026/27 · sproti dopolnjeno", sources: "predavanja in vaje 2. letnika UPEŠ (2026/27), sprotni zapiski s predavanj ter stari kolokviji in izpiti starejših generacij" },
+};
+const yearTotals = (y) => {
+  const subs = DATA.filter((s) => s.year === y).flatMap((s) => s.subjects);
+  return { subjects: subs.length, q: subs.reduce((n, s) => n + subjQ(s), 0), cards: subs.reduce((n, s) => n + subjCards(s), 0) };
+};
+
+function Welcome({ user, go }) {
+  const last = store.get("indeks.year", null);
+  const name = user && user.email ? user.email.split("@")[0].split(/[._-]/)[0] : "";
+  const hello = name ? "Živjo, " + name.charAt(0).toUpperCase() + name.slice(1) + "!" : "Pozdravljen!";
+  return (
+    <div>
+      <div className="ix-fade" style={{ marginBottom: 28 }}>
+        <div className="ix-chip" style={{ color: "var(--terra)", marginBottom: 10 }}>{hello}</div>
+        <h1 className="ix-serif" style={{ fontSize: 40, fontWeight: 900, lineHeight: 1.04, letterSpacing: "-.025em", margin: 0 }}>
+          Študijski pripomoček<br /><span style={{ color: "var(--terra)" }}>za študente EF UL.</span>
+        </h1>
+        <p style={{ color: "var(--ink2)", marginTop: 12, fontSize: 15, maxWidth: 560, lineHeight: 1.55 }}>
+          Zapiski, kvizi z razlagami, računske naloge in kartice, razdeljeni po predmetih in kolokvijih.
+          Izberi letnik, za katerega se učiš.
+        </p>
+      </div>
+
+      <div className="ix-fade" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 12, marginBottom: 34, animationDelay: "80ms" }}>
+        {YEARS.map((y) => {
+          const t = yearTotals(y), info = YEAR_INFO[y] || { title: y + ". letnik", sub: "" };
+          return (
+            <button key={y} className="ix-card" onClick={() => go({ view: "home", year: y })}
+              style={{ textAlign: "left", padding: 20, cursor: "pointer", display: "flex", flexDirection: "column", gap: 12, borderLeft: y === last ? "3px solid var(--terra)" : undefined }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+                <span className="ix-serif" style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-.02em" }}>{info.title}</span>
+                {y === last ? <span className="ix-chip" style={{ color: "var(--terra)" }}>zadnjič</span> : <ChevronRight size={18} color="var(--ink2)" />}
+              </div>
+              <span className="ix-chip">{info.sub}</span>
+              <div style={{ fontSize: 14, color: "var(--ink2)", lineHeight: 1.5 }}>
+                {t.subjects} predmetov · <b style={{ color: "var(--terra)" }}>{t.q} vprašanj</b>{t.cards > 0 && <> · {t.cards} kartic</>}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <section className="ix-fade ix-card" style={{ padding: "18px 20px", marginBottom: 14, animationDelay: "160ms" }}>
+        <div className="ix-sec" style={{ color: "var(--teal)" }}><FileText size={14} /> Od kod je snov</div>
+        <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, lineHeight: 1.6, color: "var(--ink2)" }}>
+          {YEARS.map((y) => YEAR_INFO[y] && <li key={y}><b style={{ color: "var(--ink)" }}>{y}. letnik:</b> {YEAR_INFO[y].sources}.</li>)}
+          <li>Vprašanja, razlage in povzetke je pripravil avtor s pomočjo umetne inteligence. Lahko se zmotijo - pri dvomu preveri v gradivu predavateljev.</li>
+          <li>indeks. je neuraden študentski pripomoček in ni povezan z Ekonomsko fakulteto UL. Gradiva predavateljev ostajajo last njihovih avtorjev.</li>
+        </ul>
+      </section>
+
+      <section className="ix-fade ix-card" style={{ padding: "18px 20px", animationDelay: "220ms" }}>
+        <div className="ix-sec" style={{ color: "var(--terra)" }}><GraduationCap size={14} /> Kdo stoji za tem</div>
+        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: "var(--ink2)" }}>
+          indeks. je naredil <b style={{ color: "var(--ink)" }}>Leon Špiler</b>, študent UPEŠ na EF UL (smer Bančni in finančni management),
+          najprej za lastno učenje. Napako ali predlog sporoči na{" "}
+          <a href="mailto:leon.spiler@gmail.com" style={{ color: "var(--terra)", fontWeight: 700 }}>leon.spiler@gmail.com</a> ali na Instagramu{" "}
+          <a href="https://instagram.com/spilerjev" target="_blank" rel="noopener noreferrer" style={{ color: "var(--terra)", fontWeight: 700 }}>@spilerjev</a>.
+        </p>
+      </section>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="ix-chip" style={{ marginTop: 48, paddingTop: 16, borderTop: "1px solid var(--line)", display: "flex", flexWrap: "wrap", gap: "6px 14px", justifyContent: "space-between", textTransform: "none", letterSpacing: ".02em", fontWeight: 500 }}>
+      <span>© {new Date().getFullYear()} indeks. · Leon Špiler. Vse pravice pridržane.</span>
+      <span>Neuraden pripomoček, ni povezan z EF UL.</span>
+    </footer>
   );
 }
 
