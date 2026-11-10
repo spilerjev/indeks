@@ -24,6 +24,7 @@ const upsert = (list, items) => {
 for (const mod of MODULES) {
   const subj = data.filter((s) => s.year === 1).flatMap((s) => s.subjects).find((s) => s.id === mod.id);
   if (!subj) throw new Error('Ni predmeta 1. letnika: ' + mod.id);
+  if (mod.removeParts) subj.parts = subj.parts.filter((p) => !mod.removeParts.includes(p.id) || p.decks.length);
   for (const mp of mod.parts) {
     let part = subj.parts.find((p) => p.id === mp.id);
     if (!part) { part = { id: mp.id, decks: [] }; subj.parts.push(part); }
