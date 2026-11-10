@@ -1155,7 +1155,7 @@ function FormulaDock({ subjId }) {
 
 /* ---- UVODNA STRAN: pozdrav, izbira letnika, viri, avtorske pravice (vidna tudi brez prijave) ---- */
 const YEAR_INFO = {
-  1: { title: "1. letnik", sub: "UPEŠ · 2025/26", sources: "predavanja in vaje 1. letnika UPEŠ (2025/26), lastni zapiski in rešene naloge z vaj" },
+  1: { title: "1. letnik", sub: "UPEŠ · 2025/26", sources: "predavanja in vaje 1. letnika UPEŠ (2025/26), sprotni zapiski s predavanj ter stari kolokviji in izpiti starejših generacij" },
   2: { title: "2. letnik", sub: "UPEŠ · 2026/27 · sproti dopolnjeno", sources: "predavanja in vaje 2. letnika UPEŠ (2026/27), sprotni zapiski s predavanj ter stari kolokviji in izpiti starejših generacij" },
 };
 const yearTotals = (y) => {

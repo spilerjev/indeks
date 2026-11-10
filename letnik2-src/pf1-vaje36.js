@@ -182,7 +182,7 @@ const v5 = [
     'rf = 6 %, rm = 11 %, premija ostane 5 %: 6 + 1,2 · 5 = 12 %. Inflacija prestavi celotno SML navzgor za 2 o. t.'),
   mk('Isto kot na začetku (rf 4 %, rm 9 %), a se tržna premija za tveganje poveča za 3 o. t. (rf ostane). Zahtevana donosnost X?',
     pct(4 + 1.2 * 8, 1), [pct(4 + 3 + 1.2 * 5, 1), pct(10, 1), pct(4 + 1.2 * 3, 1)], 3,
-    'Premija 8 %: 4 + 1,2 · 8 = 13,6 %. Premija se pomnoži z betо, zato je učinek 1,2 · 3 = 3,6 o. t.'),
+    'Premija 8 %: 4 + 1,2 · 8 = 13,6 %. Premija se pomnoži z beto, zato je učinek 1,2 · 3 = 3,6 o. t.'),
   mk('Obe spremembi hkrati (inflacija +2 o. t., tržna premija +3 o. t.). Kolikšna je zahtevana donosnost X in za koliko se je spremenila?',
     `${pct(15.6, 1)}; +5,6 o. t.`, [`${pct(15, 1)}; +5,0 o. t.`, `${pct(15.6, 1)}; +3,6 o. t.`, `${pct(14.4, 1)}; +4,4 o. t.`], 0,
     'rf = 6 %, premija = 8 %: 6 + 1,2 · 8 = 15,6 %. Učinek: 2 (rf) + 1,2 · 3 (premija) = 5,6 o. t.'),
@@ -307,7 +307,7 @@ const teor5 = [
     'To je dodatna donosnost, ki jo vlagatelji zahtevajo za prevzem tveganja tržnega portfelja v primerjavi z netvegano naložbo.'),
   Q('Kaj prikazuje premica trga vrednostnih papirjev (SML)?', [
     'Razmerje med celotnim tveganjem (σ) in pričakovano donosnostjo portfelja',
-    'Razmerje med betо in zahtevano donosnostjo: r = r_f + β (r_m − r_f)',
+    'Razmerje med beto in zahtevano donosnostjo: r = r_f + β (r_m − r_f)',
     'Razmerje med ceno delnice in dividendo',
     'Razmerje med dolgom in lastniškim kapitalom podjetja'], 1,
     'Naložbe nad SML (E > zahtevana) so podcenjene (kupi), pod SML precenjene (prodaj).'),

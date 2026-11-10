@@ -183,6 +183,7 @@ const kartice = [
 
 const v1 = require('./eeu-v1');
 const v2 = require('./eeu-v2');
+const v3 = require('./eeu-v3');
 
 module.exports = {
   id: 'eeu',
@@ -207,10 +208,16 @@ module.exports = {
         { id: 'eeu-integr2', name: 'Stopnje integracije in sporazumi', questions: v2.integr },
         { id: 'eeu-pref', name: 'Preferencialna liberalizacija (Viner)', questions: v2.pref },
         { id: 'eeu-rac-carine', name: 'Računske: prosta trgovina, carine, FTA', calc: true, questions: racCarine },
+        { id: 'eeu-rac-v3', name: 'Računske: Vaje 3 (presežki, svetovna cena)', calc: true, questions: v3.racVaje3 },
+        { id: 'eeu-rac-v4', name: 'Računske: Vaje 4 (carine, CU)', calc: true, questions: v3.racVaje4 },
+        { id: 'eeu-rac-v5', name: 'Računske: Vaje 5 (ustvarjanje in preusmerjanje)', calc: true, questions: v3.racVaje5 },
+        { id: 'eeu-pref2', name: 'Partnerica, tretje države in empirija (P05)', questions: v3.teorija },
+        { id: 'eeu-wto', name: 'Ekonomske integracije in WTO (P06)', questions: v3.wto },
       ],
       flashcards: [{ id: 'eeu-c-zgodovina', name: 'Letnice in pojmi', cards: kartice.map(([front, back]) => ({ front, back })) },
         { id: 'eeu-c-vaje1', name: '1. vaje: EGS, EFTA, pogodbe', cards: v1.kartice.map(([front, back]) => ({ front, back })) },
-        { id: 'eeu-c-vaje2', name: 'Mednarodna menjava, carine, integracije', cards: v2.kartice.map(([front, back]) => ({ front, back })) }],
+        { id: 'eeu-c-vaje2', name: 'Mednarodna menjava, carine, integracije', cards: v2.kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'eeu-c-v3', name: 'Računske formule, WTO', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'izpit', name: 'Delni / celotni izpit', type: 'izpit', decks: [] },
   ],

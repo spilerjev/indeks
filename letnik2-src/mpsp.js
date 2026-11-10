@@ -71,6 +71,7 @@ const kartice = [
 ];
 
 const v2 = require('./mpsp-v2');
+const v3 = require('./mpsp-v3');
 
 module.exports = {
   id: 'mpsp',
@@ -86,9 +87,12 @@ module.exports = {
         { id: 'mpsp-rac', name: 'Računske: Littlov zakon in prispevek za kritje', calc: true, questions: rac },
         { id: 'mpsp-v2-teorija', name: 'Vaje 2: zmogljivost, ozko grlo, TPČ', questions: v2.teorija },
         { id: 'mpsp-v2-rac', name: 'Računske: Vaje 2 (ortodont, delavci, urgenca)', calc: true, questions: v2.rac },
+        { id: 'mpsp-v3-teorija', name: 'Vaje 3-4: razmestitev in napovedovanje', questions: v3.teorija },
+        { id: 'mpsp-v3-rac', name: 'Računske: linija, CRAFT, napovedi', calc: true, questions: v3.rac },
       ],
       flashcards: [{ id: 'mpsp-c-1', name: 'Pojmi z vaj', cards: kartice.map(([front, back]) => ({ front, back })) },
-        { id: 'mpsp-c-2', name: 'Analiza procesa (Vaje 2)', cards: v2.kartice.map(([front, back]) => ({ front, back })) }],
+        { id: 'mpsp-c-2', name: 'Analiza procesa (Vaje 2)', cards: v2.kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'mpsp-c-3', name: 'Razmestitev in napovedovanje', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij' },
     { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Stara izpitna vprašanja', questions: izpit }] },

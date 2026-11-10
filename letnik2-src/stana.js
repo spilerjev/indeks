@@ -238,6 +238,18 @@ const kartice = [
 ];
 
 const p03 = require('./stana-p03');
+const p04 = require('./stana-p04');
+const kartP04 = [
+  ['Dvostranski interval', 'g(v) ± z_α/2 · SE(g) ; α - odklon zaupanja D = z_α/2 · SE; α = 5 % → 1,96, α = 1 % → 2,58.'],
+  ['Enostranski interval', 'Spodnja meja g − z_α·SE ("najmanj") ali zgornja g + z_α·SE ("največ"); α = 5 % → 1,645, α = 1 % → 2,33.'],
+  ['se(ȳ) in se(p)', 'se(ȳ) = s/√n · √(1 − f); se(p) = √(p(1 − p)/n) · √(1 − f); f = n/N.'],
+  ['Velikost vzorca - povprečje', 'nₛ = (z·σ/D)² (absolutno) ali (z·KV/D°)² (relativno); n = nₛ/(1 + nₛ/N), navzgor.'],
+  ['Velikost vzorca - delež', 'nₛ = z²·Π(1 − Π)/D² (absolutno) ali (z/D°)²·(1 − Π)/Π (relativno).'],
+  ['Stratificirano vs. v skupinicah', 'Stratumi: homogeni znotraj → manjša se. Skupinice: raznolike znotraj, podobne med seboj; opazujemo vse enote izbranih skupinic.'],
+  ['H₀ in H₁', 'Enačaj vedno v H₀; trditev, ki jo želimo dokazati, v H₁. H₀ ne sprejmemo, le ne zavrnemo.'],
+  ['Napaki 1. in 2. vrste', '1. vrsta: zavrnemo pravo H₀ (α). 2. vrsta: ne zavrnemo napačne H₀ (β). Moč = 1 − β.'],
+  ['p-vrednost', 'Najmanjša α, pri kateri še zavrnemo H₀; p ≤ α → zavrnemo. Enostranski p = dvostranski p / 2.'],
+];
 
 module.exports = {
   id: 'stana',
@@ -254,11 +266,19 @@ module.exports = {
         { id: 'stana-rac-opisna', name: 'Računske naloge: opisna statistika', calc: true, questions: racOpisna },
         { id: 'stana-vzorcenje', name: 'Vzorčenje: načini izbire, cenilke, SE (P03)', questions: [...p03.vzorcenje, ...p03.pravilnoNe] },
         { id: 'stana-rac-vzorcenje', name: 'Računske naloge: vzorčenje in V03', calc: true, questions: p03.racVzorcenje },
+        { id: 'stana-intervalna', name: 'Intervalna ocena (P04, V04)', questions: p04.intervalna },
+        { id: 'stana-rac-intervalna', name: 'Računske naloge: intervalna ocena', calc: true, questions: p04.racIntervalna },
+        { id: 'stana-vzorcenja', name: 'Velikost vzorca in vzorčenja z omejitvami (P05, V05)', questions: p04.vzorcenja },
+        { id: 'stana-rac-velikost', name: 'Računske naloge: velikost vzorca, stratificirano', calc: true, questions: p04.racVzorcenja },
       ],
       flashcards: [{ id: 'stana-c-k1', name: 'Pojmi in formule (1. kolokvij)', cards: kartice.map(([front, back]) => ({ front, back })) },
-        { id: 'stana-c-p03', name: 'Vzorčenje (P03)', cards: p03.kartice.map(([front, back]) => ({ front, back })) }],
+        { id: 'stana-c-p03', name: 'Vzorčenje (P03)', cards: p03.kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'stana-c-p04', name: 'Intervali, velikost vzorca, domneve', cards: kartP04.map(([front, back]) => ({ front, back })) }],
     },
-    { id: 'k2', name: '2. kolokvij', type: 'kolokvij', decks: [] },
+    { id: 'k2', name: '2. kolokvij', type: 'kolokvij', decks: [
+      { id: 'stana-domneve', name: 'Osnove preizkušanja domnev (P06, V06)', questions: p04.domneve },
+      { id: 'stana-rac-domneve', name: 'Računske naloge: preizkus domnev (Z)', calc: true, questions: p04.racDomneve },
+    ] },
     { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [] },
   ],
 };

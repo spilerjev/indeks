@@ -231,6 +231,7 @@ const kartice = [
 ];
 
 const p4 = require('./trz-p4');
+const p5 = require('./trz-p5');
 
 module.exports = {
   id: 'trz',
@@ -251,9 +252,12 @@ module.exports = {
         { id: 'trz-povprasevanje', name: 'Merjenje povpraševanja in tržni delež', questions: povprasevanje },
         { id: 'trz-glass', name: '1. vaja: Google Glass (kviz 2)', questions: p4.glass },
         { id: 'trz-vedenje', name: 'Nakupno vedenje porabnikov (4. predavanje)', questions: p4.vedenje },
+        { id: 'trz-ciljno', name: 'Ciljno trženje: STP (5. predavanje)', questions: p5.ciljno },
+        { id: 'trz-vaje-argeta-duo', name: 'Vaje: Argeta in Duolingo', questions: p5.vaje },
       ],
       flashcards: [{ id: 'trz-c-1', name: 'Ključni pojmi (predavanja 1-3)', cards: kartice.map(([front, back]) => ({ front, back })) },
-        { id: 'trz-c-2', name: 'Google Glass in nakupno vedenje', cards: p4.kartice.map(([front, back]) => ({ front, back })) }],
+        { id: 'trz-c-2', name: 'Google Glass in nakupno vedenje', cards: p4.kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'trz-c-3', name: 'Ciljno trženje (STP)', cards: p5.kartice.map(([front, back]) => ({ front, back })) }],
     },
     {
       id: 'izpit', name: 'Izpit', type: 'izpit',
