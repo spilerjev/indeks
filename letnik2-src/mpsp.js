@@ -95,6 +95,6 @@ module.exports = {
         { id: 'mpsp-c-3', name: 'Razmestitev in napovedovanje', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij' },
-    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Stara izpitna vprašanja', questions: izpit }, { id: 'mpsp-izpit2', name: 'Stari izpit: zaloge, MRP, planiranje, kakovost', questions: require('./mpsp-stari') }] },
+    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Stara izpitna vprašanja', questions: izpit }, { id: 'mpsp-izpit3', name: 'Vprašanja iz preteklih izpitov (preverjene rešitve)', questions: require('./mpsp-stari2') }, { id: 'mpsp-izpit2', name: 'Stari izpit: zaloge, MRP, planiranje, kakovost', questions: require('./mpsp-stari') }] },
   ],
 };

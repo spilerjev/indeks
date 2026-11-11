@@ -10,16 +10,10 @@ const teorija = [
     'Podjetje ima likvidnostne težave, ker dobaviteljem plačuje prepozno', 'Podjetje mora dneve vezave obveznosti skrajšati na raven dni vezave zalog'], 0,
     'Denarni cikel = DVZ + DVT − DVO je negativen: dobavitelji financirajo zaloge in terjatve dlje, kot sta vezani, zato dodatni viri niso potrebni.'),
   Q('(Stari izpiti) Kaj drži za določila bank pri najemanju kratkoročnih posojil?', [
-    'Pri anticipativnem obrestovanju ima podjetje na voljo manj denarja, kot je znesek, od katerega se obračunajo obresti',
-    'Zahteva po minimalnem stanju na transakcijskem računu zniža strošek posojila za podjetje',
-    'Kreditna linija je obveznost podjetja, da posojilo v celoti črpa v roku enega leta',
-    'Pri dekurzivnem obrestovanju mora podjetje najeti večje posojilo od zneska, ki ga potrebuje'], 0,
+    'Pri anticipativnem obrestovanju ima podjetje na voljo manj denarja, kot je znesek, od katerega tečejo obresti', 'Zahteva po minimalnem stanju na transakcijskem računu (kompenzacijsko stanje) zniža strošek posojila', 'Kreditna linija je obveznost podjetja, da odobreno posojilo v celoti črpa najpozneje v roku enega leta', 'Pri dekurzivnem obrestovanju mora podjetje najeti večje posojilo od zneska, ki ga za transakcijo potrebuje'], 0,
     'Anticipativno = obresti odštete vnaprej → razpoložljivega manj, zato je treba najeti več. Kompenzacijsko stanje strošek poveča; kreditna linija je možnost črpanja, ne obveznost.'),
   Q('(Stari izpiti) Krivulji NSV dveh medsebojno izključujočih projektov, ki se razlikujeta po obsegu, se sekata. Kaj iz tega sledi?', [
-    'Po metodi IRR lahko izberemo napačen projekt, odvisno od stroška kapitala glede na stopnjo križanja',
-    'Oba projekta imata enako notranjo stopnjo donosa, zato odločitev ni mogoča',
-    'Metoda NSV je v tem primeru nezanesljiva, zato uporabimo dobo povračila',
-    'Projekt z višjo IRR ima pri vsakem strošku kapitala tudi višjo NSV'], 0,
+    'Po metodi IRR lahko izberemo napačen projekt, odvisno od stroška kapitala glede na stopnjo križanja', 'Oba projekta imata pri stopnji križanja enako IRR, zato odločitev po nobeni metodi ni mogoča', 'Metoda NSV je pri različnem obsegu projektov nezanesljiva, zato odločimo po dobi povračila', 'Projekt z višjo IRR ima pri vsakem strošku kapitala tudi višjo NSV, zato križanje ni pomembno'], 0,
     'Pod stopnjo križanja ima višjo NSV projekt z NIŽJO IRR. Pri izključujočih projektih odloča NSV pri dejanskem strošku kapitala.'),
   Q('(Stari izpiti) Katera trditev o investicijskih kriterijih drži?', [
     'IRR nas pri dveh izključujočih projektih zavede, kadar se krivulji NSV križata',
@@ -28,10 +22,7 @@ const teorija = [
     'Doba povračila upošteva vse denarne tokove, le časovne vrednosti ne'], 0,
     'Doba povračila ne upošteva tokov PO trenutku povračila; MIRR odpravi predpostavko reinvestiranja po IRR in problem več rešitev.'),
   Q('(Stari izpiti) Katera trditev o vrednotenju navadnih delnic s sestavljeno (večstopenjsko) enačbo drži?', [
-    'Manjša kot je razlika med zahtevano donosnostjo in stopnjo rasti dividend, višja je vrednost delnice',
-    'Višje prihodnje dividende pomenijo nižjo sedanjo vrednost teh dividend',
-    'Stopnja rasti dividend do neskončnosti ne more biti negativna',
-    'Višja zahtevana donosnost pomeni višjo sedanjo vrednost prihodnjih dividend'], 0,
+    'Manjša kot je razlika med zahtevano donosnostjo in stopnjo rasti dividend, višja je vrednost delnice', 'Višje prihodnje dividende pomenijo nižjo sedanjo vrednost teh dividend in s tem nižjo vrednost delnice', 'Stopnja rasti dividend do neskončnosti ne more biti negativna, ker bi bila vrednost delnice negativna', 'Višja zahtevana donosnost pomeni višjo sedanjo vrednost prihodnjih dividend in višjo vrednost delnice'], 0,
     'P = D₁/(r − g): manjši imenovalec → višja vrednost. g je lahko tudi negativen; višji r vrednost znižuje.'),
   Q('(Stari izpiti) Kateri strošek kapitala uporabimo pri vrednotenju investicije (WACC)?', [
     'Tehtano povprečje stroškov DODATNEGA kapitala ob ciljni (optimalni) strukturi kapitala',
@@ -82,15 +73,10 @@ const teorija = [
     'Tržno premoženje ni optimalno razmerje med tveganjem in donosom'], 0,
     'Nesistematično tveganje se z razpršitvijo odpravi, zato zanj ni premije. r = rf + β(rm − rf).'),
   Q('(Stari izpiti) Katera trditev o nalogah finančnega direktorja NE drži?', [
-    'Zbere sredstva po najnižji ceni, nato se v nadaljnje faze investiranja ne vmešava več',
-    'Izbira vire sredstev in naložbe, ki najbolje sledijo cilju podjetja',
-    'Ugotavlja stroške, povezane z viri sredstev', 'Ocenjuje tveganje in donosnost vsake poslovne aktivnosti'], 0,
+    'Zbere sredstva po najnižji ceni, nato se v nadaljnje faze investiranja ne vmešava več', 'Izbira vire sredstev in naložbe podjetja, s katerimi najbolje sledi cilju poslovanja podjetja', 'Najde vire sredstev in ugotavlja stroške, ki so povezani s posameznimi viri financiranja', 'Ocenjuje tveganje in donosnost vsake poslovne aktivnosti ter koristi in stroške uporabe sredstev'], 0,
     'Finančna funkcija spremlja naložbe ves čas (koristi in stroški uporabe sredstev), ne le ob zbiranju virov.'),
   Q('(Stari izpiti) Zakaj so lastniki bolj naklonjeni tveganju kot upniki?', [
-    'Ob uspehu tvegane naložbe večina donosa pripade lastnikom, upniki dobijo le pogodbeni donos',
-    'Lastniki zaradi omejene odgovornosti ne nosijo nobenega tveganja',
-    'Upniki imajo višje zahtevane donosnosti kot lastniki',
-    'Lastniki lahko tvegano naložbo kadarkoli prodajo brez izgube'], 0,
+    'Ob uspehu tvegane naložbe večina donosa pripade lastnikom, upniki dobijo le pogodbeni donos', 'Lastniki zaradi omejene odgovornosti ne nosijo nobenega tveganja, zato jim je vseeno za izid naložbe', 'Upniki imajo višje zahtevane donosnosti kot lastniki, zato tveganih naložb ne želijo financirati', 'Lastniki lahko tvegano naložbo kadarkoli prodajo brez izgube, upniki pa terjatve ne morejo prodati'], 0,
     'Asimetrija izplačil: upnikov donos je omejen, izgubo ob stečaju pa nosi tudi on → v pogodbo vgradi omejitve (covenants).'),
   Q('(Stari izpiti) Strošek kapitala je 10,25 %, projekta A (IRR 14 %) in B (IRR 12,25 %) imata normalne tokove in enako tveganje, stopnja križanja je 8 %. Kaj drži?', [
     'Oba imata pozitivno NSV in A ima pri 10,25 % višjo NSV kot B',
@@ -99,8 +85,7 @@ const teorija = [
     'Pri izključujočih projektih bi A izbrali pri vsakem strošku kapitala'], 0,
     'IRR > WACC → NSV > 0 za oba. Nad stopnjo križanja (8 %) ima višjo NSV projekt z višjo IRR (A); pod 8 % bi bil boljši B.'),
   Q('(Stari izpiti) Kako pri oceni projekta upoštevamo zmanjšanje prodaje obstoječih izdelkov zaradi novega izdelka?', [
-    'Kot negativno eksternalijo - strošek (denarni odtok) projekta', 'Kot nepovratni strošek - ga ne upoštevamo',
-    'Kot oportunitetni priliv projekta', 'Ne upoštevamo ga, ker ni del novega projekta'], 0,
+    'Kot negativno eksternalijo - strošek (denarni odtok) projekta', 'Kot nepovratni strošek (sunk cost) - ga ne upoštevamo', 'Kot oportunitetni priliv projekta - ga prištejemo', 'Ne upoštevamo ga, ker se nanaša na obstoječe izdelke'], 0,
     'Štejejo dodatni (inkrementalni) tokovi podjetja kot celote. Obresti pri tokovih NE upoštevamo (so v diskontni stopnji) - sicer NSV podcenimo.'),
   Q('(Stari izpiti) Kaj je premija za ročnost pri obveznicah brez tveganja izostanka plačil?', [
     'Nadomestilo, ki ga investitorji zahtevajo za naložbo v obveznice z daljšo ročnostjo',
@@ -113,8 +98,7 @@ const teorija = [
     'Konzervativno politiko - del kratkoročnih potreb z dolgoročnimi viri', 'Brez izkaza uspeha tega ni mogoče ugotoviti'], 0,
     'Dolgoročne naložbe so natančno pokrite z dolgoročnimi viri, gibljiva sredstva pa s kratkoročnimi → ročnosti se ujemajo.'),
   Q('(Stari izpiti) Plačilni pogoji se spremenijo iz 4/10 neto 50 na 5/15 neto 70. Kaj se zagotovo NE bo zgodilo?', [
-    'Dnevi vezave terjatev se bodo skrajšali (ob nespremenjeni prodaji na kredit)', 'Prodaja se bo verjetno povečala',
-    'Povečali se bodo odpisi slabih terjatev', 'Zvišali se bodo stroški financiranja terjatev'], 0,
+    'Dnevi vezave terjatev se bodo skrajšali (ob nespremenjeni prodaji na kredit)', 'Prodaja se bo verjetno povečala (novi kupci in večji nakupi starih kupcev)', 'Povečali se bodo stroški, povezani z odpisom slabih terjatev do kupcev', 'Zvišali se bodo stroški financiranja variabilnega dela terjatev do kupcev'], 0,
     'Daljši rok (70 dni) in daljše obdobje popusta podaljšata dneve vezave terjatev.'),
   Q('(Stari izpiti) Katera trditev o NSV nadomestitvene naložbe je NAPAČNA?', [
     'Izguba ob prodaji stare opreme, pomnožena z davčno stopnjo, je na začetku projekta denarni odliv',
@@ -123,7 +107,7 @@ const teorija = [
     'Povečanje neto obratnega kapitala je na začetku odliv, na koncu projekta priliv'], 0,
     'Izguba ob prodaji zniža davčno osnovo → davčni prihranek (izguba × t) je PRILIV, ne odliv.'),
   Q('(Stari izpiti) Zahtevana donosnost delnice je 13 %, dividende stalno rastejo po 5 % letno. Kolikšen je dividendni donos?', [
-    '8 % - skupni donos minus kapitalski dobiček', '5 % - enak stopnji rasti dividend', '13 % - enak zahtevani donosnosti', '18 % - vsota obeh stopenj'], 0,
+    '8 % - skupni donos minus kapitalski dobiček', '5 % - dividendni donos je enak stopnji rasti', '13 % - dividendni donos je enak zahtevani donosnosti', '18 % - vsota zahtevane donosnosti in rasti'], 0,
     'r = D₁/P₀ + g → D₁/P₀ = 13 % − 5 % = 8 %. Pri stalni rasti je kapitalski dobiček enak g.'),
   Q('(Stari izpiti) Katera trditev o finančnih trgih drži?', [
     'Ekonomska funkcija finančnih trgov je učinkovit prenos prihrankov v najproduktivnejše namene',
@@ -135,8 +119,7 @@ const teorija = [
     'Kupci plačajo vse terjatve', 'Z denarjem plačamo obveznosti do dobaviteljev', 'Stalna sredstva prodamo za denar', 'Z denarjem kupimo zaloge'], 0,
     'Pospešeni koeficient = (gibljiva sredstva − zaloge)/kratkoročne obveznosti. Terjatve → denar pusti števec enak; nakup zalog z denarjem ga zniža.'),
   Q('(Stari izpiti) Zakaj je prednostna pravica obstoječih delničarjev do nakupa novih delnic pomembna?', [
-    'Varuje obstoječe lastnike pred razvodenitvijo lastniških deležev', 'Zagotavlja višjo dividendo na delnico',
-    'Varuje upnike pred spremembo strukture kapitala', 'Managerjem omogoča prodajo delnic pod tržno ceno'], 0,
+    'Varuje obstoječe lastnike pred razvodenitvijo lastniških deležev', 'Zagotavlja obstoječim lastnikom višjo dividendo na delnico po izdaji', 'Varuje upnike pred spremembo strukture kapitala, ki bi povečala tveganje', 'Managerjem omogoča izdajo in prodajo delnic pod trenutno tržno ceno'], 0,
     'Obstoječi delničar lahko kupi sorazmeren del nove izdaje in ohrani svoj delež glasov in dobička.'),
   Q('(Stari izpiti) Česa NE štejemo med denarne tokove investicijskega projekta?', [
     'Nepovratnih stroškov (sunk costs)', 'Sprememb neto obratnega kapitala', 'Oportunitetnih stroškov', 'Stroškov prevoza in montaže opreme'], 0,

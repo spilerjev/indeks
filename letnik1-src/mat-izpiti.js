@@ -44,19 +44,19 @@ const funkcije = [
     'x² − x − 2·ln|x| + ln|x − 2| + C', 'x² − x + 2·ln|x| − ln|x − 2| + C', 'x² − x − ln|x| + 2·ln|x − 2| + C', '2x² − 5x + ln|x² − 2x| + C'], 0,
     'Deljenje: kvocient 2x − 1, ostanek −x + 4. (−x + 4)/(x(x − 2)) = A/x + B/(x − 2): A = −2, B = 1.'),
   Q('(Izpit 2016) f(x) = (x + 1)/(3e³ˣ). Ekstrem in prevoj?', [
-    'Maksimum v (−2/3, e²/9 ≈ 0,82), prevoj v (−1/3, 2e/9 ≈ 0,60)', 'Minimum v (−2/3, e²/9), prevoj v (−1/3, 2e/9)', 'Maksimum v (−1/3, 2e/9), prevoj v (−2/3, e²/9)', 'Maksimum v (−1, 0), prevoja ni'], 0,
+    'Maksimum v (−2/3, e²/9 ≈ 0,82), prevoj v (−1/3, 2e/9 ≈ 0,60)', 'Minimum v (−2/3, e²/9 ≈ 0,82), prevoj v (−1/3, 2e/9 ≈ 0,60)', 'Maksimum v (−1/3, 2e/9 ≈ 0,60), prevoj v (−2/3, e²/9 ≈ 0,82)', 'Maksimum v (−1, 0), prevoj v (−1/3, 2e/9 ≈ 0,60), ničle ni'], 0,
     'f′ = −(3x + 2)/(3e³ˣ) = 0 → x = −2/3; f″ = (3x + 1)/e³ˣ, f″(−2/3) < 0 → maksimum; f″ = 0 → x = −1/3 prevoj. Ničla x = −1; x → ∞: f → 0; x → −∞: f → −∞.'),
   Q('(Izpit 2015) f(x) = (x² − 2x + 1)/(x + 1). Poševna asimptota in ekstrema?', [
     'y = x − 3; maksimum (−3, −8), minimum (1, 0)', 'y = x − 1; maksimum (−3, −8), minimum (1, 0)', 'y = x − 3; minimum (−3, −8), maksimum (1, 0)', 'y = x + 1; ekstremov ni'], 0,
     'Deljenje: (x² − 2x + 1):(x + 1) = x − 3, ostanek 4 → asimptota y = x − 3. f′ = (x − 1)(x + 3)/(x + 1)²: stacionarni točki −3 in 1; f(−3) = −8 (max), f(1) = 0 (min). Konveksna na (−1, ∞).'),
   Q('(Izpit 2014) f(x) = (x² − 2x + 1)·e²ˣ. Ekstrema in limiti?', [
-    'Maksimum (0, 1), minimum (1, 0); x → −∞: f → 0, x → ∞: f → ∞', 'Minimum (0, 1), maksimum (1, 0); x → −∞: f → ∞', 'Maksimum (0, 1), minimum (1, 0); x → −∞: f → −∞', 'Samo minimum (1, 0); x → ∞: f → 0'], 0,
+    'Maksimum (0, 1), minimum (1, 0); x → −∞: f → 0, x → ∞: f → ∞', 'Minimum (0, 1), maksimum (1, 0); x → −∞: f → ∞, x → ∞: f → 0', 'Maksimum (0, 1), minimum (1, 0); x → −∞: f → −∞, x → ∞: f → ∞', 'Samo minimum (1, 0), prevoja ni; x → −∞: f → 0, x → ∞: f → 0'], 0,
     'f′ = (2x² − 2x)e²ˣ = 0 → x = 0, 1; f″ = (4x² − 2)e²ˣ: f″(0) = −2 (max), f″(1) = 2e² (min). Prevoja pri x = ±1/√2. Dvojna ničla x = 1.'),
 ];
 
 const matrike = [
   Q('(Izpit 2021) Sistem 2x + y − z + 3u = −2, −6x − 4y + 2z − 4u = 12, 4x − 4z + 6u = −2. Rešitev?', [
-    'Enoparametrična: x = z − 2, y = −z − 1, u = 1, z ∈ ℝ', 'Natanko ena: x = −2, y = −1, z = 0, u = 1', 'Sistem ni rešljiv', 'Dvoparametrična: x = z − 2, u ∈ ℝ, z ∈ ℝ'], 0,
+    'Enoparametrična: x = z − 2, y = −z − 1, u = 1, z ∈ ℝ', 'Natanko ena rešitev: x = −2, y = −1, z = 0, u = 1', 'Sistem ni rešljiv, ker je rang razširjene matrike večji od ranga matrike', 'Dvoparametrična: x = z − 2, y = −z − 1, u ∈ ℝ, z ∈ ℝ'], 0,
     'Gaussova eliminacija: rang A = rang [A|b] = 3 < 4 neznanke → 1 parameter (z, ker v 3. stolpcu ni pivota).'),
   Q('(Izpit 2019) Sistem −2x − 2y + z + u = 1, x + 2y + z − u = 1, 4x + 6y + z + a·u = 1. Pri katerem a ima sistem dvoparametrično rešitev?', [
     'a = −3', 'a = 3', 'a = 0', 'Pri nobenem; rešitev je vedno enoparametrična'], 0,

@@ -17,10 +17,7 @@ module.exports = [
     'Odsotnost pretirane multikolinearnosti', 'Normalno porazdelitev slučajnih napak', 'Odsotnost heteroskedastičnosti slučajnih napak', 'Odsotnost izrazitih osamelcev'], 0,
     'VIF (variance inflation factor) meri, koliko je posamezna pojasnjevalna spremenljivka linearno odvisna od ostalih; VIF > 10 je problematičen.'),
   Q('(Zgled izpita) Kaj velja za preizkus domneve o razliki med aritmetičnima sredinama za NEODVISNA vzorca?', [
-    'Običajno uporabimo Welchev preizkus (t*), razen če lahko predpostavimo enaki varianci na obeh populacijah',
-    'Pred preizkusom o razliki sredin obvezno izvedemo preizkus o razliki varianc',
-    'Stopinje prostosti pri Welchevem preizkusu so m = n₁ + n₂ − 2',
-    'Temu preizkusu pravimo tudi preizkus dvojic'], 0,
+    'Običajno uporabimo Welchev preizkus (t*), razen če lahko predpostavimo enaki varianci na obeh populacijah', 'Pred preizkusom o razliki sredin obvezno izvedemo še preizkus o razliki med variancama na obeh populacijah', 'Stopinje prostosti pri Welchevem preizkusu (t*) se izračunajo kot m = n₁ + n₂ − 2, enako kot pri Studentovem', 'Izbira med Welchevim in Studentovim preizkusom je odvisna od tega, ali je spremenljivka normalno porazdeljena'], 0,
     'Welchev preizkus ne zahteva enakih varianc (df po Welch-Satterthwaite). Preizkus dvojic je za odvisna vzorca; m = n₁ + n₂ − 2 velja za Studentov t.'),
   Q('(Zgled izpita) Katera trditev o preizkušanju domnev NI pravilna?', [
     'Če zavrnemo ničelno domnevo, ko ta velja, naredimo napako druge vrste',
@@ -53,7 +50,7 @@ module.exports = [
     'ȳₖ = μ₀ + 3,3', 'ȳₖ = μ₀ + 16,5', 'ȳₖ = ȳ + 3,3', 'ȳₖ = μ₁ − 3,3'], 0,
     'se = σ/√n = 10/5 = 2; desnostranski preizkus z₀,₀₅ = 1,645 → ȳₖ = μ₀ + 1,645 · 2 = μ₀ + 3,3.'),
   Q('(Zgled izpita) V grafu časovne vrste opazimo periodičnost. Katera metoda jo natančneje opiše in ovrednoti?', [
-    'Metoda kvocientov na vrsto drsečih sredin', 'Drseče sredine', 'Trend', 'Asociacija'], 0,
+    'Metoda kvocientov na vrsto drsečih sredin', 'Metoda drsečih sredin brez kvocientov', 'Metoda najmanjših kvadratov (trend)', 'Metoda asociacije (kontingenčna tabela)'], 0,
     'Kvocienti dejanskih vrednosti in drsečih sredin dajo indekse sezonskosti; same drseče sredine periodičnost le odstranijo.'),
   Q('(Zgled izpita) ' + IZPIS2 + ' Katera trditev je pravilna?', [
     'Tabela prop.table prikazuje relativno strukturo po obeh spremenljivkah hkrati',
@@ -68,16 +65,10 @@ module.exports = [
     'Kadar je v vsaj enem polju opazovana frekvenca večja od 5'], 0,
     'Popravek za zveznost se uporablja pri eni stopinji prostosti (tabela 2 × 2); R ga privzeto vklopi (correct = TRUE).'),
   Q('(Zgled izpita) ' + IZPIS2 + ' Kaj smo ugotovili s preizkusom?', [
-    'Ker je p = 0,004 < α = 0,05, sta spol in spremljanje nogometnih tekem povezani spremenljivki',
-    'Ker je p = 0,004 < α = 0,05, spol ni povezan s spremljanjem tekem',
-    'Ker je p = 0,004 < α = 0,05, razlika ni značilna',
-    'Ker je p < α, opazovani spremenljivki nista povezani'], 0,
+    'Ker je p = 0,004 < α = 0,05, sta spol in spremljanje nogometnih tekem povezani spremenljivki', 'Ker je p = 0,004 < α = 0,05, smo ugotovili povezanost, a spol ni povezan s spremljanjem tekem', 'Ker je p = 0,004 < α = 0,05, razlika ni značilna in spol ne vpliva na spremljanje tekem', 'Ker je p = 0,004 < α = 0,05, opazovani spremenljivki nista povezani in sta neodvisni'], 0,
     'Nizka p-vrednost → zavrnemo H₀ o neodvisnosti → povezanost je statistično značilna.'),
   Q('(Zgled izpita) Pojav Y: 2016–2020 vrednosti 10, 12, 14, 17, 22 (stabilna rast ~20 % letno). S katero enostavno metodo presodimo obliko trenda in katera oblika je primerna?', [
-    'Verižni indeksi / razmerja zaporednih členov so približno enaka → eksponentni trend',
-    'Razlike zaporednih členov so enake → linearni trend',
-    'Drseče sredine kažejo cikel → polinomski trend',
-    'Korelogram → logaritemski trend'], 0,
+    'Verižni indeksi / razmerja zaporednih členov so približno enaka → eksponentni trend', 'Razlike zaporednih členov (absolutni prirastki) so približno enake → linearni trend', 'Drseče sredine kažejo izrazit cikel okoli povprečja → polinomski trend druge stopnje', 'Korelogram kaže padajočo avtokorelacijo → logaritemski trend s pojemajočo rastjo'], 0,
     'Enako razmerje med zaporednimi členi = enakomerno relativno stopnjevanje → eksponentna funkcija (lineariziramo z logaritmiranjem).'),
   Q('(Zgled izpita) Eksponentni trend za 2016–2020 (t = −2 … 2): povprečje log Y = 1,160, k_logY,t = 0,836, k_t = 10. Napoved za 2022 in letna stopnja rasti?', [
     'Y₂₀₂₂ ≈ 31; vsako leto + 21,2 %', 'Y₂₀₂₂ ≈ 26; vsako leto + 8,4 %', 'Y₂₀₂₂ ≈ 22; vsako leto + 20,0 %', 'Y₂₀₂₂ ≈ 35; vsako leto + 12,1 %'], 0,
@@ -97,9 +88,6 @@ module.exports = [
     'Približno od 40.000 do 68.000 gospodinjstev', 'Natanko 54.000 gospodinjstev'], 0,
     'p = 0,18; se(p) = √(0,18 · 0,82/1.900) = 0,0088; z = 2,58 → 0,18 ± 0,0227 → 0,157 do 0,203; × N → ≈ 47.100 do 60.900.'),
   Q('(Zgled izpita) Kaj pomeni stopnja tveganja α = 0,01 pri intervalni oceni?', [
-    'Pri 1 % vseh možnih slučajnih vzorcev te velikosti tako izračunani interval parametra ne zajame',
-    'Verjetnost, da je parameter zunaj intervala, je 99 %',
-    'Ocena odstopa od parametra za največ 1 %',
-    'Napaka 2. vrste je 1 %'], 0,
+    'Pri 1 % vseh možnih slučajnih vzorcev te velikosti tako izračunani interval parametra ne zajame', 'Verjetnost, da je parameter zunaj izračunanega intervala, je 99 %, znotraj pa 1 %', 'Ocena iz vzorca odstopa od parametra za največ 1 % njegove vrednosti (relativna natančnost)', 'Verjetnost napake 2. vrste je 1 %, zato je moč intervalne ocene 99 %'], 0,
     'α je verjetnost, da postopek da interval, ki parametra ne vsebuje; 1 − α = 99 % je stopnja zaupanja.'),
 ];
