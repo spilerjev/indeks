@@ -34,6 +34,10 @@ for (const mod of MODULES) {
     upsert(part.decks, mp.decks);
     if (mp.flashcards) { part.flashcards = part.flashcards || []; upsert(part.flashcards, mp.flashcards); }
     if (mp.notesMd) part.notes = render(mp.notesMd);
+    if (mp.prependNotesOf) {
+      const src = subj.parts.find((p) => p.id === mp.prependNotesOf);
+      if (src && src.notes) part.notes = src.notes + '\n' + part.notes;
+    }
     else if (mp.notes) part.notes = mp.notes;
   }
   const q = subj.parts.reduce((n, p) => n + p.decks.reduce((m, d) => m + d.questions.length, 0), 0);
