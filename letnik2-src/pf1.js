@@ -200,6 +200,9 @@ module.exports = {
       flashcards: [{ id: 'pf1-c-tvm-vfi', name: 'Časovna vrednost, obveznice, delnice', cards: p3.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'pf1-c-tveganje', name: 'Tveganje, CAPM, stroški kapitala', cards: v36.kartice.map(([front, back]) => ({ front, back })) }],
     },
-    { id: 'izpit', name: 'Izpit', type: 'izpit' },
+    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [
+        { id: 'pf1-iz-teorija', name: 'Teoretična vprašanja s starih izpitov', questions: require('./pf1-stari').teorija },
+        { id: 'pf1-iz-racunske', name: 'Računske naloge s starih izpitov', calc: true, questions: require('./pf1-stari').racunske },
+      ] },
   ],
 };
