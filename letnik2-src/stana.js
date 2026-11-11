@@ -280,6 +280,8 @@ module.exports = {
       { id: 'stana-domneve', name: 'Osnove preizkušanja domnev (P06, V06)', questions: p04.domneve },
       { id: 'stana-rac-domneve', name: 'Računske naloge: preizkus domnev (Z)', calc: true, questions: p04.racDomneve },
     ] },
-    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [] },
+    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [
+      { id: 'stana-izpit-zgled', name: 'Uradni zgled izpita (z rešitvami)', questions: require('./stana-izpit') },
+    ] },
   ],
 };

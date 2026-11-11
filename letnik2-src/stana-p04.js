@@ -109,7 +109,7 @@ const domneve = [
   Q('Kam postavimo trditev, ki jo želimo DOKAZATI?', ['V H₀', 'V H₁', 'V obe', 'V nobeno'], 1,
     'H₀ ne moremo dokazati, le zavrnemo jo ali ne. Če H₀ zavrnemo, vemo verjetnost napake (≤ α).'),
   Q('V kateri domnevi je VEDNO enačaj (=, ≥, ≤)?', ['V H₁', 'V H₀', 'V obeh', 'V nobeni'], 1,
-    'H₁ ima ≠, < ali >.'),
+    'Ničelna domneva H₀ vedno vsebuje enačaj (=, ≥ ali ≤), ker preizkus računamo pri predpostavki, da H₀ velja na meji. H₁ ima ≠, < ali >.'),
   Q('Želimo dokazati, da so hlebci PRELAHKI (2 kg). Domnevi?', ['H₀: μ = 2; H₁: μ ≠ 2', 'H₀: μ ≥ 2; H₁: μ < 2', 'H₀: μ ≤ 2; H₁: μ > 2', 'H₀: μ < 2; H₁: μ ≥ 2'], 1,
     'Enostranski levi preizkus. "Pretežki" → H₁: μ > 2; "ni 2 kg" → dvostranski.'),
   Q('Kaj je napaka 1. vrste?', ['Ne zavrnemo H₀, ki ne velja', 'Zavrnemo H₀, ki dejansko velja', 'Zavrnemo H₁', 'Napačno izračunamo se'], 1,
@@ -135,7 +135,7 @@ const domneve = [
   Q('Katera porazdelitev se uporablja pri ANOVA in primerjavi varianc?', ['t', 'F', 'Z', 'Poissonova'], 1,
     't: povprečja; χ²: varianca, skladnost porazdelitev; F: varianci, ANOVA, ustreznost regresije. t² ~ F(1, m).'),
   Q('Kakšna sta pričakovana vrednost in varianca χ² s m stopinjami prostosti?', ['E = 0, Var = 1', 'E = m, Var = 2m', 'E = m − 2, Var = m', 'E = 2m, Var = m'], 1,
-    'Mo = max(0, m − 2).'),
+    'χ² z m stopinjami prostosti: E = m, Var = 2m (Mo = max(0, m − 2)). Z večanjem m se porazdelitev približuje normalni.'),
   Q('Statistično značilen rezultat (nizka p) pomeni:', ['Rezultat je vsebinsko pomemben', 'Odstopanje od H₀ je značilno, a ne nujno praktično pomembno', 'H₁ zagotovo velja', 'Napake ni'], 1,
     'ASA 2016: nizka p ≠ nujno vsebinska pomembnost.'),
 ];

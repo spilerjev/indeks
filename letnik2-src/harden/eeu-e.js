@@ -212,7 +212,7 @@ module.exports = [
     'P = 6; ni uvoza; prihodek 0',
     'P = 3; uvoz 400 iz Mehike; prihodek 0',
     'P = 4; uvoz 200 iz Mehike; prihodek 400'], 0, 'P = 4; uvoz 200 iz Kitajske; prihodek 400'],
-  ['Kateri sklep sledi iz nalog z vaj 5?', [
+  ['Kateri splošni sklep velja za učinek sporazuma o prosti trgovini (FTA) na blaginjo države?', [
     'Vsaka FTA poveča blaginjo, ker cene padejo',
     'FTA vedno zniža blaginjo zaradi izgube carin',
     'FTA z manj učinkovito državo vedno poveča blaginjo'], 3,

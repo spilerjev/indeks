@@ -56,7 +56,7 @@ const pristopi = [
   Q('Kdaj je bilo socialno poglavje vključeno v BESEDILO pogodbe?', ['1957', '1989 (Socialna listina)', '1992 (Maastricht)', '1997 (Amsterdam)'], 3,
     '1989 politična izjava (VB ni podpisala); 1992 le protokol zaradi britanskega opt-outa; 1997 Amsterdam po Blairovi opustitvi opt-outa.'),
   Q('Kdaj je bila dokončana carinska unija EGS?', ['1958', '1. 7. 1968', '1973', '1992'], 1,
-    '1,5 leta pred rokom.'),
+    'Carinska unija EGS je bila dokončana 1. 7. 1968, leto in pol pred rokom iz Rimske pogodbe (konec 1969).'),
 ];
 
 const krogi = [
@@ -129,7 +129,7 @@ const integracije = [
   Q('Kaj velja za regionalne trgovinske sporazume (RTA) in WTO?', ['RTA so v skladu z načelom MFN', 'RTA kršijo načelo nediskriminacije, a so po členu 24 GATT pod pogoji izrecno dovoljeni', 'Države ne morejo biti hkrati v WTO in RTA', 'Cilj WTO je stabilnost tečajev'], 1,
     'Preferenčna liberalizacija je po definiciji diskriminatorna.'),
   Q('Kdaj WTO dovoljuje carinsko unijo?', ['Vedno', 'Če zajema (skoraj) vse proizvode, povprečna carina do tretjih držav ne naraste in se carine odpravijo v razumnem času', 'Samo za razvite države', 'Nikoli'], 1,
-    'Iz starega kolokvija.'),
+    'Člen XXIV GATT: carinska unija ali FTA je dovoljena, če zajema skoraj vso medsebojno trgovino in skupna carina do tretjih držav v povprečju ni višja kot pred integracijo.'),
   Q('Kaj je pravilno o poglabljanju integracije EU? a) 1968 carinska unija; b) Ustavna pogodba je vzpostavila politično unijo; c) Amsterdam 1999 je vzpostavil notranji trg; d) Maastricht je uvedel tristebrno strukturo', ['a in d', 'b in c', 'a, b in c', 'samo d'], 0,
     'Ustavna pogodba ni bila uveljavljena; notranji trg je rok 31. 12. 1992 (EEL). Stebri: 1) skupnosti, 2) SZVP, 3) pravosodje in notranje zadeve.'),
   Q('Kaj je prinesla Lizbonska pogodba?', ['Uvedbo evra', 'Odpravo tristebrne strukture, tri kategorije pristojnosti in možnost izstopa iz EU', 'Carinsko unijo', 'Ustanovitev ESPJ'], 1,
@@ -220,6 +220,8 @@ module.exports = {
         { id: 'eeu-c-vaje2', name: 'Mednarodna menjava, carine, integracije', cards: v2.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'eeu-c-v3', name: 'Računske formule, WTO', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },
-    { id: 'izpit', name: 'Delni / celotni izpit', type: 'izpit', decks: [] },
+    { id: 'izpit', name: 'Delni / celotni izpit', type: 'izpit', decks: [
+      { id: 'eeu-izpit-stari', name: 'Institucije, EMU, širitve (stari kolokviji)', questions: require('./eeu-izpit') },
+    ] },
   ],
 };

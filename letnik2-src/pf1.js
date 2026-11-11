@@ -203,6 +203,8 @@ module.exports = {
     { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [
         { id: 'pf1-iz-teorija', name: 'Teoretična vprašanja s starih izpitov', questions: require('./pf1-stari').teorija },
         { id: 'pf1-iz-racunske', name: 'Računske naloge s starih izpitov', calc: true, questions: require('./pf1-stari').racunske },
+        { id: 'pf1-iz-teorija2', name: 'Izbrani izpiti: teorija (z rešitvami)', questions: require('./pf1-stari2').teorija },
+        { id: 'pf1-iz-racunske2', name: 'Izbrani izpiti: računske naloge (z rešitvami)', calc: true, questions: require('./pf1-stari2').racunske },
       ] },
   ],
 };

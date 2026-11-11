@@ -81,7 +81,7 @@ const strategija = [
   PN('Pri trajnostnem trženju uravnotežimo tri razsežnosti: družbeno, ekonomsko in demografsko.', false,
     'Tri razsežnosti trajnostnega razvoja so ekonomska, EKOLOŠKA in družbena. Primer: I feel Slovenia.'),
   PN('IKT vpliva na pristop ciljnega trženja in na celoten trženjski splet.', true, 'Iz stare zbirke izpitnih vprašanj.'),
-  PN('Strateški trženjski načrt je glavni dokument za usmerjanje in koordiniranje trženjskih aktivnosti.', true, 'Lahko je na več ravneh.'),
+  PN('Strateški trženjski načrt je glavni dokument za usmerjanje in koordiniranje trženjskih aktivnosti.', true, 'Strateški trženjski načrt določa ciljne trge in ponujeno vrednost; obstaja na ravni podjetja, strateške poslovne enote ali izdelka.'),
 ];
 
 const okolje = [
@@ -179,7 +179,7 @@ const povprasevanje = [
 ];
 
 const izpitPN = [
-  PN('Sodobni porabniki so radi dobro informirani in zaradi individualizma želijo verodostojne in avtentične izdelke.', true, 'Stara izpitna trditev.'),
+  PN('Sodobni porabniki so radi dobro informirani in zaradi individualizma želijo verodostojne in avtentične izdelke.', true, 'Sodobni porabnik je dobro informiran (splet, družbena omrežja) in zaradi individualizma išče verodostojne, avtentične izdelke in osebne izkušnje.'),
   PN('Talci so nezadovoljni, a zvesti porabniki, ker ne morejo prostovoljno oditi.', true, 'Npr. monopol, visoki stroški zamenjave.'),
   PN('Globinski intervju uporabimo, ko za temo veljajo družbeno sprejete norme vedenja.', true, 'V skupini bi ljudje odgovarjali "pravilno", ne iskreno.'),
   PN('Pri omnibus raziskavah sodeluje več naročnikov, pobudnik pa je raziskovalna agencija.', true, 'Vsak naročnik plača po vprašanju.'),

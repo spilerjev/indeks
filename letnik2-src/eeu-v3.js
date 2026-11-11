@@ -66,7 +66,7 @@ const racVaje5 = calc([
     'P 26 → 24; ΔCS +27,5, ΔPS −21,5, ΔJF −12 → −6 (preusmerjanje 8 > ustvarjanje 2).'),
   Q('Ribe: FTA se pridruži še Hrvaška (P = 20). ΔW glede na začetek?', ['+18', '−6', '+85,5', '+12'], 0,
     'ΔCS +85,5, ΔPS −55,5, ΔJF −12 → +18. Samo ustvarjanje - Hrvaška je najučinkovitejša.'),
-  Q('Kateri sklep sledi iz nalog z vaj 5?', ['FTA z najučinkovitejšo državo vedno poveča blaginjo; z manj učinkovito jo lahko zniža', 'Vsaka FTA poveča blaginjo', 'FTA vedno zniža blaginjo', 'Blaginja je odvisna samo od carinskega prihodka'], 0,
+  Q('Kateri splošni sklep velja za učinek sporazuma o prosti trgovini (FTA) na blaginjo države?', ['FTA z najučinkovitejšo državo vedno poveča blaginjo; z manj učinkovito jo lahko zniža', 'Vsaka FTA poveča blaginjo', 'FTA vedno zniža blaginjo', 'Blaginja je odvisna samo od carinskega prihodka'], 0,
     'Vinerjeva nejasnost: izid je odvisen od razmerja med ustvarjanjem in preusmerjanjem.'),
 ]);
 
