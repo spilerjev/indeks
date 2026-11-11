@@ -200,6 +200,7 @@ module.exports = {
         { id: 'eeu-krogi', name: 'EFTA, širitve, evropesimizem, enotni trg', questions: krogi },
         { id: 'eeu-vzhod', name: 'Padec komunizma, Kopenhagen, širitve po 2004', questions: vzhod },
         { id: 'eeu-integracije', name: 'Integracije in WTO (stari kolokviji)', questions: integracije },
+        { id: 'eeu-stari', name: 'Kolokvija 2021 in 2014 (z rešitvami)', questions: require('./eeu-stari') },
         { id: 'eeu-vaje1', name: '1. vaje: nastanek EU, pogodbe, širitve', questions: v1.vaje1 },
         { id: 'eeu-mm', name: 'Mednarodna menjava: primerjalne prednosti', questions: v2.mm },
         { id: 'eeu-rac-mm', name: 'Računske: Vaje 2 (prednosti, pokritost uvoza)', calc: true, questions: v2.rac },
