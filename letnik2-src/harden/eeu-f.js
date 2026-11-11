@@ -1,0 +1,11 @@
+/* Težji odgovori: vprašanja, kjer je bil pravilni odgovor opazno najdaljši (pregled 11. 11. 2026). */
+module.exports = [
+  ['Kaj je prinesla Lizbonska pogodba?', ['Uvedbo evra in Evropske centralne banke', 'Tristebrno strukturo in državljanstvo Unije', 'Dokončanje notranjega trga do leta 1992'], 3, 'Odpravo stebrov in člen o izstopu (čl. 50)'],
+  ['Kaj so tehnične ovire v trgovini?', ['Carine in druge dajatve na uvoženo blago', 'Količinske omejitve uvoza, torej uvozne kvote', 'Različne stopnje DDV in trošarin med državami'], 3, 'Različni tehnični standardi, predpisi in certifikati'],
+  ['Kaj vsebuje skupni notranji trg poleg carinske unije?', ['Skupno valuto in skupno centralno banko', 'Skupno fiskalno politiko vseh držav članic', 'Skupno zunanjo in varnostno politiko članic'], 3, 'Štiri svoboščine: blago, storitve, kapital, delo'],
+  ['Kateri splošni sklep velja za učinek sporazuma o prosti trgovini', ['Vsaka FTA poveča blaginjo, ker cene na trgu padejo', 'FTA vedno zniža blaginjo zaradi izgube carinskih prihodkov', 'FTA z manj učinkovito državo vedno poveča blaginjo'], 3, 'FTA z najučinkovitejšo državo blaginjo poveča, z drugo ne nujno'],
+  ['Zakaj se države težje odločijo za carinsko unijo kot za FTA?', ['Ker je CU dražja za vzdrževanje in carinski nadzor', 'Ker WTO carinske unije načeloma ne dovoljuje', 'Ker CU zahteva zapletena pravila o poreklu blaga'], 3, 'Ker CU zahteva skupno zunanjo carino (manj suverenosti)'],
+  ['Kaj je "spaghetti bowl" (Bhagwati)?', ['Vrsta prohibitivne carine na kmetijske izdelke', 'Izvozna subvencija EU in ZDA za kmetijstvo', 'Prepletanje kmetijskih politik EU in ZDA'], 3, 'Prepletenost sporazumov in pravil o poreklu'],
+  ['Kaj prepoveduje sporazum o ribiških subvencijah (MC12, 2022)?', ['Vse ribolovne kvote in subvencije za ribiške flote', 'Uvoz rib iz držav, ki niso članice WTO', 'Carine na ribe in predelane ribje izdelke'], 3, 'Subvencije za nezakonit ribolov in prelovljene staleže'],
+  ['Kaj določa trgovinski sporazum EU-ZDA (Turnberry, 2025)?', ['Popolno prosto trgovino brez carin v obe smeri', 'Carinsko unijo med EU in ZDA do leta 2030', 'Odpravo vseh ameriških carin na jeklo in aluminij'], 3, 'Carine ZDA do 15 %, EU odpravi industrijske carine'],
+];
