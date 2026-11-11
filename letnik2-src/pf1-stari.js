@@ -92,7 +92,7 @@ const racunske = [
     'WACC = 0,7 · 12 % · 0,85 + 0,3 · 16 % = 11,94 %. V = EBIT(1 − t)/WACC = 12,75/0,1194 = 106,78 mio €.'),
   C('(Izpit 2016) MARMELADA: projekti 15, 13, 7, 5 %, vsak 5 mio €; 40 % dolg, 60 % lastniški; WACC 10 % (12 % z novimi delnicami); čisti dobiček 5 mio €; rezidualna politika. Delež dividend?', [
     '0 %', '40 %', '50 %', '100 %'], 0,
-    'Sprejmemo A in B (obe nad 12 %) = 10 mio €; lastniški del 60 % = 6 mio € > 5 mio € dobička → ves dobiček zadržimo, dividenda 0.'),
+    'Sprejmemo projekta s 15 % in 13 % (oba nad 12 %) = 10 mio €; lastniški del 60 % = 6 mio € > 5 mio € dobička → ves dobiček zadržimo, dividenda 0.'),
   C('(Izpit 2016) ČOKOLADA: 20 % dolg, 80 % lastniški, čisti dobiček 3 mio €, rezidualna politika. Koliko investicij lahko izvede, preden mora izdati nove delnice?', [
     '3,75 mio €', '5 mio €', '3 mio €', '15 mio €'], 0,
     'Prelomna točka = zadržani dobiček / delež lastniškega kapitala = 3/0,8 = 3,75 mio €.'),

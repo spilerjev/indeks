@@ -114,7 +114,7 @@ const dveSpr = calc([
   Q('f(x, y) = x²y + 3xy². Parcialni odvod po x?', ['2xy + 3y²', 'x² + 6xy', '2x + 3y²', '2xy + 6xy'], 0, 'y obravnavamo kot konstanto. f_y = x² + 6xy.'),
   Q('f(x, y) = x³ − 3x + y² − 2y. Kaj je točka (1, 1)?', ['Lokalni minimum', 'Lokalni maksimum', 'Sedlo', 'Ni stacionarna'], 0,
     'f_x = 3x² − 3, f_y = 2y − 2 → (±1, 1). V (1, 1): f_xx = 6, f_yy = 2, f_xy = 0 → D = 12 > 0, f_xx > 0 → minimum.'),
-  Q('Ista funkcija: kaj je točka (−1, 1)?', ['Sedlo', 'Minimum', 'Maksimum', 'Ni stacionarna'], 0, 'f_xx = −6 → D = −12 < 0 → sedlo.'),
+  Q('Za f(x, y) = x³ − 3x + y² − 2y: kaj je točka (−1, 1)?', ['Sedlo', 'Minimum', 'Maksimum', 'Ni stacionarna'], 0, 'f_xx = −6 → D = −12 < 0 → sedlo.'),
   Q('Kdaj je stacionarna točka funkcije dveh spremenljivk maksimum?', ['D > 0 in f_xx < 0', 'D > 0 in f_xx > 0', 'D < 0', 'D = 0'], 0, 'D = f_xx·f_yy − f_xy².'),
   Q('Maksimiraj U = xy pri omejitvi 2x + 4y = 40 (Lagrange). Rešitev?', ['x = 10, y = 5, U = 50', 'x = 5, y = 7,5, U = 37,5', 'x = 20, y = 0, U = 0', 'x = 8, y = 6, U = 48'], 0,
     'L = xy − λ(2x + 4y − 40): y = 2λ, x = 4λ → x = 2y → 4y + 4y = 40 → y = 5, x = 10.'),
@@ -145,7 +145,7 @@ const financna = calc([
   Q('Investicija 200.000; donosi 30.000, 40.000, 40.000, 150.000 (konec 1.-4. leta). NSV pri 7 %?', ['+10.061,13', '−27.094,61', '+60.000,00', '−10.061,13'], 0, 'Σ Dₜ/1,07ᵗ − 200.000. Pri 14 % je NSV −27.094,61 → interna stopnja je med 7 % in 14 %.'),
   Q('Investicija 100.000 prinese 80.000 čez 1 leto in 40.000 čez 2 leti. Interna stopnja donosnosti?', ['14,83 %', '20 %', '10 %', '12,5 %'], 0, '100.000 = 80.000/r + 40.000/r² → r = 1,1483.'),
   Q('Dolg 300.000, 7 %, 3 leta, OBROČNI način (enake razdolžnine). Prva anuiteta?', ['121.000', '114.315,50', '100.000', '107.000'], 0, 'Q = 100.000; a₁ = Q + 0,07 · 300.000 = 121.000; a₂ = 114.000; a₃ = 107.000.'),
-  Q('Isti dolg z ANUITETNIM načinom (enake anuitete). Anuiteta?', ['114.315,50', '114.000,00', '121.000,00', '107.000,00'], 0, 'a = D₀·rⁿ(r − 1)/(rⁿ − 1) = 300.000 · 1,07³ · 0,07/(1,07³ − 1).'),
+  Q('Dolg 300.000, 7 %, 3 leta, ANUITETNI način (enake anuitete). Anuiteta?', ['114.315,50', '114.000,00', '121.000,00', '107.000,00'], 0, 'a = D₀·rⁿ(r − 1)/(rⁿ − 1) = 300.000 · 1,07³ · 0,07/(1,07³ − 1).'),
   Q('Obročni način, dolg 300.000, 7 %, 3 leta. Skupaj plačane obresti?', ['42.000', '21.000', '342.000', '49.000'], 0, '21.000 + 14.000 + 7.000; vsota anuitet 342.000 = dolg + obresti.'),
 ]);
 
@@ -167,15 +167,15 @@ const verjetnost = calc([
   Q('Koliko različnih vrstnih redov ima 5 knjig?', ['120', '25', '60', '5'], 0, '5! = 120.'),
   Q('Dve kocki: verjetnost, da je vsota 7?', ['1/6', '1/12', '7/36', '1/36'], 0, 'Ugodni pari: 6 od 36.'),
   Q('P(A) = 0,5, P(B) = 0,4, P(A ∩ B) = 0,2. P(A ∪ B) = ?', ['0,7', '0,9', '0,2', '0,5'], 0, 'P(A) + P(B) − P(A ∩ B).'),
-  Q('Isti podatki: ali sta A in B neodvisna?', ['Da, ker P(A ∩ B) = P(A)·P(B) = 0,2', 'Ne', 'Ne moremo vedeti', 'Da, ker sta nezdružljiva'], 0, 'Neodvisnost: P(A ∩ B) = P(A)·P(B).'),
+  Q('P(A) = 0,5, P(B) = 0,4, P(A ∩ B) = 0,2. Ali sta A in B neodvisna?', ['Da, ker P(A ∩ B) = P(A)·P(B) = 0,2', 'Ne', 'Ne moremo vedeti', 'Da, ker sta nezdružljiva'], 0, 'Neodvisnost: P(A ∩ B) = P(A)·P(B).'),
   Q('P(A ∩ B) = 0,12, P(B) = 0,4. P(A | B) = ?', ['0,3', '0,048', '0,52', '0,12'], 0, 'P(A|B) = P(A ∩ B)/P(B).'),
   Q('Stroj A naredi 60 % izdelkov (2 % izmeta), stroj B 40 % (5 % izmeta). Verjetnost izmeta?', ['0,032', '0,035', '0,07', '0,012'], 0, 'Popolna verjetnost: 0,6 · 0,02 + 0,4 · 0,05.'),
-  Q('Isti primer: izdelek je izmet. Verjetnost, da ga je naredil stroj A?', ['0,375', '0,6', '0,02', '0,625'], 0, 'Bayes: 0,012/0,032.'),
+  Q('Stroj A naredi 60 % izdelkov (2 % izmeta), stroj B 40 % (5 % izmeta). Izdelek je izmet. Verjetnost, da ga je naredil stroj A?', ['0,375', '0,6', '0,02', '0,625'], 0, 'Bayes: 0,012/0,032.'),
 ]);
 
 const slucajne = calc([
   Q('X: vrednosti 0, 1, 2 z verjetnostmi 0,2; 0,5; 0,3. E(X) = ?', ['1,1', '1,0', '0,5', '1,5'], 0, 'Σ xᵢpᵢ = 0 + 0,5 + 0,6.'),
-  Q('Isti X: Var(X) = ?', ['0,49', '1,70', '1,21', '0,70'], 0, 'E(X²) = 0,5 + 1,2 = 1,7; Var = 1,7 − 1,1² = 0,49.'),
+  Q('X: vrednosti 0, 1, 2 z verjetnostmi 0,2; 0,5; 0,3. Var(X) = ?', ['0,49', '1,70', '1,21', '0,70'], 0, 'E(X²) = 0,5 + 1,2 = 1,7; Var = 1,7 − 1,1² = 0,49.'),
   Q('E(X) = 3, Var(X) = 4. E(2X + 1) in Var(2X + 1)?', ['7 in 16', '7 in 9', '6 in 8', '7 in 8'], 0, 'E(aX + b) = aE + b; Var(aX + b) = a²Var.'),
   Q('Binomska B(4; 0,5): P(X = 2) = ?', ['0,375', '0,5', '0,25', '0,0625'], 0, 'C(4, 2) · 0,5⁴ = 6/16.'),
   Q('Binomska B(n, p): pričakovana vrednost in varianca?', ['np in np(1 − p)', 'n/p in np', 'p in p(1 − p)', 'np in √np'], 0, 'Npr. B(20; 0,3): E = 6, Var = 4,2.'),

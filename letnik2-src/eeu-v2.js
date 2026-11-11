@@ -263,16 +263,16 @@ const rac = [
     'Obe Francija',
     'Obe Švica'], 1,
     'Absolutna prednost = višja produktivnost: ure CH (4 > 3), smuči FR (6 > 2). Tu se absolutne in relativne prednosti ujemajo.'),
-  Q('Isto: v katerem proizvodu se specializirata državi in kaj izvažata?', [
+  Q('Ure in smuči: Francija naredi 3 ure ali 6 smuči na delavca, Švica 4 ure ali 2 smuči. V katerem proizvodu se specializirata državi in kaj izvažata?', [
     'Francija ure, Švica smuči',
     'Francija smuči, Švica ure',
     'Obe državi smuči',
     'Obe državi ure'], 1,
     'Oportunitetni strošek ure: FR 6/3 = 2 smuči, CH 2/4 = 0,5 smuči. Ure so v Švici relativno cenejše; smuči v Franciji.'),
-  Q('Isto: v katerem intervalu (smuči za 1 uro) se oblikuje menjalno razmerje?', [
+  Q('Ure in smuči: oportunitetni strošek 1 ure je v Franciji 2 para smuči, v Švici 0,5 para. V katerem intervalu (smuči za 1 uro) se oblikuje menjalno razmerje?', [
     'Med 2 in 6', 'Med 0,5 in 2', 'Med 1 in 3', 'Med 0,25 in 0,5'], 1,
     'Francija ne plača več kot 2 smuči za uro (domači strošek), Švica ne sprejme manj kot 0,5 smuči (domači strošek).'),
-  Q('Isto: državi zamenjata 1 uro za 1 par smuči (MR = 1). Za koliko smuči je Francija na boljšem, če ure kupi, namesto da bi jih proizvedla sama?', [
+  Q('Ure in smuči: Francija (1 ura = 2 para smuči doma) in Švica (1 ura = 0,5 para doma) zamenjata 1 uro za 1 par smuči (MR = 1). Za koliko smuči je Francija na boljšem, če ure kupi, namesto da bi jih proizvedla sama?', [
     '0,5 pari smuči', '1 par smuči', '2 para smuči', '3 pari smuči'], 1,
     'Doma bi za 1 uro opustila 2 para smuči, z menjavo jo dobi za 1 par - prihrani 1 par. Švica dobi 1 par smuči namesto 0,5 para, torej pridobi 0,5 para.'),
   Q('Grčija (kopalke 1, brisače 5 na uro) in Portugalska (kopalke 2, brisače 6 na uro). Katera država ima absolutno prednost?', [
@@ -281,16 +281,16 @@ const rac = [
     'Grčija pri kopalkah, Portugalska pri brisačah',
     'Portugalska pri kopalkah, Grčija pri brisačah'], 1,
     'Portugalska proizvede več pri obeh (2 > 1 in 6 > 5). Absolutne prednosti zato menjave ne razložijo, relativne pa.'),
-  Q('Isto: katera država ima relativno prednost pri kopalkah in kateri je oportunitetni strošek 1 kopalke v obeh državah?', [
+  Q('Kopalke in brisače: Grčija naredi 1 kopalke ali 5 brisač na uro, Portugalska 2 kopalke ali 6 brisač. Katera država ima relativno prednost pri kopalkah in kateri je oportunitetni strošek 1 kopalke v obeh državah?', [
     'Grčija; 5 brisač v Grčiji, 3 brisače na Portugalskem',
     'Portugalska; 3 brisače na Portugalskem, 5 v Grčiji',
     'Portugalska; 6 brisač na Portugalskem, 5 v Grčiji',
     'Grčija; 1 brisača v Grčiji, 2 na Portugalskem'], 1,
     'Grčija: 1 kopalke = 5 brisač; Portugalska: 1 kopalke = 6/2 = 3 brisače. Portugalska je cenejša pri kopalkah, Grčija pri brisačah.'),
-  Q('Isto: v katerem intervalu (brisač za 1 kopalke) se mora oblikovati menjalno razmerje?', [
+  Q('Kopalke in brisače: oportunitetni strošek 1 kopalke je v Grčiji 5 brisač, na Portugalskem 3 brisače. V katerem intervalu (brisač za 1 kopalke) se mora oblikovati menjalno razmerje?', [
     'Med 3 in 5', 'Med 1 in 3', 'Med 5 in 6', 'Med 2 in 6'], 0,
     'Portugalska ne sprejme manj kot 3 brisač za kopalke, Grčija ne plača več kot 5.'),
-  Q('Isto: državi zamenjata 1 kopalke za 4 brisače. Kakšna je korist?', [
+  Q('Kopalke in brisače: Grčija (1 kopalke = 5 brisač doma) in Portugalska (1 kopalke = 3 brisače doma) zamenjata 1 kopalke za 4 brisače. Kakšna je korist?', [
     'Portugalska dobi 1 brisačo več, kot bi jih lahko proizvedla; Grčija prihrani 1 brisačo',
     'Portugalska dobi 4 brisače več; Grčija prihrani 1 brisačo',
     'Samo Portugalska pridobi; Grčija ostane enaka',

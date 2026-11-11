@@ -24,11 +24,11 @@ module.exports = [
     'Ure Francija, smuči Švica',
     'Obe dobrini Francija',
     'Obe dobrini Švica'], 1, 'Ure Švica, smuči Francija'],
-  ['Isto: v katerem proizvodu se specializirata državi', [
+  ['Ure in smuči: Francija naredi 3 ure ali 6 smuči na delavca, Švica 4 ure ali 2 smuči. V katerem proizvodu', [
     'Francija ure, Švica smuči',
     'Obe državi se specializirata za smuči',
     'Obe državi se specializirata za ure'], 2, 'Francija smuči, Švica ure'],
-  ['Isto: državi zamenjata 1 kopalke za 4 brisače', [
+  ['Kopalke in brisače: Grčija (1 kopalke = 5 brisač doma) in Portugalska (1 kopalke = 3 brisače doma) zamenjata', [
     'Portugalska dobi 4 brisače več, Grčija prihrani 1 brisačo',
     'Samo Portugalska pridobi, Grčija ostane enaka',
     'Samo Grčija pridobi, Portugalska ostane enaka'], 3, 'Portugalska +1 brisača, Grčija prihrani 1 brisačo'],

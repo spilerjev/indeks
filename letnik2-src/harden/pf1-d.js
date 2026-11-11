@@ -247,7 +247,7 @@ module.exports = [
     'WACC celotnega podjetja',
     'Netvegano obrestno mero',
     'Strošek dolga po davku'], 3, 'Strošek kapitala divizije'],
-  ['Isto podjetje: zadržan dobiček stane 10,5 %', [
+  ['Podjetje z zadržanim dobičkom 2,118 mrd € (struktura 60 % lastniški kapital, 40 % dolg): zadržan dobiček stane 10,5 %', [
     'Samo P1 (4 mrd €)', 'P1, P2 in P3 (12 mrd €)', 'P2 in P3 (8 mrd €)'], 3, 'P1 in P2 (7 mrd €)'],
   ['(Izpit 2016) Kaj je tehtano povprečje stroškov kapitala (WACC)?', [
     'Tehtano povprečje obrestnih mer pred davki, po katerih si je podjetje lani izposojalo',

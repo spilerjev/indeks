@@ -6,7 +6,7 @@ module.exports = [
     'Socialne sposobnosti', 'Samoregulacija čustev', 'Empatija do drugih'], 1],
   ['Katera je najvišja raven Maslowove piramide?', [
     'Samospoštovanje', 'Socialna pripadnost', 'Fiziološke potrebe'], 3],
-  ['Izberite pravilni odgovor:||Zanimanje managerjev', [
+  ['Katera trditev o sistemih kontrole uspešnosti drži?||Zanimanje managerjev', [
     'Uspešnost in učinkovitost sta komplementarna pojma, ki pomenita isto.',
     'Učinkovit sistem je hkrati vedno tudi uspešen sistem kontrole.',
     'Zanimanje managerjev za sisteme kontrole uspešnosti danes upada.'], 1,
@@ -21,7 +21,7 @@ module.exports = [
     'Komunikacija med funkcijami je zelo dobra.',
     'Spodbuja veliko inovacij in hiter odziv.'], 0,
     'Najustreznejša je za enega ali malo proizvodov.'],
-  ['Izberite pravilni odgovor:||Peter Senge', [
+  ['Katera trditev o učeči se organizaciji, Paretovem načelu in Googlu drži?||Peter Senge', [
     'Leta 1990 je Peter Senge populariziral pojem tehnične organizacije.',
     'Google sta leta 1998 na Stanfordu ustanovila Larry Page in Elon Musk.',
     'Paretovo načelo pravi, da 80 % časa prinese 80 % rezultata.'], 3,

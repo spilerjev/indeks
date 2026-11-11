@@ -308,7 +308,7 @@ const decks = [
       { q: 'Zaloga: 300 kg po 5 €, 500 kg po 7 €, 400 kg po 10 €, 800 kg po 12 €. V proizvodnjo gre 1.100 kg. Kolikšni so stroški po metodi FIFO?', options: [
         '12.600 EUR', '8.000 EUR', '10.230 EUR', '18.600 EUR'],
         correct: 1, explanation: 'FIFO porabi najprej najstarejše: 300×5 + 500×7 + 300×10 = 1.500 + 3.500 + 3.000 = 8.000 EUR. (LIFO bi bil 12.600, povprečna cena 10.230.)' },
-      { q: 'Ista zaloga (skupaj 18.600 € za 2.000 kg), poraba 1.100 kg. Kolikšni so stroški po metodi povprečnih cen?', options: [
+      { q: 'Zaloga: 300 kg po 5 €, 500 kg po 7 €, 400 kg po 10 €, 800 kg po 12 € (skupaj 18.600 € za 2.000 kg). V proizvodnjo gre 1.100 kg. Kolikšni so stroški po metodi povprečnih cen?', options: [
         '8.000 EUR', '10.230 EUR', '12.600 EUR', '9.300 EUR'],
         correct: 1, explanation: 'Povprečna cena = 18.600 / 2.000 = 9,30 €/kg. Stroški = 1.100 × 9,30 = 10.230 EUR.' },
       { q: 'Trgovec nabavi monitor za 100 EUR (nabavna cena) in doda 20 % maržo. Kolikšna je maloprodajna cena?', options: [

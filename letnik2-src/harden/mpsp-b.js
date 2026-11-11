@@ -10,7 +10,7 @@ module.exports = [
     'Napredek umetne inteligence v osebnem treniranju',
     'Staranje prebivalstva in manjši delež mladih vadečih'], 3,
     'Vrnitev ljudi v fitnese in lahko posnemljiva konkurenca'],
-  ['Isti primer, a skupine po 4 stranke (Z = 4, PČ = 0,5 h)', ['48', '96', '384'], 3, '192'],
+  ['Fitnes: 6 trenerjev, 2 izmeni po 4 h, skupine po 4 stranke', ['48', '96', '384'], 3, '192'],
   ['Kateri ukrep najbolj poveča prispevek za kritje (izhodišče 10.500)?', [
     'Prodaja +50 % (18.000)', 'Finančni stroški −50 % (12.750)', 'Cena +10 % (21.000)'], 3, 'Proizvodni stroški −20 % (22.500)'],
   ['Kaj je ozko grlo procesa?', [
@@ -18,12 +18,12 @@ module.exports = [
     'Resurs z največjo zmogljivostjo, ki je najbolj obremenjen',
     'Aktivnost na kritični poti, ki traja najdlje'], 3,
     'Resurs z najmanjšo zmogljivostjo, ki določa zmogljivost'],
-  ['Isti primer: ali daljši O2 vpliva na TPČ?', [
+  ['Kritična pot O1 → O3 → O4 → O5 = 140 min', [
     'Poveča (P) - vsak podaljšek podaljša TPČ',
     'Ne spremeni (N) - O2 ni na kritični poti',
     'Zmanjša (Z) - O2 se izvaja vzporedno'], 3,
     'Ne vemo (O) - kritična postane nad 20 min'],
-  ['Isti primer: D1 prevzame še O2', [
+  ['D1: O1 (20) + O5 (30), D2: O2 (20) + O4 (40), D3: O3 (20) + O6 (30), vsak 300 min/dan (zmogljivost 5 proizv./dan). D1 prevzame', [
     'Poveča se na 6', 'Ostane 5', 'Poveča se na 7,5'], 1, 'Zmanjša se na 4,3'],
   ['Urgenca: P = 50 bolnikov/h, čakajočih na prijavo Z = 30', [
     '1,67 min', '15 min', '30 min'], 0, '36 min'],

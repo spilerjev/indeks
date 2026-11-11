@@ -14,7 +14,7 @@ const racVaje3 = calc([
     'Izvoz IT = 2P − 250, uvoz DE = 200 − P → 2P − 250 = 200 − P → P = 150, menjava 50 (tisoč).'),
   Q('Plašči: avtarkija DE P = 200 (Q = 75), IT P = 125 (Q = 50); svetovna cena 150. Neto korist Nemčije?', ['+1.250', '+4.375', '+625', '−3.125'], 0,
     'ΔCS = +50 · (75 + 100)/2 = 4.375; ΔPS = −50 · (50 + 75)/2 = −3.125 → +1.250 (tisoč €).'),
-  Q('Isti primer: neto korist Italije in skupna korist menjave?', ['+625; 1.875', '+1.562,5; 2.812,5', '+625; 1.250', '−937,5; 312,5'], 0,
+  Q('Plašči: IT Q_D = 175 − P, Q_S = −75 + P; avtarkija IT P = 125, svetovna cena 150, neto korist Nemčije +1.250. Neto korist Italije in skupna korist menjave?', ['+625; 1.875', '+1.562,5; 2.812,5', '+625; 1.250', '−937,5; 312,5'], 0,
     'IT: ΔPS = +1.562,5, ΔCS = −937,5 → +625. Skupaj 1.250 + 625 = 1.875.'),
   Q('Pršut: P = 90 − Q_D/10, P = 10 + Q_S/10. Avtarkično ravnovesje?', ['P = 50 €, Q = 400 kg', 'P = 40 €, Q = 500 kg', 'P = 50 €, Q = 300 kg', 'P = 60 €, Q = 300 kg'], 0,
     'Q_D = 900 − 10P, Q_S = 10P − 100 → 1000 = 20P → P = 50, Q = 400.'),

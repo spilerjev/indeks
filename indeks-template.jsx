@@ -463,7 +463,8 @@ const CSS = `
 }
 .ix-root, .ix-root *{transition:background-color .5s ease, color .5s ease, border-color .5s ease;}
 .ix-root button{color:inherit;}
-.ix-root{font-family:'Spline Sans',system-ui,sans-serif;color:var(--ink);position:relative;background:
+html,body{overflow-x:hidden;overflow-x:clip;}
+.ix-root{font-family:'Spline Sans',system-ui,sans-serif;color:var(--ink);position:relative;overflow-x:hidden;overflow-x:clip;background:
   radial-gradient(70% 55% at 100% 0%, rgba(179,71,31,.17) 0%, transparent 62%),
   radial-gradient(65% 55% at 0% 100%, rgba(31,111,92,.16) 0%, transparent 62%),
   radial-gradient(50% 40% at 85% 95%, rgba(214,170,80,.14) 0%, transparent 65%),
@@ -524,7 +525,8 @@ const CSS = `
 .ix-seg button:hover{color:var(--ink);}
 .ix-seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);}
 .ix-sec{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:11px;}
-.ix-notes{font-size:15px;line-height:1.62;color:var(--ink);}
+.ix-notes{font-size:15px;line-height:1.62;color:var(--ink);min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:break-word;}
+.ix-notes img,.ix-notes svg,.ix-notes figure{max-width:100%;height:auto;box-sizing:border-box;}
 .ix-notes h2{font-family:'Fraunces',serif;font-size:21px;font-weight:900;margin:28px 0 12px;color:var(--terra);letter-spacing:-.01em;}
 .ix-notes h2:first-child{margin-top:0;}
 .ix-notes h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin:0 0 8px;}
@@ -2413,6 +2415,12 @@ function OverallStatsView({ stats, go, year, comm }) {
   );
 }
 
+/* Zapiski: tabelo brez ovoja .tbl zavije, da drsi vodoravno tabela in ne cela stran (telefon). */
+function wrapTables(html) {
+  if (!html) return "";
+  return html.replace(/<table[\s\S]*?<\/table>/g, (m, off) => (/<div class="tbl">\s*$/.test(html.slice(Math.max(0, off - 40), off)) ? m : '<div class="tbl">' + m + "</div>"));
+}
+
 function NotesView({ route, go }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
@@ -2427,7 +2435,7 @@ function NotesView({ route, go }) {
         <BookOpen size={22} color="var(--terra)" />
         <h1 className="ix-serif" style={{ fontSize: 24, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Zapiski · {part.name}</h1>
       </div>
-      <div className="ix-notes" dangerouslySetInnerHTML={{ __html: part.notes }} />
+      <div className="ix-notes" dangerouslySetInnerHTML={{ __html: wrapTables(part.notes) }} />
     </div>
   );
 }

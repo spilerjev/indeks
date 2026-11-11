@@ -42,19 +42,19 @@ module.exports = [
     'Ploščine ostanejo enake, zadošča ena tabela'],
   ['Zgled 1. preizkušnje: izbrali so 20 krajev', [
     'Stratificirano', 'Vzorčenje v skupinicah', 'Kvotno vzorčenje'], 2, 'Vzorčenje v več stopnjah'],
-  ['Isti primer: porazdelitev časa študija je izrazito asimetrična v desno', [
+  ['Čas študija študentov v preteklem tednu (n = 150, od 0 do 45 ur): porazdelitev', [
     'Porazdelitev je zelo podobna normalni',
     'Ocena koeficienta variacije je 45 ur',
     'Variacijskega razmika ne moremo izračunati'], 3,
     'Ocena povprečja je večja od mediane'],
-  ['Prva peterka košarkarjev: Bojan, Simon', [
+  ['Košarkarski klub je na pripravah v gorskem letovišču. Za prvo peterko', [
     'Prva peterka', 'Košarkarska ekipa', 'Gorsko letovišče'], 3, 'Posamezen igralec'],
   ['Kaj velja za standardno napako?', [
     'Meri variabilnost spremenljivke med enotami populacije',
     'Za manjše vzorce je manjša kot za večje vzorce',
     'Ocena SE deleža je neodvisna od točkovne ocene p'], 0,
     'Je praviloma manjša od standardnega odklona'],
-  ['Potrebna velikost vzorca: π ≈ 0,7, napaka največ 0,10', [
+  ['Delež avtomobilov z zimsko opremo: π ≈ 0,7', [
     'Vsaj 140 avtomobilov', 'Največ 130 avtomobilov', 'Vsaj 81 avtomobilov'], 3, 'Vsaj 131 avtomobilov'],
   ['s = 12,77 in ȳ = 30,47 (tisoč €). Koliko je kv?', [
     '2,39 (≈ 239 %)', '0,24 (≈ 24 %)', '12,77 %'], 1, '0,419 (≈ 42 %)'],

@@ -52,7 +52,7 @@ module.exports = [
     'mlado podjetje v hitri rasti',
     'podjetje v težavah',
     'banko'], 3, 'zrelo, zdravo podjetje'],
-  ['Isto podjetje podaljša plačilne roke', [
+  ['Podjetje (EBIT 200, davek 20 %, amortizacija 30, CapEx 50, NOK +20; FCF 120) podaljša', [
     'dobiček in FCF padeta',
     'dobiček zraste, FCF ostane enak',
     'nič se ne spremeni'], 3, 'dobiček enak, FCF pade'],

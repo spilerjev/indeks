@@ -124,11 +124,11 @@ module.exports = [
     'Seznama vseh enot populacije ne potrebujemo'], 3, 'Pri dani velikosti vzorca je vedno najnatančnejše'],
   ['Čas, ki so ga študenti v preteklem tednu', [
     'Ure', 'Povprečni čas študija', 'Število študentov, ki so študirali'], 3, 'Čas, namenjen študiju'],
-  ['Isti primer: porazdelitev časa študija je izrazito', [
+  ['Čas študija študentov v preteklem tednu (n = 150, od 0 do 45 ur): porazdelitev', [
     'Porazdelitev je podobna normalni',
     'Ocena KV je 45 ur',
     'Variacijskega razmika ne moremo izračunati'], 3, 'Ocena aritmetične sredine je večja od ocene mediane'],
-  ['Prva peterka košarkarjev', [
+  ['Košarkarski klub je na pripravah v gorskem letovišču. Za prvo peterko', [
     'Prva peterka', 'Košarkarska ekipa', 'Gorsko letovišče'], 3, 'Posamezen član kluba'],
   ['Kaj velja za cenilko?', [
     'Je slučajna spremenljivka, katere vrednosti se razlikujejo od enote do enote',

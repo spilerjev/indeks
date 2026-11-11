@@ -14,7 +14,7 @@ module.exports = [
   ['Investicija 100.000 prinese 80.000 čez 1 leto in 40.000 čez 2 leti', ['20,00 %', '10,00 %', '12,50 %'], 2],
   ['Kaj se zgodi z determinanto, če zamenjamo dve vrstici?', ['Ostane nespremenjena', 'Postane enaka nič', 'Se pomnoži z 2'], 0],
   ['rang A = rang [A|b] = 2, neznank je 3', ['Natanko ena rešitev', 'Nobene rešitve', 'Neskončno (2 parametra)'], 1],
-  ['Isti podatki: ali sta A in B neodvisna?', [
+  ['P(A) = 0,5, P(B) = 0,4, P(A ∩ B) = 0,2. Ali sta A in B neodvisna?', [
     'Ne, ker P(A ∩ B) ≠ P(A) + P(B)', 'Da, ker sta nezdružljiva dogodka', 'Ne moremo vedeti brez P(A ∪ B)'], 3],
   ['Binomska B(n, p): pričakovana vrednost in varianca?', ['np in √(np(1 − p))', 'n/p in np(1 − p)', 'p in p(1 − p)'], 0],
   ['Kateri pogoj mora izpolnjevati gostota verjetnosti?', [

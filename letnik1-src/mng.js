@@ -6,7 +6,6 @@ const Q = (q, options, correct, explanation) => ({ q, options, correct, explanat
 // vprašanja z možnostjo "Vse/Nobena trditev ..." - vrstni red ostane (ta možnost je zadnja)
 const QF = (q, options, correct, explanation) => ({ q, options, correct, explanation, fixedOrder: true });
 const cards = (arr) => arr.map(([front, back]) => ({ front, back }));
-const IZB = 'Izberite pravilni odgovor:';
 
 const NOTES = `
 ## Kako poteka izpit
@@ -143,7 +142,7 @@ Močno poslanstvo in vizija; prožni, ambiciozni cilji; okolje, ki spodbuja uče
 `;
 
 const uvod = [
-  QF(IZB, ['Management (Dimovski et al., 2014) pomeni sodelovanje oziroma interakcijo med sodelavci in deležniki.', 'Management pomeni planirati, organizirati, voditi in kontrolirati resurse ter procese.', 'Najstarejša švedska beseda za poslovanje je narings liv - preskrba za življenje.', 'Vsi navedeni odgovori so pravilni.'], 3,
+  QF('Kaj drži o pojmu management (1. predavanje)?', ['Management (Dimovski et al., 2014) pomeni sodelovanje oziroma interakcijo med sodelavci in deležniki.', 'Management pomeni planirati, organizirati, voditi in kontrolirati resurse ter procese.', 'Najstarejša švedska beseda za poslovanje je narings liv - preskrba za življenje.', 'Vsi navedeni odgovori so pravilni.'], 3,
     'Vprašanje z delnega testa 2023. Vse tri trditve so s 1. predavanja.'),
   Q('Kdo opredeli management kot doseganje ciljev skozi planiranje, organiziranje, vodenje in kontroliranje?', ['Daft', 'Maslow', 'Porter', 'Skinner'], 0,
     'Daft: ustvarjalno, uspešno in učinkovito doseganje ciljev skozi 4 procese.'),
@@ -178,15 +177,15 @@ const uvod = [
 const plan = [
   Q('Katera funkcija managementa je najbolj povezana z vrhnjim (strateškim) managementom?', ['Planiranje', 'Organiziranje', 'Vodenje', 'Kontroliranje'], 0,
     'Določa, kam podjetje gre in kako tja pride - a planirajo vse ravni.'),
-  QF(IZB, ['Vsaka odločitev, ki jo sprejme vrhnji management, nosi strateške posledice za celotno podjetje.', 'Ekologija prihaja v ospredje, saj se zavedamo, kaj bomo zapustili potomcem.', 'V ospredje prihajajo individualne vrednote, kar kažejo pravice glede osebnih podatkov (GDPR).', 'Vsi navedeni odgovori so pravilni.'], 3,
+  QF('Katera trditev o sodobnem okolju managementa drži?', ['Vsaka odločitev, ki jo sprejme vrhnji management, nosi strateške posledice za celotno podjetje.', 'Ekologija prihaja v ospredje, saj se zavedamo, kaj bomo zapustili potomcem.', 'V ospredje prihajajo individualne vrednote, kar kažejo pravice glede osebnih podatkov (GDPR).', 'Vsi navedeni odgovori so pravilni.'], 3,
     'Vprašanje z delnega testa 2023.'),
   Q('Kaj je PLAN?', ['Načrt, kako doseči cilj, z razporeditvijo virov, urnikom in nalogami', 'Želeno stanje v prihodnosti', 'Razlog, zaradi katerega organizacija obstaja', 'Opis organizacije v prihodnosti'], 0,
     'Cilj = želeno stanje; poslanstvo = razlog obstoja; vizija = slika prihodnosti.'),
   Q('"Naša osnovna naloga je omogočati ljudem zdravo in kakovostno življenje." (Krka) To je:', ['Poslanstvo', 'Vizija', 'Strateški cilj', 'Operativni cilj'], 0,
     'Krkina vizija: utrjevanje položaja enega vodilnih generičnih farmacevtskih podjetij.'),
-  QF(IZB, ['Taktične cilje postavlja vrhnji management.', 'Nižji management postavlja kratkoročno zastavljene cilje.', 'Taktične cilje postavljamo za dolgoročno obdobje.', 'Operativne cilje mora postavljati srednji management.'], 1,
+  QF('Katera raven managementa postavlja katere cilje? Katera trditev drži?', ['Taktične cilje postavlja vrhnji management.', 'Nižji management postavlja kratkoročno zastavljene cilje.', 'Taktične cilje postavljamo za dolgoročno obdobje.', 'Operativne cilje mora postavljati srednji management.'], 1,
     'Vprašanje z delnega testa 2023. Strateški - vrhnji; taktični - srednji; operativni (kratkoročni) - nižji.'),
-  QF(IZB, ['Pri kratkoročnem planiranju določamo korporativne cilje.', 'Pri strateškem planiranju določamo operativne cilje.', 'Pri srednjeročnem planiranju določamo operativne cilje.', 'Pri kratkoročnem planiranju določamo operativne cilje.'], 3,
+  QF('Katera trditev o ravneh planiranja in ciljih drži?', ['Pri kratkoročnem planiranju določamo korporativne cilje.', 'Pri strateškem planiranju določamo operativne cilje.', 'Pri srednjeročnem planiranju določamo operativne cilje.', 'Pri kratkoročnem planiranju določamo operativne cilje.'], 3,
     'Primer izpitnega vprašanja z zadnjega predavanja.'),
   Q('Razvrstitev ciljev na prodajne, proizvodne, nabavne in kadrovske je razvrstitev po:', ['Vsebini', 'Času', 'Pomenu', 'Organizacijski ravni'], 0,
     'Po pomenu: strateški, taktični, operativni. Po času: trajni ... operativni.'),
@@ -196,7 +195,7 @@ const plan = [
     'Poslovna učinkovitost je nujna, a ne zadostna - konkurenti jo hitro posnemajo.'),
   Q('Katere so ravni strategij?', ['Korporacijska, poslovna, funkcijska', 'Strateška, taktična, operativna', 'Globalna, regionalna, lokalna', 'Tekmovalna, kooperativna, hibridna'], 0,
     'Funkcijska = na ravni posamezne poslovne funkcije, npr. trženja.'),
-  QF(IZB, ['Vodilni avtorji modelov strateškega managementa so Avolio, Gardner in Dimovski.', 'SWOT analiza pomeni analizo prednosti, slabosti, priložnosti in nevarnosti.', 'Faza v modelu strateškega managementa v večini ni postavitev izbrane strategije v akcijo.', 'Strateški management zadeva zgolj odgovornosti vrhnjega managementa.'], 1,
+  QF('Katera trditev o strateškem managementu drži?', ['Vodilni avtorji modelov strateškega managementa so Avolio, Gardner in Dimovski.', 'SWOT analiza pomeni analizo prednosti, slabosti, priložnosti in nevarnosti.', 'Faza v modelu strateškega managementa v večini ni postavitev izbrane strategije v akcijo.', 'Strateški management zadeva zgolj odgovornosti vrhnjega managementa.'], 1,
     'Vprašanje z delnega testa 2023. Avtorji modelov: Hunger in Wheelen, Porter, Coulter, Daft ...'),
   Q('Prva faza procesa strateškega managementa po Hungerju in Wheelnu je:', ['Analiza okolja', 'Oblikovanje strategije', 'Uresničevanje strategije', 'Ovrednotenje in kontrola'], 0,
     'Analiza (SWOT) → oblikovanje → uresničevanje (programi, predračuni, postopki) → ovrednotenje.'),
@@ -248,7 +247,7 @@ const org = [
   Q('Dvojno vodenje (vertikalni in horizontalni šef) je značilno za:', ['Matrično strukturo', 'Funkcijsko strukturo', 'Divizijsko strukturo', 'Mrežno strukturo'], 0,
     'Najustreznejša za srednje velike organizacije z več izdelki; slabost: konflikti in veliko sestankov.'),
   QF('Za timsko organizacijsko strukturo velja:', ['Manjši stroški administracije.', 'Dobro ravnotežje med časom, stroški in delom.', 'Najustreznejša je za srednje velike organizacije z več izdelki.', 'Nobena trditev ni pravilna.'], 0,
-    'Vprašanje z delnega testa 2023. B in C opisujeta matrično strukturo.'),
+    'Vprašanje z delnega testa 2023. Ravnotežje med časom, stroški in delom ter primernost za srednje velike organizacije z več izdelki opisujeta matrično strukturo.'),
   Q('Strukturna možnost, pri kateri podjetje ključne aktivnosti izvaja samo, ostalo pa da zunanjim specialistom, je:', ['Mrežna struktura (outsourcing)', 'Funkcijska struktura', 'Matrična struktura', 'Divizijska struktura'], 0,
     'Slabosti mrežne: otežena kontrola virov, šibkejša lojalnost.'),
   Q('Radikalno preoblikovanje poslovnih procesov za večjo kakovost, nižje stroške in hitrost je:', ['Reinženiring', 'Delegiranje', 'Formalizacija', 'Benchmarking'], 0,
@@ -268,7 +267,7 @@ const org = [
 ];
 
 const vod = [
-  QF(IZB, ['Vodenje opredeljujemo kot sposobnost vplivanja na druge ljudi, da sodelujejo pri doseganju skupnih ciljev.', 'V širšem pomenu gre za vodenje v ožjem smislu, komuniciranje, motiviranje in kadrovanje.', 'Na vodenje lahko gledamo kot na umetnost mobiliziranja drugih za skupne cilje.', 'Vse trditve so pravilne.'], 3,
+  QF('Kaj drži o vodenju?', ['Vodenje opredeljujemo kot sposobnost vplivanja na druge ljudi, da sodelujejo pri doseganju skupnih ciljev.', 'V širšem pomenu gre za vodenje v ožjem smislu, komuniciranje, motiviranje in kadrovanje.', 'Na vodenje lahko gledamo kot na umetnost mobiliziranja drugih za skupne cilje.', 'Vse trditve so pravilne.'], 3,
     'Vprašanje z delnega testa 2023.'),
   Q('Kako Luthans opredeli vodenje?', ['Motiviranje zaposlenih, da prostovoljno prevzemajo akcije k skupnim ciljem', 'Ukazovanje na podlagi položaja', 'Nadzor nad stroški', 'Sistematično urejanje aktivnosti'], 0,
     'Zadnja možnost je opredelitev organizacijske kontrole.'),
@@ -358,8 +357,8 @@ const kont = [
     'Četrti vidik je vidik odjemalcev (trženjski).'),
   Q('Management odprtih knjig (Jack Stack) pomeni:', ['Vsi zaposleni dobijo informacije o poslovanju celotne organizacije', 'Javna objava vseh plač', 'Izpit z učbenikom', 'Nadzor nad e-pošto'], 0,
     'Sodobno organizacijsko orodje za kontrolo.'),
-  QF(IZB, ['Uspešnost in učinkovitost sta komplementarna pojma.', 'Učinkovit sistem je tudi uspešen sistem kontrole.', 'Managerji se danes vse bolj zavedajo pomena managerskih sistemov kontrole v obvladovanju uspešnosti.', 'Zanimanje managerjev za sisteme kontrole uspešnosti danes upada.'], 2,
-    'Primer vprašanja z zadnjega predavanja; pravilen je C.'),
+  QF('Katera trditev o sistemih kontrole uspešnosti drži?', ['Uspešnost in učinkovitost sta komplementarna pojma.', 'Učinkovit sistem je tudi uspešen sistem kontrole.', 'Managerji se danes vse bolj zavedajo pomena managerskih sistemov kontrole v obvladovanju uspešnosti.', 'Zanimanje managerjev za sisteme kontrole uspešnosti danes upada.'], 2,
+    'Primer vprašanja z zadnjega predavanja.'),
   Q('Koliko več časa lahko po raziskavah HBR porabi multitasking?', ['Do 25 %', 'Do 5 %', 'Do 75 %', 'Nič - prihrani čas'], 0,
     'Poleg tega zniža kakovost in produktivnost ter povzroča stres.'),
   Q('Kateri NI nasvet za premagovanje odlašanja s predavanj?', ['Počakati na navdih', 'Vizualizacija zaključene naloge', 'Javna zaobljuba', 'Prvi, najmanjši korak'], 0,
@@ -370,7 +369,7 @@ const kont = [
 
 // dodatna vprašanja z delnega testa 2023, ki ne sodijo k posamezni funkciji
 const delni = [
-  QF(IZB, ['V 1990 je Peter Senge populariziral konstrukt tehnične organizacije.', 'Paretovo načelo 80/20 pravi, da za najpomembnejša opravila, s katerimi dosežemo 80 % rezultata, porabimo samo 20 % časa.', 'Google sta leta 1998 na Stanfordu ustanovila Larry Page in Elon Musk.', 'Nobena trditev ni pravilna.'], 1,
+  QF('Katera trditev o učeči se organizaciji, Paretovem načelu in Googlu drži?', ['V 1990 je Peter Senge populariziral konstrukt tehnične organizacije.', 'Paretovo načelo 80/20 pravi, da za najpomembnejša opravila, s katerimi dosežemo 80 % rezultata, porabimo samo 20 % časa.', 'Google sta leta 1998 na Stanfordu ustanovila Larry Page in Elon Musk.', 'Nobena trditev ni pravilna.'], 1,
     'Vprašanje z delnega testa 2023. Senge je populariziral UČEČO SE organizacijo; Google sta ustanovila Page in Brin.'),
 ];
 

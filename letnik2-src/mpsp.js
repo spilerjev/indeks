@@ -47,9 +47,9 @@ const izpit = [
 const rac = [
   Q('Littlov zakon: trening traja 0,5 h, trener ima naenkrat 1 stranko. Koliko strank na uro (pretok)?', ['2', '0,5', '4', '8'], 0,
     'Z = PČ · P → P = Z / PČ = 1 / 0,5 = 2 stranki/h.'),
-  Q('Isti primer: izmena traja 4 h. Koliko strank obdela en trener v izmeni?', ['8', '4', '2', '16'], 0, '4 h · 2 = 8 strank.'),
+  Q('Trening traja 0,5 h, trener ima naenkrat 1 stranko (pretok 2 stranki/h), izmena traja 4 h. Koliko strank obdela en trener v izmeni?', ['8', '4', '2', '16'], 0, '4 h · 2 = 8 strank.'),
   Q('6 trenerjev, 2 izmeni po 4 h (3 na izmeno). Koliko strank na dan?', ['48', '24', '96', '192'], 0, '8 strank na izmeno na trenerja · 6 trenerjev = 48.'),
-  Q('Isti primer, a skupine po 4 stranke (Z = 4, PČ = 0,5 h). Koliko strank na dan?', ['192', '48', '96', '32'], 0,
+  Q('Fitnes: 6 trenerjev, 2 izmeni po 4 h, skupine po 4 stranke (Z = 4, PČ = 0,5 h). Koliko strank na dan?', ['192', '48', '96', '32'], 0,
     'P = 4 / 0,5 = 8 na uro → 32 na izmeno na trenerja → 192 na dan (4× več, a manj osebnega pristopa).'),
   Q('Prodaja 100.000, stroški prodanih 80.000, finančni stroški 6.000, davek 25 %. Prispevek za kritje (dobiček po davku)?', ['10.500', '14.000', '20.000', '15.000'], 0,
     '100.000 − 80.000 = 20.000; − 6.000 = 14.000; − 25 % davka (3.500) = 10.500.'),

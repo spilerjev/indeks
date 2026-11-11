@@ -131,7 +131,7 @@ const obveznice = [
 const obvRac = [
   Q('10-letna obveznica, nominalna vrednost 1.000 €, letni kupon 8 %. Kolikšna je cena pri zahtevani donosnosti 6 %?', ['1.000,00 €', '1.147,20 €', '935,82 €', '1.080,00 €'], 1,
     'Kuponi 588,81 + glavnica 558,39 = 1.147,20 € (premija, ker kupon > zahtevana donosnost).'),
-  Q('Ista obveznica (10 let, kupon 8 %) pri zahtevani donosnosti 9 %:', ['935,82 €', '1.000,00 €', '1.147,20 €', '900,00 €'], 0,
+  Q('Obveznica: 10 let, nominalna vrednost 1.000 €, letni kupon 8 %, zahtevana donosnost 9 %. Kolikšna je cena?', ['935,82 €', '1.000,00 €', '1.147,20 €', '900,00 €'], 0,
     'Kuponi 513,41 + glavnica 422,41 = 935,82 € (diskont). Pri 8 % je cena enaka nominalni (1.000 €).'),
   Q('5-letna obveznica, nominalna vrednost 1.000 €, kupon 4 %, zahtevana donosnost 5 %. Cena?', ['1.000,00 €', '956,71 €', '1.043,29 €', '950,00 €'], 1,
     'Kuponi 173,18 + glavnica 783,53 = 956,71 €. Na tečajnici bi kotirala pri 95,67 (v % nominalne vrednosti). Diskont 43,29 €.'),

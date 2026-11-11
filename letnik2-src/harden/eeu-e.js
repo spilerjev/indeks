@@ -82,16 +82,16 @@ module.exports = [
     'Uvedbo evra in ECB', 'Tri stebre EU', 'Skupni trg do 1992'], 3, 'Konec stebrov in izstop (čl. 50)'],
   ['Madžarska, pšenica: S = 4P − 6, D = −2P + 18, svetovna cena 2 (prosta', [
     '14 kg', '0 kg', '6 kg'], 3, '12 kg'],
-  ['Isti primer: za koliko se zaradi proste trgovine zmanjša ponudnikov presežek?', [
+  ['Madžarska, pšenica: S = 4P − 6, D = −2P + 18; avtarkična cena 4, svetovna cena 2 (prosta trgovina). Za koliko', [
     '24', '6', '8'], 1, '12'],
   ['EU: S = 3 + 4P, D = 52 − 3P, MFN carina 50 %', [
     'Iz Južne Afrike, 21', 'Iz Ugande, 21', 'Iz Južne Afrike, 17,5'], 0, 'Iz Ugande, 17,5'],
-  ['Isti primer: EU sklene FTA z JA', [
+  ['EU: S = 3 + 4P, D = 52 − 3P; pred FTA uvaža 17,5 iz Ugande', [
     'Le ustvarjanje trgovine 21; carinski prihodki ostanejo',
     'Le preusmerjanje 17,5; uvoz in cena ostaneta enaka',
     'Ustvarjanje 17,5 in preusmerjanje 3,5; izguba carin 26,25'], 3,
     'Ustvarjanje 3,5 in preusmerjanje 17,5; izguba carin 26,25'],
-  ['Isti primer: neto učinek FTA z JA na blaginjo EU?', [
+  ['EU: S = 3 + 4P, D = 52 − 3P; FTA z JA zniža ceno', [
     '+19,625', '−26,25', '+3,5'], 1, '−16,625'],
   ['Kaj je glavna razlika med EGS in EFTA?', [
     'EGS: prosta trgovina, medvladna; EFTA: carinska unija',
