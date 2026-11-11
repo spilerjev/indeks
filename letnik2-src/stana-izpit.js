@@ -90,4 +90,22 @@ module.exports = [
   Q('(Zgled izpita) Kaj pomeni stopnja tveganja α = 0,01 pri intervalni oceni?', [
     'Pri 1 % vseh možnih slučajnih vzorcev te velikosti tako izračunani interval parametra ne zajame', 'Verjetnost, da je parameter zunaj izračunanega intervala, je 99 %, znotraj pa 1 %', 'Ocena iz vzorca odstopa od parametra za največ 1 % njegove vrednosti (relativna natančnost)', 'Verjetnost napake 2. vrste je 1 %, zato je moč intervalne ocene 99 %'], 0,
     'α je verjetnost, da postopek da interval, ki parametra ne vsebuje; 1 − α = 99 % je stopnja zaupanja.'),
+  Q('(Zgled izpita 2009) Cena parcel (€) v odvisnosti od velikosti (m²) in oddaljenosti od Ljubljane (km), n = 33, Stepwise. Model 2: konstanta −21.648,8, velikost 362,349 (t = 14,9), oddaljenost −2.953,083 (se = 840,7, Sig. 0,001); R² = 0,896. Katera je najprimernejša ocena regresijske funkcije?', [
+    'cena″ = −21.648,8 + 362,349·velikost − 2.953,083·oddaljenost', 'cena″ = −230.134,3 + 375,271·velikost (model 1)', 'cena″ = 0,892·velikost − 0,210·oddaljenost (standardizirani koeficienti)', 'cena = −21.648,8 + 362,349·velikost · (−2.953,083)·oddaljenost'], 0,
+    'Vzamemo zadnji (popolnejši) model s stepwise postopka; obe spremenljivki sta značilni. Standardizirani koeficienti (Beta) niso ocena funkcije v izvirnih enotah.'),
+  Q('(Zgled izpita 2009) Parcele: cena″ = −21.648,8 + 362,349·velikost − 2.953,083·oddaljenost. Kako razložimo oceno regresijskega koeficienta pri velikosti?', [
+    'Če je parcela za 1 m² večja, oddaljenost od Ljubljane pa se ne spremeni, je v povprečju dražja za 362,349 €', 'Za 1 m² večje parcele so v povprečju dražje za 362,349 € (ne glede na oddaljenost)', 'Če se površina poveča za 1 m², je parcela dražja za 0,892 € pri nespremenjeni oddaljenosti', 'Pričakovano povečanje cene za 1 m² večje površine je 375,271 €'], 0,
+    'Parcialni regresijski koeficient vedno razlagamo ob nespremenjenih ostalih pojasnjevalnih spremenljivkah (ceteris paribus); 375,271 je koeficient iz modela 1, 0,892 je Beta.'),
+  Q('(Zgled izpita 2009) Parcele: koeficient oddaljenosti −2.953,083, se = 840,722, Sig. (2-tailed) 0,001. Katera trditev NI pravilna?', [
+    'Želimo dokazati H₁: β_oddaljenost > 0', 'Enostranski preizkus koeficienta odkrije značilno razliko pri polpromilni stopnji značilnosti', 'Parcele, ki so dlje od Ljubljane, so pri isti velikosti v povprečju cenejše', 'Manjkajoča vrednost preizkusa je t = −3,513'], 0,
+    'Dokazati želimo negativen vpliv (H₁: β < 0). t = −2.953,083/840,722 = −3,51; enostranski P = 0,001/2 = 0,0005. Predznaka t, parcialnega regresijskega in parcialnega korelacijskega koeficienta se ujemajo.'),
+  Q('(Zgled izpita 2009) Parcele: R² modela 2 = 0,896, modela 1 = 0,853; Pearsonova korelacija velikost-oddaljenost = −0,152; parcialna korelacija cena-oddaljenost ob izločeni velikosti = −0,540. Katera trditev je pravilna?', [
+    'Povezanost med velikostjo parcele in oddaljenostjo od Ljubljane je linearna, negativna in šibka (r = −0,152)', 'Ocena koeficienta multiple determinacije je 0,946', 'Partdeterminacijski koeficient ob vstopu oddaljenosti je 0,041', 'Parcialni korelacijski koeficient cena-oddaljenost ob izločeni velikosti je −0,292'], 0,
+    'R² = 0,896 (0,946 je R); part R² = 0,896 − 0,853 = 0,043; parcialna korelacija je −0,540. Koeficient variacije velikosti = 2.165,8/1.637,7 = 132 %.'),
+  Q('(Zgled izpita 2009) Tlakovci: za I. kvaliteto standardni odklon premera ne sme preseči 4 mm. Vzorec 10 tlakovcev: 198, 199, 203, 204, 202, 201, 200, 203, 205, 198 (s² = 6,23). Ali je kupec prejel tlakovce I. kvalitete (α = 5 %)?', [
+    'Da: χ² = 9·6,23/16 = 3,51 < 16,92 (m = 9), H₀: σ = 4 ne zavrnemo', 'Ne: χ² = 3,51 > 2,70, H₀ zavrnemo', 'Da: z = (201,3 − 200)/4 = 0,33 < 1,645', 'Ne moremo odločiti brez podatka o populacijski sredini'], 0,
+    'Preizkus variance: χ² = (n − 1)s²/σ₀² s m = n − 1 = 9; H₁: σ > 4 mm (desnostranski). Kritična meja χ²(9; 0,05) = 16,92.'),
+  Q('(Zgled izpita 2009) Pri t-preizkusu dveh neodvisnih vzorcev je Levenov test dal F = 0,536, Sig. = 0,470. Katera trditev NI pravilna?', [
+    'Levenov (Bartlettov) preizkus je odkril značilno razliko med variancama', 'Če Levenov preizkus odkrije značilno razliko, rezultate t-preizkusa beremo iz druge vrstice', 'Preizkusiti želimo domnevi o enakosti oziroma neenakosti varianc', 'Razmerje varianc 1,15²/1,53² = 0,565 je vrednost F-preizkusa varianc'], 0,
+    'Sig. 0,470 > 0,05 → varianci se ne razlikujeta značilno → beremo prvo vrstico (equal variances assumed): t = −0,081, P = 0,936.'),
 ];

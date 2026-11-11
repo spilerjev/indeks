@@ -18,7 +18,7 @@ const funkcije = [
     'A je minimum, B je sedlo', 'A je maksimum, B je minimum', 'A je sedlo, B je minimum', 'Obe sta minimuma'], 0,
     'f_xx = 2y + 2, f_yy = 2, f_xy = 2x; H = 4y + 4 − 4x². H(A) = 8 > 0 in f_xx(A) = 4 > 0 → minimum; H(B) = −16 < 0 → sedlo.'),
   Q('(Izpit 2016) y = x·e^(x² − 6x + 2). Elastičnost funkcije in njena vrednost pri x = 2?', [
-    'E = 2x² − 6x + 1; E(2) = −3: če x povečamo za 1 %, y pade za ≈ 3 % (elastična)', 'E = 2x² − 6x + 1; E(2) = 3: y zraste za ≈ 3 % (elastična)', 'E = x² − 6x + 2; E(2) = −6 (elastična)', 'E = 2x − 6; E(2) = −2 (neelastična)'], 0,
+    'E = 2x² − 6x + 1; E(2) = −3: če x povečamo za 1 %, y pade za ≈ 3 % (elastična)', 'E = 2x² − 6x + 1; E(2) = 3: če x povečamo za 1 %, y zraste za ≈ 3 % (elastična)', 'E = x² − 6x + 2; E(2) = −6: če x povečamo za 1 %, y pade za ≈ 6 % (elastična)', 'E = 2x − 6; E(2) = −2: če x povečamo za 1 %, y pade za ≈ 2 % (neelastična)'], 0,
     'E = x·y′/y = x(2x − 6) + 1 = 2x² − 6x + 1. |E| > 1 → elastična. E = 1 pri x = 3 (pri x = 0 ni definirana).'),
   Q('(Izpit 2017) f(x) = √x·e^(−x/2). Definicijsko območje, ekstrem in zaloga vrednosti?', [
     'D = [0, ∞); maksimum (1, 1/√e ≈ 0,61); Z = [0, 1/√e]', 'D = ℝ; maksimum (1, 1/√e); Z = (−∞, 1/√e]', 'D = (0, ∞); minimum (1, 1/√e); Z = [1/√e, ∞)', 'D = [0, ∞); maksimum (2, 1/e); Z = [0, 1/e]'], 0,
@@ -48,19 +48,19 @@ const funkcije = [
     'K = 9, L = 6; dobiček 44', 'K = 6, L = 9; dobiček 44', 'K = 12, L = 15; dobiček 55', 'K = 7, L = 5; dobiček 40'], 0,
     'π = KL − K² − 2L² + 12K + 15L − 55; π_K = L − 2K + 12 = 0, π_L = K − 4L + 15 = 0 → K = 9, L = 6; π = 44.'),
   Q('(Izpit 2019) f(x) = 2 − 3·ln x/x. Ekstrem in ∫₁ᵉ f(x) dx?', [
-    'Minimum (e, 2 − 3/e ≈ 0,90); integral 2e − 7/2 ≈ 1,94', 'Maksimum (e, 2 − 3/e); integral 2e − 3/2', 'Minimum (1, 2); integral 2e − 2', 'Minimum (e, 0,90); integral 3/2'], 0,
+    'Minimum (e, 2 − 3/e ≈ 0,90); integral 2e − 7/2 ≈ 1,94', 'Maksimum (e, 2 − 3/e ≈ 0,90); integral 2e − 3/2 ≈ 3,94', 'Minimum (1, 2); integral od 1 do e je 2e − 2 ≈ 3,44', 'Minimum (e, 0,90); integral od 1 do e je 3/2 = 1,50'], 0,
     'f′ = 3(ln x − 1)/x² = 0 → x = e, f″(e) > 0. ∫(2 − 3 ln x/x) dx = 2x − 3/2·(ln x)² + C; od 1 do e: (2e − 3/2) − 2 = 2e − 7/2.'),
   Q('(Izpit 2020) f(x) = (2x + 1)·e^(−x²). Ničla in ekstrema?', [
-    'Ničla x = −½; minimum (−1, −e⁻¹ ≈ −0,37), maksimum (½, 2e^(−1/4) ≈ 1,56)', 'Ničla x = ½; maksimum (−1, −0,37), minimum (½, 1,56)', 'Ničla x = −½; minimum (−½, 0), maksimum (0, 1)', 'Ničel ni; maksimum (0, 1)'], 0,
+    'Ničla x = −½; minimum (−1, −e⁻¹ ≈ −0,37), maksimum (½, 2e^(−1/4) ≈ 1,56)', 'Ničla x = ½; maksimum (−1, −e⁻¹ ≈ −0,37), minimum (½, 2e^(−1/4) ≈ 1,56)', 'Ničla x = −½; minimum (−½, 0), maksimum (0, 1); prevojev ni', 'Ničel ni; maksimum (0, 1), minimum (−1, −0,37); limiti sta ∞'], 0,
     'f′ = (−4x² − 2x + 2)e^(−x²) = 0 → x = −1 ali ½; f″(−1) > 0, f″(½) < 0. Narašča na (−1, ½); limiti v ±∞ sta 0.'),
   Q('(Izpit 2021) f(x) = (x + 2)/√(x² + 2). Ekstrem, limiti in zaloga vrednosti?', [
-    'Maksimum (1, √3 ≈ 1,7); x → ∞: f → 1, x → −∞: f → −1; Z = (−1, √3]', 'Minimum (1, √3); x → ±∞: f → 0; Z = [√3, ∞)', 'Maksimum (−2, 0); x → ∞: f → 1; Z = (−1, 1)', 'Ekstremov ni; x → ±∞: f → ±1; Z = (−1, 1)'], 0,
+    'Maksimum (1, √3 ≈ 1,7); x → ∞: f → 1, x → −∞: f → −1; Z = (−1, √3]', 'Minimum (1, √3 ≈ 1,7); x → ∞: f → 0, x → −∞: f → 0; Z = [√3, ∞)', 'Maksimum (−2, 0); x → ∞: f → 1, x → −∞: f → −1; Z = (−1, 1)', 'Ekstremov ni; x → ∞: f → 1, x → −∞: f → −1; Z = (−1, 1)'], 0,
     'f′ = (2 − 2x)/(x² + 2)^(3/2) = 0 → x = 1, f(1) = 3/√3 = √3. Ničla x = −2 (liha), polov ni, f(0) = √2.'),
   Q('(Izpit 2022) f(x) = eˣ/(1 − 2x). Pol, ekstrem in limiti?', [
-    'Pol x = ½; maksimum (3/2, −e^(3/2)/2 ≈ −2,24); x → −∞: f → 0, x → ∞: f → −∞', 'Pol x = ½; minimum (3/2, −2,24); x → ∞: f → 0', 'Pol x = −½; maksimum (0, 1); x → ∞: f → ∞', 'Polov ni; maksimum (3/2, 2,24); x → −∞: f → 0'], 0,
+    'Pol x = ½; maksimum (3/2, −e^(3/2)/2 ≈ −2,24); x → −∞: f → 0, x → ∞: f → −∞', 'Pol x = ½; minimum (3/2, −e^(3/2)/2 ≈ −2,24); x → −∞: f → −∞, x → ∞: f → 0', 'Pol x = −½; maksimum (0, 1); x → −∞: f → 0, x → ∞: f → ∞', 'Polov ni; maksimum (3/2, e^(3/2)/2 ≈ 2,24); x → −∞: f → 0, x → ∞: f → 0'], 0,
     'f′ = eˣ(3 − 2x)/(1 − 2x)² = 0 → x = 3/2; f″(3/2) < 0. Konveksna na (−∞, ½), konkavna na (½, ∞); Z = (−∞, −e^(3/2)/2] ∪ (0, ∞).'),
   Q('(Izpit 2022) f(x) = x²/ln x, x₀ = 3. Mejna vrednost in koeficient elastičnosti pri x₀?', [
-    'f′(3) ≈ 2,98; E ≈ 1,09 → če x zmanjšamo za 3 %, f pade za ≈ 3,27 %', 'f′(3) ≈ 1,09; E ≈ 2,98 → f pade za ≈ 8,9 %', 'f′(3) ≈ 2,98; E ≈ 0,33 → f pade za ≈ 1 %', 'f′(3) ≈ 0,298; E ≈ 1 → f pade za 3 %'], 0,
+    'f′(3) ≈ 2,98; E ≈ 1,09 → če x zmanjšamo za 3 %, f pade za ≈ 3,27 %', 'f′(3) ≈ 1,09; E ≈ 2,98 → če x zmanjšamo za 3 %, f pade za ≈ 8,94 %', 'f′(3) ≈ 2,98; E ≈ 0,33 → če x zmanjšamo za 3 %, f pade za ≈ 1,00 %', 'f′(3) ≈ 0,298; E ≈ 1,00 → če x zmanjšamo za 3 %, f pade za ≈ 3,00 %'], 0,
     'f′ = x(2 ln x − 1)/(ln x)²; E = x·f′/f = (2 ln x − 1)/ln x. Usklajeno elastična pri E = ±1: x = e in x = e^(1/3).'),
   Q('(Izpit 2015) Investicija: danes 15.000 €, čez 3 leta še 5.000 €; 6 enakih donosov konec 5. do 10. leta; 5 % letno. Kolikšni donosi dajo NSV = 0 in kolikšna je takrat interna stopnja donosnosti?', [
     'Donosi 4.626,48 €; IRR = 5 %', 'Donosi 3.333,33 €; IRR = 5 %', 'Donosi 4.626,48 €; IRR = 0 %', 'Donosi 5.000,00 €; IRR = 10 %'], 0,
@@ -108,7 +108,7 @@ const matrike = [
     'Enoparametrična (y): u = 4 − 4y, v = 4 − 5y, x = −2 + 4y', 'Natanko ena: u = 4, v = 4, x = −2, y = 0', 'Sistem ni rešljiv', 'Dvoparametrična (x, y): u = 4 − 4y, v = 4 − 5y'], 0,
     'Rang 3, 4 neznanke; v stolpcu y ni pivota → y parameter.'),
   Q('(Izpit 2018) Sistem x − ay + z + 3t = 1, 2x + 2y + t = 3, 2y − z − t = 0, … je rešljiv le za določen a (rang matrike sistema je 3, zadnja vrstica razširjene matrike je (0 0 0 0 | a + 1)). Za kateri a in kakšna je rešitev?', [
-    'a = −1; enoparametrična rešitev (parameter z)', 'a = 1; enolična rešitev', 'a = 0; dvoparametrična rešitev', 'Za vsak a; enoparametrična rešitev'], 0,
+    'a = −1; enoparametrična rešitev (parameter z)', 'a = 1; enolična rešitev (vse štiri neznanke določene)', 'a = 0; dvoparametrična rešitev (parametra z in t)', 'Za vsak a; enoparametrična rešitev (parameter t)'], 0,
     'Rešljiv, ko je rang razširjene matrike enak rangu matrike sistema (3) → a + 1 = 0. Štiri neznanke → en parameter.'),
   Q('(Izpit 2018) Homogeni sistem x + 2y + z − t = 0, 2x + y − z − 2t = 0, 3y + 3z + t = 0 (rang 3). Rešitev?', [
     'z ∈ ℝ: x = z, y = −z, t = 0', 'Samo trivialna rešitev', 'z ∈ ℝ: x = −z, y = z, t = 0', 't ∈ ℝ: x = t, y = −t, z = 0'], 0,
@@ -120,7 +120,7 @@ const matrike = [
     'X = (A⁻¹ + E)⁻¹A = [[½,0,0],[3/2,½,0],[2,3/2,½]]', 'X = A(A⁻¹ + E) = [[2,0,0],[2,2,0],[2,2,2]]', 'X = A − A⁻¹ = [[0,0,0],[4,0,0],[0,4,0]]', 'X = E'], 0,
     'A = A⁻¹X + X = (A⁻¹ + E)X → X = (A⁻¹ + E)⁻¹A. Enako: X = (A + E)⁻¹A².'),
   Q('(Izpit 2020) Sistem 3x − 3y − 2z + 4u = a², −2x + 2y − z + 2u = −3, x − y + 2z − 4u = 3. Za kateri a je rešljiv in kakšna je rešitev?', [
-    'a = ±1; dvoparametrična: x = 1 + y, z = 1 + 2u', 'a = 1; enolična rešitev', 'a = 0; enoparametrična rešitev', 'Za vsak a; dvoparametrična rešitev'], 0,
+    'a = ±1; dvoparametrična: x = 1 + y, z = 1 + 2u', 'a = 1; enolična rešitev x = 1, y = 0, z = 1, u = 0', 'a = 0; enoparametrična rešitev s parametrom u', 'Za vsak a; dvoparametrična rešitev x = 1 + y, z = 1 + 2u'], 0,
     'Eliminacija da zadnjo vrstico (0 0 0 0 | a² − 1): rešljiv, ko je a² = 1. Rang 2, 4 neznanke → parametra y in u.'),
   Q('(Izpit 2021) A = [[−1,−2],[1,3]], B = [[1,3,0],[−2,1,1]]. Rešitev enačbe 2XA = Bᵀ + XA⁻¹?', [
     'X = Bᵀ(2A − A⁻¹)⁻¹ = [[1,0],[2,1],[−1/7,1/7]]', 'X = (2A − A⁻¹)⁻¹Bᵀ', 'X = Bᵀ(2A + A⁻¹)⁻¹ = [[1,0],[2,1],[1/7,−1/7]]', 'X = Bᵀ·A/2'], 0,
