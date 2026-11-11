@@ -261,7 +261,9 @@ module.exports = {
     },
     {
       id: 'izpit', name: 'Izpit', type: 'izpit',
-      decks: [{ id: 'trz-izpit-pn', name: 'Stare izpitne trditve (P/N)', questions: izpitPN }],
+      decks: [{ id: 'trz-izpit-pn', name: 'Stare izpitne trditve (P/N)', questions: izpitPN },
+        { id: 'trz-izpit-kombo', name: 'Kaj je pravilno? (kombinacije s starih izpitov)', questions: require('./trz-stari').kombinacije },
+        { id: 'trz-izpit-pn2', name: 'Stare izpitne trditve (P/N) - 2. zbirka', questions: require('./trz-stari').pn }],
     },
   ],
 };
