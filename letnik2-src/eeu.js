@@ -222,6 +222,7 @@ module.exports = {
     },
     { id: 'izpit', name: 'Delni / celotni izpit', type: 'izpit', decks: [
       { id: 'eeu-izpit-stari', name: 'Institucije, EMU, širitve (stari kolokviji)', questions: require('./eeu-izpit') },
+      { id: 'eeu-izpiti-2017-2020', name: 'Celotna izpita 2017 in 2020 (z rešitvami)', questions: require('./eeu-izpiti') },
     ] },
   ],
 };
