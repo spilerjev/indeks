@@ -53,6 +53,14 @@ function useAuth() {
   return { session: session === undefined ? null : session, loading: session === undefined, signOut };
 }
 
+/* JSON z urejenimi ključi: Supabase (jsonb) vrne ključe v drugem vrstnem redu kot lokalni zapis,
+   zato navaden JSON.stringify istega poskusa ne prepozna kot dvojnika. */
+function canon(v) {
+  if (Array.isArray(v)) return "[" + v.map(canon).join(",") + "]";
+  if (v && typeof v === "object") return "{" + Object.keys(v).sort().map((k) => JSON.stringify(k) + ":" + canon(v[k])).join(",") + "}";
+  return JSON.stringify(v);
+}
+
 /* Združi dve statistiki: za vsak deck poveže poskuse in odstrani dvojnike. */
 function mergeStats(a, b) {
   const out = {};
@@ -63,7 +71,7 @@ function mergeStats(a, b) {
     const seen = new Set();
     const attempts = [];
     [...aa, ...bb].forEach((at) => {
-      const id = JSON.stringify(at);
+      const id = canon(at);
       if (seen.has(id)) return;
       seen.add(id);
       attempts.push(at);
@@ -99,7 +107,7 @@ function useCloudStats(userId) {
       if (cancelled || cloud == null) return;
       const merged = mergeStats(ref.current, cloud);
       apply(merged);
-      if (JSON.stringify(merged) !== JSON.stringify(cloud)) {
+      if (canon(merged) !== canon(cloud)) {
         const { error } = await supabase.from("user_stats").upsert({ user_id: userId, stats: merged, updated_at: new Date().toISOString() });
         if (error) console.warn("indeks stats: napaka pri zapisu (uskladitev):", error.message);
       }
@@ -177,6 +185,63 @@ function mapAuthErr(error) {
   return error.message || "Napaka. Poskusi znova.";
 }
 
+/* Preverjanje e-naslova ob registraciji: oblika, tipkarske napake v pogostih domenah (gmail.vom -> gmail.com)
+   in nenavadne končnice. Vrne { err, fix } ali { warn } ali null. */
+const MAIL_DOMAINS = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "live.com", "icloud.com", "me.com",
+  "gmx.com", "gmx.net", "mail.com", "googlemail.com", "siol.net", "t-2.net", "amis.net", "telemach.net", "student.uni-lj.si", "ef.uni-lj.si", "uni-lj.si"];
+const MAIL_TLDS = ["com", "si", "net", "org", "eu", "edu", "gov", "info", "io", "co", "biz", "app", "dev",
+  "de", "at", "it", "hr", "rs", "ba", "mk", "me", "ch", "fr", "nl", "be", "hu", "cz", "sk", "pl", "es", "pt", "uk",
+  "ie", "se", "no", "dk", "fi", "us", "ca", "au", "ru", "ua", "ro", "bg", "gr", "lu", "li", "mt", "cy", "lt", "lv", "ee"];
+function editDist(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++)
+    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+function checkEmail(addr) {
+  const a = addr.trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/.test(a))
+    return { err: "E-naslov ni v pravi obliki (npr. ime@gmail.com)." };
+  const [user, dom] = a.split("@");
+  const tld = dom.split(".").pop();
+  const name = dom.slice(0, -(tld.length + 1));
+  if (!MAIL_DOMAINS.includes(dom)) {
+    const near = MAIL_DOMAINS.find((kd) => {
+      const kt = kd.split(".").pop(), kn = kd.slice(0, -(kt.length + 1));
+      if (name === kn) return ["gmail", "icloud"].includes(kn) || !MAIL_TLDS.includes(tld); // gmail.vom, gmail.co
+      return tld === kt && editDist(name, kn) <= (kn.length >= 5 ? 2 : 1); // gmial.com, hotmial.com
+    });
+    if (near) return { err: `Domena "${dom}" ne obstaja - verjetno ${user}@${near}?`, fix: `${user}@${near}` };
+  }
+  if (!MAIL_TLDS.includes(tld))
+    return { warn: `Končnica ".${tld}" je nenavadna - preveri e-naslov. Če je pravilen, klikni "Ustvari račun" še enkrat.` };
+  return null;
+}
+
+/* Pogoji uporabe in zasebnost. Ob spremembi besedila dvigni TERMS_VERSION (shrani se v user_metadata ob registraciji). */
+const TERMS_VERSION = "2026-11-11";
+const TERMS_CONTACT = "leon.spiler@gmail.com";
+const TERMS = [
+  ["Kaj je indeks.", "Brezplačen študijski pripomoček za študente EF UL. Vsebina je pripravljena skrbno, a brez jamstva za popolnost in pravilnost - za izpit veljajo uradna gradiva predmeta."],
+  ["Upravljavec podatkov", `Leon Špiler, kontakt: ${TERMS_CONTACT}.`],
+  ["Kateri podatki in zakaj", "E-naslov in geslo (geslo je šifrirano) za prijavo ter statistika reševanja kvizov za sinhronizacijo med napravami. Iz statistike vseh uporabnikov prikazujemo le anonimna skupna povprečja."],
+  ["Obvestila in ponudbe", "Samo če to posebej označiš: na e-naslov ti občasno pošljemo novosti in ponudbe indeks. (npr. če bo kdaj kakšen del plačljiv). Soglasje ni pogoj za uporabo in ga lahko kadarkoli prekličeš."],
+  ["Komu podatke posredujemo", "E-naslova in drugih podatkov ne prodajamo in ne posredujemo tretjim osebam za njihove namene. Podatke tehnično hrani ponudnik baze Supabase kot obdelovalec."],
+  ["Tvoje pravice", "Kadarkoli lahko zahtevaš vpogled, popravek ali izbris računa in podatkov ter prekličeš soglasje za obvestila - piši na zgornji kontakt. Pritožbo lahko vložiš pri Informacijskem pooblaščencu RS."],
+  ["Spremembe", "Pogoje lahko posodobimo; o bistvenih spremembah te obvestimo po e-pošti ali v aplikaciji."],
+];
+function TermsBox() {
+  return (
+    <div style={{ marginTop: 8, maxHeight: 220, overflowY: "auto", padding: "10px 12px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", fontSize: 12.5, lineHeight: 1.5, color: "var(--ink2)" }}>
+      <div style={{ fontWeight: 800, color: "var(--ink)", marginBottom: 6 }}>Pogoji uporabe in zasebnost ({TERMS_VERSION.split("-").reverse().join(". ")})</div>
+      {TERMS.map(([h, t]) => (
+        <div key={h} style={{ marginBottom: 7 }}><b style={{ color: "var(--ink)" }}>{h.endsWith(".") ? h : h + "."}</b> {t}</div>
+      ))}
+    </div>
+  );
+}
+
 function Login({ year, onBack }) {
   const [mode, setMode] = useState("in"); // "in" = prijava, "up" = registracija
   const [email, setEmail] = useState("");
@@ -184,16 +249,28 @@ function Login({ year, onBack }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [info, setInfo] = useState("");
+  const [fix, setFix] = useState("");
+  const [warned, setWarned] = useState("");
+  const [terms, setTerms] = useState(false);
+  const [marketing, setMarketing] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const inputStyle = { width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" };
   const submit = async (e) => {
     e.preventDefault();
     const addr = email.trim();
     if (!addr || !password) return;
-    setErr(""); setInfo("");
+    setErr(""); setInfo(""); setFix("");
+    if (mode === "up") {
+      const chk = checkEmail(addr);
+      if (chk && chk.err) { setErr(chk.err); setFix(chk.fix || ""); return; }
+      if (chk && chk.warn && warned !== addr.toLowerCase()) { setErr(chk.warn); setWarned(addr.toLowerCase()); return; }
+    }
     if (mode === "up" && password.length < 6) { setErr("Geslo naj ima vsaj 6 znakov."); return; }
+    if (mode === "up" && !terms) { setErr("Za registracijo se strinjaj s pogoji uporabe."); return; }
     setBusy(true);
     if (mode === "up") {
-      const { data, error } = await supabase.auth.signUp({ email: addr, password, options: { emailRedirectTo: window.location.origin + window.location.pathname } });
+      const consent = { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString(), marketing_consent: marketing };
+      const { data, error } = await supabase.auth.signUp({ email: addr, password, options: { emailRedirectTo: window.location.origin + window.location.pathname, data: consent } });
       setBusy(false);
       if (error) { setErr(mapAuthErr(error)); return; }
       if (!data.session) {
@@ -233,7 +310,30 @@ function Login({ year, onBack }) {
             style={{ ...inputStyle, marginBottom: 10 }} />
           <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
             placeholder="Geslo" autoComplete={up ? "new-password" : "current-password"} style={inputStyle} />
+          {up && (
+            <div style={{ marginTop: 12, fontSize: 13, color: "var(--ink2)", lineHeight: 1.45 }}>
+              <label style={{ display: "flex", gap: 8, alignItems: "flex-start", cursor: "pointer" }}>
+                <input type="checkbox" checked={terms} onChange={(e) => setTerms(e.target.checked)} style={{ marginTop: 2 }} />
+                <span>Strinjam se s{" "}
+                  <button type="button" onClick={() => setShowTerms((v) => !v)}
+                    style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--terra)", fontWeight: 700, textDecoration: "underline", fontSize: 13 }}>
+                    pogoji uporabe in zasebnosti
+                  </button>.</span>
+              </label>
+              {showTerms && <TermsBox />}
+              <label style={{ display: "flex", gap: 8, alignItems: "flex-start", cursor: "pointer", marginTop: 8 }}>
+                <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} style={{ marginTop: 2 }} />
+                <span>Želim prejemati novosti in ponudbe indeks. na e-naslov (neobvezno, prekličem lahko kadarkoli).</span>
+              </label>
+            </div>
+          )}
           {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
+          {fix && (
+            <button type="button" onClick={() => { setEmail(fix); setFix(""); setErr(""); }}
+              style={{ background: "none", border: "none", padding: 0, marginTop: 6, cursor: "pointer", color: "var(--terra)", fontSize: 13, fontWeight: 700, textDecoration: "underline" }}>
+              Popravi v {fix}
+            </button>
+          )}
           {info && <div style={{ color: "var(--teal)", fontSize: 13, marginTop: 10 }}>{info}</div>}
           <button type="submit" disabled={busy}
             style={{ width: "100%", marginTop: 14, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
@@ -242,7 +342,7 @@ function Login({ year, onBack }) {
         </form>
         <div style={{ marginTop: 16, textAlign: "center", fontSize: 13, color: "var(--ink2)" }}>
           {up ? "Že imaš račun? " : "Nimaš računa? "}
-          <button onClick={() => { setMode(up ? "in" : "up"); setErr(""); setInfo(""); }}
+          <button onClick={() => { setMode(up ? "in" : "up"); setErr(""); setInfo(""); setFix(""); }}
             style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--terra)", fontWeight: 700, textDecoration: "underline" }}>
             {up ? "Prijava" : "Registriraj se"}
           </button>
