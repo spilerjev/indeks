@@ -262,6 +262,7 @@ module.exports = {
         { id: 'stana-opisna', name: 'Opisna statistika in frekvenčne porazdelitve', questions: opisna },
         { id: 'stana-porazd', name: 'Verjetnostne porazdelitve in normalna porazdelitev', questions: porazdelitve },
         { id: 'stana-stari', name: 'Iz starih kolokvijev (tudi vzorčenje)', questions: stariKolokviji },
+        { id: 'stana-stari2', name: 'Preizkušnja 2019 in uradni zgled (z rešitvami)', questions: require('./stana-stari2') },
         { id: 'stana-rac-normalna', name: 'Računske naloge: normalna porazdelitev', calc: true, questions: racNormalna },
         { id: 'stana-rac-opisna', name: 'Računske naloge: opisna statistika', calc: true, questions: racOpisna },
         { id: 'stana-vzorcenje', name: 'Vzorčenje: načini izbire, cenilke, SE (P03)', questions: [...p03.vzorcenje, ...p03.pravilnoNe] },
