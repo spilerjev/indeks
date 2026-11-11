@@ -3,7 +3,9 @@
 function applyHarden(questions, patches, label) {
   let ok = 0;
   for (const [prefix, wrongs, pos, newCorrect, vse] of patches) {
-    const hit = questions.filter((q) => q.options && q.q.startsWith(prefix));
+    // "predpona||del odgovora" loči vprašanja z enakim besedilom po enem od odgovorov (ki ostane tudi po popravku)
+    const [qp, op] = prefix.split('||');
+    const hit = questions.filter((q) => q.options && q.q.startsWith(qp) && (!op || q.options.some((o) => o.includes(op))));
     if (!hit.length || (hit.length > 1 && vse !== 'vse')) { console.warn(`  ! ${label}: "${prefix}" ujemanj: ${hit.length}`); continue; }
     for (const q of hit) {
     const right = newCorrect || q.options[q.correct];
