@@ -37,9 +37,10 @@ for (const mod of MODULES) {
     if (mp.prependNotesOf) {
       const ids = [].concat(mp.prependNotesOf);
       const pre = ids.map((id) => (subj.parts.find((p) => p.id === id) || {}).notes).filter(Boolean);
-      if (pre.length) part.notes = pre.join('\n') + '\n' + part.notes;
+      if (pre.length) part.notes = part.notes + '\n' + pre.join('\n'); // najprej lastni zapiski (npr. format izpita), nato zapiski kolokvijev
     }
     else if (mp.notes) part.notes = mp.notes;
+    if (mp.appendNotesMd) part.notes = (part.notes || '').split('<!--dodatek-->')[0] + '<!--dodatek-->' + render(mp.appendNotesMd);
   }
   const q = subj.parts.reduce((n, p) => n + p.decks.reduce((m, d) => m + d.questions.length, 0), 0);
   const c = subj.parts.reduce((n, p) => n + (p.flashcards || []).reduce((m, d) => m + d.cards.length, 0), 0);
