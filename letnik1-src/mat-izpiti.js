@@ -156,16 +156,18 @@ const verjetnost = [
     'P(nepolizana) = 0,6·0,1 = 0,06. P(Metka | polizana) = 0,22/0,94 = 0,234. P(natanko eden se javi) = 0,4·0,1 + 0,6·0,9 = 0,58.'),
 ];
 
+const more = require('./mat-izpiti2');
+
 module.exports = {
   id: 'mat',
   parts: [
     { id: 'k1', decks: [
-      { id: 'mat-stari-funkcije', name: 'Stari izpiti: funkcije, odvodi, integrali (z rešitvami)', calc: true, questions: funkcije },
-      { id: 'mat-stari-financna', name: 'Stari izpiti: finančna matematika (z rešitvami)', calc: true, questions: financna },
+      { id: 'mat-stari-funkcije', name: 'Stari izpiti: funkcije, odvodi, integrali (z rešitvami)', calc: true, questions: [...funkcije, ...more.funkcije] },
+      { id: 'mat-stari-financna', name: 'Stari izpiti: finančna matematika (z rešitvami)', calc: true, questions: [...financna, ...more.financna] },
     ] },
     { id: 'k2', decks: [
-      { id: 'mat-stari-matrike', name: 'Stari izpiti: sistemi in determinante (z rešitvami)', calc: true, questions: matrike },
-      { id: 'mat-stari-verjetnost', name: 'Stari izpiti: verjetnost in slučajne spremenljivke (z rešitvami)', calc: true, questions: verjetnost },
+      { id: 'mat-stari-matrike', name: 'Stari izpiti: sistemi in determinante (z rešitvami)', calc: true, questions: [...matrike, ...more.matrike] },
+      { id: 'mat-stari-verjetnost', name: 'Stari izpiti: verjetnost in slučajne spremenljivke (z rešitvami)', calc: true, questions: [...verjetnost, ...more.verjetnost] },
     ] },
   ],
 };
