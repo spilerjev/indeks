@@ -35,8 +35,9 @@ for (const mod of MODULES) {
     if (mp.flashcards) { part.flashcards = part.flashcards || []; upsert(part.flashcards, mp.flashcards); }
     if (mp.notesMd) part.notes = render(mp.notesMd);
     if (mp.prependNotesOf) {
-      const src = subj.parts.find((p) => p.id === mp.prependNotesOf);
-      if (src && src.notes) part.notes = src.notes + '\n' + part.notes;
+      const ids = [].concat(mp.prependNotesOf);
+      const pre = ids.map((id) => (subj.parts.find((p) => p.id === id) || {}).notes).filter(Boolean);
+      if (pre.length) part.notes = pre.join('\n') + '\n' + part.notes;
     }
     else if (mp.notes) part.notes = mp.notes;
   }
