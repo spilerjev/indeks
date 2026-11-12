@@ -11,8 +11,8 @@ module.exports = [
     'Staranje prebivalstva in manjši delež mladih vadečih'], 3,
     'Vrnitev ljudi v fitnese in lahko posnemljiva konkurenca'],
   ['Fitnes: 6 trenerjev, 2 izmeni po 4 h, skupine po 4 stranke', ['48', '96', '384'], 3, '192'],
-  ['Kateri ukrep najbolj poveča prispevek za kritje (izhodišče 10.500)?', [
-    'Prodaja +50 % (18.000)', 'Finančni stroški −50 % (12.750)', 'Cena +10 % (21.000)'], 3, 'Proizvodni stroški −20 % (22.500)'],
+  ['Prodaja 100.000, stroški prodanih 80.000, finančni stroški 6.000, davek 25 % (', [
+    'Prodaja +50 % (stroški prodanih sorazmerni)', 'Finančni stroški −50 %', 'Cena +10 % pri enaki količini'], 3, 'Stroški prodanih −20 %'],
   ['Kaj je ozko grlo procesa?', [
     'Aktivnost z najdaljšim časom v procesnem diagramu',
     'Resurs z največjo zmogljivostjo, ki je najbolj obremenjen',

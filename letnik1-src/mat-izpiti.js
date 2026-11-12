@@ -88,7 +88,7 @@ const financna = [
   Q('(Izpit 2020) Kredit 5.000 € odplačamo z enakimi mesečnimi anuitetami; prva eno leto in en mesec po najemu, zadnja 5 let po najemu. Konformno mesečno obrestovanje, 4 % letno. Anuiteta?', [
     '117,24 €', '104,17 €', '110,94 €', '125,60 €'], 0,
     '48 anuitet, r = ¹²√1,04; ekvivalenca na konec 5. leta: x·(r⁴⁸ − 1)/(r − 1) = 5.000·r⁶⁰ → x = 117,24 €.'),
-  Q('(Izpit 2020) Isti kredit (5.000 €, 4 % konformno mesečno, 48 obrokov od 13. do 60. meseca): če je mesečna anuiteta 100 €, preostanek pa poravnamo z zadnjim obrokom, koliko znaša zadnje plačilo?', [
+  Q('(Izpit 2020) Kredit 5.000 € (4 % letno, konformno mesečno obrestovanje) odplačujemo z 48 mesečnimi obroki od 13. do 60. meseca po najemu. Če je mesečna anuiteta 100 €, preostanek pa poravnamo z zadnjim obrokom, koliko znaša zadnje plačilo?', [
     '994,75 €', '827,52 €', '1.117,24 €', '600,00 €'], 0,
     'y = 5.000·r⁶⁰ − 100·r·(r⁴⁷ − 1)/(r − 1) = 994,75 €.'),
   Q('(Izpit 2018) 4 leta na začetku vsakega četrtletja vplačujemo po 1.500 €; nato 5 let prejemamo polletno rento na začetku polletja, prvo 7 let po prvem pologu. 1,2 % letno, relativno četrtletno obrestovanje. Renta?', [
@@ -112,7 +112,7 @@ const financna = [
   Q('(Izpit 2014) Kredit 1.000.000 € v 10 enakih polletnih obrokih, prvi pol leta po najemu; 6 % letno, relativno četrtletno obrestovanje. Obrok?', [
     '117.365,16 €', '100.000,00 €', '136.207,06 €', '115.000,00 €'], 0,
     'r = 1,015 (četrtletno); G·r²⁰ = x·(r²⁰ − 1)/(r² − 1) → x = 117.365,16 €.'),
-  Q('(Izpit 2014) Isti kredit (1.000.000 €, 6 % relativno četrtletno, 10 polletnih obrokov), a prvi obrok šele 3 leta po najemu. Obrok?', [
+  Q('(Izpit 2014) Kredit 1.000.000 € odplačamo v 10 enakih polletnih obrokih; 6 % letno, relativno četrtletno obrestovanje, a prvi obrok šele 3 leta po najemu. Obrok?', [
     '136.207,06 €', '117.365,16 €', '127.628,00 €', '150.000,00 €'], 0,
     'Redukcijski termin čez 7,5 leta: G·r³⁰ = y·(r²⁰ − 1)/(r² − 1) → y = 136.207,06 €. Odlog podraži obrok, ker dolg 2,5 leta le raste.'),
 ];

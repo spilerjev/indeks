@@ -30,7 +30,7 @@ const rac = [
     '4 + 1 + 2 = 7 min/pacienta → zmogljivost 60/7 = 8,6 pac./h.'),
   Q('Ortodont: stol je zaseden pri aktivnostih 2, 3, 4, 5, 6 (1 + 5 + 16 + 4 + 4). Kolikšna je zmogljivost procesa (1 stol, 1 receptor, 1 zobotehnik, 1 zdravnik)?', ['8,6 pac./h', '6,7 pac./h', '3 pac./h', '2 pac./h'], 3,
     'Obremenitev stola 30 min → 60/30 = 2 pac./h = ozko grlo. Zdravnik: 60/20 = 3, zobotehnik 60/9 = 6,7, receptor 60/7 = 8,6.'),
-  Q('Ortodont: dodamo še en stol (2 stola). Kolikšna je nova zmogljivost procesa?', ['4 pac./h', '3 pac./h', '2 pac./h', '6,7 pac./h'], 1,
+  Q('Ortodont: stol je obremenjen 30 min na pacienta (2 pac./h), zdravnik 20 min (3 pac./h), zobotehnik 9 min (6,7 pac./h), receptor 7 min (8,6 pac./h). Dodamo še en stol (2 stola). Kolikšna je nova zmogljivost procesa?', ['4 pac./h', '3 pac./h', '2 pac./h', '6,7 pac./h'], 1,
     'Stoli: 2 · 2 = 4/h, a zdravnik zmore le 3/h → ozko grlo se premakne na zdravnika: 3 pac./h (+1, ne +2).'),
   Q('Trije delavci, 5 operacij: O1 (30) → vzporedno O2 (20) in O3 (40) → O4 (20) → O5 (50). Kolikšen je TPČ?', ['140 min', '160 min', '120 min', '100 min'], 0,
     'Najdaljša pot: O1 + O3 + O4 + O5 = 30 + 40 + 20 + 50 = 140 min. O2 je nekritična (pot čez O2 je 20 min krajša).'),

@@ -19,7 +19,7 @@ const izpitSlike = [
   C('(Izpit) Zmogljivost 30.000 enot. Pri povečanju s 10.000 na 15.000 enot se TC povečajo s 300.000 na 400.000 EUR. Koliko so MC, FC in EAC?', [
     'MC = 20, FC = 100.000, EAC = −0,33', 'MC = 20, FC = 100.000, EAC = −0,11', 'MC = 20, FC = 200.000, EAC = −0,33', 'MC = 26,7, FC = 0, EAC = 0,67'], 0,
     'MC = 100.000 / 5.000 = 20. FC = 300.000 − 20 × 10.000 = 100.000. ETC = 33,3 % / 50 % = 0,67 → EAC = −0,33: ob 1 % večjem obsegu AC padejo za 0,33 %. (−0,11 je napačen izračun s študentske rešitve.)'),
-  C('(Izpit) Isto podjetje (MC = 20, FC = 100.000), variabilni stroški so sorazmerni na celotnem intervalu. Koliko so TC pri 20.000 enotah?', [
+  C('(Izpit) Podjetje ima MC = 20 EUR in FC = 100.000 EUR, variabilni stroški so sorazmerni na celotnem intervalu. Koliko so TC pri 20.000 enotah?', [
     '500.000 EUR', '400.000 EUR', '600.000 EUR', '533.333 EUR'], 0,
     'TC = FC + MC × Q = 100.000 + 20 × 20.000 = 500.000. Ali: 300.000 + 20 × (20.000 − 10.000).'),
   C('(Izpit) Elastičnost produkta glede na kapital je 0,2, MPL = 20, APL = 50. Koliko sta elastičnost produkcijske funkcije in EAC?', [
@@ -40,7 +40,7 @@ const izpitSlike = [
   C('(Izpit) Oprema 500.000 + transport 60.000 + montaža 70.000 EUR, proizvodna metoda; načrtovana proizvodnja 5.000, 4.000, 3.000, 2.000, 1.000 kosov. Amortizacija v 1. letu?', [
     '210.000 EUR (42 EUR/kos)', '110.000 EUR (22 EUR/kos)', '126.000 EUR (42 EUR/kos)', '166.667 EUR (33,3 EUR/kos)'], 0,
     'Osnova 630.000 / 15.000 kosov = 42 EUR/kos. 1. leto: 5.000 × 42 = 210.000; nato 168.000, 126.000, 84.000, 42.000. (Po vsoti letnih števil je 1. leto prav tako 5/15 × 630.000 = 210.000.)'),
-  C('(Izpit) Ista investicija: zgradba 4 mio EUR, linearno, 20 let. Letna amortizacija zgradbe?', [
+  C('(Izpit) Investicija obsega zgradbo za 4 mio EUR, ki se amortizira linearno v 20 letih. Kolikšna je letna amortizacija zgradbe?', [
     '200.000 EUR', '100.000 EUR', '400.000 EUR', '300.000 EUR'], 0,
     '4.000.000 / 20 = 200.000 EUR na leto. (100.000 na študentski rešitvi je napačno.)'),
   C('(Izpit) Zmogljivost 200.000 enot, P = 50 EUR, AVC = 30 EUR, FC = 400.000 EUR. Prag rentabilnosti in poslovni izid pri 60 % izkoriščenosti?', [

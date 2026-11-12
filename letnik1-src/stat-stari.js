@@ -8,7 +8,7 @@ const stari = [
   C('(Izpit 2013) Škofljica je imela 1. 1. 2009 8.413, 1. 1. 2013 pa 9.744 prebivalcev. Kolikšna je povprečna letna stopnja rasti?', [
     '3,7 %', '4,0 %', '3,2 %', '15,8 %'], 0,
     'G = (9.744 / 8.413)^(1/4) = 1,1582^0,25 = 1,037 → 3,7 %. Štiri leta, ne pet. 4,0 % = 15,8 % / 4 (aritmetično, napačno). Povprečni letni absolutni prirastek = 1.331 / 4 = 333.'),
-  C('(Izpit 2013) Ista občina: če bi prebivalstvo raslo s 3,7 % na leto naprej, koliko prebivalcev bi imela 1. 1. 2015?', [
+  C('(Izpit 2013) Škofljica je imela 1. 1. 2013 9.744 prebivalcev. Če bi prebivalstvo raslo s 3,7 % na leto naprej, koliko prebivalcev bi imela 1. 1. 2015?', [
     '10.486', '10.410', '10.743', '10.077'], 0,
     '9.744 × 1,037² ≈ 10.486. Trditev s 10.410 na izpitu ni držala. 10.077 = 9.744 + 333 (le eno leto).'),
   C('(Izpit 2013) Jabolka: cena 1,2 → 1,4 €/kg, prodaja 80 → 60 kg; hruške: 2,3 → 2,2 €/kg, 100 → 120 kg. Za koliko se je spremenila vrednost prodaje?', [

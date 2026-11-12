@@ -197,14 +197,14 @@ module.exports = [
     'Z ustrezno carino in prerazdelitvijo je CU pareto učinkovita'],
   ['Torbice: SLO 50 €, DE 40 €, TR 30 €; carina 50 % za vse. Od kod', [
     'Iz Nemčije (60 €)', 'Ne uvaža (50 €)', 'Iz Turčije (30 €)'], 3, 'Iz Turčije (45 €)'],
-  ['Torbice, carina 50 %: Slovenija sklene CU z Nemčijo', [
+  ['Torbice (SLO 50 €, DE 40 €, TR 30 €), carina 50 %', [
     'Ustvarjanje trgovine z Nemčijo',
     'Ni ne ustvarjanja ne preusmerjanja',
     'Uvoz iz Turčije se poveča'], 3, 'Preusmerjanje iz Turčije v Nemčijo'],
-  ['Torbice, carina 20 %: CU z Nemčijo', [
+  ['Torbice (SLO 50 €, DE 40 €, TR 30 €), carina 20 %', [
     'Preusmerjanje trgovine k Nemčiji', 'Ustvarjanje trgovine z Nemčijo', 'Uvoz iz Turčije preneha'], 2,
     'Ni ne ustvarjanja ne preusmerjanja'],
-  ['Torbice, carina 80 %: CU z Nemčijo', [
+  ['Torbice (SLO 50 €, DE 40 €, TR 30 €), carina 80 %', [
     'Preusmerjanje trgovine od Turčije',
     'Ni učinka, ker se ne uvaža',
     'Padec domače potrošnje torbic'], 0, 'Ustvarjanje trgovine (prej brez uvoza)'],

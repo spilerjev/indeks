@@ -134,7 +134,7 @@ const racunske = [
   C('(Kolokvij 2025, 2021) Jakob vsak hamburger poplakne z dvema pivoma. Ima 180 €, hamburger stane 6 €, pivo 3 €. Koliko hamburgerjev kupi v ravnotežju?', [
     '15', '10', '12', '30'], 0,
     'Popolna komplementa: "paket" 1 H + 2 P stane 6 + 2 · 3 = 12 €. 180 / 12 = 15 hamburgerjev (in 30 piv).'),
-  C('(Kolokvij 2021) Isti Jakob: cena hamburgerja se poveča. "Potrošniški presežek se mu zmanjša, zadovoljstvo pa poveča." Ali trditev drži?', [
+  C('(Kolokvij 2021) Jakob vsak hamburger poplakne z dvema pivoma (popolna komplementa; ima 180 €, hamburger stane 6 €, pivo 3 €). Cena hamburgerja se poveča. "Potrošniški presežek se mu zmanjša, zadovoljstvo pa poveča." Ali trditev drži?', [
     'Ne - zmanjšata se oba, presežek in zadovoljstvo',
     'Da - presežek se zmanjša, zadovoljstvo se poveča',
     'Ne - presežek se poveča, zadovoljstvo se zmanjša',

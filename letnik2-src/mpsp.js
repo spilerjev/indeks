@@ -53,8 +53,8 @@ const rac = [
     'P = 4 / 0,5 = 8 na uro → 32 na izmeno na trenerja → 192 na dan (4× več, a manj osebnega pristopa).'),
   Q('Prodaja 100.000, stroški prodanih 80.000, finančni stroški 6.000, davek 25 %. Prispevek za kritje (dobiček po davku)?', ['10.500', '14.000', '20.000', '15.000'], 0,
     '100.000 − 80.000 = 20.000; − 6.000 = 14.000; − 25 % davka (3.500) = 10.500.'),
-  Q('Kateri ukrep najbolj poveča prispevek za kritje (izhodišče 10.500)?', ['Prodaja +50 % (18.000)', 'Finančni stroški −50 % (12.750)', 'Proizvodni stroški −20 % (22.500)', 'Vsi enako'], 2,
-    'Stroški prodanih 64.000 → dobiček iz poslovanja 36.000 → 30.000 → po davku 22.500 (+114 %), brez dodatnega povpraševanja ali zmogljivosti.'),
+  Q('Prodaja 100.000, stroški prodanih 80.000, finančni stroški 6.000, davek 25 % (dobiček po davku 10.500). Kateri ukrep najbolj poveča dobiček po davku?', ['Prodaja +50 % (stroški prodanih sorazmerni)', 'Finančni stroški −50 %', 'Stroški prodanih −20 %', 'Cena +10 % pri enaki količini'], 2,
+    'Stroški prodanih −20 %: 64.000 → 36.000 − 6.000 = 30.000 → po davku 22.500 (+114 %), brez dodatnega povpraševanja ali zmogljivosti. Prodaja +50 %: 150.000 − 120.000 − 6.000 = 24.000 → 18.000; cena +10 %: 110.000 − 80.000 − 6.000 = 24.000 → 18.000; finančni stroški −50 %: 17.000 → 12.750.'),
 ];
 rac.forEach((q) => { q.calc = true; });
 

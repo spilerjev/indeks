@@ -83,7 +83,7 @@ const roki = [
   C('(Izpit 2017) Y = 720, G = 300, I = 120, C = 300, T = 250, MNP = 0,75. Investicije padejo za 15. Nov output?', [
     '660', '705', '675', '700'], 0,
     'MNV = 0,25, multiplikator = 1/0,25 = 4. ΔY = 4 × (−15) = −60 → Y = 660. (705 = brez multiplikatorja.)'),
-  C('(Izpit 2017) Isto gospodarstvo (MNP = 0,75, primanjkljaj 50). Vlada želi spet doseči Y = 720 z davki. Kaj mora storiti in kolikšen bo primanjkljaj?', [
+  C('(Izpit 2017) Y = 660 (po padcu investicij), G = 300, T = 250, MNP = 0,75 (primanjkljaj 50). Vlada želi z davki spet doseči Y = 720. Kaj mora storiti in kolikšen bo primanjkljaj?', [
     'Znižati davke za 20, primanjkljaj 70', 'Znižati davke za 15, primanjkljaj 65', 'Znižati davke za 60, primanjkljaj 110', 'Zvišati davke za 20, primanjkljaj 30'], 0,
     'Davčni multiplikator = −MNP/MNV = −3. Potrebni ΔY = +60 → ΔT = 60 / (−3) = −20 → T = 230, primanjkljaj = 300 − 230 = 70.'),
   Q('(Izpit) Kaj je multiplikator v odprtem gospodarstvu?', [
