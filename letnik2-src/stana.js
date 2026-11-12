@@ -256,6 +256,13 @@ module.exports = {
     {
       id: 'k1', name: '1. kolokvij', type: 'kolokvij',
       notes: { file: '2. letnik (2026-27)/1. semester/Statisticna analiza/ZAPISKI.md' },
+      appendNotesMd: `
+## Informacije o predmetu: kako zapisati rešitev
+- **Pri vsaki računski nalogi**: formula, vstavljene številke, rezultat in interpretacija z enoto. Samo formula in "x = 16" ni dovolj, ker izgleda prepisano.
+- Pri spremenljivki vedno napiši **mersko enoto** in imena ne krajšaj.
+- **Na začetku naloge o vzorčenju ali velikosti vzorca** najprej zapiši ENOTA / SPREMENLJIVKA / PARAMETER (npr. proizvod / teža / μ_y). Parameter določi formulo: za μ_y velja n₀ = (z σ / D)², za delež π pa n₀ = z² Π(1 − Π) / D².
+- **Stratificirano vzorčenje** je smiselno vedno, ko imamo podatke za stratume (manjša standardna napaka). Povprečje je tehtano z N_j / N, ne navadno povprečje.
+`,
       decks: [
         { id: 'stana-pojmi', name: 'Osnovni pojmi in merske lestvice', questions: pojmi },
         { id: 'stana-opisna', name: 'Opisna statistika in frekvenčne porazdelitve', questions: opisna },

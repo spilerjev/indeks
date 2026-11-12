@@ -36,6 +36,8 @@ for (const mod of MODULES) {
       if (fs.existsSync(file)) part.notes = render(fs.readFileSync(file, 'utf8'), mp.notes);
       else console.warn('  ! ni datoteke z zapiski:', file);
     }
+    // informacije o predmetu na VRH zapiskov (npr. "kako zapisati rešitev"), idempotentno prek oznake
+    if (mp.appendNotesMd) part.notes = render(mp.appendNotesMd) + '<!--/dodatek-->' + (part.notes || '').split('<!--/dodatek-->').pop().split('<!--dodatek-->')[0];
     return part;
   });
   const q = subj.parts.reduce((n, p) => n + p.decks.reduce((m, d) => m + d.questions.length, 0), 0);

@@ -163,6 +163,11 @@ module.exports = {
   parts: [
     {
       id: 'k1', name: '1. kolokvij', type: 'kolokvij',
+      appendNotesMd: `
+## Informacije o predmetu: računanje z obrestno mero
+- Najprej izračunaj **obrestno mero na obdobje** (npr. 3 % / 12 = 0,0025) in z njo računaj naprej - manj dvojnih ulomkov in napak.
+- Neokrogle vmesne vrednosti **shrani v spomin kalkulatorja**, ne zaokrožuj sproti.
+`,
       notes: {
         file: '2. letnik (2026-27)/1. semester/Poslovne finance 1/ZAPISKI.md',
         replace: [
