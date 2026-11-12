@@ -224,6 +224,35 @@ function commYearAvg(comm, year) {
   return w ? Math.round(sum / w) : null;
 }
 
+/* Uporabniško ime: 3-20 znakov (črke, številke . _ -), brez neprimernih besed (po normalizaciji: šumniki -> ascii,
+   0->o 1->i 3->e 4->a 5->s 7->t). Enako pravilo preverja tudi funkcija set_username v bazi. */
+const BANNED_NAMES = ["kurac", "kurc", "kurb", "kurv", "pizd", "pick", "jeb", "fuk", "fuck", "drka", "peder", "pedr", "cigan", "cefur",
+  "prasic", "prasec", "sranje", "hitler", "nacist", "nazi", "penis", "vagin", "klitor", "seks", "sex", "porn",
+  "nigg", "negr", "shit", "bitch", "cunt", "dick", "cock", "pussy", "whore", "slut", "rape"];
+function normName(x) {
+  return (x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d")
+    .replace(/0/g, "o").replace(/1/g, "i").replace(/3/g, "e").replace(/4/g, "a").replace(/5/g, "s").replace(/7/g, "t").replace(/8/g, "b").replace(/[^a-z]/g, "");
+}
+function checkUsername(u) {
+  const v = (u || "").trim();
+  if (v.length < 3 || v.length > 20) return "Uporabniško ime naj ima 3–20 znakov.";
+  if (!/^[A-Za-z0-9_.-]+$/.test(v)) return "Dovoljene so le črke, številke, pika, podčrtaj in pomišljaj.";
+  if (!/[A-Za-z]/.test(v)) return "Uporabniško ime naj vsebuje vsaj eno črko.";
+  const n = normName(v);
+  if (BANNED_NAMES.some((b) => n.includes(normName(b)))) return "To uporabniško ime ni dovoljeno.";
+  return null;
+}
+const displayName = (user) => (user && user.user_metadata && user.user_metadata.username) || (user && user.email) || "";
+/* Shrani uporabniško ime: v profil (RPC set_username preveri obliko, filter in unikatnost) in v metapodatke računa (za prikaz). */
+async function saveUsername(name) {
+  const local = checkUsername(name);
+  if (local) return { error: local };
+  const { data, error } = await supabase.rpc("set_username", { p_username: name.trim() });
+  if (error) return { error: /function.*set_username|schema cache/i.test(error.message) ? "Uporabniška imena še niso vklopljena (supabase/username.sql)." : error.message.replace(/^.*?: /, "") };
+  await supabase.auth.updateUser({ data: { username: data } }).catch(() => {});
+  return { username: data };
+}
+
 function mapAuthErr(error) {
   const m = (error.message || "").toLowerCase();
   if (m.includes("already registered") || m.includes("already exists") || m.includes("user already"))
@@ -299,6 +328,7 @@ function TermsBox() {
 function Login({ year, onBack }) {
   const [mode, setMode] = useState("in"); // "in" = prijava, "up" = registracija
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -311,10 +341,12 @@ function Login({ year, onBack }) {
   const inputStyle = { width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" };
   const submit = async (e) => {
     e.preventDefault();
-    const addr = email.trim();
+    let addr = email.trim();
     if (!addr || !password) return;
     setErr(""); setInfo(""); setFix("");
     if (mode === "up") {
+      const uerr = checkUsername(username);
+      if (uerr) { setErr(uerr); return; }
       const chk = checkEmail(addr);
       if (chk && chk.err) { setErr(chk.err); setFix(chk.fix || ""); return; }
       if (chk && chk.warn && warned !== addr.toLowerCase()) { setErr(chk.warn); setWarned(addr.toLowerCase()); return; }
@@ -323,10 +355,15 @@ function Login({ year, onBack }) {
     if (mode === "up" && !terms) { setErr("Za registracijo se strinjaj s pogoji uporabe."); return; }
     setBusy(true);
     if (mode === "up") {
-      const consent = { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString(), marketing_consent: marketing };
+      const uname = username.trim();
+      // zasedenost imena preverimo pred ustvarjanjem računa
+      const taken = await supabase.rpc("login_email", { p_username: uname });
+      if (!taken.error && taken.data) { setBusy(false); setErr("Uporabniško ime je že zasedeno."); return; }
+      const consent = { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString(), marketing_consent: marketing, username: uname };
       const { data, error } = await supabase.auth.signUp({ email: addr, password, options: { emailRedirectTo: window.location.origin + window.location.pathname, data: consent } });
       setBusy(false);
       if (error) { setErr(mapAuthErr(error)); return; }
+      if (data.session) await saveUsername(uname); // sicer ga App nastavi ob prvi prijavi iz metapodatkov
       if (!data.session) {
         // če je potrditev e-pošte vklopljena: ni takojšnje seje
         setInfo("Račun je ustvarjen. Potrdi e-naslov (povezava v e-pošti), nato se prijavi.");
@@ -335,6 +372,12 @@ function Login({ year, onBack }) {
       }
       // seja obstaja -> onAuthStateChange v useAuth poskrbi za vstop
       return;
+    }
+    if (!addr.includes("@")) {
+      // prijava z uporabniškim imenom: ime -> e-naslov
+      const r = await supabase.rpc("login_email", { p_username: addr });
+      if (r.error || !r.data) { setBusy(false); setErr(r.error ? "Prijava z uporabniškim imenom še ni vklopljena - vpiši e-naslov." : "Uporabniško ime ne obstaja."); return; }
+      addr = r.data;
     }
     const { error } = await supabase.auth.signInWithPassword({ email: addr, password });
     setBusy(false);
@@ -356,11 +399,16 @@ function Login({ year, onBack }) {
           <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>{up ? "Registracija" : "Prijava"}</div>
           <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
             {up
-              ? "Ustvari brezplačen račun s svojim e-naslovom in geslom."
-              : "Vpiši svoj e-naslov in geslo."}
+              ? "Ustvari brezplačen račun: uporabniško ime, e-naslov in geslo."
+              : "Vpiši uporabniško ime ali e-naslov in geslo."}
           </div>
-          <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
-            placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off" autoComplete="username"
+          {up && (
+            <input type="text" required value={username} onChange={(e) => setUsername(e.target.value)} maxLength={20}
+              placeholder="uporabniško ime (3–20 znakov)" autoCapitalize="none" autoCorrect="off" autoComplete="username"
+              style={{ ...inputStyle, marginBottom: 10 }} />
+          )}
+          <input type={up ? "email" : "text"} required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
+            placeholder={up ? "ime@email.com" : "uporabniško ime ali ime@email.com"} autoCapitalize="none" autoCorrect="off" autoComplete={up ? "email" : "username"}
             style={{ ...inputStyle, marginBottom: 10 }} />
           <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
             placeholder="Geslo" autoComplete={up ? "new-password" : "current-password"} style={inputStyle} />
@@ -1225,6 +1273,14 @@ export default function App() {
   const { session, loading: authLoading, signOut } = useAuth();
   const userId = session && session.user && session.user.id;
   const newer = useUpdateCheck();
+  useEffect(() => {
+    if (!userId) return;
+    const meta = (session.user && session.user.user_metadata) || {};
+    if (!meta.username) return;
+    supabase.from("profiles").select("username").eq("id", userId).maybeSingle().then(({ data, error }) => {
+      if (!error && data && !data.username) supabase.rpc("set_username", { p_username: meta.username }).then(() => {});
+    });
+  }, [userId]); // eslint-disable-line
   const { stats, record } = useCloudStats(userId || null);
   const comm = useCommunity(userId || null);
 
@@ -1412,7 +1468,7 @@ function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formu
         </span>
       </button>
       {user
-        ? <span className="ix-chip" style={{ marginLeft: "auto", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={user.email}>{user.email}</span>
+        ? <span className="ix-chip" style={{ marginLeft: "auto", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={user.email}>{displayName(user)}</span>
         : <span className="ix-chip" style={{ marginLeft: "auto" }}>EF · UPEŠ</span>}
       {user && (
         <button onClick={onToggleGloss} aria-label="Slovarček" aria-pressed={gloss} title={gloss ? "Slovarček je vklopljen (klik za izklop)" : "Slovarček je izklopljen (klik za vklop)"}
@@ -1778,19 +1834,19 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         const avgSec = n ? Math.round(me.data.reduce((s, r) => s + r.seconds, 0) / n) : 0;
         setMine({ n, avg, best, avgSec });
       }
-      const pr = await supabase.from("profiles").select("nickname").eq("id", userId).maybeSingle();
-      if (!cancelled && !pr.error && pr.data) { setNick(pr.data.nickname || ""); setNickDraft(pr.data.nickname || ""); }
+      const pr = await supabase.from("profiles").select("username").eq("id", userId).maybeSingle();
+      if (!cancelled && !pr.error && pr.data) { setNick(pr.data.username || ""); setNickDraft(pr.data.username || ""); }
     })();
     return () => { cancelled = true; };
   }, [partKey, userId, bump]);
+  const [nickErr, setNickErr] = useState("");
   async function saveNick() {
-    const v = nickDraft.trim().slice(0, 20);
-    if (v.length < 2) return;
+    setNickErr("");
     setSaving(true);
-    const { error } = await supabase.from("profiles").update({ nickname: v }).eq("id", userId);
+    const r = await saveUsername(nickDraft);
     setSaving(false);
-    if (error) { alert("Vzdevka ni bilo mogoče shraniti: " + error.message); return; }
-    setNick(v); setEditing(false);
+    if (r.error) { setNickErr(r.error); return; }
+    setNick(r.username); setEditing(false);
   }
   const myRank = rows ? rows.findIndex((r) => r.is_me) : -1;
   if (!userId) return null;
@@ -1801,18 +1857,19 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? (myRank >= 0 ? `ti: ${myRank + 1}. mesto · ${mine.avg} %` : `ti: ${mine.avg} % (${mine.n} rešenih)`) : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.avg} %` : ""}`) : ""}</div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", fontSize: 13, color: "var(--ink2)" }}>
-        <span>Na lestvici si prikazan kot <b style={{ color: "var(--ink)" }}>{nick || "skrajšan e-naslov"}</b>.</span>
+        <span>Na lestvici si prikazan kot <b style={{ color: "var(--ink)" }}>{nick || "skrajšan e-naslov"}</b>{nick ? " (z njim se lahko tudi prijaviš)" : ""}.</span>
         {!editing ? (
-          <button onClick={() => setEditing(true)} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "3px 10px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5 }}>{nick ? "Spremeni vzdevek" : "Nastavi vzdevek"}</button>
+          <button onClick={() => setEditing(true)} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "3px 10px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5 }}>{nick ? "Spremeni uporabniško ime" : "Nastavi uporabniško ime"}</button>
         ) : (
           <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
-            <input value={nickDraft} onChange={(e) => setNickDraft(e.target.value)} maxLength={20} placeholder="vzdevek (2–20 znakov)"
+            <input value={nickDraft} onChange={(e) => setNickDraft(e.target.value)} maxLength={20} placeholder="uporabniško ime (3–20 znakov)"
               onKeyDown={(e) => { if (e.key === "Enter") saveNick(); if (e.key === "Escape") setEditing(false); }}
               style={{ padding: "5px 9px", borderRadius: 8, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 13 }} />
-            <button onClick={saveNick} disabled={saving || nickDraft.trim().length < 2} style={{ background: "var(--teal)", color: "#fff", border: "none", borderRadius: 999, padding: "5px 11px", cursor: "pointer", fontSize: 12.5 }}>Shrani</button>
-            <button onClick={() => setEditing(false)} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "5px 11px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5 }}>Prekliči</button>
+            <button onClick={saveNick} disabled={saving || nickDraft.trim().length < 3} style={{ background: "var(--teal)", color: "#fff", border: "none", borderRadius: 999, padding: "5px 11px", cursor: "pointer", fontSize: 12.5 }}>Shrani</button>
+            <button onClick={() => { setEditing(false); setNickErr(""); }} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "5px 11px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5 }}>Prekliči</button>
           </span>
         )}
+        {nickErr && <span style={{ color: "var(--terra)", width: "100%" }}>{nickErr}</span>}
       </div>
       {err ? (
         <div style={{ fontSize: 13, color: "var(--ink2)" }}>Lestvica še ni vklopljena (v Supabase je treba zagnati <code>supabase/ranked.sql</code>). Tvoji rezultati se vseeno beležijo v statistiko.</div>
