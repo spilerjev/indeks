@@ -67,7 +67,7 @@ const pravilnoNe = [
 ];
 
 const racVzorcenje = [
-  Q('Škatle vijakov: 95,44 % škatel vsebuje med 680 in 720 vijakov, Y je normalna s središčem 700. Kolikšen je σ?', ['5 vijakov', '10 vijakov', '20 vijakov', '40 vijakov'], 1,
+  Q('Število vijakov v škatli Y je normalno porazdeljeno s povprečjem 700; 95,44 % škatel vsebuje med 680 in 720 vijakov. Kolikšen je standardni odklon σ?', ['5 vijakov', '10 vijakov', '20 vijakov', '40 vijakov'], 1,
     '95,44 % je μ ± 2σ: 700 + 2σ = 720 → σ = 10. Y ~ N(700; 10).'),
   Q('Škatle vijakov Y ~ N(700; 10). Kolikšen delež škatel vsebuje do vključno 705 vijakov?', ['0,5000', '0,6915', '0,8413', '0,3085'], 1,
     'z = (705 − 700)/10 = 0,5; F_Z(0,5) = 0,6915 → 69,15 %.'),
@@ -83,13 +83,13 @@ const racVzorcenje = [
     'μ = 24/6 = 4. σ² = Σ(y − μ)²/N = (4+1+9+0+1+1)/6 = 16/6 = 2,67 (deli z N, ne N−1). σ = 1,63.'),
   Q('Populacija N = 6 (Y = 2, 3, 7, 4, 3, 5), vzorci velikosti n = 4 brez ponavljanja. Koliko je vseh možnih vzorcev?', ['6', '15', '24', '360'], 1,
     'C(6, 4) = 6!/(4!·2!) = 15.'),
-  Q('Populacija N = 6 (σ² = 2,67), n = 4, ESV brez ponavljanja. Kolikšna je Var(ȳ)?', ['0,67', '0,27', '0,52', '0,40'], 1,
+  Q('Populacija N = 6 enot s populacijsko varianco σ² = 2,67; enostavni slučajni vzorec n = 4 brez ponavljanja. Kolikšna je varianca vzorčnega povprečja Var(ȳ)?', ['0,67', '0,27', '0,52', '0,40'], 1,
     'Var(ȳ) = σ²/n · (N−n)/(N−1) = 2,667/4 · 2/5 = 0,6667 · 0,4 = 0,2667 ≈ 0,27.'),
   Q('Populacija N = 6 (σ² = 2,67), n = 4, ESV brez ponavljanja. Kolikšna je standardna napaka SE(ȳ)?', ['0,27', '0,52', '0,67', '1,63'], 1,
     'SE = √0,2667 = 0,516 ≈ 0,52 (v enotah spremenljivke Y). Pazi: 1,63 je σ_Y, ne SE.'),
   Q('Vseh 15 vzorčnih povprečij populacije Y = 2, 3, 7, 4, 3, 5 (n = 4) ima povprečje E(ȳ). Koliko je?', ['3,75', '4', '4,25', '3,5'], 1,
     'E(ȳ) = 4 = μ_Y, zato je ȳ nepristranska cenilka za μ.'),
-  Q('Iz vzorca n = 50 iz N = 500 enot je s = 20. Kolikšen je se(ȳ)? (s/√n · √((N−n)/N))', ['2,83', '2,68', '2,52', '3,16'], 1,
+  Q('Vzorec n = 50 iz populacije N = 500 enot, vzorčni standardni odklon s = 20. Kolikšna je standardna napaka vzorčnega povprečja se(ȳ) = s/√n · √((N − n)/N)?', ['2,83', '2,68', '2,52', '3,16'], 1,
     's/√n = 20/7,071 = 2,828; √(450/500) = √0,9 = 0,9487; se = 2,828 · 0,9487 = 2,683 ≈ 2,68.'),
 ];
 

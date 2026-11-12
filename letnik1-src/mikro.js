@@ -103,13 +103,13 @@ const proizvodnja = [
 ];
 
 const proizvodnjaRac = calc([
-  Q('Q = K^½ L^½. Koliko znaša povprečni proizvod dela? (kolokvij 2021)', ['APL = K^½ / L^½', 'APL = K^½', 'APL = ½ K^½', 'APL = ½ K^½ L^−½'], 0,
+  Q('Produkcijska funkcija Q = K^½ L^½. Kolikšen je povprečni proizvod dela (APL = Q/L)? (kolokvij 2021)', ['APL = K^½ / L^½', 'APL = K^½', 'APL = ½ K^½', 'APL = ½ K^½ L^−½'], 0,
     'APL = Q/L = K^½ L^½ / L = K^½ L^−½ = K^½/L^½. Zadnja možnost je MPL.'),
-  Q('Q = K^0,5 L^0,5, K = 4, L = 16. Koliko sta APL in MPL?', ['APL = 0,5; MPL = 0,25', 'APL = 0,25; MPL = 0,5', 'APL = 8; MPL = 4', 'APL = 0,5; MPL = 0,5'], 0,
+  Q('Produkcijska funkcija Q = K^0,5 L^0,5, kapital K = 4, delo L = 16. Kolikšna sta povprečni proizvod dela (APL) in mejni proizvod dela (MPL)?', ['APL = 0,5; MPL = 0,25', 'APL = 0,25; MPL = 0,5', 'APL = 8; MPL = 4', 'APL = 0,5; MPL = 0,5'], 0,
     'Q = 2 · 4 = 8, APL = 8/16 = 0,5. MPL = 0,5 · K^0,5/L^0,5 = 0,5 · 2/4 = 0,25.'),
   Q('Q(L,K) = 5L^0,5 K^0,4. Koliko je MRTS_L pri L = 10, K = 20? (predavanje 5)', ['2,5', '0,4', '1,6', '1,25'], 0,
     'MRTS = MPL/MPK = (0,5/0,4) · K/L = 1,25 · 2 = 2,5: za dodatno enoto dela lahko kapital zmanjšamo za 2,5.'),
-  Q('Q = 2K^¼ L^½. Koliko znaša MPL?', ['K^¼ · L^−½', '2K^−¼ · L^−½', 'K^½ · L^−½', '½ K^¼ · L^−½'], 0,
+  Q('Produkcijska funkcija Q = 2K^¼ L^½. Kolikšen je mejni proizvod dela (MPL = ∂Q/∂L)?', ['K^¼ · L^−½', '2K^−¼ · L^−½', 'K^½ · L^−½', '½ K^¼ · L^−½'], 0,
     'MPL = 2 · ½ · K^¼ · L^−½.'),
 ]);
 

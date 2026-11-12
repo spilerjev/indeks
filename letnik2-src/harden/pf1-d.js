@@ -237,7 +237,7 @@ module.exports = [
     'Za višjo ceno delnice mora podjetje vedno znižati dividendo'],
   ['Delnica B: donosnost 5 %, 10 %, −10 %, −5 %', [
     'E = 2,50 %; KV = 3,35', 'E = 0,00 %; KV = 0,00', 'E = 5,00 %; KV = 1,67'], 3, 'E = 0 %; KV ni definiran'],
-  ['Delnica A: E = 13 %, β = 0,9', [
+  ['Delnica A: pričakovana donosnost E = 13 %, beta 0,9; netvegana donosnost rf = 5 %, pričakovana donosnost tržnega portfelja 15 %. Kakšna je zahtevana donosnost po CAPM in kaj to pomeni?', [
     '14 %: podcenjena (E > zahtevana) - kupiti',
     '13 %: pravilno vrednotena - zadržati',
     '15 %: precenjena (E < zahtevana) - prodati'], 3, '14 %: precenjena (E < zahtevana) - prodati'],

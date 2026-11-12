@@ -39,21 +39,21 @@ const intervalna = [
 ];
 
 const racIntervalna = calc([
-  Q('Mleko: N = 60.000, n = 200, ȳ = 15 l, s = 12 l. Koliko je se(ȳ)?', ['0,847', '0,849', '0,060', '1,200'], 0,
+  Q('Mesečna poraba mleka: populacija N = 60.000 gospodinjstev, vzorec n = 200, vzorčno povprečje ȳ = 15 l, vzorčni standardni odklon s = 12 l. Kolikšna je standardna napaka vzorčnega povprečja se(ȳ)?', ['0,847', '0,849', '0,060', '1,200'], 0,
     'se = 12/√200 · √(1 − 200/60.000) = 0,8485 · 0,9983 = 0,847.'),
-  Q('Mleko: ȳ = 15 l, se = 0,847, α = 5 % (t ≈ 1,98). 95-odstotni interval za μ?', ['13,3 < μ < 16,7 l', '14,2 < μ < 15,8 l', '12,6 < μ < 17,4 l', '13,8 < μ < 16,2 l'], 0,
+  Q('Mesečna poraba mleka: vzorčno povprečje ȳ = 15 l, standardna napaka se = 0,847, α = 5 % (t ≈ 1,98). Kakšen je 95-odstotni interval zaupanja za populacijsko povprečje μ?', ['13,3 < μ < 16,7 l', '14,2 < μ < 15,8 l', '12,6 < μ < 17,4 l', '13,8 < μ < 16,2 l'], 0,
     '15 ± 1,98 · 0,847 = 15 ± 1,68.'),
   Q('Neurje: N = 1500, n = 150, ȳ = 3800 €, s = 450 €, α = 5 %. Interval za povprečno škodo?', ['3731,7 < μ < 3868,3 €', '3727,9 < μ < 3872,1 €', '3710,1 < μ < 3889,9 €', '3765,1 < μ < 3834,9 €'], 0,
     'se = 450/√150 · √(1 − 0,1) = 34,86; 3800 ± 1,96 · 34,86 = 3800 ± 68,3.'),
   Q('Neurje: 3731,7 < μ < 3868,3 € (N = 1500). Interval za skupno škodo?', ['≈ 5,60 do 5,80 mio €', '≈ 0,56 do 0,58 mio €', '≈ 3,73 do 3,87 mio €', '≈ 56 do 58 mio €'], 0,
     'Meje pomnožimo z N = 1500: 5.597.521 < Y_tot < 5.802.479 €.'),
-  Q('Neurje: se = 34,86. Kolikšna je širina intervala pri α = 1 %?', ['≈ 180 €', '≈ 137 €', '≈ 90 €', '≈ 68 €'], 0,
+  Q('Škoda po neurju: standardna napaka vzorčnega povprečja se = 34,86 €. Kolikšna je širina dvostranskega intervala zaupanja za povprečno škodo pri α = 1 %?', ['≈ 180 €', '≈ 137 €', '≈ 90 €', '≈ 68 €'], 0,
     '2 · 2,58 · 34,86 ≈ 180 € (pri α = 5 % ≈ 137 €).'),
   Q('N = 1385 objektov, n = 100, 44 poškodovanih. Spodnja meja deleža pri α = 1 % (se(p) = 0,0478)?', ['Π > 0,329', 'Π > 0,316', 'Π > 0,346', 'Π > 0,394'], 0,
     'Enostransko z = 2,33: 0,44 − 2,33 · 0,0478 = 0,329 → vsaj 32,9 % oz. ≈ 455 objektov.'),
-  Q('JEK2: p = 0,2387, se(p) = 0,002285, α = 1 %, "največ". Zgornja meja?', ['Π < 0,2441', 'Π < 0,2432', 'Π < 0,2446', 'Π < 0,2410'], 0,
+  Q('Delež podpornikov JEK2: vzorčni delež p = 0,2387, standardna napaka se(p) = 0,002285, α = 1 %; ocenjujemo, kolikšen je delež "največ" (enostransko). Kolikšna je zgornja meja intervala za populacijski delež?', ['Π < 0,2441', 'Π < 0,2432', 'Π < 0,2446', 'Π < 0,2410'], 0,
     'Enostransko z = 2,33: 0,2387 + 2,33 · 0,002285 = 0,2441 → največ 24,4 %.'),
-  Q('Delež: p = 0,44, n = 100, N = 1385. Koliko je se(p)?', ['0,0478', '0,0496', '0,0440', '0,0246'], 0,
+  Q('Vzorčni delež enot z lastnostjo p = 0,44 iz vzorca n = 100, populacija N = 1385. Kolikšna je standardna napaka deleža se(p)?', ['0,0478', '0,0496', '0,0440', '0,0246'], 0,
     '√(0,44 · 0,56/100) · √(1 − 100/1385) = 0,0496 · 0,9633 = 0,0478.'),
 ]);
 
@@ -141,19 +141,19 @@ const domneve = [
 ];
 
 const racDomneve = calc([
-  Q('Čajne vrečke: σ = 180, n = 81. Koliko je standardna napaka?', ['20', '2,22', '180', '9'], 0,
+  Q('Stroj polni čajne vrečke; masa ima standardni odklon σ = 180 mg, vzorec obsega n = 81 vrečk. Kolikšna je standardna napaka vzorčnega povprečja?', ['20', '2,22', '180', '9'], 0,
     'se = σ/√n = 180/9 = 20 vrečk/uro.'),
   Q('H₀: μ = 4000, se = 20, H₁: μ < 4000 (nesestavljena μ = 3950), α = 5 %. Kritična meja?', ['3967,1', '3960,8', '3953,4', '3971,2'], 0,
     'Levi rep: 4000 − 1,645 · 20 = 3967,1.'),
   Q('H₀: μ = 4000, H₁: μ < 4000, se = 20, α = 5 % (kritična meja 3967,1). Kolikšna je β, če v resnici velja μ = 3950?', ['≈ 0,195', '≈ 0,050', '≈ 0,805', '≈ 0,341'], 0,
     'β = P(ȳ > 3967,1 | μ = 3950) = P(Z > 0,86) ≈ 0,195; moč 1 − β ≈ 0,805.'),
-  Q('H₀: μ = 4000, H₁: μ ≠ 4000, se = 20, α = 5 %. Območje nezavračanja?', ['3960,8 < ȳ < 4039,2', '3967,1 < ȳ < 4032,9', '3948,4 < ȳ < 4051,6', '3980 < ȳ < 4020'], 0,
+  Q('Preizkus domneve o povprečni masi vrečk: H₀: μ = 4000 mg, H₁: μ ≠ 4000 mg, standardna napaka povprečja se = 20, α = 5 %. Kakšno je območje nezavračanja H₀ za vzorčno povprečje ȳ?', ['3960,8 < ȳ < 4039,2', '3967,1 < ȳ < 4032,9', '3948,4 < ȳ < 4051,6', '3980 < ȳ < 4020'], 0,
     '4000 ± 1,96 · 20.'),
   Q('ȳ = 4050, μ₀ = 4000, se = 20, dvostranski preizkus. Sklep pri α = 5 %?', ['z = 2,5; p = 0,0124 → zavrnemo H₀', 'z = 2,5; p = 0,0062 → ne zavrnemo', 'z = 1,25; p = 0,21 → ne zavrnemo', 'z = 2,5; p = 0,9938 → ne zavrnemo'], 0,
     'z = 50/20 = 2,5 > 1,96; p = 2 · P(Z > 2,5) = 0,0124.'),
   Q('ȳ = 4050, μ₀ = 4000, se = 20; H₀: μ ≥ 4000, H₁: μ < 4000. p-vrednost in sklep?', ['p = 0,9938 → ne zavrnemo H₀', 'p = 0,0062 → zavrnemo H₀', 'p = 0,0124 → zavrnemo H₀', 'p = 0,5 → ne zavrnemo'], 0,
     'Ocena (4050) je na "napačni" strani: p = P(Z < 2,5) = 0,9938. Ni dokaza, da je stroj počasnejši.'),
-  Q('ȳ = 4050, μ₀ = 4000, se = 20; H₀: μ ≤ 4000, H₁: μ > 4000. p-vrednost?', ['0,0062', '0,0124', '0,9938', '0,025'], 0,
+  Q('Vzorčno povprečje mase vrečk ȳ = 4050 mg, domnevna vrednost μ₀ = 4000 mg, standardna napaka se = 20; H₀: μ ≤ 4000, H₁: μ > 4000. Kolikšna je p-vrednost?', ['0,0062', '0,0124', '0,9938', '0,025'], 0,
     'p = P(Z > 2,5) = 0,0062 → zavrnemo H₀; stroj je značilno hitrejši.'),
 ]);
 

@@ -438,7 +438,7 @@ const racK2 = [
   Q('Pri 200 enotah znašajo plače 6 mio EUR, elastičnost plač je 1,1. Koliko bi znašale plače pri 240 enotah?', [
     '7,32 mio EUR', '7,20 mio EUR', '6,60 mio EUR', '7,92 mio EUR'], 0,
     'Obseg +20 % → plače +20 % × 1,1 = +22 %. 6 × 1,22 = 7,32 mio EUR.'),
-  Q('Cena variabilnega faktorja je 20 EUR/enoto. Ko zaposlitev naraste z 12 na 15 enot, produkt naraste s 40 na 52 enot. Koliko so MC?', [
+  Q('Cena variabilnega faktorja je 20 EUR/enoto. Ko zaposlitev naraste z 12 na 15 enot, produkt naraste s 40 na 52 enot. Kolikšni so mejni stroški (MC) na enoto produkta?', [
     '5 EUR', '4 EUR', '20 EUR', '60 EUR'], 0,
     'ΔTC = 3 × 20 = 60 EUR, ΔQ = 12 → MC = 5 EUR. Enako: MPv = 12/3 = 4 → MC = Pv/MPv = 20/4 = 5.'),
   Q('Podjetje zaposluje 25 L in 20 K ter proizvaja 2.000 Q. MPL = 40, MPK = 30. Koliko je e in kakšni so donosi? (izpit)', [
@@ -447,10 +447,10 @@ const racK2 = [
   Q('Podjetje zaposluje 25 L in 20 K ter proizvaja 2.000 Q. MPK = 30. Za koliko % se poveča Q, če pri fiksnem L povečamo K za 40 %?', [
     '12 %', '20 %', '32 %', '30 %'], 0,
     'APK = 2.000/20 = 100. eK = MPK/APK = 30/100 = 0,3. Q se poveča za 40 % × 0,3 = 12 %.'),
-  Q('Q = 0,548·K^0,8·L^0,45. Kakšni so donosi in koliko je EAC?', [
+  Q('Produkcijska funkcija Q = 0,548·K^0,8·L^0,45. Kakšni so donosi obsega in kolikšna je elastičnost povprečnih stroškov (EAC)?', [
     'Naraščajoči (e = 1,25), EAC = −0,2', 'Padajoči (e = 0,8), EAC = 0,25', 'Naraščajoči (e = 1,25), EAC = 0,25', 'Konstantni (e = 1), EAC = 0'], 0,
     'e = 0,8 + 0,45 = 1,25 > 1. ETC = 1/1,25 = 0,8 → EAC = −0,2: ob 1 % večjem obsegu AC padejo za 0,2 %.'),
-  Q('Q = 0,548·K^0,8·L^0,45. Koliko je MPL, če je APL = 200 enot?', [
+  Q('Produkcijska funkcija Q = 0,548·K^0,8·L^0,45. Kolikšen je mejni proizvod dela (MPL), če je povprečni proizvod dela APL = 200 enot?', [
     '90 enot', '160 enot', '444 enot', '250 enot'], 0,
     'eL = 0,45 = MPL/APL → MPL = 0,45 × 200 = 90 enot.'),
   Q('Q = 0,548·K^0,8·L^0,45. Za koliko se poveča Q, če pri fiksnem K povečamo L za 20 %?', [

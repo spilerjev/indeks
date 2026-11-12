@@ -25,7 +25,7 @@ module.exports = [
     'Ne vemo (O) - kritična postane nad 20 min'],
   ['D1: O1 (20) + O5 (30), D2: O2 (20) + O4 (40), D3: O3 (20) + O6 (30), vsak 300 min/dan (zmogljivost 5 proizv./dan). D1 prevzame', [
     'Poveča se na 6', 'Ostane 5', 'Poveča se na 7,5'], 1, 'Zmanjša se na 4,3'],
-  ['Urgenca: P = 50 bolnikov/h, čakajočih na prijavo Z = 30', [
+  ['Urgenca (Littlov zakon): pretok P = 50 bolnikov na uro, povprečno število čakajočih na prijavo Z = 30. Kolikšen je povprečni čas čakanja na prijavo?', [
     '1,67 min', '15 min', '30 min'], 0, '36 min'],
   ['Kako zaokrožimo cikel, ki ni celo število', [
     'Navzgor - da ne preobremenimo mest',

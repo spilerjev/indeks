@@ -56,9 +56,9 @@ module.exports = [
     'Je praviloma manjša od standardnega odklona'],
   ['Delež avtomobilov z zimsko opremo: π ≈ 0,7', [
     'Vsaj 140 avtomobilov', 'Največ 130 avtomobilov', 'Vsaj 81 avtomobilov'], 3, 'Vsaj 131 avtomobilov'],
-  ['s = 12,77 in ȳ = 30,47 (tisoč €). Koliko je kv?', [
+  ['Letni neto prejemki: standardni odklon s = 12,77 in aritmetična sredina ȳ = 30,47 (tisoč €). Kolikšen je koeficient variacije KV?', [
     '2,39 (≈ 239 %)', '0,24 (≈ 24 %)', '12,77 %'], 1, '0,419 (≈ 42 %)'],
-  ['Nogometaši: f₃ = 18, y₃ = 50, ȳ = 40,2', [
+  ['Nogometaši (število reprezentančnih nastopov): v 3. razredu je f₃ = 18 igralcev s sredino razreda y₃ = 50 nastopov, povprečje vseh je ȳ = 40,2. Kolikšen je prispevek tega razreda k vsoti kvadratov odklonov f₃(y₃ − ȳ)²?', [
     '176,4', '96,04', '1800'], 3, '1728,72'],
   ['Kateri NI razlog za vzorčenje?', [
     'Nižja cena raziskave kot pri popisu',
