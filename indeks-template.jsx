@@ -165,6 +165,33 @@ function useCloudStats(userId) {
   return { stats, record };
 }
 
+/* Nova različica: GitHub Pages drži index.html do 10 min v predpomnilniku, zato uporabnik lahko ure dolgo
+   uporablja star bundle. Ob fokusu in vsakih 15 min preverimo v=hash v svežem index.html in ponudimo osvežitev. */
+function useUpdateCheck() {
+  const [newer, setNewer] = useState(false);
+  useEffect(() => {
+    const sc = document.querySelector('script[src*="preview.js"]');
+    const m0 = sc && /v=([a-z0-9]+)/.exec(sc.getAttribute("src") || "");
+    const cur = m0 ? m0[1] : null;
+    if (!cur) return;
+    let stop = false;
+    const check = async () => {
+      try {
+        const r = await fetch(window.location.pathname + "?_=" + Date.now(), { cache: "no-store" });
+        const t = await r.text();
+        const m = /preview\.js\?v=([a-z0-9]+)/.exec(t);
+        if (!stop && m && m[1] !== cur) setNewer(true);
+      } catch (e) {}
+    };
+    const onVis = () => { if (document.visibilityState === "visible") check(); };
+    const t0 = setTimeout(check, 4000);
+    const id = setInterval(check, 15 * 60 * 1000);
+    document.addEventListener("visibilitychange", onVis);
+    return () => { stop = true; clearTimeout(t0); clearInterval(id); document.removeEventListener("visibilitychange", onVis); };
+  }, []);
+  return newer;
+}
+
 /* Slovarček: globalno vklopljen/izklopljen (shranjeno v brskalniku). */
 const GlossCtx = React.createContext(true);
 
@@ -1197,6 +1224,7 @@ export default function App() {
 
   const { session, loading: authLoading, signOut } = useAuth();
   const userId = session && session.user && session.user.id;
+  const newer = useUpdateCheck();
   const { stats, record } = useCloudStats(userId || null);
   const comm = useCommunity(userId || null);
 
@@ -1213,6 +1241,12 @@ export default function App() {
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
         <Header onHome={() => setRoute({ view: "welcome" })} home={route.view === "home" || route.view === "welcome"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss} formulas={formulas} onToggleFormulas={toggleFormulas}
           user={session && session.user} onSignOut={signOut} />
+        {newer && (
+          <div className="ix-card" style={{ padding: "11px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", borderLeft: "3px solid var(--teal)" }}>
+            <div style={{ flex: 1, fontSize: 14 }}><b>Na voljo je nova različica indeks.</b> <span style={{ color: "var(--ink2)" }}>Osveži, da dobiš najnovejše kvize in popravke.</span></div>
+            <button onClick={() => window.location.reload()} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "8px 14px" }}>Osveži</button>
+          </div>
+        )}
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
         ) : route.view === "welcome" ? (
