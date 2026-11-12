@@ -40,8 +40,6 @@ const tvm = [
     '1,0075/1,106 − 1 ≈ −8,9 %. Inflacija je bila višja od nominalnih mer.'),
   Q('Kako izračunamo perpetuiteto kot limito anuitete?', ['n → ∞: (1 + r)⁻ⁿ → 0, zato PV → C/r', 'n → 0', 'r → ∞', 'Ni povezave'], 0,
     'Naloga: 1.000 · PVIFA(7 %, 100) = 14.269,25; perpetuiteta 14.285,71 - po 100 letih skoraj ni razlike. Zvezno obrestovanje: lim (1 + r/m)^m = e^r.'),
-  Q('Kako se na vajah priporoča računati z obrestno mero na obdobje?', ['Vedno vpisati 0,03/12 v formulo', 'Najprej izračunati r na obdobje (3 %/12 = 0,0025) in z njo računati naprej; neokrogle vrednosti shraniti v spomin kalkulatorja', 'Zaokrožiti na eno decimalko', 'Uporabiti letno mero'], 1,
-    'Manj dvojnih ulomkov in napak, brez vmesnega zaokroževanja.'),
 ];
 
 const tvmRac = [

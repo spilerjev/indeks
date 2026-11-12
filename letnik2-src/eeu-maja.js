@@ -41,7 +41,7 @@ const rac = calc([
     'MD = Q_D − Q_S = (175 − ½P) − (−25 + ½P) = 200 − P. Uvoz je 0 pri avtarkični ceni P = 200.'),
   Q('Plašči (vaje 3): Italija Q_D = 175 − P, Q_S = −75 + P. Kakšna je krivulja izvozne ponudbe XS_IT in kolikšna je avtarkična cena?', ['XS = 2P − 250; P_avt = 125 €', 'XS = 200 − P; P_avt = 200 €', 'XS = 250 − 2P; P_avt = 125 €', 'XS = P − 75; P_avt = 75 €'], 0,
     'XS = Q_S − Q_D = (−75 + P) − (175 − P) = 2P − 250; XS = 0 pri P = 125. Svetovna cena: 2P − 250 = 200 − P → P = 150.'),
-  Q('Nemčija (plašči): avtarkija P = 200, Q = 75; ob svetovni ceni 150 € je D = 100, S = 50 (·10³). Kako asistent izračuna ΔCS kot pravokotnik + trikotnik?', ['50 · 75 + 50 · 25/2 = 4 375 (·10³ €)', '50 · 100 + 50 · 25/2 = 5 625 (·10³ €)', '50 · 75 = 3 750 (·10³ €)', '50 · 50/2 = 1 250 (·10³ €)'], 0,
+  Q('Nemčija (plašči): avtarkija P = 200, Q = 75; ob svetovni ceni 150 € je D = 100, S = 50 (·10³). Koliko je ΔCS (pravokotnik + trikotnik)?', ['50 · 75 + 50 · 25/2 = 4 375 (·10³ €)', '50 · 100 + 50 · 25/2 = 5 625 (·10³ €)', '50 · 75 = 3 750 (·10³ €)', '50 · 50/2 = 1 250 (·10³ €)'], 0,
     'ΔCS = ΔP · (Q_staro + Q_novo)/2 = 50 · (75 + 100)/2 = pravokotnik 50 · 75 + trikotnik 50 · 25/2 = 4 375. ΔPS = −(50 · 50 + 50 · 25/2) = −3 125; neto +1 250.'),
   Q('Pršut (vaje 3): Q_D = 900 − 10P, Q_S = 10P − 100, svetovna cena 70 €. Kolikšna je razlika med domačo ponudbo in povpraševanjem in čemu je enaka?', ['400 − 200 = 200 kg = uvoz Slovenije', '900 − 100 = 800 kg = skupna proizvodnja', '600 − 200 = 400 kg = izvoz Slovenije', '600 + 200 = 800 kg = domača potrošnja'], 2,
     'Pri 70 €: Q_S = 600, Q_D = 200; presežek ponudbe 400 kg gre v izvoz (P_W 70 > avtarkična 50). Neto korist = 400 · 20/2 = 4 000 €.'),

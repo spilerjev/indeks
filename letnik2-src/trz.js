@@ -159,7 +159,7 @@ const raziskave = [
 ];
 
 const povprasevanje = [
-  Q('Koliko vrst ocen povpraševanja lahko pripravimo (po profesorici)?', ['12', '60', '90', '20'], 1,
+  Q('Koliko vrst ocen povpraševanja lahko pripravimo?', ['12', '60', '90', '20'], 1,
     '4 ravni izdelka × 5 prostorskih ravni × 3 časovne ravni = 60. (Kotler ima 90 - pri tem predmetu velja 60.)'),
   Q('Razpoložljivi trg so porabniki, ki imajo:', ['Samo zanimanje', 'Zanimanje, dohodek in dostop', 'Že kupljen izdelek', 'Zanimanje in so del ciljnega trga'], 1,
     'Potencialni = zanimanje; razpoložljivi = zanimanje + dohodek + dostop; ciljni = del razpoložljivega, ki ga želi osvojiti; dejanski = že kupili.'),
