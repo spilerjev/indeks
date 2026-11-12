@@ -2,7 +2,8 @@ import React, { useState, useMemo, useRef, useEffect, useCallback } from "react"
 import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
-  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search
+  BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search,
+  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 
@@ -14,6 +15,7 @@ import { createClient } from "@supabase/supabase-js";
    ========================================================================= */
 const DATA = __DATA_JSON__;
 const FORMULAS = __FORMULAS_JSON__;
+const CHARS = __CHARACTERS_JSON__;        // liki in loadouti za bitko (characters.js)
 
 const YEARS = [...new Set(DATA.map((s) => s.year))].sort();
 
@@ -40,6 +42,41 @@ const RESUME_KEY = "indeks.resume.v1";   // nedokončani kvizi (vrstni red vpra�
 const RANKED_N = 10;                     // ranked: število vprašanj
 const RANKED_SECONDS = 600;              // ranked: časovna omejitev (10 min)
 const RANKED_MIN_RUNS = 5;               // ranked: najmanj rešenih za uvrstitev na lestvico
+const RANKED_FORMULAS = ["stat", "stana"];  // ranked: brez slovarčka in formul, razen formul pri statistiki (statistični priročnik je dovoljen na izpitu)
+/* Fraunces nariše makron (ȳ, x̄) zamaknjen v desno čez oklepaj; v serifnih naslovih ga zamenjamo s kombinirano nadčrto U+0305, ki jo pisava postavi pravilno. */
+const serifBars = (s) => (typeof s === "string" ? s.replace(/ȳ/g, "y\u0305").replace(/Ȳ/g, "Y\u0305").replace(/\u0304/g, "\u0305").replace(/ŷ/g, "y\u0302").replace(/Ŷ/g, "Y\u0302") : s);
+/* Ranked točke in rank (ista formula je v bazi: supabase/ranked-tocke.sql, funkciji ranked_points in ranked_delta).
+   Točke na vprašanje: pravilen odgovor 100 + do 50 za hitrost (linearno v okviru RANKED_Q_SECONDS), napačen 0.
+   Sprememba ranka na test: 20 · (pravilni − polovica) + bonus/10; rank dela = vsota (ne pod 0), nazivi po pragih. */
+const RANKED_Q_SECONDS = 60;
+const RANKED_RANKS = [["Brucec", 0], ["Študent", 150], ["Absolvent", 350], ["Diplomant", 600], ["Magister", 900], ["Doktor", 1300], ["Docent", 1800], ["Profesor", 2400], ["Dekan", 3200], ["Rektor", 4200]];
+const rankedQPoints = (ok, sec) => (ok ? 100 + Math.round(50 * Math.max(0, 1 - sec / RANKED_Q_SECONDS)) : 0);
+const rankedEstPoints = (r) => (r.points != null ? r.points : r.correct * 100 + Math.round(r.correct * 50 * Math.max(0, 1 - r.seconds / (RANKED_Q_SECONDS * r.total))));
+const rankedDelta = (correct, total, points) => Math.round(20 * (correct - total / 2)) + Math.floor((points - 100 * correct) / 10);
+const rankName = (rating) => { let n = RANKED_RANKS[0][0]; for (const [name, min] of RANKED_RANKS) if (rating >= min) n = name; return n; };
+const rankNext = (rating) => RANKED_RANKS.find(([, min]) => min > rating) || null;
+/* Ranked: izbira je enakomerno naključna in NE upošteva znanja (kot na izpitu). Edina utež: vprašanja iz zadnjih
+   RANKED_RECENT ranked testov tega dela (shranjeno v brskalniku) imajo manjšo možnost ponovitve. */
+const RANKED_RECENT = 3;
+const RANKED_SEEN_KEY = "indeks.rankedseen.v1";
+function rankedSample(pool, n, partKey) {
+  const seen = new Set((store.get(RANKED_SEEN_KEY, {})[partKey]) || []);
+  const items = pool.map((q) => ({ q, w: seen.has(qid(q)) ? 0.3 : 1 }));
+  const out = [];
+  n = Math.min(n, items.length);
+  for (let k = 0; k < n; k++) {
+    let tot = 0;
+    for (const it of items) tot += it.w;
+    let r = Math.random() * tot, idx = items.length - 1;
+    for (let i = 0; i < items.length; i++) { r -= items[i].w; if (r <= 0) { idx = i; break; } }
+    out.push(items[idx].q);
+    items.splice(idx, 1);
+  }
+  const all = store.get(RANKED_SEEN_KEY, {});
+  all[partKey] = out.map(qid).concat(all[partKey] || []).slice(0, n * RANKED_RECENT);
+  store.set(RANKED_SEEN_KEY, all);
+  return out;
+}
 const rankedPool = (part) => part.decks.flatMap((d) => d.questions).filter((q) => q.options && q.options.length >= 2);
 /* Nedokončan kviz: shranimo celoten potek (največ 12 kompletov, največ 14 dni). */
 function loadResume() { return store.get(RESUME_KEY, {}); }
@@ -662,6 +699,18 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-face.back{transform:rotateY(180deg);background:var(--back2);border-left:3px solid var(--teal);}
 .ix-spark{display:flex;align-items:flex-end;gap:3px;height:30px;}
 .ix-spark>i{flex:1;background:var(--terra);border-radius:2px 2px 0 0;min-height:3px;opacity:.85;}
+/* 1v1: modalno okno, vnosi, gumbi-pilule, značka */
+.ix-modalbg{position:fixed;inset:0;background:rgba(25,23,18,.45);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px;}
+.ix-modal{background:var(--paper2);border:1px solid var(--line);border-radius:16px;width:min(560px,100%);max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+.ix-modalhead{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line);}
+.ix-modalbody{overflow-y:auto;padding:12px 16px 16px;-webkit-overflow-scrolling:touch;}
+.ix-root .ix-input{padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;font-family:inherit;box-sizing:border-box;}
+.ix-root .ix-pill{background:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px;cursor:pointer;color:var(--ink);font-size:12.5px;font-weight:600;white-space:nowrap;}
+.ix-root .ix-pill.on{background:var(--teal);color:#fff;border-color:var(--teal);}
+.ix-root .ix-pill.bad{color:var(--red);}
+.ix-root .ix-pill:disabled{opacity:.5;cursor:default;}
+.ix-badge{position:absolute;top:-6px;right:-8px;min-width:18px;height:18px;border-radius:999px;background:var(--terra);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;padding:0 5px;box-sizing:border-box;}
+.ix-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap;}
 `;
 
 const partQ = (p) => p.decks.reduce((n, d) => n + d.questions.length, 0);
@@ -1206,6 +1255,8 @@ function routeToHash(r, fallbackYear) {
   const yr = (r.year || fallbackYear || storedYear());
   if (r.view === "home") return "#/letnik-" + yr;
   if (r.view === "allstats") return "#/letnik-" + yr + "/statistika";
+  if (r.view === "profile") return "#/profil";
+  if (r.view === "duel") return "#/izziv/" + r.id;
   const base = "#/" + r.sem + "/" + r.subj;
   if (r.view === "subject") return base;
   if (r.view === "stats") return base + "/statistika";
@@ -1222,6 +1273,8 @@ function hashToRoute(hash) {
   if (!seg.length) return { view: "welcome" };
   const ym = /^letnik-(\d+)$/.exec(seg[0]);
   if (ym) { const y = +ym[1]; if (!YEARS.includes(y)) return home; return seg[1] === "statistika" ? { view: "allstats", year: y } : { view: "home", year: y }; }
+  if (seg[0] === "profil") return { view: "profile" };
+  if (seg[0] === "izziv" && seg[1]) return { view: "duel", id: seg[1] };
   const sem = DATA.find((x) => x.id === seg[0]);
   const subj = sem && sem.subjects.find((x) => x.id === seg[1]);
   if (!subj) return home;
@@ -1241,8 +1294,20 @@ export default function App() {
   const [route, setRouteState] = useState(() => hashToRoute(window.location.hash));
   const routeRef = useRef(route);
   routeRef.current = route;
+  // varovalo: med matchem odhod s strani (Nazaj, gumbi v glavi) zahteva potrditev, ker pomeni predajo
+  const navGuard = useRef(null);            // { hash, ask: () => boolean }
+  const ignoreHash = useRef(false);
+  const setNavGuard = useCallback((g) => { navGuard.current = g; }, []);
   useEffect(() => {
-    const onHash = () => { setRouteState(hashToRoute(window.location.hash)); window.scrollTo(0, 0); };
+    const onHash = () => {
+      if (ignoreHash.current) { ignoreHash.current = false; return; }
+      const g = navGuard.current;
+      if (g && window.location.hash !== g.hash) {
+        if (!g.ask()) { ignoreHash.current = true; window.location.hash = g.hash; return; }
+        navGuard.current = null;
+      }
+      setRouteState(hashToRoute(window.location.hash)); window.scrollTo(0, 0);
+    };
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
@@ -1251,6 +1316,8 @@ export default function App() {
     const cur = routeRef.current;
     const yr = r.year || cur.year;
     const h = routeToHash(r, yr);
+    const g = navGuard.current;
+    if (g && h !== g.hash) { if (!g.ask()) return; navGuard.current = null; }
     if (h === window.location.hash) { setRouteState(hashToRoute(h)); window.scrollTo(0, 0); }
     else window.location.hash = h;
   }, []);
@@ -1277,12 +1344,27 @@ export default function App() {
     if (!userId) return;
     const meta = (session.user && session.user.user_metadata) || {};
     if (!meta.username) return;
+    // ime iz metapodatkov registracije prepišemo v profil, če ga tam še ni (tudi kadar vrstice profila sploh še ni -
+    // npr. registracija s potrditvijo e-pošte, kjer ob registraciji ni seje); lestvica bere ime iz profila
     supabase.from("profiles").select("username").eq("id", userId).maybeSingle().then(({ data, error }) => {
-      if (!error && data && !data.username) supabase.rpc("set_username", { p_username: meta.username }).then(() => {});
+      if (!error && (!data || !data.username)) supabase.rpc("set_username", { p_username: meta.username }).then(() => {});
     });
   }, [userId]); // eslint-disable-line
   const { stats, record } = useCloudStats(userId || null);
   const comm = useCommunity(userId || null);
+  const { soc, socErr, reload: reloadSocial } = useSocial(userId || null);
+  // ko nasprotnik sprejme moj izziv (pending -> accepted v tej seji), skoči v match
+  const seenCh = useRef(null);
+  useEffect(() => {
+    if (!soc) { seenCh.current = null; return; }
+    const cur = {}; (soc.challenges || []).forEach((c) => { cur[c.id] = c.status; });
+    if (seenCh.current) {
+      const hit = (soc.challenges || []).find((c) => c.status === "accepted" && (c.my_status === "host" || c.my_status === "accepted") && seenCh.current[c.id] === "pending");
+      const r = routeRef.current;
+      if (hit && !(r.view === "duel" && r.id === hit.id)) setRoute({ view: "duel", id: hit.id });
+    }
+    seenCh.current = cur;
+  }, [soc, setRoute]);
 
   // ob odjavi ali menjavi računa nazaj na domačo stran
   const prevUser = useRef(userId);
@@ -1296,13 +1378,14 @@ export default function App() {
       <style>{CSS}</style>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "28px 18px 60px" }}>
         <Header onHome={() => setRoute({ view: "welcome" })} home={route.view === "home" || route.view === "welcome"} dark={dark} onToggleTheme={toggleTheme} gloss={gloss} onToggleGloss={toggleGloss} formulas={formulas} onToggleFormulas={toggleFormulas}
-          user={session && session.user} onSignOut={signOut} />
+          user={session && session.user} onSignOut={signOut} onProfile={() => setRoute({ view: "profile" })} badge={socialBadge(soc)} profileName={soc && soc.profile && soc.profile.username} charId={soc && soc.profile && unlocked(soc.record && soc.record.level, charById(soc.profile.character)) ? soc.profile.character : null} photo={soc && soc.profile && soc.profile.photo} />
         {newer && (
           <div className="ix-card" style={{ padding: "11px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", borderLeft: "3px solid var(--teal)" }}>
             <div style={{ flex: 1, fontSize: 14 }}><b>Na voljo je nova različica indeks.</b> <span style={{ color: "var(--ink2)" }}>Osveži, da dobiš najnovejše kvize in popravke.</span></div>
             <button onClick={() => window.location.reload()} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "8px 14px" }}>Osveži</button>
           </div>
         )}
+        {session && route.view !== "welcome" && <SocialBanner soc={soc} route={route} go={setRoute} reload={reloadSocial} />}
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
         ) : route.view === "welcome" ? (
@@ -1312,14 +1395,16 @@ export default function App() {
         ) : (
           <>
             {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} />}
-            {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} comm={comm} />}
+            {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} comm={comm} userId={userId || null} />}
             {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
-            {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} />}
+            {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} soc={soc} />}
+            {route.view === "profile" && <ProfileView user={session.user} soc={soc} socErr={socErr} reload={reloadSocial} go={setRoute} />}
+            {route.view === "duel" && <GlossCtx.Provider value={false}><DuelView route={route} go={setRoute} userId={userId} formulas={formulas} soc={soc} setNavGuard={setNavGuard} /></GlossCtx.Provider>}
             {route.view === "notes" && <NotesView route={route} go={setRoute} />}
             {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView route={route} go={setRoute} record={record} userId={userId || null} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
             {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
-            {formulas && route.subj && ["quiz", "cards", "notes", "part", "subject"].indexOf(route.view) >= 0 && <FormulaDock key={route.subj} subjId={route.subj} />}
+            {formulas && route.subj && ["quiz", "cards", "notes", "part", "subject"].indexOf(route.view) >= 0 && !(route.view === "quiz" && route.deck === "__ranked" && RANKED_FORMULAS.indexOf(route.subj) < 0) && <FormulaDock key={route.subj} subjId={route.subj} />}
           </>
         )}
         <Footer />
@@ -1455,7 +1540,7 @@ function Footer() {
   );
 }
 
-function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formulas, onToggleFormulas, user, onSignOut }) {
+function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formulas, onToggleFormulas, user, onSignOut, onProfile, badge, profileName, charId, photo }) {
   return (
     <header style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: home ? 26 : 18 }}>
       <button onClick={onHome} className="ix-serif"
@@ -1468,7 +1553,11 @@ function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formu
         </span>
       </button>
       {user
-        ? <span className="ix-chip" style={{ marginLeft: "auto", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={user.email}>{displayName(user)}</span>
+        ? <button onClick={onProfile} className="ix-chip" title="Profil, prijatelji in izzivi 1v1"
+            style={{ marginLeft: "auto", position: "relative", maxWidth: 200, overflow: "visible", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
+            {photo ? <Pic photo={photo} name={profileName} size={20} /> : charId ? <CharArt id={charId} size={20} /> : <UserRound size={14} />}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{profileName || displayName(user)}</span>
+            {badge > 0 && <span className="ix-badge">{badge}</span>}
+          </button>
         : <span className="ix-chip" style={{ marginLeft: "auto" }}>EF · UPEŠ</span>}
       {user && (
         <button onClick={onToggleGloss} aria-label="Slovarček" aria-pressed={gloss} title={gloss ? "Slovarček je vklopljen (klik za izklop)" : "Slovarček je izklopljen (klik za vklop)"}
@@ -1630,10 +1719,11 @@ function SubjectView({ route, stats, go }) {
 }
 
 /* ---- KOLOKVIJ: ločene sekcije Zapiski / Kvizi / Flashcardi ---- */
-function PartView({ route, stats, go }) {
+function PartView({ route, stats, go, soc }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const part = subj.parts.find((p) => p.id === route.part);
+  const [duelPick, setDuelPick] = useState(false);
   const cards = part.flashcards || [];
   const theoryDecks = part.decks.filter((d) => !d.calc);
   const calcDecks = part.decks.filter((d) => d.calc);
@@ -1668,6 +1758,15 @@ function PartView({ route, stats, go }) {
               </div>
               <ChevronRight size={18} color="var(--ink2)" />
             </button>
+            <button onClick={() => setDuelPick(true)} className="ix-card" style={{ width: "100%", textAlign: "left", padding: "11px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 13, borderLeft: "3px solid var(--terra)", marginTop: 9 }}>
+              <span style={{ width: 34, height: 34, borderRadius: 10, background: "var(--terra)", display: "grid", placeItems: "center", flexShrink: 0 }}><Swords size={16} color="#fff" /></span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 15 }}>Izzovi prijatelje · duel, trio, četverka</div>
+                <div className="ix-chip" style={{ marginTop: 2 }}>ista vprašanja za vse · hkrati · klasika ali bitka z liki</div>
+              </div>
+              <ChevronRight size={18} color="var(--ink2)" />
+            </button>
+            {duelPick && <NewMatch soc={soc} presetLoc={{ sem, subj, part }} go={go} onClose={() => setDuelPick(false)} onPick={(id) => { setDuelPick(false); go({ view: "duel", id }); }} />}
           </div>
         );
       })()}
@@ -1825,14 +1924,16 @@ function Leaderboard({ partKey, userId, partName, bump }) {
       if (cancelled) return;
       if (lb.error) { setErr(lb.error.message); setRows(null); }
       else { setErr(null); setRows(lb.data || []); }
-      const me = await supabase.from("ranked_results").select("correct,total,seconds,created_at").eq("part_key", partKey).eq("user_id", userId).order("created_at", { ascending: true });
+      let me = await supabase.from("ranked_results").select("correct,total,seconds,points,created_at").eq("part_key", partKey).eq("user_id", userId).order("created_at", { ascending: true });
+      if (me.error) me = await supabase.from("ranked_results").select("correct,total,seconds,created_at").eq("part_key", partKey).eq("user_id", userId).order("created_at", { ascending: true }); // baza še brez stolpca points
       if (cancelled) return;
       if (!me.error && me.data) {
         const n = me.data.length;
+        const rating = Math.max(0, me.data.reduce((s, r) => s + rankedDelta(r.correct, r.total, rankedEstPoints(r)), 0));
         const avg = n ? Math.round(me.data.reduce((s, r) => s + 100 * r.correct / r.total, 0) / n) : 0;
         const best = n ? Math.max(...me.data.map((r) => Math.round(100 * r.correct / r.total))) : 0;
         const avgSec = n ? Math.round(me.data.reduce((s, r) => s + r.seconds, 0) / n) : 0;
-        setMine({ n, avg, best, avgSec });
+        setMine({ n, avg, best, avgSec, rating });
       }
       const pr = await supabase.from("profiles").select("username").eq("id", userId).maybeSingle();
       if (!cancelled && !pr.error && pr.data) { setNick(pr.data.username || ""); setNickDraft(pr.data.username || ""); }
@@ -1854,7 +1955,7 @@ function Leaderboard({ partKey, userId, partName, bump }) {
     <div className="ix-card" style={{ padding: 18, marginTop: 14 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
         <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Lestvica · {partName}</div>
-        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? (myRank >= 0 ? `ti: ${myRank + 1}. mesto · ${mine.avg} %` : `ti: ${mine.avg} % (${mine.n} rešenih)`) : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.avg} %` : ""}`) : ""}</div>
+        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? `${myRank >= 0 ? `ti: ${myRank + 1}. mesto · ` : "ti: "}${rankName(mine.rating)} · ${mine.rating} rank${rankNext(mine.rating) ? ` (do naziva ${rankNext(mine.rating)[0]} še ${rankNext(mine.rating)[1] - mine.rating})` : ""}` : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.rating} rank` : ""}`) : ""}</div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", fontSize: 13, color: "var(--ink2)" }}>
         <span>Na lestvici si prikazan kot <b style={{ color: "var(--ink)" }}>{nick || "skrajšan e-naslov"}</b>{nick ? " (z njim se lahko tudi prijaviš)" : ""}.</span>
@@ -1872,7 +1973,7 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         {nickErr && <span style={{ color: "var(--terra)", width: "100%" }}>{nickErr}</span>}
       </div>
       {err ? (
-        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Lestvica še ni vklopljena (v Supabase je treba zagnati <code>supabase/ranked.sql</code>). Tvoji rezultati se vseeno beležijo v statistiko.</div>
+        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Lestvica še ni vklopljena (v Supabase je treba zagnati <code>supabase/ranked.sql</code> in <code>supabase/ranked-tocke.sql</code>). Tvoji rezultati se vseeno beležijo v statistiko.</div>
       ) : rows == null ? (
         <div style={{ fontSize: 13, color: "var(--ink2)" }}>Nalagam lestvico…</div>
       ) : rows.length === 0 ? (
@@ -1881,15 +1982,17 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         <div style={{ overflowX: "auto" }}>
           <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
             <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}>
-              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Najboljši</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
+              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px" }}>Naziv</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rank</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zadnji</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
             </tr></thead>
             <tbody>
               {rows.map((r, k) => (
                 <tr key={r.user_id || k} style={{ borderTop: "1px solid var(--line)", background: r.is_me ? "var(--okbg)" : "transparent", fontWeight: r.is_me ? 700 : 400 }}>
                   <td style={{ padding: "6px 6px" }}>{k + 1}</td>
                   <td style={{ padding: "6px 6px" }}>{r.name}{r.is_me ? " (ti)" : ""}</td>
+                  <td style={{ padding: "6px 6px" }}>{r.rating != null ? rankName(r.rating) : "–"}</td>
+                  <td style={{ padding: "6px 6px", textAlign: "right" }}>{r.rating != null ? r.rating : "–"}</td>
+                  <td style={{ padding: "6px 6px", textAlign: "right", color: r.last_delta < 0 ? "var(--terra)" : "var(--teal)" }}>{r.last_delta != null ? (r.last_delta >= 0 ? "+" : "") + r.last_delta : "–"}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{Math.round(r.avg_pct)} %</td>
-                  <td style={{ padding: "6px 6px", textAlign: "right" }}>{Math.round(r.best_pct)} %</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{r.runs}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{fmtTime(r.avg_seconds)}</td>
                 </tr>
@@ -1902,35 +2005,137 @@ function Leaderboard({ partKey, userId, partName, bump }) {
   );
 }
 
-function QuizView({ route, go, record, userId }) {
+function WrongReview({ wrong }) {
+  if (!wrong || !wrong.length) return null;
+  return (
+    <div>
+      <div className="ix-chip" style={{ color: "var(--red)", marginBottom: 10 }}>Pregled napak ({wrong.length})</div>
+      <div style={{ display: "grid", gap: 10 }}>
+        {wrong.map((w, k) => (
+          <div key={k} className="ix-card" style={{ padding: 15 }}>
+            <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 15 }}>{w.q}</div>
+            {w.given && <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 8, lineHeight: 1.5, overflowX: "auto" }} dangerouslySetInnerHTML={{ __html: w.given }} />}
+            {w.type === "match" ? (
+              <div style={{ display: "grid", gap: 4 }}>
+                {w.pairs.map((p, t) => (
+                  <div key={t} style={{ fontSize: 13, color: w.mMap[t] === t ? "var(--teal)" : "var(--red)" }}>
+                    {p.term} → {w.mMap[t] != null && w.pairs[w.mMap[t]] ? w.pairs[w.mMap[t]].def : "—"}{w.mMap[t] === t ? " ✓" : ` (pravilno: ${p.def})`}
+                  </div>
+                ))}
+              </div>
+            ) : w.type === "grid" ? (
+              <div style={{ display: "grid", gap: 4 }}>
+                {w._blanks.map((b) => {
+                  const pid = w.gMap[b.key]; const placed = pid != null ? ((w._pool.find((x) => x.id === pid) || {}).val) : "—";
+                  const ok = placed === b.val; const rc = b.key.split("-").map(Number);
+                  return (
+                    <div key={b.key} style={{ fontSize: 13, color: ok ? "var(--teal)" : "var(--red)" }}>
+                      {w.rows[rc[0]].label} · {w.cols[rc[1]]}: {placed}{ok ? " ✓" : ` (pravilno: ${b.val})`}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <>
+                <Row icon={<XCircle size={15} color="var(--red)" />} text={w.options[w.picked]} c="var(--red)" />
+                <Row icon={<CheckCircle2 size={15} color="var(--teal)" />} text={w.options[w.correct]} c="var(--teal)" />
+              </>
+            )}
+            {w.type !== "match" && w.wrong && w.wrong[w.options[w.picked]] && <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 6 }}><b style={{ color: "var(--ink)" }}>Zakaj ne ta:</b> {w.wrong[w.options[w.picked]]}</div>}
+            {w.explanation && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{w.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: w.explanation }} /> : w.explanation}</div>}
+            {w.more && <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 6, paddingTop: 6, borderTop: "1px solid var(--line)", lineHeight: 1.5 }}>{w.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: w.more }} /> : w.more}</div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* duel (1v1): ista vprašanja kot nasprotnik (duel.questions), čas po strežniku (duel.left), napredek sporoča DuelView;
+   sicer kot ranked (brez razlag/slovarčka). Zaključni zaslon riše DuelView. */
+/* Skupna ranked lestvica: vsota rankov vseh delov z vsaj RANKED_MIN_RUNS testi (rpc ranked_overall_leaderboard, supabase/ranked-tocke.sql). */
+function OverallLeaderboard({ userId }) {
+  const [rows, setRows] = useState(null);
+  const [err, setErr] = useState(null);
+  useEffect(() => {
+    if (!userId) return;
+    let cancelled = false;
+    supabase.rpc("ranked_overall_leaderboard").then(({ data, error }) => { if (cancelled) return; if (error) { setErr(error.message); setRows(null); } else { setErr(null); setRows(data || []); } });
+    return () => { cancelled = true; };
+  }, [userId]);
+  if (!userId) return null;
+  const myRank = rows ? rows.findIndex((r) => r.is_me) : -1;
+  const me = myRank >= 0 ? rows[myRank] : null;
+  const cell = { padding: "6px 6px" }, right = { padding: "6px 6px", textAlign: "right" };
+  return (
+    <div className="ix-card" style={{ padding: 18, marginBottom: 18 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
+        <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Skupna ranked lestvica</div>
+        <div className="ix-chip">{me ? `ti: ${myRank + 1}. mesto · ${me.rating} rank · ${me.parts} ${me.parts === 1 ? "del" : me.parts === 2 ? "dela" : "delov"}` : rows ? `ti: še brez dela s ${RANKED_MIN_RUNS} rešenimi testi` : ""}</div>
+      </div>
+      <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Vsota rankov vseh delov (vseh letnikov), v katerih imaš vsaj {RANKED_MIN_RUNS} ranked testov. Več delov in več reševanja pomeni višji rank.</div>
+      {err ? (
+        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Skupna lestvica še ni vklopljena (v Supabase je treba zagnati <code>supabase/ranked-tocke.sql</code>).</div>
+      ) : rows == null ? (
+        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Nalagam lestvico…</div>
+      ) : rows.length === 0 ? (
+        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Še nihče nima dela s {RANKED_MIN_RUNS} rešenimi ranked testi. Bodi prvi.</div>
+      ) : (
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
+            <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}>
+              <th style={cell}>#</th><th style={cell}>Ime</th><th style={right}>Rank</th><th style={right}>Delov</th><th style={right}>Testov</th>
+            </tr></thead>
+            <tbody>
+              {rows.map((r, k) => (
+                <tr key={r.user_id || k} style={{ borderTop: "1px solid var(--line)", background: r.is_me ? "var(--okbg)" : "transparent", fontWeight: r.is_me ? 700 : 400 }}>
+                  <td style={cell}>{k + 1}</td>
+                  <td style={cell}>{r.name}{r.is_me ? " (ti)" : ""}</td>
+                  <td style={right}>{r.rating}</td>
+                  <td style={right}>{r.parts}</td>
+                  <td style={right}>{r.runs}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function QuizView({ route, go, record, userId, duel }) {
   const glossOn = React.useContext(GlossCtx);
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const part = subj.parts.find((p) => p.id === route.part);
   const ranked = route.deck === "__ranked";
+  const exam = ranked || !!duel;
+  const duelRef = useRef(duel); duelRef.current = duel;
   const calcMix = route.deck === "__mixcalc";
   const mixed = route.deck === "__mix" || calcMix;
   const mixDecks = calcMix ? part.decks.filter((d) => d.calc) : part.decks.filter((d) => !d.calc);
-  const deck = ranked ? { id: "__ranked", name: "Ranked · " + part.name } : mixed ? { id: route.deck, name: calcMix ? "Mešane računske naloge" : "Mešani kviz" } : part.decks.find((d) => d.id === route.deck);
-  const pool = ranked ? rankedPool(part) : mixed ? mixDecks.flatMap((d) => d.questions) : deck.questions;
-  const mixN = ranked ? Math.min(RANKED_N, pool.length) : mixed ? Math.min(20, pool.length) : pool.length;
+  const deck = duel ? { id: "__1v1", name: "1v1 · " + part.name } : ranked ? { id: "__ranked", name: "Ranked · " + part.name } : mixed ? { id: route.deck, name: calcMix ? "Mešane računske naloge" : "Mešani kviz" } : part.decks.find((d) => d.id === route.deck);
+  const pool = exam ? rankedPool(part) : mixed ? mixDecks.flatMap((d) => d.questions) : deck.questions;
+  const mixN = duel ? duel.questions.length : ranked ? Math.min(RANKED_N, pool.length) : mixed ? Math.min(20, pool.length) : pool.length;
   const key = `${sem.id}/${subj.id}/${part.id}/${deck.id}`;
   const backToPart = () => go({ view: "part", sem: sem.id, subj: subj.id, part: part.id });
 
   function buildRun(doShuffle) {
     let base;
-    if (ranked) base = shuffle(pool).slice(0, mixN);
+    if (duel) base = duel.questions;
+    else if (ranked) base = rankedSample(pool, mixN, key);
     else if (mixed) { base = weightedSampleSmart(mixDecks, mixN); bumpMixUse(base); }
     else base = doShuffle ? shuffle(pool) : pool.slice();
     return base.map(processQuestion);
   }
 
-  const [started, setStarted] = useState(false);
+  const [started, setStarted] = useState(!!duel);
   const [shuffleQ, setShuffleQ] = useState(false);
-  const [run, setRun] = useState([]);
-  const [i, setI] = useState(0);
+  const [run, setRun] = useState(() => (duel ? buildRun(true) : []));
+  const [i, setI] = useState(duel ? Math.min(duel.resumeAnswered || 0, Math.max(0, duel.questions.length - 1)) : 0);
   const [picked, setPicked] = useState(null);
-  const [correctCount, setCorrect] = useState(0);
+  const [correctCount, setCorrect] = useState(duel ? (duel.resumeCorrect || 0) : 0);
   const [wrong, setWrong] = useState([]);
   const [done, setDone] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -1939,20 +2144,28 @@ function QuizView({ route, go, record, userId }) {
   const [mMap, setMMap] = useState({});
   const [gSel, setGSel] = useState(null);
   const [gMap, setGMap] = useState({});
+  const [hideOpt, setHideOpt] = useState(null);   // 1v1 plonkec: skrit napačen odgovor
+  const [reveal, setReveal] = useState(false);    // 1v1 goljufija: pokazan pravilni odgovor
+  const [abBusy, setAbBusy] = useState(false);
   const saved = useRef(false);
-  const attemptT = useRef(null);          // t sprotno zapisanega poskusa (isti t = isti poskus)
-  const [left, setLeft] = useState(RANKED_SECONDS);
+  const attemptT = useRef(duel ? Date.now() : null);          // t sprotno zapisanega poskusa (isti t = isti poskus)
+  const [left, setLeft] = useState(duel ? duel.left() : RANKED_SECONDS);
   const [lbBump, setLbBump] = useState(0);
-  const resumeState = !ranked ? loadResume()[key] : null;
+  const [lastRun, setLastRun] = useState(null);   // ranked: točke in sprememba ranka pravkar končanega testa
+  const qStartT = useRef(Date.now());             // ranked: začetek trenutnega vprašanja (hitrostni bonus)
+  const pointsRef = useRef(0);                    // ranked: seštevek točk v tem testu
+  const resumeState = !exam ? loadResume()[key] : null;
   const canResume = !!(resumeState && resumeState.run && resumeState.run.length && (resumeState.i > 0 || resumeState.picked != null));
 
   // Ranked: odštevanje; ob izteku se kviz konča (neodgovorjena vprašanja štejejo kot napačna)
   useEffect(() => {
-    if (!ranked || !started || done) return;
-    const id = setInterval(() => setLeft((l) => (l > 0 ? l - 1 : 0)), 1000);
+    if (!exam || !started || done) return;
+    const id = duel
+      ? setInterval(() => setLeft(duelRef.current.left()), 500)      // 1v1: preostali čas po strežniški uri
+      : setInterval(() => setLeft((l) => (l > 0 ? l - 1 : 0)), 1000);
     return () => clearInterval(id);
-  }, [ranked, started, done]);
-  useEffect(() => { if (ranked && started && !done && left <= 0) finishRun(true); }, [left]); // eslint-disable-line
+  }, [exam, started, done]); // eslint-disable-line
+  useEffect(() => { if (exam && started && !done && left <= 0) finishRun(true); }, [left]); // eslint-disable-line
 
   // Tipkovnica: 1-6 / A-F izbere odgovor, Enter / presledek / → naprej, Enter začne, R ponovi
   const kb = useRef({});
@@ -1985,10 +2198,10 @@ function QuizView({ route, go, record, userId }) {
   }, []);
   kb.current = { started, done, mixed, begin, restart };
 
-  function reset() { setI(0); setPicked(null); setCorrect(0); setWrong([]); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); saved.current = false; attemptT.current = Date.now(); setLeft(RANKED_SECONDS); }
-  function begin(doShuffle) { setShuffleQ(doShuffle); const r = buildRun(doShuffle); setRun(r); reset(); setStarted(true); if (!ranked) saveResume(key, null); }
-  function restart() { setRun(buildRun(shuffleQ)); reset(); if (!ranked) saveResume(key, null); }
-  function beginFocus() { setRun(weakestSample(pool, Math.min(20, pool.length)).map(processQuestion)); reset(); if (!ranked) saveResume(key, null); }
+  function reset() { setI(0); setPicked(null); setCorrect(0); setWrong([]); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); saved.current = false; attemptT.current = Date.now(); setLeft(RANKED_SECONDS); qStartT.current = Date.now(); pointsRef.current = 0; setLastRun(null); }
+  function begin(doShuffle) { if (duel) return; setShuffleQ(doShuffle); const r = buildRun(doShuffle); setRun(r); reset(); setStarted(true); if (!exam) saveResume(key, null); }
+  function restart() { if (duel) return; setRun(buildRun(shuffleQ)); reset(); if (!exam) saveResume(key, null); }
+  function beginFocus() { setRun(weakestSample(pool, Math.min(20, pool.length)).map(processQuestion)); reset(); if (!exam) saveResume(key, null); }
   // Nadaljevanje nedokončanega kviza (shranjeno v tem brskalniku)
   function continueRun() {
     const r = resumeState; if (!r) return;
@@ -2010,7 +2223,7 @@ function QuizView({ route, go, record, userId }) {
     record(key, { t: attemptT.current, u: Date.now(), pct: Math.round((nCorrect / Math.max(1, nAnswered)) * 100), correct: nCorrect, answered: nAnswered, total, done: !!isDone, ...(extra || {}) });
   }
   function persist(nCorrect, nWrong, ii, pk) {
-    if (ranked) return;
+    if (exam) return;
     saveResume(key, { run, i: ii, picked: pk, correctCount: nCorrect, wrong: nWrong, shuffleQ, attemptT: attemptT.current });
   }
 
@@ -2041,10 +2254,10 @@ function QuizView({ route, go, record, userId }) {
           {ranked ? (
             <>
               <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "0 0 6px" }}>
-                <b style={{ color: "var(--ink)" }}>{mixN} naključnih vprašanj</b> iz vseh kvizov tega dela ({pool.length} v naboru), <b style={{ color: "var(--ink)" }}>{fmtTime(RANKED_SECONDS)} časa</b>. Med reševanjem ni razlag, so pa v pregledu na koncu.
+                <b style={{ color: "var(--ink)" }}>{mixN} naključnih vprašanj</b> iz vseh kvizov tega dela ({pool.length} v naboru), <b style={{ color: "var(--ink)" }}>{fmtTime(RANKED_SECONDS)} časa</b>. {RANKED_FORMULAS.indexOf(subj.id) >= 0 ? "Med reševanjem ni razlag in slovarčka; formule so dovoljene (kot statistični priročnik na izpitu)." : "Med reševanjem ni razlag, slovarčka in formul (kot na izpitu brez pripomočkov)."} Razlage so v pregledu na koncu.
               </p>
               <p style={{ color: "var(--ink2)", fontSize: 13, margin: "0 0 18px" }}>
-                Lestvica: povprečje vseh tvojih rešenih ranked testov tega dela; uvrstiš se po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
+                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Brucca do Rektorja. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
               </p>
               <button onClick={() => begin(true)} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "13px 22px", display: "flex", alignItems: "center", gap: 8 }}>
                 <Trophy size={17} /> Začni ranked
@@ -2094,7 +2307,7 @@ function QuizView({ route, go, record, userId }) {
   const restLow = ((q.options ? q.options.join(" ") : (q.pairs ? q.pairs.map((p) => p.term + " " + p.def).join(" ") : "")) + " " + (q.explanation || "") + " " + (q.more || "")).toLowerCase();
   const inTxt = (g, t) => (g.b ? new RegExp("\\b" + g.s + "\\b").test(t) : t.includes(g.s));
   const defQ = /\bkaj (pomeni|je|prikazuje|opisuje|označuje|razumemo)\b|\bkako (opredelimo|definiramo)\b|\bopredeli\b|definicij|\bkatere vrste\b|\bkateri tip\b|\bza kaj se uporablja\b/.test(stemLow);
-  const gloss = (!glossOn || ranked || q.type === "match" || q.type === "grid") ? [] : GLOSSARY.filter((g) => {
+  const gloss = (!glossOn || exam || q.type === "match" || q.type === "grid") ? [] : GLOSSARY.filter((g) => {
     if (g.subj && (Array.isArray(g.subj) ? g.subj.indexOf(subj.id) < 0 : g.subj !== subj.id)) return false;
     const inRest = inTxt(g, restLow), inStem = inTxt(g, stemLow);
     if (!inRest && !inStem) return false;
@@ -2103,14 +2316,29 @@ function QuizView({ route, go, record, userId }) {
   }).sort((x, y) => (inTxt(y, stemLow) ? 1 : 0) - (inTxt(x, stemLow) ? 1 : 0)).slice(0, 6);
   const wrongExpl = (!answered || picked === q.correct || !q.wrong) ? null : q.wrong[q.options[picked]];
 
+  async function useAbility() {
+    if (!duel || !duel.ability || duel.ability.used || abBusy) return;
+    setAbBusy(true);
+    const r = await duel.useAbility();
+    setAbBusy(false);
+    if (r === "cheat" && !answered) setReveal(true);
+  }
+  function usePlonkec() {
+    if (!duel || answered || hideOpt != null || !q.options || q.options.length < 3 || !duel.useHint()) return;
+    const wrongIdx = q.options.map((_, k) => k).filter((k) => k !== q.correct);
+    setHideOpt(wrongIdx[Math.floor(Math.random() * wrongIdx.length)]);
+  }
   function choose(idx) {
-    if (answered) return;
+    if (answered || idx === hideOpt) return;
     setPicked(idx);
     const ok = idx === q.correct;
     recordQ(q, ok);
+    if (ranked) pointsRef.current += rankedQPoints(ok, (Date.now() - qStartT.current) / 1000);
     const nc = correctCount + (ok ? 1 : 0), nw = ok ? wrong : [...wrong, { ...q, picked: idx }];
     setCorrect(nc); setWrong(nw);
-    if (!ranked) { liveRecord(nc, i + 1, false); persist(nc, nw, i, idx); }
+    sfx(ok ? "correct" : "wrong");
+    if (duel) duel.onAnswer(ok, ok ? null : { ...q, picked: idx });
+    if (!exam) { liveRecord(nc, i + 1, false); persist(nc, nw, i, idx); }
   }
   function submitMatch() {
     if (answered) return;
@@ -2119,7 +2347,9 @@ function QuizView({ route, go, record, userId }) {
     recordQ(q, allCorrect);
     const nc = correctCount + (allCorrect ? 1 : 0), nw = allCorrect ? wrong : [...wrong, { ...q, mMap: { ...mMap } }];
     setCorrect(nc); setWrong(nw);
-    if (!ranked) { liveRecord(nc, i + 1, false); persist(nc, nw, i, allCorrect ? 1 : 0); }
+    sfx(allCorrect ? "correct" : "wrong");
+    if (duel) duel.onAnswer(allCorrect, allCorrect ? null : { ...q, mMap: { ...mMap } });
+    if (!exam) { liveRecord(nc, i + 1, false); persist(nc, nw, i, allCorrect ? 1 : 0); }
   }
   const poolVal = (pid) => { const p = (q._pool || []).find((x) => x.id === pid); return p ? p.val : null; };
   function placeGrid(key) {
@@ -2139,18 +2369,23 @@ function QuizView({ route, go, record, userId }) {
     recordQ(q, ok);
     const nc = correctCount + (ok ? 1 : 0), nw = ok ? wrong : [...wrong, { ...q, gMap: { ...gMap } }];
     setCorrect(nc); setWrong(nw);
-    if (!ranked) { liveRecord(nc, i + 1, false); persist(nc, nw, i, ok ? 1 : 0); }
+    sfx(ok ? "correct" : "wrong");
+    if (duel) duel.onAnswer(ok, ok ? null : { ...q, gMap: { ...gMap } });
+    if (!exam) { liveRecord(nc, i + 1, false); persist(nc, nw, i, ok ? 1 : 0); }
   }
   function finishRun(timeout) {
     if (saved.current) return;
     saved.current = true;
     const total = run.length;
     const answeredN = timeout ? i + (picked !== null ? 1 : 0) : total;
+    if (duel) { setDone(true); duel.onFinish(); return; }
     if (ranked) {
       const seconds = Math.min(RANKED_SECONDS, RANKED_SECONDS - left);
-      record(key, { t: attemptT.current, u: Date.now(), pct: Math.round((correctCount / total) * 100), correct: correctCount, answered: total, total, done: true, seconds, timeout: !!timeout });
+      const points = pointsRef.current, delta = rankedDelta(correctCount, total, points);
+      setLastRun({ points, delta });
+      record(key, { t: attemptT.current, u: Date.now(), pct: Math.round((correctCount / total) * 100), correct: correctCount, answered: total, total, done: true, seconds, points, timeout: !!timeout });
       if (userId) {
-        supabase.from("ranked_results").insert({ user_id: userId, part_key: key, correct: correctCount, total, seconds })
+        supabase.from("ranked_results").insert({ user_id: userId, part_key: key, correct: correctCount, total, seconds, points })
           .then(({ error }) => { if (error) console.warn("indeks ranked: " + error.message); setLbBump((b) => b + 1); });
       }
     } else {
@@ -2161,9 +2396,10 @@ function QuizView({ route, go, record, userId }) {
   }
   function next() {
     if (i + 1 >= questions.length) finishRun(false);
-    else { setI(i + 1); setPicked(null); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); if (!ranked) persist(correctCount, wrong, i + 1, null); }
+    else { setI(i + 1); setPicked(null); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); setHideOpt(null); setReveal(false); qStartT.current = Date.now(); if (!exam) persist(correctCount, wrong, i + 1, null); }
   }
 
+  if (done && duel) return <div className="ix-card" style={{ padding: 24, textAlign: "center", color: "var(--ink2)", fontSize: 14.5 }}>Shranjujem rezultat…</div>;
   if (done) {
     const pct = Math.round((correctCount / questions.length) * 100);
     const good = pct >= 60;
@@ -2175,6 +2411,7 @@ function QuizView({ route, go, record, userId }) {
           <Trophy size={34} color={good ? "var(--teal)" : "var(--terra)"} />
           <div className="ix-serif" style={{ fontSize: 46, fontWeight: 900, margin: "8px 0 2px" }}>{pct}%</div>
           <div className="ix-chip">{correctCount} / {questions.length} pravilnih · {deck.name}{ranked && <span> · čas {fmtTime(Math.min(RANKED_SECONDS, RANKED_SECONDS - left))}{left <= 0 ? " · čas je potekel" : ""}</span>}</div>
+          {ranked && lastRun && <div style={{ marginTop: 10, fontSize: 15 }}><b>{lastRun.points} točk</b> · rank <b style={{ color: lastRun.delta >= 0 ? "var(--teal)" : "var(--terra)" }}>{lastRun.delta >= 0 ? "+" : ""}{lastRun.delta}</b></div>}
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 20, flexWrap: "wrap" }}>
             <button onClick={restart} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "11px 18px", display: "flex", alignItems: "center", gap: 7 }}>
               <RotateCcw size={16} /> Ponovi
@@ -2210,66 +2447,26 @@ function QuizView({ route, go, record, userId }) {
             )}
           </div>
         )}
-        {wrong.length > 0 && (
-          <div>
-            <div className="ix-chip" style={{ color: "var(--red)", marginBottom: 10 }}>Pregled napak ({wrong.length})</div>
-            <div style={{ display: "grid", gap: 10 }}>
-              {wrong.map((w, k) => (
-                <div key={k} className="ix-card" style={{ padding: 15 }}>
-                  <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 15 }}>{w.q}</div>
-                  {w.given && <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 8, lineHeight: 1.5, overflowX: "auto" }} dangerouslySetInnerHTML={{ __html: w.given }} />}
-                  {w.type === "match" ? (
-                    <div style={{ display: "grid", gap: 4 }}>
-                      {w.pairs.map((p, t) => (
-                        <div key={t} style={{ fontSize: 13, color: w.mMap[t] === t ? "var(--teal)" : "var(--red)" }}>
-                          {p.term} → {w.mMap[t] != null && w.pairs[w.mMap[t]] ? w.pairs[w.mMap[t]].def : "—"}{w.mMap[t] === t ? " ✓" : ` (pravilno: ${p.def})`}
-                        </div>
-                      ))}
-                    </div>
-                  ) : w.type === "grid" ? (
-                    <div style={{ display: "grid", gap: 4 }}>
-                      {w._blanks.map((b) => {
-                        const pid = w.gMap[b.key]; const placed = pid != null ? ((w._pool.find((x) => x.id === pid) || {}).val) : "—";
-                        const ok = placed === b.val; const rc = b.key.split("-").map(Number);
-                        return (
-                          <div key={b.key} style={{ fontSize: 13, color: ok ? "var(--teal)" : "var(--red)" }}>
-                            {w.rows[rc[0]].label} · {w.cols[rc[1]]}: {placed}{ok ? " ✓" : ` (pravilno: ${b.val})`}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <>
-                      <Row icon={<XCircle size={15} color="var(--red)" />} text={w.options[w.picked]} c="var(--red)" />
-                      <Row icon={<CheckCircle2 size={15} color="var(--teal)" />} text={w.options[w.correct]} c="var(--teal)" />
-                    </>
-                  )}
-                  {w.type !== "match" && w.wrong && w.wrong[w.options[w.picked]] && <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 6 }}><b style={{ color: "var(--ink)" }}>Zakaj ne ta:</b> {w.wrong[w.options[w.picked]]}</div>}
-                  {w.explanation && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{w.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: w.explanation }} /> : w.explanation}</div>}
-                  {w.more && <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 6, paddingTop: 6, borderTop: "1px solid var(--line)", lineHeight: 1.5 }}>{w.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: w.more }} /> : w.more}</div>}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <WrongReview wrong={wrong} />
       </div>
     );
   }
 
   return (
     <div className="ix-fade">
-      <button onClick={backToPart} className="ix-chip"
-        style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14 }}>
-        <ChevronLeft size={15} /> {part.name}
+      <button onClick={duel ? duel.onLeave : backToPart} className="ix-chip"
+        style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14, color: duel ? "var(--red)" : undefined }}>
+        {duel ? <><X size={15} /> Predaj match</> : <><ChevronLeft size={15} /> {part.name}</>}
       </button>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
         <span className="ix-chip">{deck.name}</span>
-        <span className="ix-chip">{i + 1} / {questions.length}{ranked && <span style={{ marginLeft: 8, color: left <= 60 ? "var(--red)" : "var(--teal)", fontVariantNumeric: "tabular-nums" }}>⏱ {fmtTime(left)}</span>}</span>
+        <span className="ix-chip">{i + 1} / {questions.length}{exam && <span style={{ marginLeft: 8, color: left <= 60 ? "var(--red)" : "var(--teal)", fontVariantNumeric: "tabular-nums" }}>⏱ {fmtTime(left)}</span>}</span>
       </div>
-      <div className="ix-bar" style={{ marginBottom: 22 }}><span style={{ width: `${(i / questions.length) * 100}%` }} /></div>
+      <div className="ix-bar" style={{ marginBottom: duel ? 12 : 22 }}><span style={{ width: `${(i / questions.length) * 100}%` }} /></div>
+      {duel && <DuelLive live={duel.live} />}
 
-      <h2 className="ix-serif" style={{ fontSize: 21, fontWeight: 600, lineHeight: 1.3, margin: "0 0 20px" }}>{q.q}</h2>
+      <h2 className="ix-serif" style={{ fontSize: 21, fontWeight: 600, lineHeight: 1.3, margin: "0 0 20px" }}>{serifBars(q.q)}</h2>
 
       {gloss.length > 0 && (
         <div style={{ marginBottom: 20 }}>
@@ -2404,9 +2601,10 @@ function QuizView({ route, go, record, userId }) {
             if (idx === q.correct) st = { borderColor: "var(--teal)", background: "var(--okbg)" };
             else if (idx === picked) st = { borderColor: "var(--red)", background: "var(--badbg)" };
             else st = { opacity: 0.6 };
-          }
+          } else if (idx === hideOpt) st = { opacity: 0.3, textDecoration: "line-through" };
+          else if (reveal && idx === q.correct) st = { borderColor: "var(--teal)", background: "var(--okbg)" };
           return (
-            <button key={idx} className="ix-opt" disabled={answered} onClick={() => choose(idx)} style={st}>
+            <button key={idx} className="ix-opt" disabled={answered || idx === hideOpt} onClick={() => choose(idx)} style={st}>
               <span style={{ display: "flex", alignItems: "center", gap: 11 }}>
                 <span style={{ fontWeight: 700, color: "var(--ink2)", fontSize: 13 }}><span className="ix-optkey-letter">{"ABCDEF"[idx]}</span><kbd className="ix-kbd ix-optkey-num">{idx + 1}</kbd></span>
                 <span style={{ flex: 1 }}>{opt}</span>
@@ -2418,6 +2616,13 @@ function QuizView({ route, go, record, userId }) {
         })}
       </div>
       )}
+      {duel && !answered && (duel.hints > 0 && hideOpt == null && q.options && q.options.length >= 3 || (duel.ability && duel.ability.active && !duel.ability.used)) && (
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
+          {duel.hints > 0 && hideOpt == null && q.options && q.options.length >= 3 && <button onClick={usePlonkec} className="ix-pill">📝 Plonkec ({duel.hints}) · skrij en napačen odgovor</button>}
+          {duel.ability && duel.ability.active && !duel.ability.used && <button onClick={useAbility} disabled={abBusy} className="ix-pill on" title={duel.ability.desc}>✨ {duel.ability.name} · {duel.ability.desc.replace(/^Aktivno \(1×\): /, "")}</button>}
+        </div>
+      )}
+      {duel && duel.ability && duel.ability.armed && !answered && <div style={{ fontSize: 12.5, color: "var(--terra)", marginTop: 8, fontWeight: 600 }}>Vse ali nič je aktivno: pravilen odgovor = 3× škoda, napačen = −20 HP.</div>}
       {!answered && (
         <div className="ix-kbdhint">
           {q.type === "match" || q.type === "grid"
@@ -2428,12 +2633,12 @@ function QuizView({ route, go, record, userId }) {
 
       {answered && (
         <div className="ix-fade" style={{ marginTop: 18 }}>
-          {!ranked && wrongExpl && (
+          {!exam && wrongExpl && (
             <div className="ix-card" style={{ padding: 14, fontSize: 13.5, color: "var(--ink2)", marginBottom: 14, borderLeft: "3px solid var(--red)" }}>
               <b style={{ color: "var(--ink)" }}>Zakaj ne ta odgovor:</b> {wrongExpl}
             </div>
           )}
-          {!ranked && q.explanation && (
+          {!exam && q.explanation && (
             <div className="ix-card" style={{ padding: 14, fontSize: 14, color: "var(--ink2)", marginBottom: 14, lineHeight: 1.55 }}>
               {q.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: q.explanation }} /> : q.explanation}
               {q.more && (
@@ -2453,6 +2658,1147 @@ function QuizView({ route, go, record, userId }) {
           <div className="ix-kbdhint" style={{ justifyContent: "flex-end" }}><span><kbd className="ix-kbd">Enter</kbd> / <kbd className="ix-kbd">presledek</kbd> {i + 1 >= questions.length ? "zaključi" : "naprej"}</span></div>
         </div>
       )}
+    </div>
+  );
+}
+
+/* =========================================================================
+   ARENA: profil, prijatelji, matchi za 2–4 igralce (Supabase: supabase/1v1.sql), liki (characters.js)
+   Povabila, sprejem, napredek in udarci v živo prek Realtime (postgres_changes), kot rezerva periodično branje.
+   ========================================================================= */
+/* Zvoki (WebAudio, brez datotek): pravilno/napačno, klik, povabilo, udarec, kritik, zmaga, poraz. Izklop: profil -> Zvoki. */
+const SOUND_KEY = "indeks.sound";
+const soundOn = () => store.get(SOUND_KEY, true) !== false;
+let _actx = null;
+function sfx(kind) {
+  if (!soundOn()) return;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    _actx = _actx || new AC(); const ctx = _actx; if (ctx.state === "suspended") ctx.resume();
+    const t0 = ctx.currentTime;
+    const tone = (f, start, dur, type, vol) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type || "sine"; o.frequency.setValueAtTime(f, t0 + start); g.gain.setValueAtTime(0.0001, t0 + start); g.gain.exponentialRampToValueAtTime(vol || 0.12, t0 + start + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t0 + start + dur); o.connect(g); g.connect(ctx.destination); o.start(t0 + start); o.stop(t0 + start + dur + 0.02); };
+    const S = { click: () => tone(900, 0, 0.04, "square", 0.04), correct: () => { tone(660, 0, 0.09); tone(990, 0.09, 0.14); }, wrong: () => tone(160, 0, 0.22, "sawtooth", 0.08),
+      invite: () => { tone(784, 0, 0.12); tone(1046, 0.14, 0.2); }, hit: () => tone(220, 0, 0.1, "triangle", 0.1), crit: () => { tone(1200, 0, 0.06, "square", 0.08); tone(300, 0.05, 0.16, "sawtooth", 0.1); },
+      hurt: () => tone(120, 0, 0.18, "sawtooth", 0.1), win: () => { tone(523, 0, 0.12); tone(659, 0.12, 0.12); tone(784, 0.24, 0.12); tone(1046, 0.36, 0.3); }, lose: () => { tone(392, 0, 0.18); tone(311, 0.18, 0.18); tone(262, 0.36, 0.3, "sine", 0.1); } };
+    if (S[kind]) S[kind]();
+  } catch (e) {}
+}
+/* XP in nivoji (battle pass): številke v characters.js in supabase/1v1.sql. */
+const levelOf = (xp) => CHARS.LEVELS.filter((t) => t <= (xp || 0)).length;
+const levelXp = (lvl) => CHARS.LEVELS[Math.min(CHARS.LEVELS.length, Math.max(1, lvl)) - 1];
+const nextLevelXp = (lvl) => (lvl < CHARS.LEVELS.length ? CHARS.LEVELS[lvl] : null);
+const unlocked = (level, obj) => (obj && obj.unlock ? obj.unlock : 1) <= (level || 1);
+const DUEL_GRACE = 16;                   // s po izteku: nedokončane strežnik označi kot odšle
+const DUEL_BATTLE_N = 30;                // bitka: nabor vprašanj (match traja, dokler nekomu ne zmanjka HP, največ toliko vprašanj)
+const DUEL_BATTLE_SECONDS = 900;         // bitka: časovna omejitev
+const SIZE_LABEL = { 2: "Duel", 3: "Trio", 4: "Četverka" };
+const MODE_LABEL = { classic: "Klasika", basic: "Bitka", battle: "Bitka z liki" };
+const isBattle = (mode) => mode === "basic" || mode === "battle";   // oba bojna načina (HP)
+const LETNIK_LABELS = { 1: "1. letnik", 2: "2. letnik", 3: "3. letnik", 4: "1. letnik mag.", 5: "2. letnik mag." };
+const SMER_SUGGEST = ["UPEŠ", "VPŠ", "Bančni in finančni management", "Računovodstvo in revizija", "Trženje", "Management", "Mednarodno poslovanje", "Poslovna informatika", "Podjetništvo", "Poslovna logistika", "Turizem", "Ekonomija", "Denar in finance"];
+const charById = (id) => (id === "basic" ? CHARS.BASIC : CHARS.CHARACTERS.find((c) => c.id === id)) || CHARS.CHARACTERS[0];
+const itemById = (id) => CHARS.ITEMS.find((p) => p.id === id) || null;
+const ACTIVE_ABILITIES = ["stimulus", "allin", "tariff", "cheat"];
+const splitItems = (perk) => (perk || "").split(",").map((x) => x.trim()).filter((x) => itemById(x)).slice(0, 2);
+/* Lik + oprema (do 2) -> številke za strežnik (duel_ready jih še omeji na varne meje). */
+function charBuild(charId, items) {
+  const c = charById(charId);
+  const its = (Array.isArray(items) ? items : splitItems(items)).map(itemById).filter(Boolean).slice(0, 2);
+  const st = { hp: c.stats.hp, atk: c.stats.atk, crit: c.stats.crit, streak: c.stats.streak, quick: 0, shield: 0, heal: 0, healEvery: 3, penaltyAt: 2, hints: 0 };
+  its.forEach((it) => Object.keys(it.mod).forEach((k) => { st[k] = (k === "healEvery" || k === "penaltyAt") ? it.mod[k] : Math.round((st[k] + it.mod[k]) * 100) / 100; }));
+  if (c.ability && c.ability.id === "iron") st.shield = Math.round((st.shield + 0.15) * 100) / 100;   // Železna lady: pasivni ščit
+  return { id: c.id, name: c.name, items: its.map((x) => x.id).join(","), ability: c.ability ? c.ability.id : "", ...st };
+}
+/* Profilna slika uporabnika (Storage bucket avatars); brez nje začetnica imena. */
+function Pic({ photo, name, size, style }) {
+  const [ok, setOk] = useState(true);
+  useEffect(() => { setOk(true); }, [photo]);
+  const box = { width: size, height: size, borderRadius: "50%", flexShrink: 0, ...(style || {}) };
+  if (!photo || !ok) return <span title={name} style={{ ...box, background: "var(--terra)", color: "#fff", display: "grid", placeItems: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: Math.round(size * 0.46), lineHeight: 1 }}>{(name || "?").charAt(0).toUpperCase()}</span>;
+  return <img src={photo} alt={name} title={name} onError={() => setOk(false)} style={{ ...box, objectFit: "cover", display: "block", border: "1px solid var(--line)" }} />;
+}
+/* Nalaganje profilne slike: pomanjšaj na 256 px (canvas), JPEG, v bucket avatars/<uid>.jpg, URL shrani v profil. */
+async function uploadPhoto(file, userId) {   // vrne URL; zapis v profil opravi klicatelj (update_profile)
+  const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error("Slike ni mogoče prebrati.")); i.src = URL.createObjectURL(file); });
+  const S = 256, c = document.createElement("canvas"); c.width = S; c.height = S;
+  const side = Math.min(img.width, img.height), sx = (img.width - side) / 2, sy = (img.height - side) / 2;
+  c.getContext("2d").drawImage(img, sx, sy, side, side, 0, 0, S, S);
+  const blob = await new Promise((res) => c.toBlob(res, "image/jpeg", 0.86));
+  if (!blob) throw new Error("Slike ni mogoče pretvoriti.");
+  const path = userId + ".jpg";
+  const up = await supabase.storage.from("avatars").upload(path, blob, { upsert: true, contentType: "image/jpeg", cacheControl: "3600" });
+  if (up.error) throw new Error(/bucket/i.test(up.error.message) ? "Shramba za slike še ni vklopljena (supabase/1v1.sql)." : up.error.message);
+  const url = SUPABASE_URL + "/storage/v1/object/public/avatars/" + path + "?v=" + Date.now();
+  return url;
+}
+/* Slika lika (docs/liki/<id>.png); dokler je ni, začetnice na temnem ozadju. */
+function CharArt({ id, size, style }) {
+  const c = charById(id);
+  const [ok, setOk] = useState(true);
+  useEffect(() => { setOk(true); }, [id]);
+  const box = { width: size, height: size, borderRadius: Math.round(size * 0.28), flexShrink: 0, ...(style || {}) };
+  if (!ok) return <span title={c.name} style={{ ...box, background: "var(--ink)", color: "var(--paper)", display: "grid", placeItems: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: Math.round(size * 0.42), lineHeight: 1 }}>{c.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2)}</span>;
+  return <img src={"liki/" + c.id + ".png"} alt={c.name} title={c.name} onError={() => setOk(false)} style={{ ...box, objectFit: "cover", background: "var(--paper2)", border: "1px solid var(--line)", display: "block" }} />;
+}
+/* Napaka RPC v slovenščini; če tabel/funkcij še ni, povej, katero SQL datoteko je treba zagnati. */
+function rpcErr(error, fallback) {
+  if (!error) return null;
+  const m = error.message || "";
+  if (/does not exist|schema cache|could not find/i.test(m)) return "Arena še ni vklopljena (v Supabase zaženi supabase/1v1.sql).";
+  return m.replace(/^[A-Z0-9]+: /, "") || fallback || "Napaka.";
+}
+/* ID vprašanja za match: besedilo + možnosti (qid uporablja samo besedilo, ki se lahko ponovi). */
+function duelQid(q) {
+  const s = (q.q || "") + "|" + (q.options || []).join("|");
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return "d" + (h >>> 0).toString(36);
+}
+const partByKey = (key) => {
+  const [semId, subjId, partId] = (key || "").split("/");
+  const sem = DATA.find((s) => s.id === semId); const subj = sem && sem.subjects.find((s) => s.id === subjId); const part = subj && subj.parts.find((p) => p.id === partId);
+  return part ? { sem, subj, part } : null;
+};
+/* Vsi deli, v katerih je mogoč match (dovolj vprašanj z možnostmi). */
+function duelParts() {
+  const out = [];
+  DATA.forEach((sem) => sem.subjects.forEach((subj) => subj.parts.forEach((part) => { if (rankedPool(part).length >= RANKED_N) out.push({ sem, subj, part, key: `${sem.id}/${subj.id}/${part.id}` }); })));
+  return out;
+}
+/* Pogoji zmage v klasiki (kot v Call of Duty): število vprašanj, čas ali cilj točk. */
+const WIN_RULES = [
+  { id: "q10", rule: "questions", value: 10, label: "10 vprašanj", desc: "Vsak reši 10 vprašanj; zmaga največ točk." },
+  { id: "q20", rule: "questions", value: 20, label: "20 vprašanj", desc: "Vsak reši 20 vprašanj; zmaga največ točk." },
+  { id: "t5", rule: "time", value: 300, label: "5 minut", desc: "Kolikor vprašanj utegneš v 5 minutah; zmaga največ točk." },
+  { id: "t10", rule: "time", value: 600, label: "10 minut", desc: "Kolikor vprašanj utegneš v 10 minutah; zmaga največ točk." },
+  { id: "p1000", rule: "points", value: 1000, label: "do 1000 točk", desc: "Prvi, ki zbere 1000 točk, konča match." },
+];
+const winRuleText = (st) => st.mode !== "classic" ? "" : st.win_rule === "time" ? `${fmtTime(st.seconds_limit)} časa` : st.win_rule === "points" ? `do ${st.win_value} točk` : `${(st.question_ids || []).length} vprašanj`;
+async function createChallenge(opponentIds, sem, subj, part, mode, winId) {
+  const pool = rankedPool(part);
+  const battle = isBattle(mode);
+  const wr = (!battle && WIN_RULES.find((w) => w.id === winId)) || WIN_RULES[0];
+  const want = battle ? DUEL_BATTLE_N : wr.rule === "questions" ? wr.value : 60;
+  const seen = new Set(); const ids = [];
+  shuffle(pool).forEach((q) => { const id = duelQid(q); if (ids.length < want && !seen.has(id)) { seen.add(id); ids.push(id); } });
+  const { data, error } = await supabase.rpc("create_challenge", { p_opponents: opponentIds, p_part_key: `${sem.id}/${subj.id}/${part.id}`, p_part_name: `${subj.name} · ${part.name}`, p_question_ids: ids, p_mode: mode || "classic",
+    p_seconds_limit: battle ? DUEL_BATTLE_SECONDS : wr.rule === "time" ? wr.value : wr.rule === "points" ? 900 : RANKED_SECONDS, p_win_rule: wr.rule, p_win_value: wr.rule === "points" ? wr.value : null });
+  return { id: data, error: rpcErr(error) };
+}
+/* Vprašanja matcha iz shranjenih ID-jev (vsi igralci dobijo ista, v istem vrstnem redu). */
+function resolveDuel(st) {
+  const loc = partByKey(st.part_key);
+  if (!loc) return { error: "Tega dela ni več v aplikaciji." };
+  const byId = {};
+  rankedPool(loc.part).forEach((q) => { const id = duelQid(q); if (!byId[id]) byId[id] = q; });
+  const qs = (st.question_ids || []).map((id) => byId[id]).filter(Boolean);
+  if (qs.length !== (st.question_ids || []).length) return { ...loc, questions: qs, error: "Vprašanja se ne ujemajo s to različico aplikacije. Osveži stran (nova različica) in poskusi znova." };
+  return { ...loc, questions: qs };
+}
+
+/* Družabno stanje (profil, prijatelji, prošnje, matchi) v enem klicu + Realtime osvežitev. */
+function useSocial(userId) {
+  const [soc, setSoc] = useState(null);
+  const [err, setErr] = useState(null);
+  const loadRef = useRef(null);
+  useEffect(() => {
+    if (!userId) { setSoc(null); setErr(null); loadRef.current = null; return; }
+    let cancelled = false;
+    const load = async () => {
+      const { data, error } = await supabase.rpc("social_state");
+      if (cancelled) return;
+      if (error) { setErr(rpcErr(error)); return; }
+      setErr(null); setSoc(data || null);
+    };
+    loadRef.current = load;
+    load();
+    const onVis = () => { if (document.visibilityState === "visible") load(); };
+    document.addEventListener("visibilitychange", onVis);
+    const iv = setInterval(() => { if (document.visibilityState === "visible") load(); }, 45000);
+    const ch = supabase.channel("social:" + userId)
+      .on("postgres_changes", { event: "*", schema: "public", table: "friendships", filter: "addressee=eq." + userId }, () => load())
+      .on("postgres_changes", { event: "*", schema: "public", table: "friendships", filter: "requester=eq." + userId }, () => load())
+      .on("postgres_changes", { event: "*", schema: "public", table: "challenge_players", filter: "user_id=eq." + userId }, () => load())   // sprememba statusa matcha prek sprožilca osveži tudi te vrstice
+      .subscribe();
+    return () => { cancelled = true; clearInterval(iv); document.removeEventListener("visibilitychange", onVis); supabase.removeChannel(ch); };
+  }, [userId]);
+  const reload = useCallback(() => { if (loadRef.current) loadRef.current(); }, []);
+  return { soc, socErr: err, reload };
+}
+const socialBadge = (soc) => soc ? (soc.requests_in || []).length + (soc.challenges || []).filter((c) => c.status === "pending" && c.my_status === "invited").length : 0;
+const statPair = (s, k) => `${(s && s[k + "_w"]) || 0}–${(s && s[k + "_l"]) || 0}`;
+/* Vrstica javne statistike igralca: zmage–porazi po velikosti, bitke, vadba. */
+function StatsLine({ s, full }) {
+  if (!s) return null;
+  return (
+    <span className="ix-chip" style={{ display: "inline-flex", gap: "4px 10px", flexWrap: "wrap", textTransform: "none", letterSpacing: ".04em" }}>
+      {s.level != null && <span title={`${s.xp || 0} XP`}>nivo <b style={{ color: "var(--terra)" }}>{s.level}</b></span>}
+      <span title="Duel: zmage–porazi">duel <b style={{ color: "var(--ink)" }}>{statPair(s, "duel")}</b></span>
+      <span title="Trio: zmage–porazi">trio <b style={{ color: "var(--ink)" }}>{statPair(s, "trio")}</b></span>
+      <span title="Četverka: zmage–porazi">četverka <b style={{ color: "var(--ink)" }}>{statPair(s, "squad")}</b></span>
+      <span title="Zmage v bitkah">bitke <b style={{ color: "var(--terra)" }}>{s.battle_w || 0}</b></span>
+      {(full || s.attempts > 0) && <span title="Rešeni kvizi · povprečje">vadba <b style={{ color: "var(--teal)" }}>{s.attempts || 0}×{s.avg_pct != null ? ` · ${s.avg_pct} %` : ""}</b></span>}
+    </span>
+  );
+}
+
+function Modal({ title, icon, onClose, children }) {
+  useEffect(() => { const k = (e) => { if (e.key === "Escape") onClose(); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, [onClose]);
+  return (
+    <div className="ix-modalbg" onClick={onClose}>
+      <div className="ix-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label={title}>
+        <div className="ix-modalhead">
+          {icon}<b style={{ fontSize: 15 }}>{title}</b>
+          <button onClick={onClose} aria-label="Zapri" className="ix-formx" style={{ marginLeft: "auto" }}><X size={17} /></button>
+        </div>
+        <div className="ix-modalbody">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+/* Izbira lika in loadouta (profil, lobby bitke). */
+function CharPicker({ character, items, onChange, compact, level }) {
+  const lvl = level || 1;
+  const its = splitItems(Array.isArray(items) ? items.join(",") : items).filter((x) => unlocked(lvl, itemById(x)));
+  const b = charBuild(unlocked(lvl, charById(character)) ? character : CHARS.CHARACTERS[0].id, its);
+  const toggleItem = (id) => onChange(b.id, its.includes(id) ? its.filter((x) => x !== id) : its.length >= 2 ? [its[1], id] : [...its, id]);
+  return (
+    <div>
+      <div style={{ display: "grid", gridTemplateColumns: compact ? "repeat(auto-fill,minmax(120px,1fr))" : "repeat(auto-fill,minmax(150px,1fr))", gap: 8 }}>
+        {CHARS.CHARACTERS.map((c) => {
+          const on = c.id === b.id, lock = !unlocked(lvl, c);
+          return (
+            <button key={c.id} onClick={() => { if (!lock) onChange(c.id, its); }} disabled={lock} title={lock ? `Odkleneš na nivoju ${c.unlock}` : c.name} className="ix-card" style={{ padding: "10px 11px", textAlign: "left", cursor: lock ? "default" : "pointer", opacity: lock ? .5 : 1, borderColor: on ? "var(--terra)" : undefined, background: on ? "var(--okbg)" : undefined, display: "grid", gap: 3 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}><CharArt id={c.id} size={compact ? 36 : 48} /><div><b style={{ fontSize: 14 }}>{c.name}</b><div className="ix-chip" style={{ fontSize: 10 }}>{lock ? <><Lock size={10} style={{ verticalAlign: -1 }} /> nivo {c.unlock}</> : c.title}</div></div></div>
+              {!compact && <div style={{ fontSize: 12, color: "var(--ink2)", lineHeight: 1.4 }}>{c.desc}</div>}
+              <div className="ix-chip" style={{ fontSize: 10.5, letterSpacing: ".05em", textTransform: "none" }}>HP {c.stats.hp} · napad {c.stats.atk} · kritik {c.stats.crit} % · serija +{Math.round(c.stats.streak * 100)} %</div>
+              {c.ability && <div style={{ fontSize: 12, lineHeight: 1.4, marginTop: 2 }}><b style={{ color: "var(--terra)" }}>{c.ability.name}:</b> <span style={{ color: "var(--ink2)" }}>{c.ability.desc}</span></div>}
+            </button>
+          );
+        })}
+      </div>
+      <div className="ix-chip" style={{ margin: "12px 0 6px" }}>Oprema (do 2 stvari · {its.length}/2)</div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        {CHARS.ITEMS.map((it) => { const lock = !unlocked(lvl, it); return (
+          <button key={it.id} onClick={() => { if (!lock) toggleItem(it.id); }} disabled={lock} className={"ix-pill" + (its.includes(it.id) ? " on" : "")} style={lock ? { opacity: .45 } : undefined} title={lock ? `Odkleneš na nivoju ${it.unlock}` : it.desc}>{lock && <Lock size={10} style={{ verticalAlign: -1, marginRight: 3 }} />}{it.name}{!compact && <span style={{ opacity: .8, fontWeight: 400 }}> · {lock ? `nivo ${it.unlock}` : it.desc}</span>}</button>
+        ); })}
+      </div>
+      <div style={{ fontSize: 12.5, color: "var(--ink2)", marginTop: 10, lineHeight: 1.5 }}>Izbrano: <b style={{ color: "var(--ink)" }}>{b.name}{its.length ? " + " + its.map((x) => itemById(x).name).join(" + ") : ""}</b> · HP {b.hp} · napad {b.atk} · kritik {b.crit} % (2×) · serija +{Math.round(b.streak * 100)} %/odg.{b.quick ? ` · hitri odgovor +${Math.round(b.quick * 100)} %` : ""}{b.shield ? ` · ščit ${Math.round(b.shield * 100)} %` : ""}{b.heal ? ` · vsak ${b.healEvery}. zaporedni pravilni +${b.heal} HP` : ""}{b.hints ? ` · plonkec ×${b.hints}` : ""} · kazen −10 HP pri {b.penaltyAt} zaporednih napačnih.</div>
+    </div>
+  );
+}
+
+/* Nov match: izbira prijateljev (1–3), načina in kviza. presetFriend / presetLoc predizbereta. */
+function NewMatch({ soc, presetFriend, presetLoc, onClose, onPick, go }) {
+  const friends = (soc && soc.friends) || [];
+  const [sel, setSel] = useState(() => (presetFriend ? [presetFriend.user_id] : []));
+  const [mode, setMode] = useState(() => store.get("indeks.arena.mode", "classic"));
+  const [q, setQ] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState(null);
+  const all = useMemo(duelParts, []);
+  const needle = q.trim().toLowerCase();
+  const list = needle ? all.filter((x) => (x.subj.name + " " + x.part.name).toLowerCase().includes(needle)) : all;
+  const years = [...new Set(list.map((x) => x.sem.year))].sort();
+  const [winId, setWinId] = useState(() => store.get("indeks.arena.win", "q10"));
+  const maxOpp = isBattle(mode) ? 1 : 3;          // bitka je samo duel; klasika do četverke
+  const toggle = (id) => setSel((s) => (s.includes(id) ? s.filter((x) => x !== id) : s.length >= maxOpp ? (maxOpp === 1 ? [id] : s) : [...s, id]));
+  const pickMode = (m) => { setMode(m); store.set("indeks.arena.mode", m); if (isBattle(m)) setSel((s) => s.slice(0, 1)); };
+  const pickWin = (w) => { setWinId(w); store.set("indeks.arena.win", w); };
+  async function pick(x) {
+    if (busy || !sel.length) return; setBusy(true); setErr(null);
+    const r = await createChallenge(sel, x.sem, x.subj, x.part, mode, winId);
+    setBusy(false);
+    if (r.error) { setErr(r.error); return; }
+    onPick(r.id);
+  }
+  const size = sel.length + 1;
+  return (
+    <Modal title="Nov match" icon={<Swords size={17} color="var(--terra)" />} onClose={onClose}>
+      {!friends.length ? (
+        <div style={{ fontSize: 13.5, color: "var(--ink2)" }}>Še nimaš prijateljev. <button onClick={() => { onClose(); go({ view: "profile" }); }} className="ix-pill" style={{ marginLeft: 4 }}>Dodaj jih v profilu</button></div>
+      ) : (
+        <>
+          <div className="ix-chip" style={{ marginBottom: 6 }}>1. Način</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 8, marginBottom: 14 }}>
+            <button onClick={() => pickMode("classic")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "classic" ? "var(--teal)" : undefined, background: mode === "classic" ? "var(--okbg)" : undefined }}>
+              <b style={{ fontSize: 14 }}><Trophy size={13} style={{ verticalAlign: -2 }} /> Klasika</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Točke: 100 za pravilen odgovor + do 50 za hitrost. Zmaga največ točk.</div>
+            </button>
+            <button onClick={() => pickMode("basic")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "basic" ? "var(--terra)" : undefined, background: mode === "basic" ? "var(--badbg)" : undefined }}>
+              <b style={{ fontSize: 14 }}><Zap size={13} style={{ verticalAlign: -2 }} /> Bitka</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Vsi enaki (100 HP): vprašanja tečejo, dokler nekomu ne zmanjka HP. Brez izbire lika in opreme.</div>
+            </button>
+            <button onClick={() => pickMode("battle")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "battle" ? "var(--terra)" : undefined, background: mode === "battle" ? "var(--badbg)" : undefined }}>
+              <b style={{ fontSize: 14 }}><Swords size={13} style={{ verticalAlign: -2 }} /> Bitka z liki</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Do 0 HP, z liki, sposobnostmi in opremo (do 2). Kdo je meta, vidiš na profilu.</div>
+            </button>
+          </div>
+          {mode === "classic" && (
+            <>
+              <div className="ix-chip" style={{ marginBottom: 6 }}>2. Pogoj zmage</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 4 }}>
+                {WIN_RULES.map((w) => <button key={w.id} onClick={() => pickWin(w.id)} className={"ix-pill" + (winId === w.id ? " on" : "")} title={w.desc}>{w.label}</button>)}
+              </div>
+              <div style={{ fontSize: 12.5, color: "var(--ink2)", marginBottom: 14 }}>{(WIN_RULES.find((w) => w.id === winId) || WIN_RULES[0]).desc}</div>
+            </>
+          )}
+          <div className="ix-chip" style={{ marginBottom: 6 }}>{mode === "classic" ? "3" : "2"}. Nasprotniki ({isBattle(mode) ? "duel: 1" : "1–3"}) · {SIZE_LABEL[size] || "Duel"}</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
+            {friends.map((f) => { const on = sel.includes(f.user_id); return (
+              <button key={f.id} onClick={() => toggle(f.user_id)} className={"ix-pill" + (on ? " on" : "")} disabled={!on && maxOpp > 1 && sel.length >= maxOpp}>{f.username}</button>
+            ); })}
+          </div>
+          <div className="ix-chip" style={{ marginBottom: 6 }}>{mode === "classic" ? "4" : "3"}. Kviz</div>
+          {err && <div style={{ color: "var(--terra)", fontSize: 13, marginBottom: 8 }}>{err}</div>}
+          {presetLoc ? (
+            <button onClick={() => pick(presetLoc)} disabled={busy || !sel.length} className="ix-btn" style={{ background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "12px 18px", display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center" }}>
+              <Swords size={16} /> Pošlji izziv · {presetLoc.subj.name} · {presetLoc.part.name}
+            </button>
+          ) : (
+            <>
+              <input className="ix-input" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Išči predmet ali del…" style={{ width: "100%", marginBottom: 10 }} />
+              {!sel.length && <div style={{ fontSize: 12.5, color: "var(--ink2)", marginBottom: 8 }}>Najprej izberi vsaj enega nasprotnika.</div>}
+              {years.map((y) => (
+                <div key={y} style={{ marginBottom: 10 }}>
+                  <div className="ix-chip" style={{ color: "var(--terra)", margin: "6px 0" }}>{y}. letnik</div>
+                  {list.filter((x) => x.sem.year === y).map((x) => (
+                    <button key={x.key} onClick={() => pick(x)} disabled={busy || !sel.length} className="ix-opt" style={{ padding: "10px 12px", marginBottom: 6, display: "flex", alignItems: "center", gap: 10, opacity: sel.length ? 1 : .6 }}>
+                      <span style={{ flex: 1 }}><b style={{ fontSize: 14 }}>{x.subj.name}</b><span style={{ color: "var(--ink2)", fontSize: 13 }}> · {x.part.name}</span></span>
+                      <span className="ix-chip">{rankedPool(x.part).length} vpr.</span>
+                      <ChevronRight size={16} color="var(--ink2)" />
+                    </button>
+                  ))}
+                </div>
+              ))}
+              {!list.length && <div style={{ fontSize: 13, color: "var(--ink2)" }}>Ni zadetkov.</div>}
+            </>
+          )}
+        </>
+      )}
+    </Modal>
+  );
+}
+
+/* Obvestila: povabilo v match (Sprejmi/Zavrni), match v pripravi. Prikazano na vseh straneh razen na samem matchu. */
+function SocialBanner({ soc, route, go, reload }) {
+  const [busy, setBusy] = useState(null);
+  const seenInv = useRef(null);
+  useEffect(() => {
+    if (!soc) return;
+    const ids = (soc.challenges || []).filter((c) => c.status === "pending" && c.my_status === "invited").map((c) => c.id);
+    if (seenInv.current && ids.some((x) => !seenInv.current.includes(x))) sfx("invite");
+    seenInv.current = ids;
+  }, [soc]);
+  if (!soc) return null;
+  const items = (soc.challenges || []).filter((c) => (c.status === "pending" && c.my_status === "invited") || (c.status === "accepted" && (c.my_status === "host" || c.my_status === "accepted")))
+    .filter((c) => !(route.view === "duel" && route.id === c.id)).slice(0, 3);
+  if (!items.length) return null;
+  async function respond(c, accept) {
+    setBusy(c.id);
+    const { error } = await supabase.rpc("respond_challenge", { p_id: c.id, p_accept: accept });
+    setBusy(null);
+    if (error) { alert(rpcErr(error)); return; }
+    reload();
+    if (accept) go({ view: "duel", id: c.id });
+  }
+  return (
+    <div style={{ display: "grid", gap: 8, marginBottom: 16 }}>
+      {items.map((c) => (
+        <div key={c.id} className="ix-card" style={{ padding: "11px 14px", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", borderLeft: "3px solid var(--terra)" }}>
+          <Swords size={17} color="var(--terra)" />
+          <div style={{ flex: 1, fontSize: 14, minWidth: 180 }}>
+            {c.status === "pending"
+              ? <><b>{c.host}</b> te vabi: {SIZE_LABEL[c.size]} · {MODE_LABEL[c.mode]} <span style={{ color: "var(--ink2)" }}>· {c.part_name}</span></>
+              : <>{SIZE_LABEL[c.size]} ({MODE_LABEL[c.mode]}) čaka <span style={{ color: "var(--ink2)" }}>· {c.part_name}</span></>}
+          </div>
+          {c.status === "pending" ? (
+            <span style={{ display: "flex", gap: 6 }}>
+              <button onClick={() => respond(c, true)} disabled={busy === c.id} className="ix-pill on"><Check size={13} style={{ verticalAlign: -2 }} /> Sprejmi</button>
+              <button onClick={() => respond(c, false)} disabled={busy === c.id} className="ix-pill bad">Zavrni</button>
+            </span>
+          ) : <span style={{ display: "flex", gap: 6 }}><button onClick={() => go({ view: "duel", id: c.id })} className="ix-pill on">Odpri</button><button onClick={async () => { if (!confirm("Zapustim ta match? Zate ne šteje.")) return; setBusy(c.id); await supabase.rpc("abandon_challenge", { p_id: c.id }); setBusy(null); reload(); }} disabled={busy === c.id} className="ix-pill" title="Zapusti match">Zapusti</button></span>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ---- PROFIL: urejanje, lik, prijatelji s statistiko, matchi, bilanca ---- */
+function ProfileView({ user, soc, socErr, reload, go }) {
+  const p = (soc && soc.profile) || {};
+  const [edit, setEdit] = useState(false);
+  const [d, setD] = useState({ letnik: "", smer: "", bio: "" });
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState(null);
+  useEffect(() => { if (!edit) setD({ letnik: p.letnik || "", smer: p.smer || "", bio: p.bio || "" }); }, [soc]); // eslint-disable-line
+  const [uEdit, setUEdit] = useState(false);
+  const [uDraft, setUDraft] = useState("");
+  const [uErr, setUErr] = useState("");
+  const [fName, setFName] = useState("");
+  const [fMsg, setFMsg] = useState(null);
+  const [busy, setBusy] = useState(null);
+  const [picker, setPicker] = useState(null);     // { friend? }
+  const [open, setOpen] = useState({});
+  const [charOpen, setCharOpen] = useState(false);
+  const [snd, setSnd] = useState(soundOn());
+  const [photoBusy, setPhotoBusy] = useState(false);
+  const [photoMsg, setPhotoMsg] = useState(null);
+  const fileRef = useRef(null);
+  const username = p.username || displayName(user);
+  async function onPhoto(e) {
+    const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
+    if (!/^image\//.test(f.type)) { setPhotoMsg({ err: "Izberi sliko (JPG, PNG)." }); return; }
+    setPhotoBusy(true); setPhotoMsg(null);
+    try {
+      const url = await uploadPhoto(f, user.id);
+      const { error } = await supabase.rpc("update_profile", { p_letnik: p.letnik || null, p_smer: p.smer || "", p_bio: p.bio || "", p_photo: url });
+      if (error) throw new Error(rpcErr(error));
+      setPhotoMsg({ ok: "Slika je shranjena." }); reload();
+    } catch (err) { setPhotoMsg({ err: err.message }); }
+    setPhotoBusy(false);
+  }
+  const [charDraft, setCharDraft] = useState(null);     // lokalna izbira lika/opreme (ostane tudi, če shranjevanje ne uspe)
+  const [charMsg, setCharMsg] = useState(null);
+  useEffect(() => { if (soc && soc.profile) setCharDraft({ character: soc.profile.character || CHARS.CHARACTERS[0].id, items: splitItems(soc.profile.perk) }); }, [soc && soc.profile && soc.profile.character, soc && soc.profile && soc.profile.perk]); // eslint-disable-line
+  const myLevel = (soc && soc.record && soc.record.level) || 1;
+  const curChar0 = charDraft ? charDraft.character : p.character;
+  const curChar = unlocked(myLevel, charById(curChar0)) ? curChar0 : CHARS.CHARACTERS[0].id;   // zaklenjen (še neodklenjen) lik -> osnovni
+  const curItems = (charDraft ? charDraft.items : splitItems(p.perk)).filter((x) => unlocked(myLevel, itemById(x)));
+  const myChar = charBuild(curChar, curItems);
+  const myItems = splitItems(curItems.join(","));
+
+  async function saveProfile() {
+    setSaving(true); setMsg(null);
+    const { error } = await supabase.rpc("update_profile", { p_letnik: d.letnik ? +d.letnik : null, p_smer: d.smer, p_bio: d.bio });
+    setSaving(false);
+    if (error) { setMsg({ err: rpcErr(error) }); return; }
+    setEdit(false); reload();
+  }
+  async function saveChar(c, items) {
+    setCharDraft({ character: c, items: items || [] }); setCharMsg(null);
+    const { error } = await supabase.rpc("update_profile", { p_letnik: p.letnik || null, p_smer: p.smer || "", p_bio: p.bio || "", p_character: c, p_perk: (items || []).join(",") });
+    if (error) { setCharMsg({ err: "Izbira ni shranjena: " + rpcErr(error) }); return; }
+    setCharMsg({ ok: "Shranjeno." }); reload();
+  }
+  async function saveU() {
+    setUErr("");
+    const r = await saveUsername(uDraft);
+    if (r.error) { setUErr(r.error); return; }
+    setUEdit(false); reload();
+  }
+  async function addFriend() {
+    const name = fName.trim(); if (!name) return;
+    setBusy("add"); setFMsg(null);
+    const { data, error } = await supabase.rpc("send_friend_request", { p_username: name });
+    setBusy(null);
+    if (error) { setFMsg({ err: rpcErr(error) }); return; }
+    setFName(""); setFMsg({ ok: data && data.status === "accepted" ? `${data.username} je zdaj tvoj prijatelj.` : `Prošnja je poslana (${data && data.username}).` }); reload();
+  }
+  async function rpc(fn, args, after) {
+    setBusy(fn + JSON.stringify(args));
+    const { error } = await supabase.rpc(fn, args);
+    setBusy(null);
+    if (error) { alert(rpcErr(error)); return; }
+    reload(); if (after) after();
+  }
+  const chs = (soc && soc.challenges) || [];
+  const invited = chs.filter((c) => c.status === "pending" && c.my_status === "invited");
+  const pendingMine = chs.filter((c) => c.status === "pending" && c.my_status !== "invited" && c.my_status !== "declined");
+  const active = chs.filter((c) => c.status === "accepted" && (c.my_status === "host" || c.my_status === "accepted"));
+  const history = chs.filter((c) => c.status === "done" || c.status === "abandoned").slice(0, 12);
+  const rec = (soc && soc.record) || {};
+  const uid = user && user.id;
+  const resultOf = (c) => c.status === "abandoned" ? { t: "prekinjen", col: "var(--ink2)" } : c.my_status === "left" ? { t: "predal (poraz)", col: "var(--red)" } : !c.winner ? { t: "neodločeno", col: "var(--ink2)" } : c.winner === uid ? { t: "zmaga", col: "var(--teal)" } : { t: "poraz", col: "var(--red)" };
+  const when = (iso) => { const dt = new Date(iso); return dt.toLocaleDateString("sl-SI", { day: "numeric", month: "numeric" }) + " " + dt.toLocaleTimeString("sl-SI", { hour: "2-digit", minute: "2-digit" }); };
+  const others = (c) => (c.players || []).filter((x) => x.user_id !== uid).map((x) => x.username).join(", ");
+
+  return (
+    <div className="ix-fade">
+      {picker && <NewMatch soc={soc} presetFriend={picker.friend} go={go} onClose={() => setPicker(null)} onPick={(id) => { setPicker(null); reload(); go({ view: "duel", id }); }} />}
+      <button onClick={() => go({ view: "home" })} className="ix-chip" style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14 }}>
+        <ChevronLeft size={15} /> Domov
+      </button>
+      {socErr && <div className="ix-card" style={{ padding: "11px 14px", marginBottom: 14, fontSize: 13.5, color: "var(--ink2)", borderLeft: "3px solid var(--terra)" }}>{socErr}</div>}
+
+      {/* PROFIL */}
+      <div className="ix-card" style={{ padding: 22, marginBottom: 18 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+          <button onClick={() => fileRef.current && fileRef.current.click()} title="Profilna slika (klik za nalaganje)" disabled={photoBusy} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, position: "relative" }}>
+            <Pic photo={p.photo} name={username} size={64} />
+            <span style={{ position: "absolute", right: -4, bottom: -4, width: 22, height: 22, borderRadius: 999, background: "var(--ink)", color: "var(--paper)", display: "grid", placeItems: "center", border: "2px solid var(--paper2)" }}><Pencil size={11} /></span>
+          </button>
+          <input ref={fileRef} type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} />
+          <button onClick={() => setCharOpen((o) => !o)} title="Moj lik in oprema (klik za spremembo)" style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}><CharArt id={myChar.id} size={44} /></button>
+          <div style={{ flex: 1, minWidth: 160 }}>
+            {!uEdit ? (
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <h1 className="ix-serif" style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>{username}</h1>
+                <button onClick={() => { setUDraft(p.username || ""); setUEdit(true); }} className="ix-pill" title="Spremeni uporabniško ime"><Pencil size={12} style={{ verticalAlign: -1 }} /> ime</button>
+              </div>
+            ) : (
+              <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+                <input className="ix-input" value={uDraft} onChange={(e) => setUDraft(e.target.value)} maxLength={20} placeholder="uporabniško ime (3–20 znakov)" onKeyDown={(e) => { if (e.key === "Enter") saveU(); if (e.key === "Escape") setUEdit(false); }} autoFocus />
+                <button onClick={saveU} disabled={uDraft.trim().length < 3} className="ix-pill on">Shrani</button>
+                <button onClick={() => setUEdit(false)} className="ix-pill">Prekliči</button>
+                {uErr && <span style={{ color: "var(--terra)", fontSize: 13, width: "100%" }}>{uErr}</span>}
+              </div>
+            )}
+            <div className="ix-chip" style={{ marginTop: 4 }}>{[LETNIK_LABELS[p.letnik], p.smer].filter(Boolean).join(" · ") || "letnik in smer še nista nastavljena"} · {myChar.name}{myItems.length ? " + " + myItems.map((x) => itemById(x).name).join(" + ") : ""}</div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div className="ix-serif" style={{ fontSize: 22, fontWeight: 900 }}>{rec.wins || 0}<span style={{ fontSize: 14, color: "var(--ink2)" }}> / {rec.matches || 0}</span></div>
+            <div className="ix-chip">zmag / matchev</div>
+          </div>
+        </div>
+        <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}><StatsLine s={rec} full /><button onClick={() => setCharOpen((o) => !o)} className={"ix-pill" + (charOpen ? " on" : "")} style={{ marginLeft: "auto" }}><Zap size={12} style={{ verticalAlign: -1 }} /> Lik in oprema</button><button onClick={() => { const v = !soundOn(); store.set(SOUND_KEY, v); setSnd(v); if (v) sfx("click"); }} className={"ix-pill" + (snd ? " on" : "")} title="Zvoki ob odgovorih, povabilih in udarcih">{snd ? "🔊 Zvoki" : "🔇 Zvoki"}</button></div>
+        <XpBar s={rec} />
+        {photoMsg && <div style={{ fontSize: 13, marginTop: 6, color: photoMsg.err ? "var(--terra)" : "var(--teal)" }}>{photoMsg.err || photoMsg.ok}</div>}
+        {charOpen && (
+          <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
+            <div className="ix-sec" style={{ color: "var(--terra)" }}><Zap size={14} /> Moj lik za bitke</div>
+            <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Liki se razlikujejo po življenju, moči udarca, kritikih in bonusu za serijo; vsak ima svojo sposobnost, oprema (do 2 stvari) doda posebnosti. Slike: docs/liki/&lt;id&gt;.png.</div>
+            <CharPicker character={curChar} items={curItems} onChange={saveChar} level={rec.level || 1} />
+            <BattlePass level={rec.level || 1} />
+            {charMsg && <div style={{ fontSize: 13, marginTop: 8, color: charMsg.err ? "var(--terra)" : "var(--teal)" }}>{charMsg.err || charMsg.ok}</div>}
+          </div>
+        )}
+        {!edit ? (
+          <div style={{ marginTop: 14, display: "flex", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
+            <p style={{ margin: 0, flex: 1, minWidth: 200, fontSize: 14.5, lineHeight: 1.55, color: p.bio ? "var(--ink)" : "var(--ink2)" }}>{p.bio || "Dodaj kratek opis - prijatelji ga vidijo v svojem seznamu."}</p>
+            <button onClick={() => setEdit(true)} className="ix-pill"><Pencil size={12} style={{ verticalAlign: -1 }} /> Uredi profil</button>
+          </div>
+        ) : (
+          <div style={{ marginTop: 14, display: "grid", gap: 10 }}>
+            <label style={{ fontSize: 13, color: "var(--ink2)", display: "grid", gap: 4 }}>Letnik
+              <select className="ix-input" value={d.letnik} onChange={(e) => setD({ ...d, letnik: e.target.value })}>
+                <option value="">—</option>
+                {Object.keys(LETNIK_LABELS).map((k) => <option key={k} value={k}>{LETNIK_LABELS[k]}</option>)}
+              </select>
+            </label>
+            <label style={{ fontSize: 13, color: "var(--ink2)", display: "grid", gap: 4 }}>Smer / program
+              <input className="ix-input" list="ix-smer" value={d.smer} onChange={(e) => setD({ ...d, smer: e.target.value })} maxLength={60} placeholder="npr. UPEŠ, Bančni in finančni management" />
+              <datalist id="ix-smer">{SMER_SUGGEST.map((s) => <option key={s} value={s} />)}</datalist>
+            </label>
+            <label style={{ fontSize: 13, color: "var(--ink2)", display: "grid", gap: 4 }}>Kratek opis <span style={{ fontSize: 11 }}>({d.bio.length}/200)</span>
+              <textarea className="ix-input" value={d.bio} onChange={(e) => setD({ ...d, bio: e.target.value.slice(0, 200) })} rows={3} placeholder="Kdo si, kaj študiraš, za kaj se učiš…" style={{ resize: "vertical" }} />
+            </label>
+            {msg && msg.err && <div style={{ color: "var(--terra)", fontSize: 13 }}>{msg.err}</div>}
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={saveProfile} disabled={saving} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "9px 16px" }}>Shrani</button>
+              <button onClick={() => { setEdit(false); setD({ letnik: p.letnik || "", smer: p.smer || "", bio: p.bio || "" }); }} className="ix-btn" style={{ background: "transparent", color: "var(--ink)", border: "1px solid var(--line)", padding: "9px 16px" }}>Prekliči</button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* PRIJATELJI */}
+      <div className="ix-card" style={{ padding: 22, marginBottom: 18 }}>
+        <div className="ix-sec" style={{ color: "var(--teal)" }}><Users size={14} /> Prijatelji {soc && soc.friends && soc.friends.length ? `(${soc.friends.length})` : ""}</div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+          <input className="ix-input" value={fName} onChange={(e) => setFName(e.target.value)} placeholder="uporabniško ime prijatelja" maxLength={20} onKeyDown={(e) => { if (e.key === "Enter") addFriend(); }} style={{ flex: 1, minWidth: 180 }} />
+          <button onClick={addFriend} disabled={busy === "add" || !fName.trim()} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "9px 14px", display: "flex", alignItems: "center", gap: 6 }}><UserPlus size={15} /> Pošlji prošnjo</button>
+        </div>
+        {fMsg && <div style={{ fontSize: 13, marginTop: 8, color: fMsg.err ? "var(--terra)" : "var(--teal)" }}>{fMsg.err || fMsg.ok}</div>}
+        {soc && soc.requests_in && soc.requests_in.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <div className="ix-chip" style={{ color: "var(--terra)", marginBottom: 4 }}>Prošnje zate</div>
+            {soc.requests_in.map((r) => (
+              <div key={r.id} className="ix-row">
+                <Pic photo={r.photo} name={r.username} size={24} />
+                <span style={{ flex: 1, fontSize: 14 }}><b>{r.username}</b>{(r.letnik || r.smer) && <span style={{ color: "var(--ink2)" }}> · {[LETNIK_LABELS[r.letnik], r.smer].filter(Boolean).join(", ")}</span>}</span>
+                <button onClick={() => rpc("respond_friend_request", { p_id: r.id, p_accept: true })} className="ix-pill on"><Check size={13} style={{ verticalAlign: -2 }} /> Sprejmi</button>
+                <button onClick={() => rpc("respond_friend_request", { p_id: r.id, p_accept: false })} className="ix-pill bad">Zavrni</button>
+              </div>
+            ))}
+          </div>
+        )}
+        {soc && soc.requests_out && soc.requests_out.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <div className="ix-chip" style={{ marginBottom: 4 }}>Poslane prošnje</div>
+            {soc.requests_out.map((r) => (
+              <div key={r.id} className="ix-row">
+                <UserRound size={16} color="var(--ink2)" />
+                <span style={{ flex: 1, fontSize: 14 }}><b>{r.username}</b> <span style={{ color: "var(--ink2)" }}>· čaka na odgovor</span></span>
+                <button onClick={() => rpc("remove_friend", { p_id: r.id })} className="ix-pill">Prekliči</button>
+              </div>
+            ))}
+          </div>
+        )}
+        <div style={{ marginTop: 14 }}>
+          {soc && soc.friends && soc.friends.length ? soc.friends.map((f) => (
+            <div key={f.id} className="ix-row" style={{ alignItems: "flex-start" }}>
+              <button onClick={() => setOpen((o) => ({ ...o, [f.id]: !o[f.id] }))} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", flex: 1, textAlign: "left", minWidth: 200 }}>
+                <div style={{ fontSize: 14.5, display: "flex", alignItems: "center", gap: 8 }}><Pic photo={f.photo} name={f.username} size={30} />{f.character && <CharArt id={f.character} size={22} />}<b>{f.username}</b><ChevronDown size={14} color="var(--ink2)" style={{ transform: open[f.id] ? "rotate(180deg)" : "none", transition: "transform .18s" }} /></div>
+                <div className="ix-chip" style={{ marginTop: 2 }}>{[LETNIK_LABELS[f.letnik], f.smer].filter(Boolean).join(" · ") || "brez podatkov o letniku"}</div>
+                <div style={{ marginTop: 4 }}><StatsLine s={f.stats} /></div>
+                {open[f.id] && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{f.bio || "Brez opisa."}{f.character ? ` · Lik: ${charById(f.character).name}${splitItems(f.perk).length ? " + " + splitItems(f.perk).map((x) => itemById(x).name).join(" + ") : ""}` : ""}</div>}
+              </button>
+              <button onClick={() => setPicker({ friend: f })} className="ix-pill on"><Swords size={13} style={{ verticalAlign: -2 }} /> Izzovi</button>
+              <button onClick={() => { if (confirm(`Odstranim ${f.username} s seznama prijateljev?`)) rpc("remove_friend", { p_id: f.id }); }} className="ix-pill" title="Odstrani prijatelja"><X size={13} /></button>
+            </div>
+          )) : <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 4 }}>Še nimaš prijateljev. Vpiši uporabniško ime sošolca in mu pošlji prošnjo; ko jo sprejme, ga lahko izzoveš.</div>}
+        </div>
+      </div>
+
+      {/* MATCHI */}
+      <div className="ix-card" style={{ padding: 22 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
+          <div className="ix-sec" style={{ color: "var(--terra)", marginBottom: 0 }}><Swords size={14} /> Arena · matchi</div>
+          <button onClick={() => setPicker({})} disabled={!(soc && soc.friends && soc.friends.length)} className="ix-pill on" style={{ marginLeft: "auto" }}><Swords size={13} style={{ verticalAlign: -2 }} /> Nov match</button>
+        </div>
+        <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55 }}>Duel, trio ali četverka: vsi rešujejo ista vprašanja hkrati, napredek vidite v živo. <b style={{ color: "var(--ink)" }}>Klasika</b>: {RANKED_N} vprašanj, 100 točk za pravilen odgovor + do 50 za hitrost. <b style={{ color: "var(--ink)" }}>Bitka</b>: vsi enaki s 100 HP, pravilen odgovor udari vse nasprotnike, serija ojača, kritiki podvojijo, 2 zaporedna napačna = −10 HP; vprašanja tečejo, dokler nekomu ne zmanjka HP (največ {DUEL_BATTLE_N}, {fmtTime(DUEL_BATTLE_SECONDS)}). <b style={{ color: "var(--ink)" }}>Bitka z liki</b>: isto, a z liki, sposobnostmi in opremo. Prekinjen match se ne šteje.</div>
+        {invited.map((c) => (
+          <div key={c.id} className="ix-row">
+            <Swords size={16} color="var(--terra)" />
+            <span style={{ flex: 1, fontSize: 14 }}><b>{c.host}</b> te vabi: {SIZE_LABEL[c.size]} · {MODE_LABEL[c.mode]} <span style={{ color: "var(--ink2)" }}>· {c.part_name}</span></span>
+            <button onClick={() => rpc("respond_challenge", { p_id: c.id, p_accept: true }, () => go({ view: "duel", id: c.id }))} className="ix-pill on"><Check size={13} style={{ verticalAlign: -2 }} /> Sprejmi</button>
+            <button onClick={() => rpc("respond_challenge", { p_id: c.id, p_accept: false })} className="ix-pill bad">Zavrni</button>
+          </div>
+        ))}
+        {active.map((c) => (
+          <div key={c.id} className="ix-row">
+            <Zap size={16} color="var(--teal)" />
+            <span style={{ flex: 1, fontSize: 14 }}>{SIZE_LABEL[c.size]} · {MODE_LABEL[c.mode]} z <b>{others(c)}</b> <span style={{ color: "var(--ink2)" }}>· {c.part_name}</span></span>
+            <button onClick={() => go({ view: "duel", id: c.id })} className="ix-pill on">Odpri</button>
+          </div>
+        ))}
+        {pendingMine.map((c) => (
+          <div key={c.id} className="ix-row">
+            <Clock size={16} color="var(--ink2)" />
+            <span style={{ flex: 1, fontSize: 14 }}>{c.my_status === "host" ? "Čakam na odgovore" : "Sprejel si, čakamo ostale"}: <b>{others(c)}</b> <span style={{ color: "var(--ink2)" }}>· {c.part_name}</span></span>
+            <button onClick={() => go({ view: "duel", id: c.id })} className="ix-pill">Odpri</button>
+            {c.my_status === "host" && <button onClick={() => rpc("cancel_challenge", { p_id: c.id })} className="ix-pill">Prekliči</button>}
+          </div>
+        ))}
+        {history.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <div className="ix-chip" style={{ marginBottom: 4 }}>Zadnji matchi</div>
+            {history.map((c) => { const r = resultOf(c); const me = (c.players || []).find((x) => x.user_id === uid); return (
+              <div key={c.id} className="ix-row" style={{ padding: "7px 0" }}>
+                <span style={{ fontSize: 13.5, flex: 1 }}><b style={{ color: r.col }}>{r.t}</b> · {SIZE_LABEL[c.size]} ({MODE_LABEL[c.mode]}) z <b>{others(c)}</b> <span style={{ color: "var(--ink2)" }}>· {c.part_name}</span></span>
+                <span className="ix-chip" style={{ fontVariantNumeric: "tabular-nums" }}>{c.status === "done" && me ? (isBattle(c.mode) ? `${me.hp ?? 0} HP · ${me.correct} pravilnih` : `${me.points} t. · ${me.correct} pravilnih`) : ""} · {when(c.created_at)}</span>
+                <button onClick={() => go({ view: "duel", id: c.id })} className="ix-pill" title="Podrobnosti"><ChevronRight size={13} /></button>
+              </div>
+            ); })}
+          </div>
+        )}
+      </div>
+      {!socErr && <LiveMatches userId={uid} go={go} />}
+      {!socErr && <ArenaMeta userId={uid} go={go} />}
+    </div>
+  );
+}
+
+/* XP in nivo: vrstica napredka do naslednjega nivoja. */
+function XpBar({ s }) {
+  const xp = (s && s.xp) || 0, lvl = (s && s.level) || levelOf(xp);
+  const lo = levelXp(lvl), hi = nextLevelXp(lvl);
+  const pct = hi ? Math.round(100 * (xp - lo) / (hi - lo)) : 100;
+  return (
+    <div style={{ marginTop: 10 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "var(--ink2)", marginBottom: 3 }}>
+        <span><b style={{ color: "var(--ink)" }}>Nivo {lvl}</b> · {xp} XP</span>
+        <span>{hi ? `še ${hi - xp} XP do nivoja ${lvl + 1}` : "najvišji nivo"}</span>
+      </div>
+      <div className="ix-bar" style={{ height: 8 }}><span style={{ width: `${Math.max(2, Math.min(100, pct))}%`, background: "var(--teal)" }} /></div>
+      <div style={{ fontSize: 11.5, color: "var(--ink2)", marginTop: 3 }}>XP: {CHARS.XP_RULES.attempt} na rešen kviz · {CHARS.XP_RULES.match} na match · {CHARS.XP_RULES.win} na zmago</div>
+    </div>
+  );
+}
+/* Battle pass: kaj se odklene na katerem nivoju (liki in oprema po vrsti). */
+function BattlePass({ level }) {
+  const steps = [...CHARS.CHARACTERS.map((c) => ({ lvl: c.unlock || 1, kind: "character", obj: c })), ...CHARS.ITEMS.map((it) => ({ lvl: it.unlock || 1, kind: "item", obj: it }))].sort((a, b) => a.lvl - b.lvl);
+  const byLvl = {}; steps.forEach((x) => { (byLvl[x.lvl] = byLvl[x.lvl] || []).push(x); });
+  const lvls = Object.keys(byLvl).map(Number).sort((a, b) => a - b);
+  return (
+    <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
+      <div className="ix-sec" style={{ color: "var(--teal)" }}><Trophy size={14} /> Battle pass · odklepanje po nivojih</div>
+      <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 6 }}>
+        {lvls.map((l) => {
+          const open = l <= level;
+          return (
+            <div key={l} className="ix-card" style={{ minWidth: 118, padding: "8px 10px", opacity: open ? 1 : .55, borderColor: l === level ? "var(--terra)" : undefined, flexShrink: 0 }}>
+              <div className="ix-chip" style={{ color: open ? "var(--teal)" : "var(--ink2)", marginBottom: 6 }}>{open ? "✓" : <Lock size={10} style={{ verticalAlign: -1 }} />} nivo {l}</div>
+              {byLvl[l].map((x) => (
+                <div key={x.obj.id} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12.5, marginBottom: 4 }}>
+                  {x.kind === "character" ? <CharArt id={x.obj.id} size={22} /> : <span style={{ width: 22, height: 22, borderRadius: 6, background: "var(--paper)", border: "1px solid var(--line)", display: "grid", placeItems: "center", fontSize: 11 }}>🎒</span>}
+                  <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{x.obj.name}</span>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+/* Matchi, ki tečejo zdaj (vsi uporabniki): klik = gledanje v živo. */
+function LiveMatches({ userId, go }) {
+  const [live, setLive] = useState(null);
+  useEffect(() => {
+    let dead = false;
+    const load = () => supabase.rpc("arena_live").then(({ data, error }) => { if (!dead && !error) setLive(data || []); });
+    load();
+    const iv = setInterval(() => { if (document.visibilityState === "visible") load(); }, 10000);
+    return () => { dead = true; clearInterval(iv); };
+  }, []);
+  if (!live || !live.length) return null;
+  return (
+    <div className="ix-card" style={{ padding: 18, marginTop: 18, borderLeft: "3px solid var(--red)" }}>
+      <div className="ix-sec" style={{ color: "var(--red)" }}><Zap size={14} /> V živo zdaj ({live.length})</div>
+      <div style={{ display: "grid", gap: 6 }}>
+        {live.map((m) => (
+          <div key={m.id} className="ix-row" style={{ padding: "6px 0", borderTop: "none" }}>
+            <span style={{ flex: 1, fontSize: 13.5 }}>
+              <b>{SIZE_LABEL[m.size]} · {MODE_LABEL[m.mode]}</b> <span style={{ color: "var(--ink2)" }}>· {m.part_name}</span>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 12px", marginTop: 2, fontSize: 12.5, color: "var(--ink2)" }}>
+                {(m.players || []).map((p) => <span key={p.user_id} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>{m.mode === "battle" && p.character ? <CharArt id={p.character} size={16} /> : <Pic photo={p.photo} name={p.username} size={16} />}{p.username}{p.is_me ? " (ti)" : ""}: {isBattle(m.mode) ? `${Math.max(0, p.hp || 0)} HP` : `${p.points || 0} t.`}</span>)}
+              </div>
+            </span>
+            <button onClick={() => go({ view: "duel", id: m.id })} className="ix-pill on">{(m.players || []).some((p) => p.is_me) ? "Odpri" : "Glej"}</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* Meta (kateri liki in oprema zmagujejo) in zgodovina vseh matchev; vidno vsem prijavljenim. */
+function ArenaMeta({ userId, go }) {
+  const [meta, setMeta] = useState(null);
+  const [hist, setHist] = useState(null);
+  const [tab, setTab] = useState("meta");
+  useEffect(() => {
+    let dead = false;
+    supabase.rpc("arena_meta").then(({ data, error }) => { if (!dead && !error) setMeta(data); });
+    supabase.rpc("arena_history", { p_limit: 30 }).then(({ data, error }) => { if (!dead && !error) setHist(data); });
+    return () => { dead = true; };
+  }, []);
+  if (!meta && !hist) return null;
+  const pct = (w, n) => (n ? Math.round(100 * w / n) : 0);
+  const when = (iso) => { const dt = new Date(iso); return dt.toLocaleDateString("sl-SI", { day: "numeric", month: "numeric" }) + " " + dt.toLocaleTimeString("sl-SI", { hour: "2-digit", minute: "2-digit" }); };
+  const nameOfItems = (its) => splitItems(its).map((x) => itemById(x).name).join(" + ");
+  const Tbl = ({ rows, label, nameOf }) => (
+    <div style={{ overflowX: "auto", marginBottom: 12 }}>
+      <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
+        <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}><th style={{ padding: "4px 6px" }}>{label}</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Matchi</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zmage</th><th style={{ padding: "4px 6px", textAlign: "right" }}>%</th></tr></thead>
+        <tbody>{[...rows].sort((a, b) => pct(b.wins, b.matches) - pct(a.wins, a.matches) || b.matches - a.matches).map((r, k) => (
+          <tr key={k} style={{ borderTop: "1px solid var(--line)" }}><td style={{ padding: "6px" }}>{nameOf(r)}</td><td style={{ padding: "6px", textAlign: "right" }}>{r.matches}</td><td style={{ padding: "6px", textAlign: "right" }}>{r.wins}</td><td style={{ padding: "6px", textAlign: "right", fontWeight: 700 }}>{pct(r.wins, r.matches)} %</td></tr>
+        ))}</tbody>
+      </table>
+    </div>
+  );
+  return (
+    <div className="ix-card" style={{ padding: 22, marginTop: 18 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+        <div className="ix-sec" style={{ color: "var(--ink)", marginBottom: 0 }}><BarChart3 size={14} /> Arena · meta in zgodovina vseh</div>
+        <span style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
+          <button onClick={() => setTab("meta")} className={"ix-pill" + (tab === "meta" ? " on" : "")}>Meta</button>
+          <button onClick={() => setTab("hist")} className={"ix-pill" + (tab === "hist" ? " on" : "")}>Vsi matchi</button>
+        </span>
+      </div>
+      {tab === "meta" ? (
+        !meta || !meta.matches ? <div style={{ fontSize: 13.5, color: "var(--ink2)" }}>Še ni končanih bitk. Ko jih bo nekaj, se tu pokaže, kateri liki in oprema zmagujejo.</div> : (
+          <>
+            <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Končanih bitk: <b style={{ color: "var(--ink)" }}>{meta.matches}</b>. Delež zmag po likih, opremi in kombinacijah (vsi igralci).</div>
+            <Tbl rows={meta.characters || []} label="Lik" nameOf={(r) => <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><CharArt id={r.id} size={22} />{charById(r.id).name}</span>} />
+            {(meta.items || []).length > 0 && <Tbl rows={meta.items} label="Oprema" nameOf={(r) => (itemById(r.id) || { name: r.id }).name} />}
+            {(meta.setups || []).length > 0 && <Tbl rows={meta.setups} label="Kombinacija (≥ 2 matcha)" nameOf={(r) => `${charById(r.character).name}${r.items ? " + " + nameOfItems(r.items) : ""}`} />}
+          </>
+        )
+      ) : (
+        !hist || !hist.length ? <div style={{ fontSize: 13.5, color: "var(--ink2)" }}>Še ni končanih matchev.</div> : (
+          <div>
+            {hist.map((h) => (
+              <div key={h.id} className="ix-row" style={{ padding: "8px 0", alignItems: "flex-start" }}>
+                <div style={{ flex: 1, minWidth: 220 }}>
+                  <div style={{ fontSize: 13.5 }}><b>{SIZE_LABEL[h.size]} · {MODE_LABEL[h.mode]}</b> <span style={{ color: "var(--ink2)" }}>· {h.part_name}</span></div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", marginTop: 4, fontSize: 13 }}>
+                    {(h.players || []).map((p) => (
+                      <span key={p.user_id} style={{ display: "inline-flex", alignItems: "center", gap: 5, color: p.user_id === h.winner ? "var(--teal)" : "var(--ink2)", fontWeight: p.user_id === h.winner ? 700 : 400 }}>
+                        {p.user_id === h.winner && <Crown size={12} />}{h.mode === "battle" && p.character && <CharArt id={p.character} size={18} />}{p.username}{p.is_me ? " (ti)" : ""}
+                        <span style={{ fontWeight: 400, color: "var(--ink2)" }}>{isBattle(h.mode) ? ` ${Math.max(0, p.hp || 0)} HP` : ` ${p.points || 0} t.`}{p.status === "left" ? " · odšel" : ""}{h.mode === "battle" && p.items ? ` · ${nameOfItems(p.items)}` : ""}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <span className="ix-chip">{h.winner_name ? `zmaga ${h.winner_name}` : "neodločeno"} · {when(h.created_at)}</span>
+                {(h.players || []).some((p) => p.is_me) && <button onClick={() => go({ view: "duel", id: h.id })} className="ix-pill" title="Podrobnosti"><ChevronRight size={13} /></button>}
+              </div>
+            ))}
+          </div>
+        )
+      )}
+    </div>
+  );
+}
+
+/* Napredek vseh igralcev med matchem (v živo) + zadnji dogodki. */
+function DuelLive({ live }) {
+  const { players, me, mode, n, events, hitFlash } = live; const fixedN = live.fixedN !== false;
+  const lastEv = useRef(null);
+  useEffect(() => {
+    const last = events.length ? events[events.length - 1] : null;
+    if (last && lastEv.current != null && last.id > lastEv.current && isBattle(mode)) {
+      if (last.actor === me) { if (last.kind === "crit") sfx("crit"); else if (last.kind === "hit") sfx("hit"); else if (last.kind === "penalty") sfx("hurt"); }
+      else if (last.kind === "hit" || last.kind === "crit" || last.kind === "ko") sfx("hurt");
+    }
+    if (last) lastEv.current = last.id;
+  }, [events.length ? events[events.length - 1].id : 0]); // eslint-disable-line
+  const name = (uid) => { const p = players.find((x) => x.user_id === uid); return p ? p.username : "?"; };
+  const evText = (e) => {
+    if (e.kind === "crit") return `💥 KRITIK! ${name(e.actor)} je zadel ${e.dmg}${e.streak > 1 ? ` (serija ${e.streak})` : ""}`;
+    if (e.kind === "hit") return `⚔️ ${name(e.actor)} je zadel ${e.dmg}${e.streak > 1 ? ` (serija ${e.streak})` : ""}`;
+    if (e.kind === "miss") return `✗ ${name(e.actor)} je zgrešil`;
+    if (e.kind === "ko") return `☠️ ${name(e.actor)} je izločil ${e.targets && e.targets[0] ? name(e.targets[0].user_id) : ""}`;
+    if (e.kind === "heal") return `🍔 ${name(e.actor)} si je povrnil ${e.dmg} HP (serija ${e.streak})`;
+    if (e.kind === "penalty") return `⚠️ ${name(e.actor)}: ${e.dmg > 10 ? "vse ali nič ni uspelo" : "napačni zapored"}, −${e.dmg} HP`;
+    if (e.kind === "ability") { const p = players.find((x) => x.user_id === e.actor); const ab = p && p.character && charById(p.character.id).ability; return `✨ ${name(e.actor)}: ${ab ? ab.name : "sposobnost"}${e.dmg ? ` (${e.dmg} HP)` : ""}`; }
+    if (e.kind === "finish") return `🏁 ${name(e.actor)} je končal`;
+    if (e.kind === "left") return `🚪 ${name(e.actor)} je odšel`;
+    return "";
+  };
+  const feed = isBattle(mode) ? events.slice(-3).reverse() : events.filter((e) => e.kind !== "hit" && e.kind !== "miss" && e.kind !== "crit" && e.kind !== "heal" && e.kind !== "penalty").slice(-2).reverse();
+  return (
+    <div className="ix-card" style={{ padding: "10px 13px", marginBottom: 18, display: "grid", gap: 6 }}>
+      {players.map((p) => {
+        const isMe = p.user_id === me;
+        const out = p.status === "left" || p.eliminated;
+        const val = isBattle(mode) ? Math.max(0, p.hp || 0) / Math.max(1, p.max_hp || 100) : fixedN ? (p.answered || 0) / n : Math.min(1, (p.points || 0) / 1000);
+        return (
+          <div key={p.user_id} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, opacity: out ? .55 : 1, transition: "box-shadow .3s", boxShadow: isMe && hitFlash ? "0 0 0 2px var(--red)" : "none", borderRadius: 6 }}>
+            <span style={{ flex: "0 1 130px", minWidth: 80, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: isMe ? 700 : 500, display: "flex", alignItems: "center", gap: 6 }}>{p.character && p.character.id !== "basic" && <CharArt id={p.character.id} size={22} />}<span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{p.username}{isMe ? " (ti)" : ""}</span></span>
+            <span className="ix-bar" style={{ flex: "1 1 60px", minWidth: 40, height: isBattle(mode) ? 9 : 6 }}><span style={{ width: `${Math.round(val * 100)}%`, background: isBattle(mode) ? (val > .5 ? "var(--teal)" : val > .25 ? "var(--terra)" : "var(--red)") : isMe ? "var(--terra)" : "var(--teal)" }} /></span>
+            <span style={{ flex: "0 0 auto", minWidth: 90, textAlign: "right", color: "var(--ink2)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap", fontSize: 12.5 }}>
+              {isBattle(mode) ? <><b style={{ color: "var(--ink)" }}>{Math.max(0, p.hp || 0)} HP</b> · {p.correct || 0}/{p.answered || 0} ✓</> : <>{fixedN ? `${p.answered || 0}/${n}` : `${p.correct || 0}/${p.answered || 0} ✓`} · <b style={{ color: "var(--ink)" }}>{p.points || 0} t.</b></>}
+              {p.status === "left" ? " · predal" : p.eliminated ? " · izločen" : p.finished ? " · končal" : ""}
+            </span>
+          </div>
+        );
+      })}
+      {feed.length > 0 && <div style={{ borderTop: "1px solid var(--line)", paddingTop: 6, display: "grid", gap: 2 }}>{feed.map((e) => <div key={e.id} className="ix-fade" style={{ fontSize: 12.5, color: e.actor === me ? "var(--ink)" : "var(--ink2)" }}>{evText(e)}</div>)}</div>}
+    </div>
+  );
+}
+
+/* ---- MATCH: povabilo -> lobby (lik) -> odštevanje -> QuizView v načinu duel -> rezultat ---- */
+function DuelView({ route, go, userId, formulas, soc, setNavGuard }) {
+  const id = route.id;
+  const [st, setSt] = useState(null);
+  const [err, setErr] = useState(null);
+  const [wrong, setWrong] = useState([]);
+  const [localDone, setLocalDone] = useState(false);
+  const [tick, setTick] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const [hitFlash, setHitFlash] = useState(false);
+  const [pick, setPick] = useState(null);   // lik za to bitko {character, items}
+  const [hintsLeft, setHintsLeft] = useState(null);   // plonkci (iz opreme), štejemo lokalno
+  const offset = useRef(0);
+  const stRef = useRef(null);
+  const hpRef = useRef(null);
+  const now = useCallback(() => Date.now() - offset.current, []);
+  const applySt = useCallback((data) => {
+    if (!data) return;
+    offset.current = Date.now() - Date.parse(data.server_now);
+    const me = (data.players || []).find((p) => p.user_id === userId);
+    if (me && hpRef.current != null && me.hp != null && me.hp < hpRef.current) { setHitFlash(true); setTimeout(() => setHitFlash(false), 500); }
+    hpRef.current = me ? me.hp : null;
+    stRef.current = data; setSt(data);
+  }, [userId]);
+  const load = useCallback(async () => {
+    const { data, error } = await supabase.rpc("duel_state", { p_id: id });
+    if (error) { setErr(rpcErr(error)); return null; }
+    if (!data) { setErr("Tega matcha ni (ali nisi igralec)."); return null; }
+    setErr(null); applySt(data); return data;
+  }, [id, applySt]);
+  useEffect(() => {
+    let alive = true;
+    setSt(null); setWrong([]); setLocalDone(false); stRef.current = null; hpRef.current = null;
+    load().then((d) => { if (alive && d && d.status === "accepted") supabase.rpc("settle_challenge", { p_id: id }).then(() => { if (alive) load(); }); });
+    const ch = supabase.channel("duel:" + id)
+      .on("postgres_changes", { event: "*", schema: "public", table: "challenges", filter: "id=eq." + id }, () => load())
+      .on("postgres_changes", { event: "*", schema: "public", table: "challenge_players", filter: "challenge_id=eq." + id }, () => load())
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "challenge_events", filter: "challenge_id=eq." + id }, () => load())
+      .subscribe();
+    const iv = setInterval(() => { const s = stRef.current; if (alive && document.visibilityState === "visible" && s && (s.status === "pending" || s.status === "accepted")) load(); }, 5000);
+    return () => { alive = false; clearInterval(iv); supabase.removeChannel(ch); };
+  }, [id, load]);
+  // odhod s strani po "Pripravljen" in pred koncem = predaja (poraz zate, zmaga nasprotniku)
+  useEffect(() => () => {
+    const s = stRef.current; if (!s || s.status !== "accepted") return;
+    const me = (s.players || []).find((p) => p.user_id === userId); if (!me || !me.ready_at || me.finished) return;
+    supabase.rpc("abandon_challenge", { p_id: id }).then(() => {});
+  }, [id, userId]);
+  // zvok ob koncu
+  const doneSfx = useRef(false);
+  useEffect(() => {
+    if (!st || st.status !== "done" || doneSfx.current) return;
+    const mine = (st.players || []).some((p) => p.user_id === userId);
+    if (mine) { doneSfx.current = true; sfx(st.winner === userId ? "win" : "lose"); }
+  }, [st && st.status]); // eslint-disable-line
+
+  const players = (st && st.players) || [];
+  const activeP = players.filter((p) => p.status === "host" || p.status === "accepted");
+  const me = players.find((p) => p.user_id === userId) || null;
+  const others = players.filter((p) => p.user_id !== userId);
+  const nameOf = (uid) => { const p = players.find((x) => x.user_id === uid); return p ? p.username : "?"; };
+  const startAt = st && st.start_at ? Date.parse(st.start_at) : null;
+  const endAt = startAt ? startAt + st.seconds_limit * 1000 : null;
+  const res = useMemo(() => (st ? resolveDuel(st) : null), [st && st.part_key, st && JSON.stringify(st.question_ids)]); // eslint-disable-line
+  const n = st ? (st.question_ids || []).length : 0;
+  const battle = st && isBattle(st.mode);        // HP, dogodki
+  const pro = st && st.mode === "battle";          // izbira lika, oprema, sposobnosti
+  const running = st && st.status === "accepted" && startAt && now() >= startAt;
+  const countdown = st && st.status === "accepted" && startAt && now() < startAt;
+  const spectator = st && st.is_player === false;
+  // med matchem odhod s strani zahteva potrditev (predaja)
+  const guardOn = !!(st && st.status === "accepted" && me && me.ready_at && !me.finished && !localDone && !spectator);
+  useEffect(() => {
+    if (!setNavGuard) return;
+    if (guardOn) setNavGuard({ hash: "#/izziv/" + id, ask: () => confirm(startAt ? "Zapustiš match? To je predaja: ti poraz, nasprotnik zmaga." : "Zapustiš pripravo? Match se zate konča.") });
+    else setNavGuard(null);
+    return () => setNavGuard(null);
+  }, [guardOn, id, startAt]); // eslint-disable-line
+  useEffect(() => {
+    if (!guardOn || !startAt) return;
+    const h = (e) => { e.preventDefault(); e.returnValue = ""; };
+    window.addEventListener("beforeunload", h);
+    return () => window.removeEventListener("beforeunload", h);
+  }, [guardOn, startAt]);
+  const prof = (soc && soc.profile) || {};
+  const myLevel = (soc && soc.record && soc.record.level) || 1;
+  const myPick = pick || { character: unlocked(myLevel, charById(prof.character)) ? (prof.character || CHARS.CHARACTERS[0].id) : CHARS.CHARACTERS[0].id, items: splitItems(prof.perk).filter((x) => unlocked(myLevel, itemById(x))) };
+  useEffect(() => { if (hintsLeft == null && me && me.character) setHintsLeft(me.character.hints || 0); }, [me && me.character]); // eslint-disable-line
+  useEffect(() => { if (!countdown) return; const t = setInterval(() => setTick((x) => x + 1), 200); return () => clearInterval(t); }, [countdown]);
+  // ko sem končal, drugi pa ne: po izteku časa (+grace) zaključi strežnik
+  useEffect(() => {
+    if (!st || st.status !== "accepted" || !me || !me.finished || !endAt) return;
+    if (activeP.every((p) => p.finished)) return;
+    const t = setTimeout(() => supabase.rpc("settle_challenge", { p_id: id }).then(() => load()), Math.max(500, endAt + DUEL_GRACE * 1000 - now()));
+    return () => clearTimeout(t);
+  }, [st && st.status, me && me.finished, activeP.filter((p) => p.finished).length, endAt]); // eslint-disable-line
+
+  async function act(fn, args, after) {
+    setBusy(true);
+    const { data, error } = await supabase.rpc(fn, args || { p_id: id });
+    setBusy(false);
+    if (error) { setErr(rpcErr(error)); return; }
+    if (data && data.server_now) applySt(data); else await load();
+    if (after) after();
+  }
+  function onAnswer(ok, entry) {
+    if (!ok && entry) setWrong((w) => [...w, entry]);
+    supabase.rpc("duel_answer", { p_id: id, p_ok: !!ok }).then(({ data, error }) => { if (error) setErr(rpcErr(error)); applySt(data); });
+  }
+  function onFinish() {
+    setLocalDone(true);
+    supabase.rpc("duel_finish", { p_id: id }).then(({ data, error }) => { if (error) setErr(rpcErr(error)); applySt(data); });
+  }
+  function leave() {
+    const msg = !startAt ? "Zapustiš pripravo? Match se zate konča." : activeP.length > 2 ? "Zapustiš match? To je predaja: zate poraz, ostali nadaljujejo." : "Zapustiš match? To je predaja: ti poraz, nasprotnik zmaga.";
+    if (confirm(msg)) act("abandon_challenge");
+  }
+  async function rematch() {
+    if (!res || res.error) return;
+    setBusy(true);
+    const r = await createChallenge(activeP.filter((p) => p.user_id !== userId).map((p) => p.user_id), res.sem, res.subj, res.part, st.mode, st.win_rule === "time" ? (st.seconds_limit <= 300 ? "t5" : "t10") : st.win_rule === "points" ? "p1000" : (st.question_ids || []).length >= 20 ? "q20" : "q10");
+    setBusy(false);
+    if (r.error) { setErr(r.error); return; }
+    go({ view: "duel", id: r.id });
+  }
+  const back = () => go({ view: "profile" });
+  const Back = () => (
+    <button onClick={back} className="ix-chip" style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14 }}>
+      <ChevronLeft size={15} /> Profil in arena
+    </button>
+  );
+  const btn = (bg) => ({ background: bg, color: bg === "transparent" ? "var(--ink)" : "#fff", border: `1px solid ${bg === "transparent" ? "var(--ink)" : bg}`, padding: "11px 18px", display: "inline-flex", alignItems: "center", gap: 7 });
+
+  if (err && !st) return <div className="ix-fade"><Back /><div className="ix-card" style={{ padding: 22, fontSize: 14, color: "var(--ink2)" }}>{err}</div></div>;
+  if (!st) return <div className="ix-fade"><Back /><div style={{ textAlign: "center", color: "var(--ink2)", padding: "10vh 0", fontSize: 15 }}>Nalagam match…</div></div>;
+
+  const title = `${SIZE_LABEL[st.size] || "Match"} · ${MODE_LABEL[st.mode]}${st.mode === "classic" ? " · " + winRuleText(st) : ""}`;
+  const liveObj = { players: activeP.length ? activeP : players, me: userId, mode: st.mode, n, fixedN: st.mode === "classic" && st.win_rule === "questions", events: st.events || [], hitFlash };
+
+  // GLEDALEC: nisem igralec; vidim napredek, dogodke in vprašanja, pri katerih so igralci
+  if (spectator && (running || countdown || st.status === "done")) {
+    const left = endAt ? Math.max(0, Math.ceil((endAt - now()) / 1000)) : 0;
+    return (
+      <div className="ix-fade">
+        <Back />
+        <div className="ix-card" style={{ padding: 22, marginBottom: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 10, flexWrap: "wrap" }}>
+            <Swords size={20} color="var(--terra)" />
+            <div style={{ flex: 1 }}><h2 className="ix-serif" style={{ fontSize: 22, fontWeight: 900, margin: 0 }}>{title}</h2><div className="ix-chip" style={{ marginTop: 2 }}>{st.part_name} · {st.status === "done" ? "končano" : "v živo"}</div></div>
+            {st.status !== "done" && running && <span className="ix-chip" style={{ color: left <= 60 ? "var(--red)" : "var(--teal)", fontVariantNumeric: "tabular-nums" }}>⏱ {fmtTime(left)}</span>}
+          </div>
+          {st.status === "done" && <div className="ix-serif" style={{ fontSize: 24, fontWeight: 900, margin: "0 0 10px" }}>{st.winner ? `Zmagal je ${nameOf(st.winner)}.` : "Neodločeno."}</div>}
+          <DuelLive live={liveObj} />
+          {st.status !== "done" && res && !res.error && activeP.map((p) => {
+            const q = res.questions[Math.min(p.answered || 0, res.questions.length - 1)];
+            return q && !p.finished ? (
+              <div key={p.user_id} className="ix-card" style={{ padding: "10px 13px", marginBottom: 8 }}>
+                <div className="ix-chip" style={{ marginBottom: 4 }}>{p.username} · vprašanje {(p.answered || 0) + 1}</div>
+                <div style={{ fontSize: 14, lineHeight: 1.4 }}>{serifBars(q.q)}</div>
+                <div style={{ fontSize: 12.5, color: "var(--ink2)", marginTop: 4 }}>{(q.options || []).map((o, k) => `${"ABCDEF"[k]}) ${o}`).join("  ·  ")}</div>
+              </div>
+            ) : null;
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // MATCH TEČE (jaz še nisem končal)
+  if (running && me && me.ready_at && !me.finished && !localDone && res && !res.error) {
+    const duel = {
+      questions: res.questions, resumeAnswered: me.answered || 0, resumeCorrect: me.correct || 0,
+      left: () => Math.max(0, Math.ceil((endAt - now()) / 1000)),
+      onAnswer, onFinish, onLeave: leave, live: liveObj,
+      hints: hintsLeft || 0, useHint: () => { if (!hintsLeft) return false; setHintsLeft((h) => h - 1); return true; },
+      ability: pro && me.character && me.character.ability ? { id: me.character.ability, ...(charById(me.character.id).ability || {}), active: ACTIVE_ABILITIES.includes(me.character.ability), used: !!me.ability_used, armed: !!me.boost } : null,
+      useAbility: async () => { const { data, error } = await supabase.rpc("duel_ability", { p_id: id }); if (error) { setErr(rpcErr(error)); return null; } applySt(data); return me.character.ability; },
+    };
+    return (
+      <>
+        <QuizView key={id} route={{ view: "quiz", sem: res.sem.id, subj: res.subj.id, part: res.part.id, deck: "__1v1" }} go={go} record={() => {}} userId={userId} duel={duel} />
+        {formulas && RANKED_FORMULAS.indexOf(res.subj.id) >= 0 && <FormulaDock key={res.subj.id} subjId={res.subj.id} />}
+      </>
+    );
+  }
+
+  const myFin = !!(me && me.finished) || localDone;
+  const leftP = players.filter((p) => p.status === "left");
+  const sorted = [...activeP].sort((a, b) => battle
+    ? ((b.eliminated ? 0 : 1) - (a.eliminated ? 0 : 1)) || ((b.hp || 0) - (a.hp || 0)) || (b.correct - a.correct) || ((a.seconds ?? 9e9) - (b.seconds ?? 9e9))
+    : ((b.points || 0) - (a.points || 0)) || (b.correct - a.correct) || ((a.seconds ?? 9e9) - (b.seconds ?? 9e9))).concat(leftP);
+  const fixedN = st.mode === "classic" && st.win_rule === "questions";   // sicer (čas, točke, bitka) štejemo odgovorjena
+  const stLabel = { pending: "povabilo", accepted: running ? "match" : countdown ? "začenja se" : "priprava", done: "rezultat", declined: "zavrnjeno", cancelled: "preklicano", abandoned: "prekinjeno" }[st.status];
+
+  return (
+    <div className="ix-fade">
+      <Back />
+      <div className="ix-card" style={{ padding: 24, marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 6 }}>
+          <Swords size={20} color="var(--terra)" />
+          <div><h2 className="ix-serif" style={{ fontSize: 22, fontWeight: 900, margin: 0 }}>{title}</h2><div className="ix-chip" style={{ marginTop: 2 }}>{st.part_name} · {stLabel}</div></div>
+        </div>
+        {err && <div style={{ color: "var(--terra)", fontSize: 13, margin: "8px 0" }}>{err}</div>}
+        {res && res.error && st.status !== "done" && <div style={{ color: "var(--terra)", fontSize: 13.5, margin: "8px 0" }}>{res.error}</div>}
+
+        {/* igralci in njihov status (povabilo / lobby) */}
+        {(st.status === "pending" || (st.status === "accepted" && !startAt)) && (
+          <div style={{ margin: "12px 0", display: "grid", gap: 4 }}>
+            {players.filter((p) => p.status !== "declined" || st.status === "pending").map((p) => (
+              <div key={p.user_id} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
+                <span style={{ width: 26, display: "grid", placeItems: "center" }}>{p.character && pro ? <CharArt id={p.character.id} size={26} /> : p.user_id === userId && pro ? <CharArt id={myPick.character} size={26} /> : <Pic photo={p.photo} name={p.username} size={24} />}</span>
+                <b>{p.username}{p.user_id === userId ? " (ti)" : ""}</b>
+                <span className="ix-chip" style={{ color: p.status === "declined" ? "var(--red)" : p.ready_at ? "var(--teal)" : "var(--ink2)" }}>
+                  {p.status === "host" ? (st.status === "pending" ? "gostitelj" : p.ready_at ? "pripravljen" : "gostitelj · še ni pripravljen") : p.status === "invited" ? "čaka na odgovor" : p.status === "declined" ? "zavrnil" : p.status === "left" ? "odšel" : p.ready_at ? "pripravljen" : (st.status === "pending" ? "sprejel" : "še ni pripravljen")}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {st.status === "pending" && me && me.status === "host" && (
+          <div style={{ marginTop: 8, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+            <p style={{ color: "var(--ink2)", fontSize: 14, margin: 0, flexBasis: "100%" }}>Ko odgovorijo vsi povabljeni, se match sam premakne v pripravo. Lahko pa začneš že s tistimi, ki so sprejeli.</p>
+            {players.some((p) => p.status === "accepted") && <button onClick={() => act("start_lobby")} disabled={busy} className="ix-btn" style={btn("var(--teal)")}><Zap size={16} /> Začni s tistimi, ki so sprejeli</button>}
+            <button onClick={() => act("cancel_challenge", null, back)} disabled={busy} className="ix-btn" style={btn("transparent")}>Prekliči izziv</button>
+          </div>
+        )}
+        {st.status === "pending" && me && me.status === "invited" && (
+          <div style={{ marginTop: 8 }}>
+            <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "0 0 14px" }}><b style={{ color: "var(--ink)" }}>{nameOf(st.host)}</b> te vabi v {SIZE_LABEL[st.size]}: {battle ? `do ${n} istih vprašanj` : `${n} istih vprašanj`}, {fmtTime(st.seconds_limit)} časa, brez razlag in slovarčka. {pro ? "Bitka z liki: vprašanja tečejo, dokler nekomu ne zmanjka HP; pravilen odgovor udari vse nasprotnike; izbereš lik in opremo. 2 zaporedna napačna = −10 HP." : battle ? "Bitka do 0 HP: vsi imate 100 HP, pravilen odgovor udari vse nasprotnike, vsak 3. zaporedni pravilni vrne 5 HP. 2 zaporedna napačna = −10 HP." : "Klasika: 100 točk za pravilen odgovor + do 50 za hitrost."}</p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <button onClick={() => act("respond_challenge", { p_id: id, p_accept: true })} disabled={busy || !!(res && res.error)} className="ix-btn" style={btn("var(--teal)")}><Check size={16} /> Sprejmi</button>
+              <button onClick={() => act("respond_challenge", { p_id: id, p_accept: false }, back)} disabled={busy} className="ix-btn" style={btn("transparent")}>Zavrni</button>
+            </div>
+          </div>
+        )}
+        {st.status === "pending" && me && me.status === "accepted" && <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "8px 0 0" }}>Sprejel si. Čakamo še na ostale; ko odgovorijo (ali gostitelj začne), te aplikacija sama pripelje v pripravo.</p>}
+        {st.status === "pending" && me && me.status === "declined" && <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "8px 0 0" }}>Povabilo si zavrnil.</p>}
+        {(st.status === "declined" || st.status === "cancelled") && (
+          <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "14px 0 0" }}>{st.status === "declined" ? "Nihče ni sprejel povabila; match odpade." : (st.host === userId ? "Izziv si preklical." : `${nameOf(st.host)} je izziv preklical.`)}</p>
+        )}
+        {st.status === "abandoned" && (
+          <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "14px 0 0" }}>Match je bil prekinjen{st.abandoned_by ? (st.abandoned_by === userId ? " (ti)" : ` (${nameOf(st.abandoned_by)})`) : ""} in se ne šteje.</p>
+        )}
+
+        {st.status === "accepted" && !startAt && me && (me.status === "host" || me.status === "accepted") && (
+          <div style={{ marginTop: 8 }}>
+            {!me.ready_at ? (
+              <>
+                <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "0 0 6px" }}>{battle ? `Do ${n} vprašanj (konec, ko nekomu zmanjka HP)` : `${n} vprašanj`}, {fmtTime(st.seconds_limit)}. Match začne 3 sekunde po tem, ko so pripravljeni vsi.</p>
+                <p style={{ color: "var(--ink2)", fontSize: 13, margin: "0 0 14px" }}>Ko klikneš »Pripravljen«, se odhod s strani šteje kot odhod iz matcha (zate ne šteje{activeP.length > 2 ? ", ostali nadaljujejo" : ""}).</p>
+                {pro && (
+                  <div style={{ marginBottom: 16 }}>
+                    <div className="ix-chip" style={{ color: "var(--terra)", marginBottom: 8 }}>Tvoj lik in oprema za to bitko</div>
+                    <CharPicker compact character={myPick.character} items={myPick.items} onChange={(c, its) => setPick({ character: c, items: its })} level={(soc && soc.record && soc.record.level) || 1} />
+                  </div>
+                )}
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  <button onClick={() => act("duel_ready", { p_id: id, p_character: pro ? charBuild(myPick.character, myPick.items) : null })} disabled={busy || !!(res && res.error)} className="ix-btn" style={btn("var(--teal)")}><Zap size={16} /> Pripravljen sem</button>
+                  <button onClick={leave} disabled={busy} className="ix-btn" style={btn("transparent")}>{activeP.length > 2 ? "Zapusti" : "Prekini"}</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "0 0 16px", display: "flex", alignItems: "center", gap: 8 }}><Clock size={16} /> Pripravljen si. Čakam na: <b style={{ color: "var(--ink)" }}>{activeP.filter((p) => !p.ready_at).map((p) => p.username).join(", ") || "…"}</b></p>
+                <button onClick={leave} disabled={busy} className="ix-btn" style={btn("transparent")}>{activeP.length > 2 ? "Zapusti" : "Prekini"}</button>
+              </>
+            )}
+          </div>
+        )}
+        {countdown && (
+          <div style={{ textAlign: "center", padding: "18px 0 6px" }}>
+            <div className="ix-chip">začne čez</div>
+            <div className="ix-serif" style={{ fontSize: 64, fontWeight: 900, lineHeight: 1 }}>{Math.max(1, Math.ceil((startAt - now()) / 1000))}</div>
+          </div>
+        )}
+        {running && me && !me.ready_at && <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "14px 0 0" }}>Match že teče brez tebe (nisi kliknil »Pripravljen«).</p>}
+        {st.status === "accepted" && me && me.status === "left" && <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "14px 0 0" }}>Match si predal (poraz). Ostali nadaljujejo.</p>}
+        {spectator && !running && !countdown && st.status !== "done" && <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "14px 0 0" }}>Nisi igralec tega matcha. Ko se začne, ga lahko gledaš v živo.</p>}
+
+        {(myFin || st.status === "done") && (
+          <div style={{ marginTop: 16 }}>
+            {st.status === "done" ? (
+              <div className="ix-serif" style={{ fontSize: 30, fontWeight: 900, margin: "4px 0 12px", color: st.winner === userId ? "var(--teal)" : st.winner ? "var(--red)" : "var(--ink)" }}>
+                {st.winner === userId ? "Zmagal si! 🏆" : st.winner ? `Zmagal je ${nameOf(st.winner)}.${me && me.status === "left" ? " Predal si." : ""}` : "Neodločeno."}
+              </div>
+            ) : (
+              <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "0 0 12px", display: "flex", alignItems: "center", gap: 8 }}><Clock size={16} /> {me && me.eliminated ? "Izločen si. " : "Končal si. "}Čakam, da končajo: {activeP.filter((p) => !p.finished).map((p) => `${p.username} (${p.answered || 0}${battle ? "" : "/" + n})`).join(", ") || "…"}</p>
+            )}
+            <div style={{ display: "grid", gap: 8 }}>
+              {sorted.map((p, k) => {
+                const isMe = p.user_id === userId, win = st.status === "done" && st.winner === p.user_id;
+                return (
+                  <div key={p.user_id} className="ix-card" style={{ padding: "10px 14px", display: "flex", alignItems: "center", gap: 12, borderLeft: `3px solid ${isMe ? "var(--terra)" : "var(--teal)"}`, background: win ? "var(--okbg)" : undefined, opacity: p.status === "left" ? .6 : 1 }}>
+                    <span className="ix-serif" style={{ fontSize: 20, fontWeight: 900, width: 26, color: "var(--ink2)" }}>{k + 1}.</span>
+                    {p.character && pro ? <CharArt id={p.character.id} size={34} /> : <Pic photo={p.photo} name={p.username} size={34} />}
+                    <div style={{ flex: 1, minWidth: 120 }}>
+                      <div style={{ fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", gap: 6 }}>{win && <Crown size={14} color="var(--teal)" />}{p.username}{isMe ? " (ti)" : ""}</div>
+                      <div className="ix-chip">{p.status === "left" ? "predal" : p.eliminated ? "izločen" : p.finished && p.seconds != null ? `čas ${fmtTime(p.seconds)}` : p.finished ? "končal" : `odgovoril ${p.answered || 0}/${n}`}{battle && p.max_streak > 1 ? ` · najdaljša serija ${p.max_streak}` : ""}{battle && p.dmg_dealt ? ` · škoda ${p.dmg_dealt}` : ""}{pro && p.character && p.character.items ? ` · ${splitItems(p.character.items).map((x) => itemById(x).name).join(", ")}` : ""}</div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <div className="ix-serif" style={{ fontSize: 24, fontWeight: 900, lineHeight: 1 }}>{battle ? <>{Math.max(0, p.hp || 0)}<span style={{ fontSize: 12, color: "var(--ink2)" }}> HP</span></> : <>{p.points || 0}<span style={{ fontSize: 12, color: "var(--ink2)" }}> t.</span></>}</div>
+                      <div className="ix-chip">{p.correct || 0} / {fixedN ? n : (p.answered || 0)} pravilnih{p.status === "left" ? " · predal" : ""}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {st.status === "done" && (
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+                <button onClick={rematch} disabled={busy || !res || !!res.error} className="ix-btn" style={btn("var(--terra)")}><Swords size={16} /> Revanša</button>
+                <button onClick={back} className="ix-btn" style={btn("transparent")}>Nazaj na profil</button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      {myFin && battle && st.status !== "done" && <DuelLive live={liveObj} />}
+      {wrong.length > 0 && <WrongReview wrong={wrong} />}
     </div>
   );
 }
@@ -2543,7 +3889,7 @@ function FlashcardsView({ route, go, record }) {
         <div className={"ix-flip-inner" + (flipped ? " flipped" : "")}>
           <div className="ix-face">
             <span className="ix-chip" style={{ marginBottom: 12 }}>Pojem</span>
-            <div className="ix-serif" style={{ fontSize: 24, fontWeight: 600, lineHeight: 1.25 }}>{card.front}</div>
+            <div className="ix-serif" style={{ fontSize: 24, fontWeight: 600, lineHeight: 1.25 }}>{serifBars(card.front)}</div>
             <span className="ix-chip" style={{ marginTop: 18, opacity: .7 }}>klikni za odgovor</span>
           </div>
           <div className="ix-face back">
@@ -2718,7 +4064,7 @@ function CommunityCard({ comm, year, mine, mineAll, practiced, myAttempts }) {
   );
 }
 
-function OverallStatsView({ stats, go, year, comm }) {
+function OverallStatsView({ stats, go, year, comm, userId }) {
   const agg = aggregate(stats, year);
   const aggAll = aggregate(stats, 0);
   const [open, setOpen] = useState({});
@@ -2742,6 +4088,8 @@ function OverallStatsView({ stats, go, year, comm }) {
         <BarChart3 size={22} color="var(--teal)" />
         <h1 className="ix-serif" style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Skupna statistika · {year}. letnik</h1>
       </div>
+
+      <OverallLeaderboard userId={userId} />
 
       <div style={{ display: "flex", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
         <Stat big={agg.overallAvg + "%"} label="povprečje vsega" />

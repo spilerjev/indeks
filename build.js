@@ -13,7 +13,8 @@ function findPart(sid, pid) {
 
 const tpl = fs.readFileSync(require('path').join(__dirname,'indeks-template.jsx'), 'utf8');
 const FORMULAS = require(require('path').join(__dirname,'formulas.js'));
-const out = tpl.replace('__DATA_JSON__', JSON.stringify(DATA)).replace('__FORMULAS_JSON__', JSON.stringify(FORMULAS));
+const CHARACTERS = require(require('path').join(__dirname,'characters.js'));
+const out = tpl.replace('__DATA_JSON__', JSON.stringify(DATA)).replace('__FORMULAS_JSON__', JSON.stringify(FORMULAS)).replace('__CHARACTERS_JSON__', JSON.stringify(CHARACTERS));
 fs.writeFileSync('/Users/cocosmacbook/Documents/Claude/Indeks app/indeks-pipeline/dist/indeks-app.jsx', out);
 
 let q = 0; DATA.forEach(s => s.subjects.forEach(su => su.parts.forEach(p => (p.decks||[]).forEach(d => q += (d.questions||[]).length))));
