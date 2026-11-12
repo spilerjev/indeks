@@ -99,8 +99,8 @@ const racVzorcenja = calc([
     'ȳ_str = (450 · 7 + 280 · 11,8)/730 = 6454/730 = 8,84.'),
   Q('Stratificirana ocena povprečja ȳ_str = 8,84 (študentke N₁ = 450, študenti N₂ = 280), se(ȳ_str) = 0,2232, α = 5 %. Interval zaupanja?', ['8,40 < μ < 9,28', '8,62 < μ < 9,06', '8,27 < μ < 9,41', '8,84 < μ < 9,28'], 0,
     '8,841 ± 1,96 · 0,2232 = 8,841 ± 0,438.'),
-  Q('Sistematično vzorčenje: N = 1000, n = 200. Kolikšen je korak?', ['5', '200', '20', '0,2'], 0,
-    's = N/n = 1/f = 5 → izberemo vsako 5. enoto.'),
+  Q('Sistematično vzorčenje: iz oštevilčenega seznama populacije N = 1000 enot izberemo vzorec n = 200. Kolikšen je korak izbire s (razmik med zaporednima izbranima enotama) in katere enote pridejo v vzorec?', ['s = 5: vsaka 5. enota seznama', 's = 200: vsaka 200. enota seznama', 's = 20: vsaka 20. enota seznama', 's = 0,2: vsaka peta enota preskočena'], 0,
+    'Korak s = N/n = 1/f; vzorčni delež f = n/N = 200/1000 = 0,2 → s = 1/0,2 = 5: od slučajnega začetka izberemo vsako 5. enoto (P05, Primer 5.5). Pozor na pristranskost, če se korak ujema s periodo v populaciji.'),
   Q('Kvotni vzorec n = 120, letniki 3 : 2 : 1, v vsakem M : Ž = 4 : 6. Koliko žensk iz 1. letnika?', ['36', '24', '60', '12'], 0,
     '1. letnik = 120 · 3/6 = 60; ženske = 60 · 0,6 = 36.'),
 ]);
