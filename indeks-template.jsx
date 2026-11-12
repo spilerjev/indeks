@@ -47,14 +47,11 @@ const RANKED_FORMULAS = ["stat", "stana"];  // ranked: brez slovarčka in formul
 const serifBars = (s) => (typeof s === "string" ? s.replace(/ȳ/g, "y\u0305").replace(/Ȳ/g, "Y\u0305").replace(/\u0304/g, "\u0305").replace(/ŷ/g, "y\u0302").replace(/Ŷ/g, "Y\u0302") : s);
 /* Ranked točke in rank (ista formula je v bazi: supabase/ranked-tocke.sql, funkciji ranked_points in ranked_delta).
    Točke na vprašanje: pravilen odgovor 100 + do 50 za hitrost (linearno v okviru RANKED_Q_SECONDS), napačen 0.
-   Sprememba ranka na test: 20 · (pravilni − polovica) + bonus/10; rank dela = vsota (ne pod 0), nazivi po pragih. */
+   Sprememba ranka na test: 20 · (pravilni − polovica) + bonus/10; rank dela = vsota (ne pod 0). Brez nazivov (Leon, 12. 11.). */
 const RANKED_Q_SECONDS = 60;
-const RANKED_RANKS = [["Brucec", 0], ["Študent", 150], ["Absolvent", 350], ["Diplomant", 600], ["Magister", 900], ["Doktor", 1300], ["Docent", 1800], ["Profesor", 2400], ["Dekan", 3200], ["Rektor", 4200]];
 const rankedQPoints = (ok, sec) => (ok ? 100 + Math.round(50 * Math.max(0, 1 - sec / RANKED_Q_SECONDS)) : 0);
 const rankedEstPoints = (r) => (r.points != null ? r.points : r.correct * 100 + Math.round(r.correct * 50 * Math.max(0, 1 - r.seconds / (RANKED_Q_SECONDS * r.total))));
 const rankedDelta = (correct, total, points) => Math.round(20 * (correct - total / 2)) + Math.floor((points - 100 * correct) / 10);
-const rankName = (rating) => { let n = RANKED_RANKS[0][0]; for (const [name, min] of RANKED_RANKS) if (rating >= min) n = name; return n; };
-const rankNext = (rating) => RANKED_RANKS.find(([, min]) => min > rating) || null;
 /* Ranked: izbira je enakomerno naključna in NE upošteva znanja (kot na izpitu). Edina utež: vprašanja iz zadnjih
    RANKED_RECENT ranked testov tega dela (shranjeno v brskalniku) imajo manjšo možnost ponovitve. */
 const RANKED_RECENT = 3;
@@ -1955,7 +1952,7 @@ function Leaderboard({ partKey, userId, partName, bump }) {
     <div className="ix-card" style={{ padding: 18, marginTop: 14 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
         <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Lestvica · {partName}</div>
-        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? `${myRank >= 0 ? `ti: ${myRank + 1}. mesto · ` : "ti: "}${rankName(mine.rating)} · ${mine.rating} rank${rankNext(mine.rating) ? ` (do naziva ${rankNext(mine.rating)[0]} še ${rankNext(mine.rating)[1] - mine.rating})` : ""}` : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.rating} rank` : ""}`) : ""}</div>
+        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? `${myRank >= 0 ? `ti: ${myRank + 1}. mesto · ` : "ti: "}${mine.rating} rank` : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.rating} rank` : ""}`) : ""}</div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", fontSize: 13, color: "var(--ink2)" }}>
         <span>Na lestvici si prikazan kot <b style={{ color: "var(--ink)" }}>{nick || "skrajšan e-naslov"}</b>{nick ? " (z njim se lahko tudi prijaviš)" : ""}.</span>
@@ -1982,14 +1979,13 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         <div style={{ overflowX: "auto" }}>
           <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
             <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}>
-              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px" }}>Naziv</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rank</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zadnji</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
+              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rank</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zadnji</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
             </tr></thead>
             <tbody>
               {rows.map((r, k) => (
                 <tr key={r.user_id || k} style={{ borderTop: "1px solid var(--line)", background: r.is_me ? "var(--okbg)" : "transparent", fontWeight: r.is_me ? 700 : 400 }}>
                   <td style={{ padding: "6px 6px" }}>{k + 1}</td>
                   <td style={{ padding: "6px 6px" }}>{r.name}{r.is_me ? " (ti)" : ""}</td>
-                  <td style={{ padding: "6px 6px" }}>{r.rating != null ? rankName(r.rating) : "–"}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{r.rating != null ? r.rating : "–"}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right", color: r.last_delta < 0 ? "var(--terra)" : "var(--teal)" }}>{r.last_delta != null ? (r.last_delta >= 0 ? "+" : "") + r.last_delta : "–"}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{Math.round(r.avg_pct)} %</td>
@@ -2257,7 +2253,7 @@ function QuizView({ route, go, record, userId, duel }) {
                 <b style={{ color: "var(--ink)" }}>{mixN} naključnih vprašanj</b> iz vseh kvizov tega dela ({pool.length} v naboru), <b style={{ color: "var(--ink)" }}>{fmtTime(RANKED_SECONDS)} časa</b>. {RANKED_FORMULAS.indexOf(subj.id) >= 0 ? "Med reševanjem ni razlag in slovarčka; formule so dovoljene (kot statistični priročnik na izpitu)." : "Med reševanjem ni razlag, slovarčka in formul (kot na izpitu brez pripomočkov)."} Razlage so v pregledu na koncu.
               </p>
               <p style={{ color: "var(--ink2)", fontSize: 13, margin: "0 0 18px" }}>
-                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Brucca do Rektorja. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
+                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
               </p>
               <button onClick={() => begin(true)} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "13px 22px", display: "flex", alignItems: "center", gap: 8 }}>
                 <Trophy size={17} /> Začni ranked
