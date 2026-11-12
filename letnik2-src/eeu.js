@@ -184,6 +184,7 @@ const kartice = [
 const v1 = require('./eeu-v1');
 const v2 = require('./eeu-v2');
 const v3 = require('./eeu-v3');
+const maja = require('./eeu-maja');
 
 module.exports = {
   id: 'eeu',
@@ -212,6 +213,8 @@ module.exports = {
         { id: 'eeu-rac-v3', name: 'Računske: Vaje 3 (presežki, svetovna cena)', calc: true, questions: v3.racVaje3 },
         { id: 'eeu-rac-v4', name: 'Računske: Vaje 4 (carine, CU)', calc: true, questions: v3.racVaje4 },
         { id: 'eeu-rac-v5', name: 'Računske: Vaje 5 (ustvarjanje in preusmerjanje)', calc: true, questions: v3.racVaje5 },
+        { id: 'eeu-maja', name: 'Majini zapiski: carine in preferencialna liberalizacija (P04, P05)', questions: maja.teorija },
+        { id: 'eeu-maja-rac', name: 'Računske: Vaje 3 z rešitvami (Majini zapiski)', calc: true, questions: maja.rac },
         { id: 'eeu-pref2', name: 'Partnerica, tretje države in empirija (P05)', questions: v3.teorija },
         { id: 'eeu-wto', name: 'Ekonomske integracije in WTO (P06)', questions: v3.wto },
       ],

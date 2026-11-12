@@ -239,6 +239,7 @@ const kartice = [
 
 const p03 = require('./stana-p03');
 const p04 = require('./stana-p04');
+const maja = require('./stana-maja');
 const kartP04 = [
   ['Dvostranski interval', 'g(v) ± z_α/2 · SE(g) ; α - odklon zaupanja D = z_α/2 · SE; α = 5 % → 1,96, α = 1 % → 2,58.'],
   ['Enostranski interval', 'Spodnja meja g − z_α·SE ("najmanj") ali zgornja g + z_α·SE ("največ"); α = 5 % → 1,645, α = 1 % → 2,33.'],
@@ -271,6 +272,8 @@ module.exports = {
         { id: 'stana-rac-intervalna', name: 'Računske naloge: intervalna ocena', calc: true, questions: p04.racIntervalna },
         { id: 'stana-vzorcenja', name: 'Velikost vzorca in vzorčenja z omejitvami (P05, V05)', questions: p04.vzorcenja },
         { id: 'stana-rac-velikost', name: 'Računske naloge: velikost vzorca, stratificirano', calc: true, questions: p04.racVzorcenja },
+        { id: 'stana-maja', name: 'Majini zapiski: P05 in V05 (poudarki s predavanja in vaj)', questions: maja.teorija },
+        { id: 'stana-maja-rac', name: 'Računske: velikost vzorca in stratificirano (Majini zapiski)', calc: true, questions: maja.rac },
       ],
       flashcards: [{ id: 'stana-c-k1', name: 'Pojmi in formule (1. kolokvij)', cards: kartice.map(([front, back]) => ({ front, back })) },
         { id: 'stana-c-p03', name: 'Vzorčenje (P03)', cards: p03.kartice.map(([front, back]) => ({ front, back })) },

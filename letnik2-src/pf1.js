@@ -156,6 +156,7 @@ const kartice = [
 
 const p3 = require('./pf1-p3');
 const v36 = require('./pf1-vaje36');
+const maja = require('./pf1-maja');
 
 module.exports = {
   id: 'pf1',
@@ -180,6 +181,7 @@ module.exports = {
         { id: 'pf1-rac-kazalniki', name: 'Računske: kazalniki in DuPont', calc: true, questions: racKazalniki },
         { id: 'pf1-tvm', name: 'Časovna vrednost denarja (P03, V02)', questions: p3.tvm },
         { id: 'pf1-rac-tvm', name: 'Računske: časovna vrednost denarja', calc: true, questions: p3.tvmRac },
+        { id: 'pf1-maja-rac', name: 'Računske: vaje 2 z rešitvami (Majini zapiski)', calc: true, questions: maja.rac },
       ],
       flashcards: [{ id: 'pf1-c-k1', name: 'Pojmi in formule', cards: kartice.map(([front, back]) => ({ front, back })) }],
     },

@@ -72,6 +72,7 @@ const kartice = [
 
 const v2 = require('./mpsp-v2');
 const v3 = require('./mpsp-v3');
+const maja = require('./mpsp-maja');
 
 module.exports = {
   id: 'mpsp',
@@ -89,6 +90,8 @@ module.exports = {
         { id: 'mpsp-v2-rac', name: 'Računske: Vaje 2 (ortodont, delavci, urgenca)', calc: true, questions: v2.rac },
         { id: 'mpsp-v3-teorija', name: 'Vaje 3-4: razmestitev in napovedovanje', questions: v3.teorija },
         { id: 'mpsp-v3-rac', name: 'Računske: linija, CRAFT, napovedi', calc: true, questions: v3.rac },
+        { id: 'mpsp-maja', name: 'Majini zapiski: Vaje 4 (napovedovanje povpraševanja)', questions: maja.teorija },
+        { id: 'mpsp-maja-rac', name: 'Računske: regresija in PANN (Vaje 4, Majini zapiski)', calc: true, questions: maja.rac },
       ],
       flashcards: [{ id: 'mpsp-c-1', name: 'Pojmi z vaj', cards: kartice.map(([front, back]) => ({ front, back })) },
         { id: 'mpsp-c-2', name: 'Analiza procesa (Vaje 2)', cards: v2.kartice.map(([front, back]) => ({ front, back })) },
