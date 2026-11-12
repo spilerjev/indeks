@@ -516,6 +516,11 @@ html,body{overflow-x:hidden;overflow-x:clip;}
   border-radius:13px;padding:14px 16px;cursor:pointer;transition:all .14s;font-size:15px;}
 .ix-opt:hover:not(:disabled){border-color:var(--ink);transform:translateX(3px);}
 .ix-opt:disabled{cursor:default;}
+.ix-kbd{display:inline-block;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink2);background:var(--paper2);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:3px 6px;min-width:12px;text-align:center;}
+.ix-kbdhint{display:none;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12px;color:var(--ink2);margin-top:14px;}
+.ix-kbdhint span{display:inline-flex;align-items:center;gap:5px;}
+.ix-optkey-num{display:none;}
+@media (hover:hover) and (pointer:fine){.ix-kbdhint{display:flex;}.ix-optkey-num{display:inline-block;}.ix-optkey-letter{display:none;}}
 .ix-bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;}
 .ix-bar>span{display:block;height:100%;background:var(--terra);transition:width .4s ease;}
 .ix-btn{font-weight:600;border-radius:12px;cursor:pointer;}
@@ -1700,6 +1705,37 @@ function QuizView({ route, go, record }) {
   const [gMap, setGMap] = useState({});
   const saved = useRef(false);
 
+  // Tipkovnica: 1-6 / A-F izbere odgovor, Enter / presledek / → naprej, Enter začne, R ponovi
+  const kb = useRef({});
+  useEffect(() => {
+    function onKey(e) {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+      const t = e.target, tag = t && t.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
+      const st = kb.current, k = e.key;
+      const isNext = k === "Enter" || k === " " || k === "ArrowRight";
+      if (!st.started) {
+        if (k === "Enter" || k === " ") { e.preventDefault(); st.begin(!!st.mixed); }
+        else if (!st.mixed && (k === "m" || k === "M")) { e.preventDefault(); st.begin(true); }
+        return;
+      }
+      if (st.done) { if (k === "r" || k === "R") { e.preventDefault(); st.restart(); } return; }
+      const q = st.q; if (!q) return;
+      if (!st.answered) {
+        if (q.type === "match" || q.type === "grid") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
+        const n = parseInt(k, 10);
+        if (n >= 1 && n <= q.options.length) { e.preventDefault(); st.choose(n - 1); return; }
+        const li = k.length === 1 ? "abcdef".indexOf(k.toLowerCase()) : -1;
+        if (li >= 0 && li < q.options.length) { e.preventDefault(); st.choose(li); }
+        return;
+      }
+      if (isNext) { e.preventDefault(); st.next(); }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+  kb.current = { started, done, mixed, begin, restart };
+
   function reset() { setI(0); setPicked(null); setCorrect(0); setWrong([]); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); saved.current = false; }
   function begin(doShuffle) { setShuffleQ(doShuffle); setRun(buildRun(doShuffle)); reset(); setStarted(true); }
   function restart() { setRun(buildRun(shuffleQ)); reset(); }
@@ -1726,6 +1762,7 @@ function QuizView({ route, go, record }) {
               <button onClick={() => begin(true)} className="ix-btn" style={{ background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "13px 22px", display: "flex", alignItems: "center", gap: 8 }}>
                 <Shuffle size={17} /> Začni mešani kviz
               </button>
+              <div className="ix-kbdhint"><span><kbd className="ix-kbd">Enter</kbd> začni</span></div>
             </>
           ) : (
             <>
@@ -1741,6 +1778,7 @@ function QuizView({ route, go, record }) {
                   <Shuffle size={16} /> Premešaj vprašanja
                 </button>
               </div>
+              <div className="ix-kbdhint"><span><kbd className="ix-kbd">Enter</kbd> začni po vrsti</span><span><kbd className="ix-kbd">M</kbd> premešano</span></div>
             </>
           )}
         </div>
@@ -1751,6 +1789,9 @@ function QuizView({ route, go, record }) {
   const questions = run;
   const q = questions[i];
   const answered = picked !== null;
+  kb.current = { ...kb.current, q, answered, choose, next,
+    canSubmit: q.type === "match" ? Object.keys(mMap).length >= q.pairs.length : q.type === "grid" ? Object.keys(gMap).length >= q._blanks.length : false,
+    submit: q.type === "match" ? submitMatch : submitGrid };
   const stemLow = (q.q || "").toLowerCase();
   const restLow = ((q.options ? q.options.join(" ") : (q.pairs ? q.pairs.map((p) => p.term + " " + p.def).join(" ") : "")) + " " + (q.explanation || "") + " " + (q.more || "")).toLowerCase();
   const inTxt = (g, t) => (g.b ? new RegExp("\\b" + g.s + "\\b").test(t) : t.includes(g.s));
@@ -1825,6 +1866,7 @@ function QuizView({ route, go, record }) {
               Nazaj na kolokvij
             </button>
           </div>
+          <div className="ix-kbdhint" style={{ justifyContent: "center" }}><span><kbd className="ix-kbd">R</kbd> ponovi</span></div>
         </div>
 
         {mastery && mastery.total > 0 && (
@@ -2048,7 +2090,7 @@ function QuizView({ route, go, record }) {
           return (
             <button key={idx} className="ix-opt" disabled={answered} onClick={() => choose(idx)} style={st}>
               <span style={{ display: "flex", alignItems: "center", gap: 11 }}>
-                <span style={{ fontWeight: 700, color: "var(--ink2)", fontSize: 13 }}>{"ABCDEF"[idx]}</span>
+                <span style={{ fontWeight: 700, color: "var(--ink2)", fontSize: 13 }}><span className="ix-optkey-letter">{"ABCDEF"[idx]}</span><kbd className="ix-kbd ix-optkey-num">{idx + 1}</kbd></span>
                 <span style={{ flex: 1 }}>{opt}</span>
                 {answered && idx === q.correct && <CheckCircle2 size={18} color="var(--teal)" />}
                 {answered && idx === picked && idx !== q.correct && <XCircle size={18} color="var(--red)" />}
@@ -2057,6 +2099,13 @@ function QuizView({ route, go, record }) {
           );
         })}
       </div>
+      )}
+      {!answered && (
+        <div className="ix-kbdhint">
+          {q.type === "match" || q.type === "grid"
+            ? <span><kbd className="ix-kbd">Enter</kbd> preveri</span>
+            : <span><kbd className="ix-kbd">1</kbd>–<kbd className="ix-kbd">{q.options.length}</kbd> izberi odgovor</span>}
+        </div>
       )}
 
       {answered && (
@@ -2083,6 +2132,7 @@ function QuizView({ route, go, record }) {
           <button onClick={next} className="ix-btn" style={{ background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "12px 22px", display: "flex", alignItems: "center", gap: 8, marginLeft: "auto" }}>
             {i + 1 >= questions.length ? "Zaključi" : "Naprej"} <ChevronRight size={17} />
           </button>
+          <div className="ix-kbdhint" style={{ justifyContent: "flex-end" }}><span><kbd className="ix-kbd">Enter</kbd> / <kbd className="ix-kbd">presledek</kbd> {i + 1 >= questions.length ? "zaključi" : "naprej"}</span></div>
         </div>
       )}
     </div>
@@ -2106,6 +2156,25 @@ function FlashcardsView({ route, go, record }) {
   const saved = useRef(false);
 
   const card = order[i];
+
+  // Tipkovnica: presledek / Enter obrne, ← ali 1 = še ne znam, → ali 2 = znam, R ponovi
+  const kb = useRef({});
+  useEffect(() => {
+    function onKey(e) {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+      const t = e.target, tag = t && t.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
+      const st = kb.current, k = e.key;
+      if (st.done) { if (k === "r" || k === "R") { e.preventDefault(); st.restart(); } return; }
+      if (k === " " || k === "Enter") { e.preventDefault(); st.flip(); return; }
+      if (!st.flipped) return;
+      if (k === "ArrowLeft" || k === "1") { e.preventDefault(); st.advance(false); }
+      else if (k === "ArrowRight" || k === "2") { e.preventDefault(); st.advance(true); }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+  kb.current = { done, flipped, restart, advance, flip: () => setFlipped((f) => !f) };
 
   function advance(wasKnown) {
     const nk = known + (wasKnown ? 1 : 0);
@@ -2133,6 +2202,7 @@ function FlashcardsView({ route, go, record }) {
               Nazaj na kolokvij
             </button>
           </div>
+          <div className="ix-kbdhint" style={{ justifyContent: "center" }}><span><kbd className="ix-kbd">R</kbd> premešaj znova</span></div>
         </div>
       </div>
     );
@@ -2181,6 +2251,11 @@ function FlashcardsView({ route, go, record }) {
             </button>
           </>
         )}
+      </div>
+      <div className="ix-kbdhint" style={{ justifyContent: "center" }}>
+        {!flipped
+          ? <span><kbd className="ix-kbd">presledek</kbd> obrni</span>
+          : <><span><kbd className="ix-kbd">←</kbd> še ne znam</span><span><kbd className="ix-kbd">→</kbd> znam</span></>}
       </div>
     </div>
   );
