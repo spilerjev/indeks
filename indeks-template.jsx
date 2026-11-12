@@ -36,6 +36,22 @@ const store = (() => {
 })();
 const STATS_KEY = "indeks.stats.v1";
 const MIX_KEY = "indeks.mixuse.v1";
+const RESUME_KEY = "indeks.resume.v1";   // nedokončani kvizi (vrstni red vprašanj, odgovori) po kompletu
+const RANKED_N = 10;                     // ranked: število vprašanj
+const RANKED_SECONDS = 600;              // ranked: časovna omejitev (10 min)
+const RANKED_MIN_RUNS = 5;               // ranked: najmanj rešenih za uvrstitev na lestvico
+const rankedPool = (part) => part.decks.flatMap((d) => d.questions).filter((q) => q.options && q.options.length >= 2);
+/* Nedokončan kviz: shranimo celoten potek (največ 12 kompletov, največ 14 dni). */
+function loadResume() { return store.get(RESUME_KEY, {}); }
+function saveResume(key, state) {
+  const all = loadResume(); const now = Date.now();
+  Object.keys(all).forEach((k) => { if (now - (all[k].u || 0) > 14 * 86400000) delete all[k]; });
+  if (state) all[key] = { ...state, u: now }; else delete all[key];
+  const keys = Object.keys(all).sort((a, b) => (all[b].u || 0) - (all[a].u || 0)).slice(0, 12);
+  const out = {}; keys.forEach((k) => { out[k] = all[k]; });
+  store.set(RESUME_KEY, out);
+}
+const fmtTime = (sec) => { sec = Math.max(0, sec | 0); return Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0"); };
 
 /* ---- Supabase: računi + oblačna statistika ---- */
 const SUPABASE_URL = "https://fdcnkqjbuatsisznqcos.supabase.co";
@@ -70,7 +86,15 @@ function mergeStats(a, b) {
     const bb = (b && b[k] && b[k].attempts) || [];
     const seen = new Set();
     const attempts = [];
+    const byT = new Map(); // sprotno zapisani poskusi: isti t = isti poskus, obvelja bolj napredovan
     [...aa, ...bb].forEach((at) => {
+      if (at && at.t != null && at.answered != null) {
+        const ex = byT.get(at.t);
+        if (!ex) { byT.set(at.t, at); attempts.push(at); return; }
+        const newer = (at.answered || 0) > (ex.answered || 0) || ((at.answered || 0) === (ex.answered || 0) && (at.u || 0) > (ex.u || 0));
+        if (newer) { attempts[attempts.indexOf(ex)] = at; byT.set(at.t, at); }
+        return;
+      }
       const id = canon(at);
       if (seen.has(id)) return;
       seen.add(id);
@@ -121,7 +145,10 @@ function useCloudStats(userId) {
   const record = useCallback((key, res) => {
     const prev = ref.current;
     const cur = prev[key] || { attempts: [] };
-    const next = { ...prev, [key]: { attempts: [...cur.attempts, { t: Date.now(), ...res }] } };
+    const at = { t: Date.now(), ...res };
+    const idx = res.t != null ? cur.attempts.findIndex((x) => x.t === res.t) : -1;
+    const list = idx >= 0 ? cur.attempts.map((x, k) => (k === idx ? at : x)) : [...cur.attempts, at];
+    const next = { ...prev, [key]: { attempts: list } };
     apply(next);
     if (!userId) return;
     if (timer.current) clearTimeout(timer.current);
@@ -1075,6 +1102,7 @@ function mixDecksOf(p) {
   const out = [];
   if (p.decks.filter((d) => !d.calc).length >= 2) out.push({ id: "__mix", name: "Mešani kviz" });
   if (p.decks.filter((d) => d.calc).length >= 2) out.push({ id: "__mixcalc", name: "Mešane računske naloge" });
+  if (rankedPool(p).length >= RANKED_N) out.push({ id: "__ranked", name: "Ranked" });
   return out;
 }
 
@@ -1082,7 +1110,7 @@ function aggregate(stats, year) {
   const items = [];
   DATA.filter((sem) => !year || sem.year === year).forEach((sem) => sem.subjects.forEach((su) => su.parts.forEach((p) => {
     p.decks.forEach((d) => { const ds = deckStats(stats, `${sem.id}/${su.id}/${p.id}/${d.id}`); if (ds) items.push({ semId: sem.id, subjId: su.id, partId: p.id, deckId: d.id, view: "quiz", cat: p.type, kind: "Kviz", subj: su.name, part: p.name, name: d.name, ds }); });
-    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${su.id}/${p.id}/${d.id}`); if (ds) items.push({ semId: sem.id, subjId: su.id, partId: p.id, deckId: d.id, view: "quiz", cat: p.type, kind: "Mešani", subj: su.name, part: p.name, name: d.name, ds }); });
+    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${su.id}/${p.id}/${d.id}`); if (ds) items.push({ semId: sem.id, subjId: su.id, partId: p.id, deckId: d.id, view: "quiz", cat: p.type, kind: d.id === "__ranked" ? "Ranked" : "Mešani", subj: su.name, part: p.name, name: d.name, ds }); });
     (p.flashcards || []).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${su.id}/${p.id}/${d.id}`); if (ds) items.push({ semId: sem.id, subjId: su.id, partId: p.id, deckId: d.id, view: "cards", cat: "kartice", kind: "Kartice", subj: su.name, part: p.name, name: d.name, ds }); });
   })));
   const avgOf = (arr) => arr.length ? Math.round(arr.reduce((s, x) => s + x, 0) / arr.length) : 0;
@@ -1198,7 +1226,7 @@ export default function App() {
             {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
             {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} />}
             {route.view === "notes" && <NotesView route={route} go={setRoute} />}
-            {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView route={route} go={setRoute} record={record} /></GlossCtx.Provider>}
+            {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView route={route} go={setRoute} record={record} userId={userId || null} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
             {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
             {formulas && route.subj && ["quiz", "cards", "notes", "part", "subject"].indexOf(route.view) >= 0 && <FormulaDock key={route.subj} subjId={route.subj} />}
@@ -1533,6 +1561,27 @@ function PartView({ route, stats, go }) {
         <h1 className="ix-serif" style={{ fontSize: 27, fontWeight: 900, margin: "3px 0 0", letterSpacing: "-.02em" }}>{part.name}</h1>
       </div>
 
+      {/* RANKED */}
+      {rankedPool(part).length >= RANKED_N && (() => {
+        const ds = deckStats(stats, `${sem.id}/${subj.id}/${part.id}/__ranked`);
+        return (
+          <div style={{ marginBottom: 22 }}>
+            <div className="ix-sec" style={{ color: "var(--teal)" }}><Trophy size={14} /> Ranked</div>
+            <button className="ix-card" onClick={() => go({ view: "quiz", sem: sem.id, subj: subj.id, part: part.id, deck: "__ranked" })}
+              style={{ width: "100%", textAlign: "left", padding: "14px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 13, borderLeft: "3px solid var(--teal)" }}>
+              <span style={{ width: 34, height: 34, borderRadius: 10, background: "var(--teal)", display: "grid", placeItems: "center", flexShrink: 0 }}>
+                <Trophy size={16} color="#fff" />
+              </span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 15 }}>Ranked · {part.name}</div>
+                <div className="ix-chip" style={{ marginTop: 2 }}>{RANKED_N} naključnih iz vseh kvizov · {fmtTime(RANKED_SECONDS)} · lestvica{ds && <span style={{ color: "var(--teal)" }}> · rešenih {ds.n}, povprečje {ds.avg}%</span>}</div>
+              </div>
+              <ChevronRight size={18} color="var(--ink2)" />
+            </button>
+          </div>
+        );
+      })()}
+
       {/* ZAPISKI */}
       <div style={{ marginBottom: 22 }}>
         <div className="ix-sec" style={{ color: "var(--terra)" }}><BookOpen size={14} /> Zapiski</div>
@@ -1668,23 +1717,119 @@ function Empty({ text }) {
   );
 }
 
-function QuizView({ route, go, record }) {
+/* Ranked lestvica: Supabase tabela ranked_results + funkcija ranked_leaderboard (glej supabase/ranked.sql).
+   Če SQL še ni zagnan, se prikaže obvestilo; lokalna statistika deluje ne glede na to. */
+function Leaderboard({ partKey, userId, partName, bump }) {
+  const [rows, setRows] = useState(null);
+  const [mine, setMine] = useState(null);
+  const [err, setErr] = useState(null);
+  const [nick, setNick] = useState("");
+  const [nickDraft, setNickDraft] = useState("");
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  useEffect(() => {
+    if (!userId) return;
+    let cancelled = false;
+    (async () => {
+      const lb = await supabase.rpc("ranked_leaderboard", { p_part_key: partKey });
+      if (cancelled) return;
+      if (lb.error) { setErr(lb.error.message); setRows(null); }
+      else { setErr(null); setRows(lb.data || []); }
+      const me = await supabase.from("ranked_results").select("correct,total,seconds,created_at").eq("part_key", partKey).eq("user_id", userId).order("created_at", { ascending: true });
+      if (cancelled) return;
+      if (!me.error && me.data) {
+        const n = me.data.length;
+        const avg = n ? Math.round(me.data.reduce((s, r) => s + 100 * r.correct / r.total, 0) / n) : 0;
+        const best = n ? Math.max(...me.data.map((r) => Math.round(100 * r.correct / r.total))) : 0;
+        const avgSec = n ? Math.round(me.data.reduce((s, r) => s + r.seconds, 0) / n) : 0;
+        setMine({ n, avg, best, avgSec });
+      }
+      const pr = await supabase.from("profiles").select("nickname").eq("id", userId).maybeSingle();
+      if (!cancelled && !pr.error && pr.data) { setNick(pr.data.nickname || ""); setNickDraft(pr.data.nickname || ""); }
+    })();
+    return () => { cancelled = true; };
+  }, [partKey, userId, bump]);
+  async function saveNick() {
+    const v = nickDraft.trim().slice(0, 20);
+    if (v.length < 2) return;
+    setSaving(true);
+    const { error } = await supabase.from("profiles").update({ nickname: v }).eq("id", userId);
+    setSaving(false);
+    if (error) { alert("Vzdevka ni bilo mogoče shraniti: " + error.message); return; }
+    setNick(v); setEditing(false);
+  }
+  const myRank = rows ? rows.findIndex((r) => r.is_me) : -1;
+  if (!userId) return null;
+  return (
+    <div className="ix-card" style={{ padding: 18, marginTop: 14 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+        <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Lestvica · {partName}</div>
+        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? (myRank >= 0 ? `ti: ${myRank + 1}. mesto · ${mine.avg} %` : `ti: ${mine.avg} % (${mine.n} rešenih)`) : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.avg} %` : ""}`) : ""}</div>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", fontSize: 13, color: "var(--ink2)" }}>
+        <span>Na lestvici si prikazan kot <b style={{ color: "var(--ink)" }}>{nick || "skrajšan e-naslov"}</b>.</span>
+        {!editing ? (
+          <button onClick={() => setEditing(true)} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "3px 10px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5 }}>{nick ? "Spremeni vzdevek" : "Nastavi vzdevek"}</button>
+        ) : (
+          <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+            <input value={nickDraft} onChange={(e) => setNickDraft(e.target.value)} maxLength={20} placeholder="vzdevek (2–20 znakov)"
+              onKeyDown={(e) => { if (e.key === "Enter") saveNick(); if (e.key === "Escape") setEditing(false); }}
+              style={{ padding: "5px 9px", borderRadius: 8, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 13 }} />
+            <button onClick={saveNick} disabled={saving || nickDraft.trim().length < 2} style={{ background: "var(--teal)", color: "#fff", border: "none", borderRadius: 999, padding: "5px 11px", cursor: "pointer", fontSize: 12.5 }}>Shrani</button>
+            <button onClick={() => setEditing(false)} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "5px 11px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5 }}>Prekliči</button>
+          </span>
+        )}
+      </div>
+      {err ? (
+        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Lestvica še ni vklopljena (v Supabase je treba zagnati <code>supabase/ranked.sql</code>). Tvoji rezultati se vseeno beležijo v statistiko.</div>
+      ) : rows == null ? (
+        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Nalagam lestvico…</div>
+      ) : rows.length === 0 ? (
+        <div style={{ fontSize: 13, color: "var(--ink2)" }}>Še nihče ni rešil {RANKED_MIN_RUNS} ranked testov tega dela. Bodi prvi.</div>
+      ) : (
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
+            <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}>
+              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Najboljši</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
+            </tr></thead>
+            <tbody>
+              {rows.map((r, k) => (
+                <tr key={r.user_id || k} style={{ borderTop: "1px solid var(--line)", background: r.is_me ? "var(--okbg)" : "transparent", fontWeight: r.is_me ? 700 : 400 }}>
+                  <td style={{ padding: "6px 6px" }}>{k + 1}</td>
+                  <td style={{ padding: "6px 6px" }}>{r.name}{r.is_me ? " (ti)" : ""}</td>
+                  <td style={{ padding: "6px 6px", textAlign: "right" }}>{Math.round(r.avg_pct)} %</td>
+                  <td style={{ padding: "6px 6px", textAlign: "right" }}>{Math.round(r.best_pct)} %</td>
+                  <td style={{ padding: "6px 6px", textAlign: "right" }}>{r.runs}</td>
+                  <td style={{ padding: "6px 6px", textAlign: "right" }}>{fmtTime(r.avg_seconds)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function QuizView({ route, go, record, userId }) {
   const glossOn = React.useContext(GlossCtx);
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const part = subj.parts.find((p) => p.id === route.part);
+  const ranked = route.deck === "__ranked";
   const calcMix = route.deck === "__mixcalc";
   const mixed = route.deck === "__mix" || calcMix;
   const mixDecks = calcMix ? part.decks.filter((d) => d.calc) : part.decks.filter((d) => !d.calc);
-  const deck = mixed ? { id: route.deck, name: calcMix ? "Mešane računske naloge" : "Mešani kviz" } : part.decks.find((d) => d.id === route.deck);
-  const pool = mixed ? mixDecks.flatMap((d) => d.questions) : deck.questions;
-  const mixN = mixed ? Math.min(20, pool.length) : pool.length;
+  const deck = ranked ? { id: "__ranked", name: "Ranked · " + part.name } : mixed ? { id: route.deck, name: calcMix ? "Mešane računske naloge" : "Mešani kviz" } : part.decks.find((d) => d.id === route.deck);
+  const pool = ranked ? rankedPool(part) : mixed ? mixDecks.flatMap((d) => d.questions) : deck.questions;
+  const mixN = ranked ? Math.min(RANKED_N, pool.length) : mixed ? Math.min(20, pool.length) : pool.length;
   const key = `${sem.id}/${subj.id}/${part.id}/${deck.id}`;
   const backToPart = () => go({ view: "part", sem: sem.id, subj: subj.id, part: part.id });
 
   function buildRun(doShuffle) {
     let base;
-    if (mixed) { base = weightedSampleSmart(mixDecks, mixN); bumpMixUse(base); }
+    if (ranked) base = shuffle(pool).slice(0, mixN);
+    else if (mixed) { base = weightedSampleSmart(mixDecks, mixN); bumpMixUse(base); }
     else base = doShuffle ? shuffle(pool) : pool.slice();
     return base.map(processQuestion);
   }
@@ -1704,6 +1849,19 @@ function QuizView({ route, go, record }) {
   const [gSel, setGSel] = useState(null);
   const [gMap, setGMap] = useState({});
   const saved = useRef(false);
+  const attemptT = useRef(null);          // t sprotno zapisanega poskusa (isti t = isti poskus)
+  const [left, setLeft] = useState(RANKED_SECONDS);
+  const [lbBump, setLbBump] = useState(0);
+  const resumeState = !ranked ? loadResume()[key] : null;
+  const canResume = !!(resumeState && resumeState.run && resumeState.run.length && (resumeState.i > 0 || resumeState.picked != null));
+
+  // Ranked: odštevanje; ob izteku se kviz konča (neodgovorjena vprašanja štejejo kot napačna)
+  useEffect(() => {
+    if (!ranked || !started || done) return;
+    const id = setInterval(() => setLeft((l) => (l > 0 ? l - 1 : 0)), 1000);
+    return () => clearInterval(id);
+  }, [ranked, started, done]);
+  useEffect(() => { if (ranked && started && !done && left <= 0) finishRun(true); }, [left]); // eslint-disable-line
 
   // Tipkovnica: 1-6 / A-F izbere odgovor, Enter / presledek / → naprej, Enter začne, R ponovi
   const kb = useRef({});
@@ -1736,10 +1894,34 @@ function QuizView({ route, go, record }) {
   }, []);
   kb.current = { started, done, mixed, begin, restart };
 
-  function reset() { setI(0); setPicked(null); setCorrect(0); setWrong([]); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); saved.current = false; }
-  function begin(doShuffle) { setShuffleQ(doShuffle); setRun(buildRun(doShuffle)); reset(); setStarted(true); }
-  function restart() { setRun(buildRun(shuffleQ)); reset(); }
-  function beginFocus() { setRun(weakestSample(pool, Math.min(20, pool.length)).map(processQuestion)); reset(); }
+  function reset() { setI(0); setPicked(null); setCorrect(0); setWrong([]); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); saved.current = false; attemptT.current = Date.now(); setLeft(RANKED_SECONDS); }
+  function begin(doShuffle) { setShuffleQ(doShuffle); const r = buildRun(doShuffle); setRun(r); reset(); setStarted(true); if (!ranked) saveResume(key, null); }
+  function restart() { setRun(buildRun(shuffleQ)); reset(); if (!ranked) saveResume(key, null); }
+  function beginFocus() { setRun(weakestSample(pool, Math.min(20, pool.length)).map(processQuestion)); reset(); if (!ranked) saveResume(key, null); }
+  // Nadaljevanje nedokončanega kviza (shranjeno v tem brskalniku)
+  function continueRun() {
+    const r = resumeState; if (!r) return;
+    let ii = r.i, pk = r.picked;
+    const cq = r.run[ii];
+    if (pk != null && cq && (cq.type === "match" || cq.type === "grid")) { ii = ii + 1; pk = null; } // ovire z mapami ne obnavljamo - naprej
+    setShuffleQ(!!r.shuffleQ); setRun(r.run); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({});
+    setCorrect(r.correctCount || 0); setWrong(r.wrong || []); saved.current = false; attemptT.current = r.attemptT || Date.now(); setLeft(RANKED_SECONDS);
+    if (ii >= r.run.length) { // vse je bilo že odgovorjeno - samo še zaključi in zapiši
+      saved.current = true;
+      record(key, { t: attemptT.current, u: Date.now(), pct: Math.round(((r.correctCount || 0) / r.run.length) * 100), correct: r.correctCount || 0, answered: r.run.length, total: r.run.length, done: true });
+      saveResume(key, null); setI(r.run.length - 1); setPicked(0); setStarted(true); setDone(true); return;
+    }
+    setI(ii); setPicked(pk); setStarted(true);
+  }
+  // Sprotni zapis poskusa v statistiko: isti t se ob vsakem odgovoru posodobi (šteje tudi nedokončan kviz)
+  function liveRecord(nCorrect, nAnswered, isDone, extra) {
+    const total = run.length || 1;
+    record(key, { t: attemptT.current, u: Date.now(), pct: Math.round((nCorrect / Math.max(1, nAnswered)) * 100), correct: nCorrect, answered: nAnswered, total, done: !!isDone, ...(extra || {}) });
+  }
+  function persist(nCorrect, nWrong, ii, pk) {
+    if (ranked) return;
+    saveResume(key, { run, i: ii, picked: pk, correctCount: nCorrect, wrong: nWrong, shuffleQ, attemptT: attemptT.current });
+  }
 
   // UVODNI ZASLON — izbira vrstnega reda
   if (!started) {
@@ -1749,12 +1931,36 @@ function QuizView({ route, go, record }) {
           style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14 }}>
           <ChevronLeft size={15} /> {part.name}
         </button>
+        {canResume && (
+          <button className="ix-card" onClick={continueRun}
+            style={{ width: "100%", textAlign: "left", padding: "15px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 13, borderLeft: "3px solid var(--teal)", marginBottom: 12 }}>
+            <span style={{ width: 34, height: 34, borderRadius: 10, background: "var(--teal)", display: "grid", placeItems: "center", flexShrink: 0 }}><RotateCcw size={16} color="#fff" /></span>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600, fontSize: 15 }}>Nadaljuj nedokončan kviz</div>
+              <div className="ix-chip" style={{ marginTop: 2 }}>pri vprašanju {Math.min(resumeState.run.length, resumeState.i + 1)} / {resumeState.run.length} · pravilnih {resumeState.correctCount || 0} · odgovori že štejejo v statistiko</div>
+            </div>
+            <ChevronRight size={18} color="var(--ink2)" />
+          </button>
+        )}
         <div className="ix-card" style={{ padding: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 6 }}>
-            {mixed ? <Shuffle size={20} color="var(--terra)" /> : <FileText size={20} color="var(--ink)" />}
+            {ranked ? <Trophy size={20} color="var(--teal)" /> : mixed ? <Shuffle size={20} color="var(--terra)" /> : <FileText size={20} color="var(--ink)" />}
             <h2 className="ix-serif" style={{ fontSize: 22, fontWeight: 900, margin: 0 }}>{deck.name}</h2>
           </div>
-          {mixed ? (
+          {ranked ? (
+            <>
+              <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "0 0 6px" }}>
+                <b style={{ color: "var(--ink)" }}>{mixN} naključnih vprašanj</b> iz vseh kvizov tega dela ({pool.length} v naboru), <b style={{ color: "var(--ink)" }}>{fmtTime(RANKED_SECONDS)} časa</b>. Med reševanjem ni razlag, so pa v pregledu na koncu.
+              </p>
+              <p style={{ color: "var(--ink2)", fontSize: 13, margin: "0 0 18px" }}>
+                Lestvica: povprečje vseh tvojih rešenih ranked testov tega dela; uvrstiš se po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
+              </p>
+              <button onClick={() => begin(true)} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "13px 22px", display: "flex", alignItems: "center", gap: 8 }}>
+                <Trophy size={17} /> Začni ranked
+              </button>
+              <div className="ix-kbdhint"><span><kbd className="ix-kbd">Enter</kbd> začni</span></div>
+            </>
+          ) : mixed ? (
             <>
               <p style={{ color: "var(--ink2)", fontSize: 14.5, margin: "0 0 18px" }}>
                 {mixN} naključnih {calcMix ? "računskih nalog" : "vprašanj"} iz {mixDecks.length} {calcMix ? "sklopov" : "kvizov"} tega dela. Vsakič dobiš drugačen nabor, odgovori so premešani.
@@ -1782,6 +1988,7 @@ function QuizView({ route, go, record }) {
             </>
           )}
         </div>
+        {ranked && <Leaderboard partKey={key} userId={userId} partName={part.name} bump={lbBump} />}
       </div>
     );
   }
@@ -1796,7 +2003,7 @@ function QuizView({ route, go, record }) {
   const restLow = ((q.options ? q.options.join(" ") : (q.pairs ? q.pairs.map((p) => p.term + " " + p.def).join(" ") : "")) + " " + (q.explanation || "") + " " + (q.more || "")).toLowerCase();
   const inTxt = (g, t) => (g.b ? new RegExp("\\b" + g.s + "\\b").test(t) : t.includes(g.s));
   const defQ = /\bkaj (pomeni|je|prikazuje|opisuje|označuje|razumemo)\b|\bkako (opredelimo|definiramo)\b|\bopredeli\b|definicij|\bkatere vrste\b|\bkateri tip\b|\bza kaj se uporablja\b/.test(stemLow);
-  const gloss = (!glossOn || q.type === "match" || q.type === "grid") ? [] : GLOSSARY.filter((g) => {
+  const gloss = (!glossOn || ranked || q.type === "match" || q.type === "grid") ? [] : GLOSSARY.filter((g) => {
     if (g.subj && (Array.isArray(g.subj) ? g.subj.indexOf(subj.id) < 0 : g.subj !== subj.id)) return false;
     const inRest = inTxt(g, restLow), inStem = inTxt(g, stemLow);
     if (!inRest && !inStem) return false;
@@ -1810,16 +2017,18 @@ function QuizView({ route, go, record }) {
     setPicked(idx);
     const ok = idx === q.correct;
     recordQ(q, ok);
-    if (ok) setCorrect((c) => c + 1);
-    else setWrong((w) => [...w, { ...q, picked: idx }]);
+    const nc = correctCount + (ok ? 1 : 0), nw = ok ? wrong : [...wrong, { ...q, picked: idx }];
+    setCorrect(nc); setWrong(nw);
+    if (!ranked) { liveRecord(nc, i + 1, false); persist(nc, nw, i, idx); }
   }
   function submitMatch() {
     if (answered) return;
     const allCorrect = q.pairs.every((_, t) => mMap[t] === t);
     setPicked(allCorrect ? 1 : 0);
     recordQ(q, allCorrect);
-    if (allCorrect) setCorrect((c) => c + 1);
-    else setWrong((w) => [...w, { ...q, mMap: { ...mMap } }]);
+    const nc = correctCount + (allCorrect ? 1 : 0), nw = allCorrect ? wrong : [...wrong, { ...q, mMap: { ...mMap } }];
+    setCorrect(nc); setWrong(nw);
+    if (!ranked) { liveRecord(nc, i + 1, false); persist(nc, nw, i, allCorrect ? 1 : 0); }
   }
   const poolVal = (pid) => { const p = (q._pool || []).find((x) => x.id === pid); return p ? p.val : null; };
   function placeGrid(key) {
@@ -1837,14 +2046,31 @@ function QuizView({ route, go, record }) {
     const ok = q._blanks.every((b) => gMap[b.key] != null && poolVal(gMap[b.key]) === b.val);
     setPicked(ok ? 1 : 0);
     recordQ(q, ok);
-    if (ok) setCorrect((c) => c + 1);
-    else setWrong((w) => [...w, { ...q, gMap: { ...gMap } }]);
+    const nc = correctCount + (ok ? 1 : 0), nw = ok ? wrong : [...wrong, { ...q, gMap: { ...gMap } }];
+    setCorrect(nc); setWrong(nw);
+    if (!ranked) { liveRecord(nc, i + 1, false); persist(nc, nw, i, ok ? 1 : 0); }
+  }
+  function finishRun(timeout) {
+    if (saved.current) return;
+    saved.current = true;
+    const total = run.length;
+    const answeredN = timeout ? i + (picked !== null ? 1 : 0) : total;
+    if (ranked) {
+      const seconds = Math.min(RANKED_SECONDS, RANKED_SECONDS - left);
+      record(key, { t: attemptT.current, u: Date.now(), pct: Math.round((correctCount / total) * 100), correct: correctCount, answered: total, total, done: true, seconds, timeout: !!timeout });
+      if (userId) {
+        supabase.from("ranked_results").insert({ user_id: userId, part_key: key, correct: correctCount, total, seconds })
+          .then(({ error }) => { if (error) console.warn("indeks ranked: " + error.message); setLbBump((b) => b + 1); });
+      }
+    } else {
+      liveRecord(correctCount, answeredN, true);
+      saveResume(key, null);
+    }
+    setDone(true);
   }
   function next() {
-    if (i + 1 >= questions.length) {
-      if (!saved.current) { saved.current = true; record(key, { pct: Math.round((correctCount / questions.length) * 100), correct: correctCount, total: questions.length }); }
-      setDone(true);
-    } else { setI(i + 1); setPicked(null); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); }
+    if (i + 1 >= questions.length) finishRun(false);
+    else { setI(i + 1); setPicked(null); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); if (!ranked) persist(correctCount, wrong, i + 1, null); }
   }
 
   if (done) {
@@ -1857,7 +2083,7 @@ function QuizView({ route, go, record }) {
         <div className="ix-card" style={{ padding: 26, textAlign: "center", marginBottom: 18 }}>
           <Trophy size={34} color={good ? "var(--teal)" : "var(--terra)"} />
           <div className="ix-serif" style={{ fontSize: 46, fontWeight: 900, margin: "8px 0 2px" }}>{pct}%</div>
-          <div className="ix-chip">{correctCount} / {questions.length} pravilnih · {deck.name}</div>
+          <div className="ix-chip">{correctCount} / {questions.length} pravilnih · {deck.name}{ranked && <span> · čas {fmtTime(Math.min(RANKED_SECONDS, RANKED_SECONDS - left))}{left <= 0 ? " · čas je potekel" : ""}</span>}</div>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 20, flexWrap: "wrap" }}>
             <button onClick={restart} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "11px 18px", display: "flex", alignItems: "center", gap: 7 }}>
               <RotateCcw size={16} /> Ponovi
@@ -1868,6 +2094,7 @@ function QuizView({ route, go, record }) {
           </div>
           <div className="ix-kbdhint" style={{ justifyContent: "center" }}><span><kbd className="ix-kbd">R</kbd> ponovi</span></div>
         </div>
+        {ranked && <Leaderboard partKey={key} userId={userId} partName={part.name} bump={lbBump} />}
 
         {mastery && mastery.total > 0 && (
           <div className="ix-card" style={{ padding: 18, marginBottom: 18, borderLeft: `3px solid ${mastered ? "var(--teal)" : "var(--terra)"}` }}>
@@ -1947,7 +2174,7 @@ function QuizView({ route, go, record }) {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
         <span className="ix-chip">{deck.name}</span>
-        <span className="ix-chip">{i + 1} / {questions.length}</span>
+        <span className="ix-chip">{i + 1} / {questions.length}{ranked && <span style={{ marginLeft: 8, color: left <= 60 ? "var(--red)" : "var(--teal)", fontVariantNumeric: "tabular-nums" }}>⏱ {fmtTime(left)}</span>}</span>
       </div>
       <div className="ix-bar" style={{ marginBottom: 22 }}><span style={{ width: `${(i / questions.length) * 100}%` }} /></div>
 
@@ -2110,12 +2337,12 @@ function QuizView({ route, go, record }) {
 
       {answered && (
         <div className="ix-fade" style={{ marginTop: 18 }}>
-          {wrongExpl && (
+          {!ranked && wrongExpl && (
             <div className="ix-card" style={{ padding: 14, fontSize: 13.5, color: "var(--ink2)", marginBottom: 14, borderLeft: "3px solid var(--red)" }}>
               <b style={{ color: "var(--ink)" }}>Zakaj ne ta odgovor:</b> {wrongExpl}
             </div>
           )}
-          {q.explanation && (
+          {!ranked && q.explanation && (
             <div className="ix-card" style={{ padding: 14, fontSize: 14, color: "var(--ink2)", marginBottom: 14, lineHeight: 1.55 }}>
               {q.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: q.explanation }} /> : q.explanation}
               {q.more && (
@@ -2268,7 +2495,7 @@ function StatsView({ route, stats, go, comm }) {
   const rows = [];
   subj.parts.forEach((p) => {
     p.decks.forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kviz", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
-    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Mešani", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
+    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: d.id === "__ranked" ? "Ranked" : "Mešani", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
     (p.flashcards || []).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kartice", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
   });
   const totalAttempts = rows.reduce((n, r) => n + r.ds.n, 0);
