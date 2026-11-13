@@ -50,12 +50,25 @@ const serifBars = (s) => (typeof s === "string" ? s.replace(/ȳ/g, "y\u0305").re
    Točke na vprašanje: pravilen odgovor 100 + do 50 za hitrost (linearno v okviru RANKED_Q_SECONDS), napačen 0.
    Sprememba ranka na test: 20 · (pravilni − polovica) + bonus/10; rank dela = vsota (ne pod 0), nazivi po pragih. */
 const RANKED_Q_SECONDS = 60;
-const RANKED_RANKS = [["Bruc", 0], ["Študent", 150], ["Absolvent", 300], ["Diplomant", 450], ["Magister", 600], ["Doktor", 1000], ["Profesor", 1600], ["Dekan", 2500]];   // nazivi po ranku dela: odličen test (10/10 v 5 min) = +125, največ +150; 5 odličnih (625) = Magister, Doktor ~8, Profesor ~13, Dekan ~20 odličnih
+/* Nazivi: vsak zahteva rank dela IN formo v zadnjih 10 testih (povprečje pravilnih, pri najvišjih tudi povprečen čas).
+   Rank je seštevek (odličen test 10/10 v 5 min = +125, največ +150), forma je trenutna: če pade, pade tudi naziv, rank ostane.
+   [ime, najmanjši rank, najmanjši % zadnjih 10, največ sekund zadnjih 10 (null = brez pogoja)] */
+const RANKED_RANKS = [["Bruc", 0, 0, null], ["Študent", 150, 0, null], ["Absolvent", 300, 60, null], ["Diplomant", 450, 70, null], ["Magister", 600, 75, null], ["Doktor", 1000, 85, null], ["Profesor", 1600, 90, 360], ["Dekan", 2500, 95, 300]];
 const rankedQPoints = (ok, sec) => (ok ? 100 + Math.round(50 * Math.max(0, 1 - sec / RANKED_Q_SECONDS)) : 0);
 const rankedEstPoints = (r) => (r.points != null ? r.points : r.correct * 100 + Math.round(r.correct * 50 * Math.max(0, 1 - r.seconds / (RANKED_Q_SECONDS * r.total))));
 const rankedDelta = (correct, total, points) => Math.round(20 * (correct - total / 2)) + Math.floor((points - 100 * correct) / 10);
-const rankName = (rating) => { let n = RANKED_RANKS[0][0]; for (const [name, min] of RANKED_RANKS) if (rating >= min) n = name; return n; };
-const rankNext = (rating) => RANKED_RANKS.find(([, min]) => min > rating) || null;
+const rankOk = (t, rating, pct, sec) => rating >= t[1] && (pct == null ? t[2] === 0 : pct >= t[2]) && (t[3] == null || (sec != null && sec <= t[3]));
+const rankName = (rating, pct, sec) => { let n = RANKED_RANKS[0][0]; for (const t of RANKED_RANKS) if (rankOk(t, rating, pct, sec)) n = t[0]; return n; };
+/* Naslednji naziv in kaj zanj manjka (besedilo). */
+const rankNext = (rating, pct, sec) => {
+  const cur = RANKED_RANKS.findIndex((t) => t[0] === rankName(rating, pct, sec));
+  const t = RANKED_RANKS[cur + 1]; if (!t) return null;
+  const need = [];
+  if (rating < t[1]) need.push(`še ${t[1] - rating} ranka`);
+  if (t[2] > 0 && (pct == null || pct < t[2])) need.push(`≥ ${t[2]} % v zadnjih 10`);
+  if (t[3] != null && (sec == null || sec > t[3])) need.push(`povprečen čas ≤ ${fmtTime(t[3])}`);
+  return [t[0], need.join(", ") || "izpolnjeno"];
+};
 /* Ranked: izbira je enakomerno naključna in NE upošteva znanja (kot na izpitu). Edina utež: vprašanja iz zadnjih
    RANKED_RECENT ranked testov tega dela (shranjeno v brskalniku) imajo manjšo možnost ponovitve. */
 const RANKED_RECENT = 3;
@@ -1934,7 +1947,10 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         const avg = n ? Math.round(me.data.reduce((s, r) => s + 100 * r.correct / r.total, 0) / n) : 0;
         const best = n ? Math.max(...me.data.map((r) => Math.round(100 * r.correct / r.total))) : 0;
         const avgSec = n ? Math.round(me.data.reduce((s, r) => s + r.seconds, 0) / n) : 0;
-        setMine({ n, avg, best, avgSec, rating });
+        const last = me.data.slice(-10);
+        const recentPct = last.length ? Math.round(10 * last.reduce((s, r) => s + 100 * r.correct / r.total, 0) / last.length) / 10 : null;
+        const recentSec = last.length ? Math.round(last.reduce((s, r) => s + r.seconds, 0) / last.length) : null;
+        setMine({ n, avg, best, avgSec, rating, recentPct, recentSec });
       }
       const pr = await supabase.from("profiles").select("username").eq("id", userId).maybeSingle();
       if (!cancelled && !pr.error && pr.data) { setNick(pr.data.username || ""); setNickDraft(pr.data.username || ""); }
@@ -1956,7 +1972,7 @@ function Leaderboard({ partKey, userId, partName, bump }) {
     <div className="ix-card" style={{ padding: 18, marginTop: 14 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
         <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Lestvica · {partName}</div>
-        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? `${myRank >= 0 ? `ti: ${myRank + 1}. mesto · ` : "ti: "}${rankName(mine.rating)} · ${mine.rating} rank${rankNext(mine.rating) ? ` (do naziva ${rankNext(mine.rating)[0]} še ${rankNext(mine.rating)[1] - mine.rating})` : ""}` : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.rating} rank` : ""}`) : ""}</div>
+        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? `${myRank >= 0 ? `ti: ${myRank + 1}. mesto · ` : "ti: "}${rankName(mine.rating, mine.recentPct, mine.recentSec)} · ${mine.rating} rank · zadnjih 10: ${mine.recentPct} %${rankNext(mine.rating, mine.recentPct, mine.recentSec) ? ` (za ${rankNext(mine.rating, mine.recentPct, mine.recentSec)[0]}: ${rankNext(mine.rating, mine.recentPct, mine.recentSec)[1]})` : ""}` : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.rating} rank` : ""}`) : ""}</div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", fontSize: 13, color: "var(--ink2)" }}>
         <span>Na lestvici si prikazan kot <b style={{ color: "var(--ink)" }}>{nick || "skrajšan e-naslov"}</b>{nick ? " (z njim se lahko tudi prijaviš)" : ""}.</span>
@@ -1983,16 +1999,17 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         <div style={{ overflowX: "auto" }}>
           <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
             <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}>
-              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px" }}>Naziv</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rank</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zadnji</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
+              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px" }}>Naziv</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rank</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zadnji</th><th style={{ padding: "4px 6px", textAlign: "right" }} title="Povprečje zadnjih 10 testov">Zadnjih 10</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
             </tr></thead>
             <tbody>
               {rows.map((r, k) => (
                 <tr key={r.user_id || k} style={{ borderTop: "1px solid var(--line)", background: r.is_me ? "var(--okbg)" : "transparent", fontWeight: r.is_me ? 700 : 400 }}>
                   <td style={{ padding: "6px 6px" }}>{k + 1}</td>
                   <td style={{ padding: "6px 6px" }}>{r.name}{r.is_me ? " (ti)" : ""}</td>
-                  <td style={{ padding: "6px 6px" }}>{r.rating != null ? rankName(r.rating) : "–"}</td>
+                  <td style={{ padding: "6px 6px" }}>{r.rating != null ? rankName(r.rating, r.recent_pct != null ? +r.recent_pct : null, r.recent_seconds != null ? +r.recent_seconds : null) : "–"}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{r.rating != null ? r.rating : "–"}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right", color: r.last_delta < 0 ? "var(--terra)" : "var(--teal)" }}>{r.last_delta != null ? (r.last_delta >= 0 ? "+" : "") + r.last_delta : "–"}</td>
+                  <td style={{ padding: "6px 6px", textAlign: "right" }}>{r.recent_pct != null ? Math.round(r.recent_pct) + " %" : "–"}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{Math.round(r.avg_pct)} %</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{r.runs}</td>
                   <td style={{ padding: "6px 6px", textAlign: "right" }}>{fmtTime(r.avg_seconds)}</td>
@@ -2259,7 +2276,7 @@ function QuizView({ route, go, record, userId, duel }) {
                 <b style={{ color: "var(--ink)" }}>{mixN} naključnih vprašanj</b> iz vseh kvizov tega dela ({pool.length} v naboru), <b style={{ color: "var(--ink)" }}>{fmtTime(RANKED_SECONDS)} časa</b>. {RANKED_FORMULAS.indexOf(subj.id) >= 0 ? "Med reševanjem ni razlag in slovarčka; formule so dovoljene (kot statistični priročnik na izpitu)." : "Med reševanjem ni razlag, slovarčka in formul (kot na izpitu brez pripomočkov)."} Razlage so v pregledu na koncu.
               </p>
               <p style={{ color: "var(--ink2)", fontSize: 13, margin: "0 0 18px" }}>
-                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Bruca do Dekana. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
+                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Bruca do Dekana zahtevajo rank <b style={{ color: "var(--ink)" }}>in</b> formo v zadnjih 10 testih (Magister ≥ 75 %, Doktor ≥ 85 %, Profesor ≥ 90 % in ≤ 6 min, Dekan ≥ 95 % in ≤ 5 min); če forma pade, pade naziv, rank ostane. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
               </p>
               <button onClick={() => begin(true)} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "13px 22px", display: "flex", alignItems: "center", gap: 8 }}>
                 <Trophy size={17} /> Začni ranked

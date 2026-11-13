@@ -36,9 +36,11 @@ $$;
 
 -- 3) lestvica dela: rank = vsota sprememb, uvrstitev po >= 5 testih
 drop function if exists public.ranked_leaderboard(text);   -- vrnjeni stolpci se spremenijo
-create or replace function public.ranked_leaderboard(p_part_key text)
+-- vrne tudi formo zadnjih 10 testov (recent_pct, recent_seconds): nazivi zahtevajo rank IN formo (glej RANKED_RANKS v predlogi)
+drop function if exists public.ranked_leaderboard(text);
+create function public.ranked_leaderboard(p_part_key text)
 returns table (user_id uuid, name text, runs bigint, rating int, avg_pct numeric, best_pct numeric, avg_seconds numeric,
-               avg_points numeric, best_points int, last_delta int, is_me boolean)
+               avg_points numeric, best_points int, last_delta int, recent_pct numeric, recent_seconds numeric, is_me boolean)
 language sql
 security definer
 set search_path = public
@@ -63,6 +65,8 @@ as $$
          round(avg(r.pts), 1) as avg_points,
          max(r.pts) as best_points,
          max(case when r.rn = 1 then r.d end) as last_delta,
+         round(avg(case when r.rn <= 10 then 100.0 * r.correct / nullif(r.total, 0) end), 1) as recent_pct,
+         round(avg(case when r.rn <= 10 then r.seconds end)) as recent_seconds,
          (r.user_id = auth.uid()) as is_me
   from r
   left join public.profiles p on p.id = r.user_id
