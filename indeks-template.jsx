@@ -6,6 +6,7 @@ import {
   Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
+import { createPortal } from "react-dom";
 
 /* =========================================================================
    semester {id, year, name, subjects} -> predmet -> parts (kolokviji + izpit)
@@ -697,7 +698,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-spark{display:flex;align-items:flex-end;gap:3px;height:30px;}
 .ix-spark>i{flex:1;background:var(--terra);border-radius:2px 2px 0 0;min-height:3px;opacity:.85;}
 /* 1v1: modalno okno, vnosi, gumbi-pilule, značka */
-.ix-modalbg{position:fixed;inset:0;background:rgba(25,23,18,.45);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px;}
+.ix-root .ix-modalbg{position:fixed;inset:0;background:rgba(25,23,18,.45);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px;}
 .ix-modal{background:var(--paper2);border:1px solid var(--line);border-radius:16px;width:min(560px,100%);max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);}
 .ix-modalhead{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line);}
 .ix-modalbody{overflow-y:auto;padding:12px 16px 16px;-webkit-overflow-scrolling:touch;}
@@ -2838,9 +2839,12 @@ function StatsLine({ s, full }) {
   );
 }
 
+/* Modalno okno se izriše v .ix-root (portal): znotraj .ix-fade (animacija transform) bi position:fixed veljal glede na vsebino, ne na okno. */
 function Modal({ title, icon, onClose, children }) {
   useEffect(() => { const k = (e) => { if (e.key === "Escape") onClose(); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, [onClose]);
-  return (
+  useEffect(() => { const prev = document.body.style.overflow; document.body.style.overflow = "hidden"; return () => { document.body.style.overflow = prev; }; }, []);
+  const host = document.querySelector(".ix-root") || document.body;
+  return createPortal(
     <div className="ix-modalbg" onClick={onClose}>
       <div className="ix-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label={title}>
         <div className="ix-modalhead">
@@ -2849,7 +2853,8 @@ function Modal({ title, icon, onClose, children }) {
         </div>
         <div className="ix-modalbody">{children}</div>
       </div>
-    </div>
+    </div>,
+    host
   );
 }
 
