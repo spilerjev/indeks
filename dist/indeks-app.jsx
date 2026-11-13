@@ -64,7 +64,7 @@ const rankNext = (rating, pct, sec) => {
   const cur = RANKED_RANKS.findIndex((t) => t[0] === rankName(rating, pct, sec));
   const t = RANKED_RANKS[cur + 1]; if (!t) return null;
   const need = [];
-  if (rating < t[1]) need.push(`še ${t[1] - rating} ranka`);
+  if (rating < t[1]) need.push(`še ${t[1] - rating} ELO`);
   if (t[2] > 0 && (pct == null || pct < t[2])) need.push(`≥ ${t[2]} % v zadnjih 10`);
   if (t[3] != null && (sec == null || sec > t[3])) need.push(`povprečen čas ≤ ${fmtTime(t[3])}`);
   return [t[0], need.join(", ") || "izpolnjeno"];
@@ -1972,7 +1972,7 @@ function Leaderboard({ partKey, userId, partName, bump }) {
     <div className="ix-card" style={{ padding: 18, marginTop: 14 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
         <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Lestvica · {partName}</div>
-        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? `${myRank >= 0 ? `ti: ${myRank + 1}. mesto · ` : "ti: "}${rankName(mine.rating, mine.recentPct, mine.recentSec)} · ${mine.rating} rank · zadnjih 10: ${mine.recentPct} %${rankNext(mine.rating, mine.recentPct, mine.recentSec) ? ` (za ${rankNext(mine.rating, mine.recentPct, mine.recentSec)[0]}: ${rankNext(mine.rating, mine.recentPct, mine.recentSec)[1]})` : ""}` : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.rating} rank` : ""}`) : ""}</div>
+        <div className="ix-chip">{mine ? (mine.n >= RANKED_MIN_RUNS ? `${myRank >= 0 ? `ti: ${myRank + 1}. mesto · ` : "ti: "}${rankName(mine.rating, mine.recentPct, mine.recentSec)} · ${mine.rating} ELO · zadnjih 10: ${mine.recentPct} %${rankNext(mine.rating, mine.recentPct, mine.recentSec) ? ` (za ${rankNext(mine.rating, mine.recentPct, mine.recentSec)[0]}: ${rankNext(mine.rating, mine.recentPct, mine.recentSec)[1]})` : ""}` : `ti: ${mine.n}/${RANKED_MIN_RUNS} rešenih za uvrstitev${mine.n ? ` · ${mine.rating} ELO` : ""}`) : ""}</div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", fontSize: 13, color: "var(--ink2)" }}>
         <span>Na lestvici si prikazan kot <b style={{ color: "var(--ink)" }}>{nick || "skrajšan e-naslov"}</b>{nick ? " (z njim se lahko tudi prijaviš)" : ""}.</span>
@@ -1999,7 +1999,7 @@ function Leaderboard({ partKey, userId, partName, bump }) {
         <div style={{ overflowX: "auto" }}>
           <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
             <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}>
-              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px" }}>Naziv</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rank</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zadnji</th><th style={{ padding: "4px 6px", textAlign: "right" }} title="Povprečje zadnjih 10 testov">Zadnjih 10</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
+              <th style={{ padding: "4px 6px" }}>#</th><th style={{ padding: "4px 6px" }}>Ime</th><th style={{ padding: "4px 6px" }}>Naziv</th><th style={{ padding: "4px 6px", textAlign: "right" }}>ELO</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Zadnji</th><th style={{ padding: "4px 6px", textAlign: "right" }} title="Povprečje zadnjih 10 testov">Zadnjih 10</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povprečje</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Rešenih</th><th style={{ padding: "4px 6px", textAlign: "right" }}>Povpr. čas</th>
             </tr></thead>
             <tbody>
               {rows.map((r, k) => (
@@ -2090,9 +2090,9 @@ function OverallLeaderboard({ userId, year }) {
     <div className="ix-card" style={{ padding: 18, marginBottom: 18 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
         <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Skupna ranked lestvica · {year}. letnik</div>
-        <div className="ix-chip">{me ? `ti: ${myRank + 1}. mesto · ${me.rating} rank · ${me.parts} ${me.parts === 1 ? "del" : me.parts === 2 ? "dela" : "delov"}` : rows ? `ti: še brez dela s ${RANKED_MIN_RUNS} rešenimi testi` : ""}</div>
+        <div className="ix-chip">{me ? `ti: ${myRank + 1}. mesto · ${me.rating} ELO · ${me.parts} ${me.parts === 1 ? "del" : me.parts === 2 ? "dela" : "delov"}` : rows ? `ti: še brez dela s ${RANKED_MIN_RUNS} rešenimi testi` : ""}</div>
       </div>
-      <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Vsota rankov vseh delov {year}. letnika, v katerih imaš vsaj {RANKED_MIN_RUNS} ranked testov. Več delov in več reševanja pomeni višji rank.</div>
+      <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Vsota ELO vseh delov {year}. letnika, v katerih imaš vsaj {RANKED_MIN_RUNS} ranked testov. Več delov in več reševanja pomeni višji ELO.</div>
       {err ? (
         <div style={{ fontSize: 13, color: "var(--ink2)" }}>Skupna lestvica še ni vklopljena (v Supabase je treba zagnati <code>supabase/ranked-tocke.sql</code>).</div>
       ) : rows == null ? (
@@ -2103,7 +2103,7 @@ function OverallLeaderboard({ userId, year }) {
         <div style={{ overflowX: "auto" }}>
           <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13.5 }}>
             <thead><tr style={{ color: "var(--ink2)", fontSize: 12, textAlign: "left" }}>
-              <th style={cell}>#</th><th style={cell}>Ime</th><th style={right}>Rank</th><th style={right}>Delov</th><th style={right}>Testov</th>
+              <th style={cell}>#</th><th style={cell}>Ime</th><th style={right}>ELO</th><th style={right}>Delov</th><th style={right}>Testov</th>
             </tr></thead>
             <tbody>
               {rows.map((r, k) => (
@@ -2276,7 +2276,7 @@ function QuizView({ route, go, record, userId, duel }) {
                 <b style={{ color: "var(--ink)" }}>{mixN} naključnih vprašanj</b> iz vseh kvizov tega dela ({pool.length} v naboru), <b style={{ color: "var(--ink)" }}>{fmtTime(RANKED_SECONDS)} časa</b>. {RANKED_FORMULAS.indexOf(subj.id) >= 0 ? "Med reševanjem ni razlag in slovarčka; formule so dovoljene (kot statistični priročnik na izpitu)." : "Med reševanjem ni razlag, slovarčka in formul (kot na izpitu brez pripomočkov)."} Razlage so v pregledu na koncu.
               </p>
               <p style={{ color: "var(--ink2)", fontSize: 13, margin: "0 0 18px" }}>
-                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Bruca do Dekana zahtevajo rank <b style={{ color: "var(--ink)" }}>in</b> formo v zadnjih 10 testih (Magister ≥ 75 %, Doktor ≥ 85 %, Profesor ≥ 90 % in ≤ 6 min, Dekan ≥ 95 % in ≤ 5 min); če forma pade, pade naziv, rank ostane. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
+                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). ELO: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih ELO pade, sicer zraste; ELO dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Bruca do Dekana zahtevajo ELO <b style={{ color: "var(--ink)" }}>in</b> formo v zadnjih 10 testih (Magister ≥ 75 %, Doktor ≥ 85 %, Profesor ≥ 90 % in ≤ 6 min, Dekan ≥ 95 % in ≤ 5 min); če forma pade, pade naziv, ELO ostane. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
               </p>
               <button onClick={() => begin(true)} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "13px 22px", display: "flex", alignItems: "center", gap: 8 }}>
                 <Trophy size={17} /> Začni ranked
@@ -2430,7 +2430,7 @@ function QuizView({ route, go, record, userId, duel }) {
           <Trophy size={34} color={good ? "var(--teal)" : "var(--terra)"} />
           <div className="ix-serif" style={{ fontSize: 46, fontWeight: 900, margin: "8px 0 2px" }}>{pct}%</div>
           <div className="ix-chip">{correctCount} / {questions.length} pravilnih · {deck.name}{ranked && <span> · čas {fmtTime(Math.min(RANKED_SECONDS, RANKED_SECONDS - left))}{left <= 0 ? " · čas je potekel" : ""}</span>}</div>
-          {ranked && lastRun && <div style={{ marginTop: 10, fontSize: 15 }}><b>{lastRun.points} točk</b> · rank <b style={{ color: lastRun.delta >= 0 ? "var(--teal)" : "var(--terra)" }}>{lastRun.delta >= 0 ? "+" : ""}{lastRun.delta}</b></div>}
+          {ranked && lastRun && <div style={{ marginTop: 10, fontSize: 15 }}><b>{lastRun.points} točk</b> · ELO <b style={{ color: lastRun.delta >= 0 ? "var(--teal)" : "var(--terra)" }}>{lastRun.delta >= 0 ? "+" : ""}{lastRun.delta}</b></div>}
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 20, flexWrap: "wrap" }}>
             <button onClick={restart} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "11px 18px", display: "flex", alignItems: "center", gap: 7 }}>
               <RotateCcw size={16} /> Ponovi
