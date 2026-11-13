@@ -50,7 +50,7 @@ const serifBars = (s) => (typeof s === "string" ? s.replace(/ȳ/g, "y\u0305").re
    Točke na vprašanje: pravilen odgovor 100 + do 50 za hitrost (linearno v okviru RANKED_Q_SECONDS), napačen 0.
    Sprememba ranka na test: 20 · (pravilni − polovica) + bonus/10; rank dela = vsota (ne pod 0), nazivi po pragih. */
 const RANKED_Q_SECONDS = 60;
-const RANKED_RANKS = [["Bruc", 0], ["Študent", 100], ["Absolvent", 250], ["Diplomant", 450], ["Magister", 700], ["Doktor", 1000], ["Profesor", 1400], ["Dekan", 1900]];   // nazivi po ranku dela (en test prinese največ +150)
+const RANKED_RANKS = [["Bruc", 0], ["Študent", 300], ["Absolvent", 700], ["Diplomant", 1200], ["Magister", 1800], ["Doktor", 2600], ["Profesor", 3500], ["Dekan", 4500]];   // nazivi po ranku dela: odličen test (10/10 v 5 min) = +125, največ +150; 5 odličnih = Študent, Dekan ~35 odličnih
 const rankedQPoints = (ok, sec) => (ok ? 100 + Math.round(50 * Math.max(0, 1 - sec / RANKED_Q_SECONDS)) : 0);
 const rankedEstPoints = (r) => (r.points != null ? r.points : r.correct * 100 + Math.round(r.correct * 50 * Math.max(0, 1 - r.seconds / (RANKED_Q_SECONDS * r.total))));
 const rankedDelta = (correct, total, points) => Math.round(20 * (correct - total / 2)) + Math.floor((points - 100 * correct) / 10);
