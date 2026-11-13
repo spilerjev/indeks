@@ -3,10 +3,20 @@
    rešitve so preverjene z izpisi (reziduali, se, df, enostranske p-vrednosti). */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
-const SMUC = 'Smučišča (n = 20): CENA vozovnice (odvisna) v odvisnosti od PROGE (km), VIŠINA (m), ZMOGLJIVOST (tisoč smučarjev/h), metoda Forward. Korelacije s CENO: PROGE 0,916, VIŠINA 0,467 (Sig. 1-tailed 0,019), ZMOGLJIVOST 0,903. Model 2 (PROGE + ZMOGLJIVOST): ANOVA regresija 581,84, residual 79,11, skupaj 660,95; F = 62,5; koeficienti: konstanta 6,538, PROGE 0,357 (t = 3,018, Sig. 0,008), ZMOGLJIVOST 0,443 (t = 2,421, Sig. 0,027).';
-const BUS = 'Potniki na 10 postajah (v 1000) decembra in junija, preizkus dvojic: povprečje december 26,10, junij 23,00; sd razlik 5,238; 95 % interval razlike −0,647 do 6,847; t = 1,872; Sig. (2-tailed) 0,094.';
-const GORIVO = 'Poraba goriva na prebivalca (PORABAPC) v 35 ameriških državah, Forward: model 1 (DOVOL) R = 0,693, R² = 0,480, F = 30,51; model 2 (DOVOL + DOHPC) R = 0,831, R² = 0,691, R² change 0,210, std. error 54,498; ANOVA model 2: Mean Square regresija 106.211,3, residual 2.970,1.';
-const AVTOBUSI = 'Iztrošenost avtobusov v dveh podjetjih (po 11 avtobusov): povprečje 153,45 proti 94,91; Levenov test F = 1,325, Sig. 0,263; t = 1,759, df = 20, Sig. (2-tailed) 0,094.';
+const tbl = require('./tbl');
+const SMUC = 'Smučišča (n = 20): odvisna spremenljivka CENA vozovnice (€), pojasnjevalne PROGE (skupna dolžina prog, km), VIŠINA (nadmorska višina, m) in ZMOGLJIVOST (tisoč smučarjev/h); multipla regresija, metoda Forward. SPSS izpis je v tabelah.';
+const G_SMUC = tbl('Correlations (Pearson, s spremenljivko CENA)', ['Spremenljivka', 'r s CENO', 'Sig. (1-tailed)'], [['PROGE', '0,916', '0,000'], ['VIŠINA', '<b>?</b>', '0,019'], ['ZMOGLJIVOST', '0,903', '0,000']], 'Vrednost korelacije VIŠINA–CENA v izpisu manjka (vprašanje).')
+  + tbl('ANOVA - Model 2 (PROGE, ZMOGLJIVOST)', ['', 'Sum of Squares', 'df', 'Mean Square', 'F', 'Sig.'], [['Regression', '581,84', 2, '290,92', '62,5', '0,000'], ['Residual', '79,11', 17, '4,65', '', ''], ['Total', '660,95', 19, '', '', '']])
+  + tbl('Coefficients - Model 2', ['', 'B', 't', 'Sig. (2-tailed)'], [['(Constant)', '6,538', '', ''], ['PROGE', '0,357', '3,018', '0,008'], ['ZMOGLJIVOST', '0,443', '2,421', '0,027']]);
+const BUS = 'Potniki na 10 avtobusnih postajah (v tisoč) decembra in junija; preizkus dvojic (Paired Samples). Izpis je v tabelah.';
+const G_BUS = tbl('Paired Samples Statistics', ['', 'Mean', 'N'], [['DECEMBER', '26,10', 10], ['JUNIJ', '23,00', 10]])
+  + tbl('Paired Samples Test (DECEMBER − JUNIJ)', ['Mean', 'Std. Deviation', 'Std. Error Mean', '95 % CI Lower', '95 % CI Upper', 't', 'df', 'Sig. (2-tailed)'], [['<b>?</b>', '5,238', '<b>?</b>', '−0,647', '6,847', '1,872', 9, '0,094']], 'Dve vrednosti v izpisu manjkata (vprašanji).');
+const GORIVO = 'Poraba goriva na prebivalca (PORABAPC, galone) v 35 ameriških državah; pojasnjevalne spremenljivke DOVOL (delež voznikov), DOHPC (dohodek na prebivalca) in DAVEK; multipla regresija, metoda Forward. Izpis je v tabelah.';
+const G_GORIVO = tbl('Model Summary', ['Model', 'Spremenljivke', 'R', 'R Square', 'Std. Error', 'R Square Change', 'F Change'], [[1, 'DOVOL', '0,693', '0,480', '', '0,480', '30,51'], [2, 'DOVOL, DOHPC', '0,831', '0,691', '54,498', '0,210', '']])
+  + tbl('ANOVA', ['Model', '', 'df', 'Mean Square', 'F', 'Sig.'], [[1, 'Regression', 1, '147.702,9', '30,51', '0,000'], ['', 'Residual', 33, '4.841,3', '', ''], [2, 'Regression', 2, '106.211,3', '35,76', '0,000'], ['', 'Residual', 32, '2.970,1', '', '']], 'DAVEK v model ni bil vključen (Excluded Variables).');
+const AVTOBUSI = 'Iztrošenost avtobusov v dveh podjetjih (po 11 avtobusov); preizkus za dva neodvisna vzorca (Independent Samples). Izpis je v tabelah.';
+const G_AVTOBUSI = tbl('Group Statistics', ['Podjetje', 'N', 'Mean'], [['1', 11, '153,45'], ['2', 11, '94,91']])
+  + tbl('Independent Samples Test', ['Levene F', 'Levene Sig.', 't', 'df', 'Sig. (2-tailed)'], [['1,325', '0,263', '1,759', 20, '0,094']]);
 
 module.exports = [
   Q('(2. PP 2019) ' + SMUC + ' V tabeli Correlations manjka korelacija VIŠINA-CENA. Kolikšna je in kaj pomeni?', [
@@ -127,3 +137,4 @@ module.exports = [
     'Vrednost Levenovega testa je vedno pozitivna'], 0,
     'Razmerje varianc je klasični F-preizkus; Levenov test temelji na absolutnih odklonih od sredin in je manj občutljiv na nenormalnost.'),
 ];
+module.exports.forEach((q) => { if (q.q.includes(SMUC)) q.given = G_SMUC; else if (q.q.includes(BUS)) q.given = G_BUS; else if (q.q.includes(GORIVO)) q.given = G_GORIVO; else if (q.q.includes(AVTOBUSI)) q.given = G_AVTOBUSI; });

@@ -3,8 +3,14 @@
    napačno prepisal frekvence (pravilno n = 20). Vprašanja, ki so že v kvizu "Iz starih kolokvijev", so izpuščena. */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
-const IZPIS_2019 = 'Računalniški izpis (čas priprave v urah): od 0 do pod 4 → 7 študentov, od 4 do pod 8 → 6, od 8 do pod 12 → 4, od 12 do pod 16 → 3 (skupaj 20); varianca 18,989.';
-const IZPIS_2010 = 'Računalniški izpis (število zaposlenih z EF, n = 100): 1-5 → 12, 6-10 → 15, 11-15 → 15, 16-20 → 32, 21-25 → 18, 26-30 → 8; povprečje 15,65, mediana 16,30, standardni odklon 7,298.';
+const tbl = require('./tbl');
+const IZPIS_2019 = 'Čas priprave 20 študentov na izpit (v urah) - frekvenčna porazdelitev in varianca sta v računalniškem izpisu (tabela).';
+const G_2019 = tbl('Čas priprave (ure)', ['Razred', 'Št. študentov', '%'], [['od 0 do pod 4', 7, '35,0'], ['od 4 do pod 8', 6, '30,0'], ['od 8 do pod 12', 4, '20,0'], ['od 12 do pod 16', 3, '15,0'], ['<b>Skupaj</b>', '<b>20</b>', '<b>100,0</b>']], 'Varianca (vzorčna ocena): 18,989. Povprečje v izpisu ni navedeno.');
+const IZPIS_2010 = 'Število zaposlenih z diplomo EF v 100 podjetjih - frekvenčna porazdelitev in opisne statistike so v računalniškem izpisu (tabeli).';
+const G_2010 = tbl('Število zaposlenih z EF (n = 100)', ['Razred', 'Frekvenca', '%', 'Kumulativni %'], [['1–5', 12, 12, 12], ['6–10', 15, 15, 27], ['11–15', 15, 15, 42], ['16–20', 32, 32, 74], ['21–25', 18, 18, 92], ['26–30', 8, 8, 100], ['<b>Skupaj</b>', '<b>100</b>', '<b>100</b>', '']])
+  + tbl('Statistics', ['N', 'Mean', 'Median', 'Std. Deviation'], [[100, '15,65', '16,30', '7,298']]);
+const G_GLED = tbl('Crosstabulation: nogomet (gleda tekme) × spol', ['nogomet', '', 'Moški', 'Ženske', 'Total'],
+  [['DA', 'Count', 60, 40, 100], ['', '% within nogomet', '60,0 %', '40,0 %', '100 %'], ['NE', 'Count', 30, 50, 80], ['', '% within nogomet', '37,5 %', '62,5 %', '100 %'], ['<b>Total</b>', 'Count', 90, 90, 180], ['', '% within nogomet', '50,0 %', '50,0 %', '100 %']]);
 
 module.exports = [
   Q('(Preizkušnja 2019) Občina želi oceniti delež izmed 2000 avtomobilov z ustrezno zimsko opremo. Predvidevajo okoli 70 %. Ocena naj od predvidene vrednosti ne odstopa za več kot 10 %, α = 5 %, vzorec brez ponavljanja. Koliko avtomobilov naj izberejo?', [
@@ -52,7 +58,7 @@ module.exports = [
   Q('(Preizkušnja 2019) ' + IZPIS_2019 + ' Čas je normalno porazdeljen, vzorec je majhen glede na populacijo. Interval zaupanja za povprečni čas pri α = 1 %?', [
     '4,1 < μ < 9,1', '4,7 < μ < 8,5', '4 < μ < 8', 'Ocene ni mogoče podati'], 0,
     'ȳ iz razredov: (2·7 + 6·6 + 10·4 + 14·3)/20 = 6,6 ure; s = √18,989 = 4,36; se = 4,36/√20 = 0,974; 6,6 ± 2,58 · 0,974 → 4,1 do 9,1. Povprečje ni izpisano, a ga izračunamo iz sredin razredov.'),
-  Q('(Zgled 2010) 180 gledalcev: Moški DA 60, NE 30; Ženske DA 40, NE 50. Izpis kaže "% within nogomet" (nogomet v vrsticah, spol v stolpcih). Kaj drži?', [
+  Q('(Zgled 2010) 180 gledalcev nogometnih tekem: v tabeli Crosstabs je spremenljivka nogomet (ali gleda tekme) v vrsticah (čelo tabele), spol v stolpcih (glava tabele); izračunani so odstotki "% within nogomet". Kaj drži?', [
     'Izračunali smo strukturo po spremenljivki, ki je v glavi tabele', 'Izračunali smo strukturo po obeh spremenljivkah hkrati', 'Mediana za spremenljivko spol je 50 %', 'Med moškimi je 60 % takih, ki gledajo tekme'], 0,
     'Odstotki "within nogomet" v vsaki vrstici razdelijo enote po spolu (glava tabele). Med moškimi gleda 60/90 = 66,7 %; spol je imenska, zato mediana ne obstaja.'),
   Q('(Zgled 2010) Na tekmah reprezentance: nekateri na nobeni, rekorder na 45, porazdelitev izrazito asimetrična v desno. Kaj drži?', [
@@ -68,3 +74,4 @@ module.exports = [
     'α pove verjetnost, da prava vrednost leži znotraj izračunanega intervala', 'Če znižamo α, se poveča vrednost standardizirane spremenljivke', 'Če vzorec povečamo na 4-kratnik, se standardna napaka razpolovi', 'Če zvišamo α, se poveča delež vzorcev z napačnim sklepom'], 0,
     'α je delež vzorcev, pri katerih interval NE zajame prave vrednosti (verjetnost, da je zunaj). Za en izračunan interval ne vemo, ali zajame parameter.'),
 ];
+module.exports.forEach((q) => { if (q.q.includes(IZPIS_2019)) q.given = G_2019; else if (q.q.includes(IZPIS_2010)) q.given = G_2010; else if (q.q.startsWith('(Zgled 2010) 180 gledalcev')) q.given = G_GLED; });

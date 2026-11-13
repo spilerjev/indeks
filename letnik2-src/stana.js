@@ -170,12 +170,14 @@ const racOpisna = [
     '18 · (50 − 40,2)² = 18 · 96,04 = 1728,72.'),
   Q('Razred "nad 40,5 do 60,5" ima meje 40,5 in 60,5. Koliko je sredina razreda?', ['50,5', '50', '40,5', '60,5'], 0,
     'yₖ = (40,5 + 60,5)/2 = 50,5.'),
-  Q('Fₖ° do 2. razreda je 0,804, do 3. razreda 0,957. V katerem razredu je 9. decil?', ['V 2. razredu', 'V 3. razredu', 'V 4. razredu', 'Med 2. in 3.'], 1,
-    'Ker F₂° = 0,804 < 0,90 ≤ F₃° = 0,957, leži D₉ v 3. razredu.'),
+  { ...Q('Letni neto prejemki 46 zaposlenih (v tisoč €) so razvrščeni v pet razredov; frekvence in kumulativne relativne frekvence Fₖ° so v tabeli. V katerem razredu je 9. decil (D₉)?', ['V 2. razredu', 'V 3. razredu', 'V 4. razredu', 'Med 2. in 3.'], 1,
+    'D₉ je vrednost, pod katero je 90 % enot. Ker F₂° = 0,804 < 0,90 ≤ F₃° = 0,957, leži D₉ v 3. razredu (41–60 tisoč €).'),
+    given: require('./tbl')('Letni neto prejemki (tisoč €), n = 46', ['Razred', 'fₖ', 'Fₖ', 'Fₖ°'], [['1–20', 7, 7, '0,152'], ['21–40', 30, 37, '0,804'], ['41–60', 7, 44, '0,957'], ['61–80', 1, 45, '0,978'], ['81–100', 1, 46, '1,000']]) },
   Q('Čas učenja (ure na teden): R izpis mean = 6,80, sd = 4,42. Kolikšna je ocena koeficienta variacije KV = sd/mean?', ['0,650', '4,42', '0,634', '1,54'], 0,
     'kv = 4,42 / 6,80 = 0,650.'),
-  Q('Frekvenčna tabela časa učenja (n = 20): razred "od 0 do pod 4" ima 7 študentov (35 %). Koliko se jih je učilo vsaj 4 ure?', ['65 % študentov', '35 % študentov', '7 študentov', '25 % študentov'], 0,
+  { ...Q('Čas učenja 20 študentov (ure na teden) je razvrščen v razrede (tabela). Kolikšen delež študentov se je učil vsaj 4 ure?', ['65 % študentov', '35 % študentov', '7 študentov', '25 % študentov'], 0,
     'Vsaj 4 ure = vsi razen 1. razreda: 100 % − 35 % = 65 % (13 študentov).'),
+    given: require('./tbl')('Čas učenja (ure na teden), n = 20', ['Razred', 'Št. študentov', '%'], [['od 0 do pod 4', 7, '35,0'], ['od 4 do pod 8', 6, '30,0'], ['od 8 do pod 12', 4, '20,0'], ['od 12 do pod 16', 3, '15,0'], ['<b>Skupaj</b>', '<b>20</b>', '<b>100,0</b>']]) },
 ];
 racOpisna.forEach((q) => { q.calc = true; });
 
