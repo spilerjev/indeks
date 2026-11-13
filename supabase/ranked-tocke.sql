@@ -105,3 +105,35 @@ as $$
 $$;
 revoke all on function public.ranked_overall_leaderboard() from public, anon;
 grant execute on function public.ranked_overall_leaderboard() to authenticated;
+
+-- 5) skupna lestvica LETNIKA: vsota rankov delov, katerih semester (prvi del part_key, npr. s1, s2, y2s1) je v p_sems
+create or replace function public.ranked_year_leaderboard(p_sems text[])
+returns table (user_id uuid, name text, parts bigint, runs bigint, rating int, is_me boolean)
+language sql
+security definer
+set search_path = public
+as $$
+  with per as (
+    select x.user_id, x.part_key, count(*) as n,
+           greatest(0, sum(public.ranked_delta(x.correct, x.total, x.seconds, x.points)))::int as rt
+    from public.ranked_results x
+    where split_part(x.part_key, '/', 1) = any(p_sems)
+    group by x.user_id, x.part_key
+    having count(*) >= 5
+  )
+  select per.user_id,
+         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''),
+                  nullif(trim((select u.raw_user_meta_data->>'username' from auth.users u where u.id = per.user_id)), ''),
+                  left(split_part(coalesce(p.email, ''), '@', 1), 3) || '***') as name,
+         count(*) as parts,
+         sum(per.n) as runs,
+         sum(per.rt)::int as rating,
+         (per.user_id = auth.uid()) as is_me
+  from per
+  left join public.profiles p on p.id = per.user_id
+  group by per.user_id, p.username, p.nickname, p.email
+  order by rating desc, runs desc
+  limit 100;
+$$;
+revoke all on function public.ranked_year_leaderboard(text[]) from public, anon;
+grant execute on function public.ranked_year_leaderboard(text[]) to authenticated;

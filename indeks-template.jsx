@@ -50,7 +50,7 @@ const serifBars = (s) => (typeof s === "string" ? s.replace(/ȳ/g, "y\u0305").re
    Točke na vprašanje: pravilen odgovor 100 + do 50 za hitrost (linearno v okviru RANKED_Q_SECONDS), napačen 0.
    Sprememba ranka na test: 20 · (pravilni − polovica) + bonus/10; rank dela = vsota (ne pod 0), nazivi po pragih. */
 const RANKED_Q_SECONDS = 60;
-const RANKED_RANKS = [["Bruc", 0], ["Študent", 150], ["Absolvent", 350], ["Diplomant", 600], ["Magister", 900], ["Doktor", 1300], ["Docent", 1800], ["Profesor", 2400], ["Dekan", 3200], ["Rektor", 4200]];
+const RANKED_RANKS = [["Bruc", 0], ["Študent", 100], ["Absolvent", 250], ["Diplomant", 450], ["Magister", 700], ["Doktor", 1000], ["Profesor", 1400], ["Dekan", 1900]];   // nazivi po ranku dela (en test prinese največ +150)
 const rankedQPoints = (ok, sec) => (ok ? 100 + Math.round(50 * Math.max(0, 1 - sec / RANKED_Q_SECONDS)) : 0);
 const rankedEstPoints = (r) => (r.points != null ? r.points : r.correct * 100 + Math.round(r.correct * 50 * Math.max(0, 1 - r.seconds / (RANKED_Q_SECONDS * r.total))));
 const rankedDelta = (correct, total, points) => Math.round(20 * (correct - total / 2)) + Math.floor((points - 100 * correct) / 10);
@@ -2054,16 +2054,17 @@ function WrongReview({ wrong }) {
 
 /* duel (1v1): ista vprašanja kot nasprotnik (duel.questions), čas po strežniku (duel.left), napredek sporoča DuelView;
    sicer kot ranked (brez razlag/slovarčka). Zaključni zaslon riše DuelView. */
-/* Skupna ranked lestvica: vsota rankov vseh delov z vsaj RANKED_MIN_RUNS testi (rpc ranked_overall_leaderboard, supabase/ranked-tocke.sql). */
-function OverallLeaderboard({ userId }) {
+/* Skupna ranked lestvica letnika: vsota rankov vseh delov tega letnika z vsaj RANKED_MIN_RUNS testi (rpc ranked_year_leaderboard, supabase/ranked-tocke.sql). */
+function OverallLeaderboard({ userId, year }) {
   const [rows, setRows] = useState(null);
   const [err, setErr] = useState(null);
+  const sems = DATA.filter((sm) => sm.year === year).map((sm) => sm.id);
   useEffect(() => {
     if (!userId) return;
     let cancelled = false;
-    supabase.rpc("ranked_overall_leaderboard").then(({ data, error }) => { if (cancelled) return; if (error) { setErr(error.message); setRows(null); } else { setErr(null); setRows(data || []); } });
+    supabase.rpc("ranked_year_leaderboard", { p_sems: sems }).then(({ data, error }) => { if (cancelled) return; if (error) { setErr(error.message); setRows(null); } else { setErr(null); setRows(data || []); } });
     return () => { cancelled = true; };
-  }, [userId]);
+  }, [userId, year]); // eslint-disable-line
   if (!userId) return null;
   const myRank = rows ? rows.findIndex((r) => r.is_me) : -1;
   const me = myRank >= 0 ? rows[myRank] : null;
@@ -2071,10 +2072,10 @@ function OverallLeaderboard({ userId }) {
   return (
     <div className="ix-card" style={{ padding: 18, marginBottom: 18 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
-        <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Skupna ranked lestvica</div>
+        <div className="ix-serif" style={{ fontWeight: 900, fontSize: 17, display: "flex", alignItems: "center", gap: 8 }}><Trophy size={16} color="var(--teal)" /> Skupna ranked lestvica · {year}. letnik</div>
         <div className="ix-chip">{me ? `ti: ${myRank + 1}. mesto · ${me.rating} rank · ${me.parts} ${me.parts === 1 ? "del" : me.parts === 2 ? "dela" : "delov"}` : rows ? `ti: še brez dela s ${RANKED_MIN_RUNS} rešenimi testi` : ""}</div>
       </div>
-      <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Vsota rankov vseh delov (vseh letnikov), v katerih imaš vsaj {RANKED_MIN_RUNS} ranked testov. Več delov in več reševanja pomeni višji rank.</div>
+      <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Vsota rankov vseh delov {year}. letnika, v katerih imaš vsaj {RANKED_MIN_RUNS} ranked testov. Več delov in več reševanja pomeni višji rank.</div>
       {err ? (
         <div style={{ fontSize: 13, color: "var(--ink2)" }}>Skupna lestvica še ni vklopljena (v Supabase je treba zagnati <code>supabase/ranked-tocke.sql</code>).</div>
       ) : rows == null ? (
@@ -2258,7 +2259,7 @@ function QuizView({ route, go, record, userId, duel }) {
                 <b style={{ color: "var(--ink)" }}>{mixN} naključnih vprašanj</b> iz vseh kvizov tega dela ({pool.length} v naboru), <b style={{ color: "var(--ink)" }}>{fmtTime(RANKED_SECONDS)} časa</b>. {RANKED_FORMULAS.indexOf(subj.id) >= 0 ? "Med reševanjem ni razlag in slovarčka; formule so dovoljene (kot statistični priročnik na izpitu)." : "Med reševanjem ni razlag, slovarčka in formul (kot na izpitu brez pripomočkov)."} Razlage so v pregledu na koncu.
               </p>
               <p style={{ color: "var(--ink2)", fontSize: 13, margin: "0 0 18px" }}>
-                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Bruca do Rektorja. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
+                Točke: pravilen odgovor <b style={{ color: "var(--ink)" }}>100</b> + do <b style={{ color: "var(--ink)" }}>50</b> za hitrost (v {RANKED_Q_SECONDS} s). Rank: vsak test prinese <b style={{ color: "var(--ink)" }}>20 · (pravilni − {RANKED_N / 2}) + bonus/10</b>, torej pri manj kot polovici pravilnih rank pade, sicer zraste; rank dela je vsota vseh tvojih testov in nikoli ne pade pod 0. Nazivi od Bruca do Dekana. Na lestvico se uvrstiš po <b style={{ color: "var(--ink)" }}>{RANKED_MIN_RUNS} rešenih</b>. Ob izteku časa neodgovorjena vprašanja štejejo kot napačna. Prekinjen test se ne šteje.
               </p>
               <button onClick={() => begin(true)} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "13px 22px", display: "flex", alignItems: "center", gap: 8 }}>
                 <Trophy size={17} /> Začni ranked
@@ -4094,7 +4095,7 @@ function OverallStatsView({ stats, go, year, comm, userId }) {
         <h1 className="ix-serif" style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Skupna statistika · {year}. letnik</h1>
       </div>
 
-      <OverallLeaderboard userId={userId} />
+      <OverallLeaderboard userId={userId} year={year} />
 
       <div style={{ display: "flex", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
         <Stat big={agg.overallAvg + "%"} label="povprečje vsega" />
