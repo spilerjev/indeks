@@ -656,7 +656,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-formname{font-size:12.5px;color:var(--ink2);font-weight:600;}
 .ix-formf{margin-top:2px;font-family:'Spline Sans',system-ui,sans-serif;font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.45;word-break:break-word;}
 .ix-formd{margin-top:2px;font-size:12px;color:var(--ink2);line-height:1.4;}
-@media (max-width:760px){.ix-formpanel{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:58vh;}.ix-root .ix-formbtn{right:12px;bottom:12px;}}
+@media (max-width:760px){.ix-root .ix-formpanel{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:58vh;}.ix-root .ix-formbtn{right:12px;bottom:12px;}}
 .ix-serif{font-family:'Fraunces',Georgia,serif;}
 .ix-fade{opacity:0;transform:translateY(10px);animation:ixIn .5s cubic-bezier(.2,.7,.2,1) forwards;}
 @keyframes ixIn{to{opacity:1;transform:none;}}
@@ -700,7 +700,19 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-sub-chip{font-size:12.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink2);cursor:pointer;text-align:left;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .ix-sub-chip:hover{border-color:var(--ink);color:var(--ink);}
 .ix-sub-chip.bm{border-color:var(--teal);color:var(--teal);}
-.ix-float-toc{position:fixed;left:14px;bottom:18px;z-index:40;display:flex;align-items:center;gap:6px;padding:9px 13px;border-radius:999px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;font:600 13px/1 inherit;box-shadow:0 6px 18px rgba(0,0,0,.18);}
+.ix-root .ix-tocbtn{position:fixed;left:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:7px;padding:10px 15px;border-radius:999px;border:1px solid var(--line);background:var(--ink);color:var(--paper);font-weight:700;font-size:13.5px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.22);}
+.ix-root .ix-tocpanel{left:14px;right:auto;}
+.ix-tocrow{width:100%;text-align:left;background:none;border:none;border-bottom:1px dashed var(--line);padding:8px 4px;cursor:pointer;display:flex;align-items:center;gap:9px;color:var(--ink);font:inherit;font-size:13.5px;line-height:1.3;}
+.ix-tocrow:hover{background:var(--paper);}
+.ix-tocrow.sub{padding-left:38px;font-size:12.5px;color:var(--ink2);border-bottom:none;padding-top:4px;padding-bottom:4px;}
+.ix-tocrow.sub:hover{color:var(--ink);}
+.ix-tocrow .ix-toc-n{min-width:22px;height:22px;border-radius:7px;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--ink2);flex-shrink:0;}
+.ix-tocrow.on .ix-toc-n{background:var(--terra);color:#fff;border-color:var(--terra);}
+.ix-tocrow .ix-toc-cnt{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:700;color:var(--ink2);}
+.ix-tocrow .ix-toc-cnt.hit{color:var(--terra);}
+.ix-mark{background:rgba(255,196,60,.55);color:inherit;border-radius:3px;padding:0 1px;}
+.ix-dark .ix-mark{background:rgba(255,196,60,.32);}
+@media (max-width:760px){.ix-root .ix-tocpanel{left:8px;right:8px;}.ix-root .ix-tocbtn{left:12px;bottom:12px;}}
 .ix-notes h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin:0 0 8px;}
 .ix-notes .note-card{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--terra);border-radius:12px;padding:14px 16px;margin:12px 0;}
 .ix-notes ul{margin:6px 0;padding-left:20px;}
@@ -1428,7 +1440,7 @@ export default function App() {
             {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} soc={soc} />}
             {route.view === "profile" && <ProfileView user={session.user} soc={soc} socErr={socErr} reload={reloadSocial} go={setRoute} />}
             {route.view === "duel" && <GlossCtx.Provider value={false}><DuelView route={route} go={setRoute} userId={userId} formulas={formulas} soc={soc} setNavGuard={setNavGuard} /></GlossCtx.Provider>}
-            {route.view === "notes" && <NotesView route={route} go={setRoute} />}
+            {route.view === "notes" && <NotesView route={route} go={setRoute} user={session && session.user} />}
             {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView route={route} go={setRoute} record={record} userId={userId || null} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
             {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
@@ -4199,9 +4211,18 @@ function wrapTables(html) {
   return html.replace(/<table[\s\S]*?<\/table>/g, (m, off) => (/<div class="tbl">\s*$/.test(html.slice(Math.max(0, off - 40), off)) ? m : '<div class="tbl">' + m + "</div>"));
 }
 
-/* Zapiski: razdeljeni po predavanjih (vsak <h2> je razdelek), s kazalom, zložljivimi razdelki, skoki na podteme (<h3>)
-   in zaznamkom. Zaznamek se shrani v brskalnik (READ_KEY): samodejno (zadnje mesto, mimo katerega si drsel) ali ročno (pripni). */
+/* Zapiski: razdeljeni po predavanjih (vsak <h2> je razdelek). Kazalo je plavajoča plošča (gumb spodaj levo, dostopna
+   med drsenjem) z iskanjem po vsem besedilu; zadetki se v odprtih razdelkih označijo. Zaznamek (zadnje prebrano mesto)
+   se shrani v brskalnik (READ_KEY) in na račun (user_metadata.readpos), zato velja na vseh napravah. */
 const notesLabel = (t) => t.replace(/<[^>]+>/g, "").replace(/\s*\([^()]*\.(pdf|docx|md|html|xlsx|key|pptx)[^()]*\)/gi, "").replace(/\s+/g, " ").trim();
+const stripTags = (h) => (h || "").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ");
+const escRe = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const countHits = (text, q) => (q ? (text.match(new RegExp(escRe(q), "gi")) || []).length : 0);
+function highlightHtml(html, q) {
+  if (!q) return html;
+  const re = new RegExp(escRe(q), "gi");
+  return html.split(/(<[^>]+>)/).map((p) => (p.startsWith("<") ? p : p.replace(re, (m) => '<mark class="ix-mark">' + m + "</mark>"))).join("");
+}
 function splitNotes(html) {
   const secs = [];
   const chunks = (html || "").split(/(?=<h2[\s>])/);
@@ -4213,37 +4234,79 @@ function splitNotes(html) {
     let k = 0;
     body = body.replace(/<h3([^>]*)>([\s\S]*?)<\/h3>/g, (mm, attrs, t) => { const id = "nsec" + idx + "-h" + (k++); subs.push({ id, title: notesLabel(t) }); return "<h3" + attrs + ' id="' + id + '">' + t + "</h3>"; });
     const title = m ? m[1] : "Uvod";
-    secs.push({ id: "nsec" + idx, title, label: notesLabel(title), body: wrapTables(body), subs });
+    const label = notesLabel(title);
+    secs.push({ id: "nsec" + idx, title, label, body: wrapTables(body), subs, text: (label + " " + stripTags(body)).toLowerCase() });
   });
   return secs;
 }
 function loadReadPos(key) { const all = store.get(READ_KEY, {}); return all[key] || null; }
-function saveReadPos(key, pos) { const all = store.get(READ_KEY, {}); if (pos) all[key] = { ...pos, t: Date.now() }; else delete all[key]; store.set(READ_KEY, all); }
-function scrollToEl(id) { const el = document.getElementById(id); if (!el) return; const y = el.getBoundingClientRect().top + window.scrollY - 14; window.scrollTo({ top: y, behavior: "smooth" }); }
+function mergeReadPos(a, b) { const out = { ...(a || {}) }; Object.keys(b || {}).forEach((k) => { if (!out[k] || (b[k].t || 0) > (out[k].t || 0)) out[k] = b[k]; }); return out; }
+let readPosTimer = null;
+function pushReadPos(user) {
+  if (!user) return;
+  if (readPosTimer) clearTimeout(readPosTimer);
+  readPosTimer = setTimeout(() => {
+    const all = store.get(READ_KEY, {});
+    const keys = Object.keys(all).sort((x, y) => (all[y].t || 0) - (all[x].t || 0)).slice(0, 40);
+    const trimmed = {}; keys.forEach((k) => { trimmed[k] = all[k]; });
+    supabase.auth.updateUser({ data: { readpos: trimmed } }).then(({ error }) => { if (error) console.warn("indeks zaznamek: " + error.message); });
+  }, 1500);
+}
+function saveReadPos(key, pos, user) { const all = store.get(READ_KEY, {}); if (pos) all[key] = { ...pos, t: Date.now() }; else all[key] = { cleared: true, t: Date.now() }; store.set(READ_KEY, all); pushReadPos(user); }
+function scrollToEl(idOrEl) { const el = typeof idOrEl === "string" ? document.getElementById(idOrEl) : idOrEl; if (!el) return; const y = el.getBoundingClientRect().top + window.scrollY - 14; window.scrollTo({ top: y, behavior: "smooth" }); }
+const isNarrow = () => window.innerWidth <= 760;
 
-function NotesView({ route, go }) {
+function NotesView({ route, go, user }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const part = subj.parts.find((p) => p.id === route.part);
   const key = `${sem.id}/${subj.id}/${part.id}`;
   const secs = useMemo(() => splitNotes(part.notes), [part]);
-  const [bm, setBm] = useState(() => loadReadPos(key));
-  const bmSec = bm ? (secs.find((x) => x.id === bm.sec && x.label === bm.label) || secs.find((x) => x.label === bm.label) || null) : null;
+  const validBm = (b) => (b && !b.cleared ? b : null);
+  const [bm, setBm] = useState(() => validBm(loadReadPos(key)));
+  const findSec = (b) => (b ? (secs.find((x) => x.id === b.sec && x.label === b.label) || secs.find((x) => x.label === b.label) || null) : null);
+  const bmSec = findSec(bm);
   const [open, setOpen] = useState(() => new Set(bmSec ? [bmSec.id] : secs.length ? [secs[Math.min(1, secs.length - 1)].id] : []));
-  const [showFloat, setShowFloat] = useState(false);
+  const [panel, setPanel] = useState(false);
+  const [q, setQ] = useState("");
   const manual = useRef(false);
+  const ql = q.trim().length >= 2 ? q.trim() : "";
+  const hits = useMemo(() => (ql ? secs.map((sec) => countHits(sec.text, ql.toLowerCase())) : null), [secs, ql]);
+
+  // zaznamek z računa (druga naprava): novejši zapis zmaga
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    supabase.auth.getUser().then(({ data }) => {
+      if (cancelled) return;
+      const cloud = data && data.user && data.user.user_metadata && data.user.user_metadata.readpos;
+      if (!cloud) return;
+      const merged = mergeReadPos(store.get(READ_KEY, {}), cloud);
+      store.set(READ_KEY, merged);
+      const mine = validBm(merged[key]);
+      if (mine && (!bm || (mine.t || 0) > (bm.t || 0))) { setBm(mine); const sec = findSec(mine); if (sec) setOpen((o) => new Set([...o, sec.id])); }
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [user && user.id, key]); // eslint-disable-line
+
   const toggle = (id) => setOpen((o) => { const n = new Set(o); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   const openAll = () => setOpen(new Set(secs.map((x) => x.id)));
   const closeAll = () => setOpen(new Set());
-  const jumpTo = (secId, subId) => { setOpen((o) => new Set([...o, secId])); setTimeout(() => scrollToEl(subId || "hd-" + secId), 60); };
-  const pin = (sec, sub) => { const pos = { sec: sec.id, label: sec.label, sub: sub ? sub.id : null, subTitle: sub ? sub.title : null, manual: true }; saveReadPos(key, pos); setBm({ ...pos, t: Date.now() }); manual.current = true; };
-  const clearBm = () => { saveReadPos(key, null); setBm(null); manual.current = false; };
+  const jumpTo = (secId, subId, toHit) => {
+    setOpen((o) => new Set([...o, secId]));
+    if (isNarrow()) setPanel(false);
+    setTimeout(() => {
+      if (toHit) { const mk = document.querySelector("#hd-" + secId + " .ix-mark"); if (mk) { scrollToEl(mk); return; } }
+      scrollToEl(subId || "hd-" + secId);
+    }, 60);
+  };
+  const pin = (sec, sub) => { const pos = { sec: sec.id, label: sec.label, sub: sub ? sub.id : null, subTitle: sub ? sub.title : null, manual: true }; saveReadPos(key, pos, user); setBm({ ...pos, t: Date.now() }); manual.current = true; };
+  const clearBm = () => { saveReadPos(key, null, user); setBm(null); manual.current = false; };
 
   // samodejni zaznamek: zadnji naslov (h2/h3), mimo katerega si drsel; ročno pripetega ne prepišemo
   useEffect(() => {
     let tm = null;
     const onScroll = () => {
-      setShowFloat(window.scrollY > 600);
       if (tm) return;
       tm = setTimeout(() => {
         tm = null;
@@ -4256,16 +4319,78 @@ function NotesView({ route, go }) {
           else if (hd) break;
           for (const sub of sec.subs) { const el = document.getElementById(sub.id); if (el && el.getBoundingClientRect().top <= 140) best = { sec: sec.id, label: sec.label, sub: sub.id, subTitle: sub.title }; }
         }
-        if (best) { const cur = loadReadPos(key); if (!cur || cur.manual || cur.sec !== best.sec || cur.sub !== best.sub) { if (!(cur && cur.manual)) { saveReadPos(key, best); setBm({ ...best, t: Date.now() }); } } }
+        if (!best) return;
+        const cur = validBm(loadReadPos(key));
+        if (cur && cur.manual) return;
+        if (!cur || cur.sec !== best.sec || cur.sub !== best.sub) { saveReadPos(key, best, user); setBm({ ...best, t: Date.now() }); }
       }, 500);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => { window.removeEventListener("scroll", onScroll); if (tm) clearTimeout(tm); };
-  }, [secs, open, key]);
+  }, [secs, open, key, user && user.id]); // eslint-disable-line
+
+  useEffect(() => { if (!panel) return; const k = (e) => { if (e.key === "Escape") setPanel(false); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, [panel]);
 
   const bmTitle = bm ? (bm.subTitle ? bm.label + " › " + bm.subTitle : bm.label) : "";
   const continueReading = () => { if (!bmSec) return; jumpTo(bmSec.id, bm.sub && bmSec.subs.some((x) => x.id === bm.sub) ? bm.sub : null); };
   const allOpen = open.size >= secs.length;
+  const totalHits = hits ? hits.reduce((a, b) => a + b, 0) : 0;
+  const host = document.querySelector(".ix-root") || document.body;
+  const nSecs = secs.length + " " + (secs.length === 1 ? "razdelek" : secs.length === 2 ? "razdelka" : secs.length < 5 ? "razdelki" : "razdelkov");
+
+  const tocPanel = (
+    <>
+      {!panel && (
+        <button onClick={() => setPanel(true)} className="ix-tocbtn" aria-label="Odpri kazalo"><List size={15} /> Kazalo</button>
+      )}
+      {panel && (
+        <aside className="ix-formpanel ix-tocpanel" role="complementary" aria-label="Kazalo zapiskov">
+          <div className="ix-formhead">
+            <List size={16} color="var(--terra)" />
+            <b style={{ flex: 1 }}>Kazalo · {nSecs}</b>
+            <button onClick={allOpen ? closeAll : openAll} title={allOpen ? "Strni vse razdelke" : "Razširi vse razdelke"} className="ix-formx">{allOpen ? <ChevronsDownUp size={15} /> : <ChevronsUpDown size={15} />}</button>
+            <button onClick={() => setPanel(false)} aria-label="Zapri kazalo" className="ix-formx"><X size={16} /></button>
+          </div>
+          <div className="ix-formsearch">
+            <Search size={14} color="var(--ink2)" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Išči v zapiskih (npr. carina, Viner, MFN)…" />
+            {q && <button onClick={() => setQ("")} aria-label="Počisti iskanje" className="ix-formx"><X size={13} /></button>}
+          </div>
+          <div className="ix-formbody" style={{ padding: "4px 10px 16px" }}>
+            {ql && <div className="ix-chip" style={{ padding: "6px 4px" }}>{totalHits ? `${totalHits} zadetkov · klikni razdelek, zadetki so označeni` : "Ni zadetkov."}</div>}
+            {bm && bmSec && !ql && (
+              <button className="ix-tocrow" onClick={continueReading} style={{ color: "var(--teal)", fontWeight: 600 }}>
+                <BookmarkCheck size={15} /> <span style={{ flex: 1, minWidth: 0 }}>Nadaljuj: {bmTitle}</span>
+              </button>
+            )}
+            {secs.map((sec, i) => {
+              const n = hits ? hits[i] : 0;
+              if (ql && !n) return null;
+              const isOpen = open.has(sec.id);
+              const showSubs = sec.subs.length > 0 && (isOpen || !!ql);
+              const subs = ql ? sec.subs.filter((sub) => sub.title.toLowerCase().includes(ql.toLowerCase())) : sec.subs;
+              return (
+                <div key={sec.id}>
+                  <button className={"ix-tocrow" + (isOpen ? " on" : "")} onClick={() => jumpTo(sec.id, null, !!ql)}>
+                    <span className="ix-toc-n">{i + 1}</span>
+                    <span style={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>{sec.label}</span>
+                    {bm && bm.sec === sec.id && <Bookmark size={13} color="var(--teal)" />}
+                    <span className={"ix-toc-cnt" + (ql ? " hit" : "")}>{ql ? n + "×" : sec.subs.length ? sec.subs.length + " tem" : ""}</span>
+                  </button>
+                  {showSubs && subs.map((sub) => (
+                    <button key={sub.id} className="ix-tocrow sub" onClick={() => jumpTo(sec.id, sub.id, false)}>
+                      <span style={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>{sub.title}</span>
+                      {bm && bm.sub === sub.id && <Bookmark size={12} color="var(--teal)" />}
+                    </button>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        </aside>
+      )}
+    </>
+  );
 
   return (
     <div className="ix-fade">
@@ -4273,9 +4398,12 @@ function NotesView({ route, go }) {
         style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 16 }}>
         <ChevronLeft size={15} /> {part.name}
       </button>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
         <BookOpen size={22} color="var(--terra)" />
-        <h1 className="ix-serif" style={{ fontSize: 24, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Zapiski · {part.name}</h1>
+        <h1 className="ix-serif" style={{ fontSize: 24, fontWeight: 900, margin: 0, letterSpacing: "-.02em", flex: 1, minWidth: 200 }}>Zapiski · {part.name}</h1>
+        <button onClick={() => setPanel(true)} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "6px 12px", cursor: "pointer", color: "var(--ink)", fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>
+          <List size={14} /> Kazalo · {nSecs}
+        </button>
       </div>
 
       {bm && bmSec && (
@@ -4290,23 +4418,6 @@ function NotesView({ route, go }) {
         </div>
       )}
 
-      <div id="notes-toc" className="ix-card" style={{ padding: "12px 12px 6px", marginBottom: 18 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
-          <div className="ix-sec" style={{ color: "var(--ink)", margin: 0 }}><List size={14} /> Kazalo · {secs.length} {secs.length === 1 ? "razdelek" : secs.length === 2 ? "razdelka" : secs.length < 5 ? "razdelki" : "razdelkov"}</div>
-          <button onClick={allOpen ? closeAll : openAll} style={{ marginLeft: "auto", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "5px 11px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5, display: "flex", alignItems: "center", gap: 5 }}>
-            {allOpen ? <><ChevronsDownUp size={13} /> Strni vse</> : <><ChevronsUpDown size={13} /> Razširi vse</>}
-          </button>
-        </div>
-        {secs.map((sec, i) => (
-          <button key={sec.id} className={"ix-toc-item" + (open.has(sec.id) ? " on" : "")} onClick={() => jumpTo(sec.id)}>
-            <span className="ix-toc-n">{i + 1}</span>
-            <span style={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>{sec.label}</span>
-            {bm && bm.sec === sec.id && <Bookmark size={14} color="var(--teal)" />}
-            {sec.subs.length > 0 && <span className="ix-chip" style={{ flexShrink: 0 }}>{sec.subs.length} tem</span>}
-          </button>
-        ))}
-      </div>
-
       <div style={{ display: "grid", gap: 12 }}>
         {secs.map((sec, i) => {
           const isOpen = open.has(sec.id);
@@ -4317,7 +4428,8 @@ function NotesView({ route, go }) {
                 <span className="ix-toc-n" style={{ marginTop: 2 }}>{i + 1}</span>
                 <span className="ix-sec-title" dangerouslySetInnerHTML={{ __html: sec.title }} />
                 <span style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0, marginTop: 2 }}>
-                  {sec.subs.length > 0 && <span className="ix-chip">{sec.subs.length} tem</span>}
+                  {hits && hits[i] > 0 && <span className="ix-chip" style={{ color: "var(--terra)" }}>{hits[i]}×</span>}
+                  {!hits && sec.subs.length > 0 && <span className="ix-chip">{sec.subs.length} tem</span>}
                   {isOpen ? <ChevronUp size={18} color="var(--ink2)" /> : <ChevronDown size={18} color="var(--ink2)" />}
                 </span>
               </button>
@@ -4332,7 +4444,7 @@ function NotesView({ route, go }) {
                       <Bookmark size={13} /> Pripni
                     </button>
                   </div>
-                  <div className="ix-notes" dangerouslySetInnerHTML={{ __html: sec.body }} />
+                  <div className="ix-notes" dangerouslySetInnerHTML={{ __html: ql ? highlightHtml(sec.body, ql) : sec.body }} />
                   {i + 1 < secs.length && (
                     <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 14 }}>
                       <button onClick={() => jumpTo(secs[i + 1].id)} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "9px 14px", display: "flex", alignItems: "center", gap: 6 }}>
@@ -4346,9 +4458,7 @@ function NotesView({ route, go }) {
           );
         })}
       </div>
-      {showFloat && (
-        <button className="ix-float-toc" onClick={() => scrollToEl("notes-toc")}><List size={14} /> Kazalo</button>
-      )}
+      {createPortal(tocPanel, host)}
     </div>
   );
 }
