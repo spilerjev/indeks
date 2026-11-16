@@ -256,7 +256,7 @@ module.exports = {
   id: 'stana',
   parts: [
     {
-      id: 'k1', name: '1. kolokvij', type: 'kolokvij',
+      id: 'k1', name: '1. kolokvij', type: 'kolokvij', date: '2026-11-13T15:00',
       notes: { file: '2. letnik (2026-27)/1. semester/Statisticna analiza/ZAPISKI.md' },
       appendNotesMd: `
 ## Informacije o predmetu: kako zapisati rešitev
@@ -286,7 +286,7 @@ module.exports = {
         { id: 'stana-c-p03', name: 'Vzorčenje (P03)', cards: p03.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'stana-c-p04', name: 'Intervali, velikost vzorca, domneve', cards: kartP04.map(([front, back]) => ({ front, back })) }],
     },
-    { id: 'k2', name: '2. kolokvij', type: 'kolokvij', decks: [
+    { id: 'k2', name: '2. kolokvij', type: 'kolokvij', date: '2026-12-18', decks: [
       { id: 'stana-domneve', name: 'Osnove preizkušanja domnev (P06, V06)', questions: p04.domneve },
       { id: 'stana-rac-domneve', name: 'Računske naloge: preizkus domnev (Z)', calc: true, questions: p04.racDomneve },
       { id: 'stana-2pp-stari', name: '2. preizkušnja 2019 in uradni zgled (z rešitvami)', questions: require('./stana-2pp') },

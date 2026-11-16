@@ -78,7 +78,7 @@ module.exports = {
   id: 'mpsp',
   parts: [
     {
-      id: 'k1', name: '1. kolokvij', type: 'kolokvij',
+      id: 'k1', name: '1. kolokvij', type: 'kolokvij', date: '2026-12-01T17:30',
       notes: {
         file: '2. letnik (2026-27)/1. semester/Management proizvodnih in storitvenih procesov/Vaje/ZAPISKI.md',
         skip: ['plakat', 'predstavitev'],

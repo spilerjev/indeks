@@ -1443,7 +1443,7 @@ export default function App() {
           <Login year={route.view === "home" ? route.year : null} onBack={() => setRoute({ view: "welcome" })} />
         ) : (
           <>
-            {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} />}
+            {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} userId={userId || null} />}
             {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} comm={comm} userId={userId || null} />}
             {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
             {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} soc={soc} />}
@@ -1660,7 +1660,7 @@ function YearSwitch({ year, setYear }) {
   );
 }
 
-function Home({ go, stats, year, setYear, comm }) {
+function Home({ go, stats, year, setYear, comm, userId }) {
   const agg = aggregate(stats, year);
   const sems = DATA.filter((s) => s.year === year);
   return (
@@ -1676,6 +1676,7 @@ function Home({ go, stats, year, setYear, comm }) {
 
       {YEARS.length > 1 && <div className="ix-fade" style={{ marginBottom: 22 }}><YearSwitch year={year} setYear={setYear} /></div>}
 
+      <NextUp sems={sems} stats={stats} comm={comm} go={go} userId={userId} />
       <OverallBanner agg={agg} comm={comm} year={year} onOpen={() => go({ view: "allstats" })} />
 
       {sems.map((sem, si) => (
@@ -4104,6 +4105,103 @@ function Stat({ big, label }) {
       <div className="ix-serif" style={{ fontSize: 30, fontWeight: 900 }}>{big}</div>
       <div className="ix-chip" style={{ marginTop: 2 }}>{label}</div>
     </div>
+  );
+}
+
+/* Kartica "Naslednji kolokvij": najbližji del z datumom (part.date, ISO, lahko s T uro), odštevanje, tvoj napredek pri tem delu,
+   eno glavno priporočilo (nedokončan kviz > najšibkejši kviz < 60 % > še neodprt kviz > ranked < 5 testov > mešani kviz),
+   skupnost (povprečje, lestvica rankeda) in naslednji roki. Dele brez datuma preskoči; dan po roku izgine. */
+const DAYS_SL = ["ned", "pon", "tor", "sre", "čet", "pet", "sob"];
+function fmtExamDate(iso) { const d = new Date(iso); const t = /T(\d{2}:\d{2})/.exec(iso); return `${DAYS_SL[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.` + (t ? ` ob ${t[1]}` : ""); }
+function NextUp({ sems, stats, comm, go, userId }) {
+  const now = Date.now();
+  const items = sems.flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => p.date).map((p) => ({ sem, subj, part: p, t: new Date(p.date).getTime() }))))
+    .filter((x) => x.t > now - 8 * 36e5).sort((a, b) => a.t - b.t);
+  const first = items[0];
+  const key = first ? `${first.sem.id}/${first.subj.id}/${first.part.id}` : null;
+  const [lb, setLb] = useState(null);
+  useEffect(() => {
+    if (!userId || !key) return;
+    let c = false;
+    supabase.rpc("ranked_leaderboard", { p_part_key: key + "/__ranked" }).then(({ data, error }) => { if (!c && !error) setLb(data || []); }).catch(() => {});
+    return () => { c = true; };
+  }, [userId, key]);
+  if (!first) return null;
+  const { sem, subj, part } = first;
+  const dayStart = new Date(); dayStart.setHours(0, 0, 0, 0);
+  const days = Math.max(0, Math.round((new Date(first.t).setHours(0, 0, 0, 0) - dayStart.getTime()) / 864e5));
+  const pool = part.decks.flatMap((d) => d.questions);
+  const m = poolMastery(pool);
+  const pct = m.total ? Math.round((m.everCorrect / m.total) * 100) : 0;
+  const rows = part.decks.map((d) => ({ d, ds: deckStats(stats, `${key}/${d.id}`) }));
+  const weakest = rows.filter((r) => r.ds && r.ds.avg < 60).sort((a, b) => a.ds.avg - b.ds.avg)[0];
+  const unseen = rows.find((r) => !r.ds);
+  const resumeKey = Object.keys(loadResume()).find((k) => k.startsWith(key + "/") && !(loadResume()[k] || {}).cleared);
+  const resumeDeck = resumeKey ? resumeKey.slice(key.length + 1) : null;
+  const rp = loadReadPos(key); const bm = rp && !rp.cleared ? rp : null;
+  const ranked = deckStats(stats, `${key}/__ranked`);
+  const hasRanked = rankedPool(part).length >= RANKED_N;
+  let cw = 0, cs = 0; part.decks.forEach((d) => { const c = commDeck(comm, `${key}/${d.id}`); if (c) { cw += c.users; cs += c.users * c.avg; } });
+  const cAvg = cw ? Math.round(cs / cw) : null;
+  const myLb = lb ? lb.findIndex((r) => r.is_me) : -1;
+  const goQuiz = (deck) => go({ view: "quiz", sem: sem.id, subj: subj.id, part: part.id, deck });
+  const goPart = () => go({ view: "part", sem: sem.id, subj: subj.id, part: part.id });
+  const deckName = (id) => (part.decks.find((d) => d.id === id) || {}).name || (id === "__mix" ? "Mešani kviz" : id === "__mixcalc" ? "Mešane računske naloge" : id === "__ranked" ? "Ranked" : id);
+  let rec;
+  if (resumeDeck) rec = { label: "Nadaljuj nedokončan kviz", sub: deckName(resumeDeck), act: () => goQuiz(resumeDeck) };
+  else if (weakest) rec = { label: `Ponovi najšibkejši kviz (${weakest.ds.avg} %)`, sub: weakest.d.name, act: () => goQuiz(weakest.d.id) };
+  else if (unseen) rec = { label: "Reši kviz, ki ga še nisi odprl", sub: unseen.d.name, act: () => goQuiz(unseen.d.id) };
+  else if (hasRanked && (!ranked || ranked.n < RANKED_MIN_RUNS)) rec = { label: "Preizkusi se v rankedu", sub: `${ranked ? ranked.n : 0}/${RANKED_MIN_RUNS} testov za uvrstitev na lestvico`, act: () => goQuiz("__ranked") };
+  else if (part.decks.filter((d) => !d.calc).length >= 2) rec = { label: days <= 3 ? "Zadnja ponovitev: mešani kviz" : "Mešani kviz čez vso snov", sub: "20 naključnih vprašanj, vsakič drugačnih", act: () => goQuiz("__mix") };
+  else rec = { label: "Odpri kolokvij", sub: part.name, act: goPart };
+  const left = m.total - m.everCorrect;
+  const perDay = days > 0 ? Math.ceil(left / days) : left;
+  const urgent = days <= 3;
+  return (
+    <section className="ix-card ix-fade" style={{ padding: "16px 18px", marginBottom: 18, borderLeft: `3px solid ${urgent ? "var(--red)" : "var(--terra)"}` }}>
+      <div style={{ display: "flex", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
+        <div style={{ flex: "1 1 260px", minWidth: 0 }}>
+          <div className="ix-chip" style={{ color: urgent ? "var(--red)" : "var(--terra)" }}>Naslednji kolokvij · {fmtExamDate(part.date)}</div>
+          <div className="ix-serif" style={{ fontSize: 22, fontWeight: 900, lineHeight: 1.15, margin: "4px 0 6px", letterSpacing: "-.01em" }}>{subj.name} · {part.name}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <div style={{ flex: "1 1 160px", height: 8, borderRadius: 6, background: "var(--paper)", border: "1px solid var(--line)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${pct}%`, background: "var(--teal)", transition: "width .4s" }} />
+            </div>
+            <span className="ix-chip" style={{ textTransform: "none", letterSpacing: 0 }}>osvojenih {m.everCorrect}/{m.total} ({pct} %){left > 0 && days > 0 ? ` · še ${left}, to je ~${perDay} na dan` : ""}</span>
+          </div>
+        </div>
+        <div style={{ textAlign: "center", minWidth: 86, padding: "6px 12px", borderRadius: 12, background: "var(--paper)", border: "1px solid var(--line)" }}>
+          <div className="ix-serif" style={{ fontSize: 30, fontWeight: 900, lineHeight: 1, color: urgent ? "var(--red)" : "var(--ink)" }}>{days === 0 ? "danes" : days}</div>
+          <div className="ix-chip" style={{ marginTop: 3 }}>{days === 0 ? "kolokvij" : days === 1 ? "dan" : days === 2 ? "dneva" : days < 5 ? "dnevi" : "dni"}</div>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginTop: 14 }}>
+        <button onClick={rec.act} className="ix-btn" style={{ background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 8, textAlign: "left" }}>
+          <ChevronRight size={16} /><span><b>{rec.label}</b><span style={{ opacity: .85, fontSize: 12.5 }}> · {rec.sub}</span></span>
+        </button>
+        {hasRanked && <button onClick={() => goQuiz("__ranked")} className="ix-pill"><Trophy size={13} style={{ verticalAlign: -2 }} /> Ranked{ranked ? ` · ${ranked.n}× · ${ranked.avg} %` : ""}</button>}
+        {part.notes && <button onClick={() => go({ view: "notes", sem: sem.id, subj: subj.id, part: part.id })} className="ix-pill" style={{ whiteSpace: "normal", textAlign: "left" }}><BookOpen size={13} style={{ verticalAlign: -2 }} /> {bm ? `Nadaljuj branje: ${(bm.subTitle || bm.label || "").slice(0, 28)}` : "Zapiski"}</button>}
+        <button onClick={goPart} className="ix-pill">Vsi kvizi</button>
+      </div>
+
+      {(cAvg != null || (lb && lb.length > 0)) && (
+        <div className="ix-chip" style={{ marginTop: 12, textTransform: "none", letterSpacing: 0, lineHeight: 1.6 }}>
+          <Users size={12} style={{ verticalAlign: -2 }} /> Skupnost: {cAvg != null ? `povprečje kvizov ${cAvg} %` : ""}{cAvg != null && lb && lb.length ? " · " : ""}
+          {lb && lb.length > 0 && <>ranked: {lb.slice(0, 3).map((r, i) => `${i + 1}. ${r.name} ${Math.round(r.avg_pct)} %`).join(", ")}{myLb >= 0 ? ` · ti si ${myLb + 1}.` : ""}</>}
+        </div>
+      )}
+      {items.length > 1 && (
+        <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap", marginTop: 10 }}>
+          <span className="ix-chip">Nato:</span>
+          {items.slice(1, 4).map((x) => (
+            <button key={x.sem.id + x.subj.id + x.part.id} onClick={() => go({ view: "part", sem: x.sem.id, subj: x.subj.id, part: x.part.id })} className="ix-pill" style={{ fontWeight: 500, whiteSpace: "normal", textAlign: "left", lineHeight: 1.35 }}>
+              {x.subj.name} · {x.part.name} · {fmtExamDate(x.part.date).replace(/ ob .*$/, "")}
+            </button>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
