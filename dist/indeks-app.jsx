@@ -702,6 +702,9 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-sub-chip.bm{border-color:var(--teal);color:var(--teal);}
 .ix-root .ix-tocbtn{position:fixed;left:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:7px;padding:10px 15px;border-radius:999px;border:1px solid var(--line);background:var(--ink);color:var(--paper);font-weight:700;font-size:13.5px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.22);}
 .ix-root .ix-tocpanel{left:14px;right:auto;}
+.ix-root .ix-totop{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:50;width:42px;height:42px;border-radius:999px;border:1px solid var(--line);background:var(--paper2);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.18);opacity:.92;}
+.ix-root .ix-totop:hover{opacity:1;border-color:var(--ink);}
+@media (max-width:760px){.ix-root .ix-totop{bottom:14px;width:40px;height:40px;}}
 .ix-tocrow{width:100%;text-align:left;background:none;border:none;border-bottom:1px dashed var(--line);padding:8px 4px;cursor:pointer;display:flex;align-items:center;gap:9px;color:var(--ink);font:inherit;font-size:13.5px;line-height:1.3;}
 .ix-tocrow:hover{background:var(--paper);}
 .ix-tocrow.sub{padding-left:38px;font-size:12.5px;color:var(--ink2);border-bottom:none;padding-top:4px;padding-bottom:4px;}
@@ -1449,8 +1452,23 @@ export default function App() {
         )}
         <Footer />
       </div>
+      <ScrollTop />
     </div>
   );
+}
+
+/* Plavajoč gumb »Na vrh«: pokaže se, ko si zdrsel več kot 600 px (sredina spodaj, da ne prekriva Kazala levo in Formul desno). */
+function ScrollTop() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    let raf = null;
+    const onScroll = () => { if (raf) return; raf = requestAnimationFrame(() => { raf = null; setShow(window.scrollY > 600); }); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => { window.removeEventListener("scroll", onScroll); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+  if (!show) return null;
+  return <button className="ix-totop" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Na vrh strani" title="Na vrh"><ChevronUp size={20} /></button>;
 }
 
 /* Plavajoč gumb »Formule« + plošča z (iskalnimi) formulami predmeta. Brez ozadja, da lahko še naprej odgovarjaš. */
