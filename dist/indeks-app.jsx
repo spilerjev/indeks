@@ -747,6 +747,9 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-modal{background:var(--paper2);border:1px solid var(--line);border-radius:16px;width:min(560px,100%);max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);}
 .ix-modalhead{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line);}
 .ix-modalbody{overflow-y:auto;padding:12px 16px 16px;-webkit-overflow-scrolling:touch;}
+.ix-dialog{width:min(430px,100%);animation:ixPop .18s cubic-bezier(.2,.7,.2,1);}
+@keyframes ixPop{from{opacity:0;transform:translateY(8px) scale(.98);}to{opacity:1;transform:none;}}
+.ix-dialog-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;}
 .ix-root .ix-input{padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:14px;font-family:inherit;box-sizing:border-box;}
 .ix-root .ix-pill{background:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px;cursor:pointer;color:var(--ink);font-size:12.5px;font-weight:600;white-space:nowrap;}
 .ix-root .ix-pill.on{background:var(--teal);color:#fff;border-color:var(--teal);}
@@ -1346,8 +1349,11 @@ export default function App() {
       if (ignoreHash.current) { ignoreHash.current = false; return; }
       const g = navGuard.current;
       if (g && window.location.hash !== g.hash) {
-        if (!g.ask()) { ignoreHash.current = true; window.location.hash = g.hash; return; }
-        navGuard.current = null;
+        // najprej nazaj na stran matcha, nato vprašamo; ob potrditvi nadaljujemo na cilj
+        const target = window.location.hash;
+        ignoreHash.current = true; window.location.hash = g.hash;
+        Promise.resolve(g.ask()).then((ok) => { if (!ok) return; navGuard.current = null; window.location.hash = target; });
+        return;
       }
       setRouteState(hashToRoute(window.location.hash)); window.scrollTo(0, 0);
     };
@@ -1360,9 +1366,9 @@ export default function App() {
     const yr = r.year || cur.year;
     const h = routeToHash(r, yr);
     const g = navGuard.current;
-    if (g && h !== g.hash) { if (!g.ask()) return; navGuard.current = null; }
-    if (h === window.location.hash) { setRouteState(hashToRoute(h)); window.scrollTo(0, 0); }
-    else window.location.hash = h;
+    const apply = () => { if (h === window.location.hash) { setRouteState(hashToRoute(h)); window.scrollTo(0, 0); } else window.location.hash = h; };
+    if (g && h !== g.hash) { Promise.resolve(g.ask()).then((ok) => { if (!ok) return; navGuard.current = null; apply(); }); return; }
+    apply();
   }, []);
   const [dark, setDark] = useState(() => store.get("indeks.theme", "light") === "dark");
   const year = route.year || storedYear();
@@ -1453,6 +1459,7 @@ export default function App() {
         <Footer />
       </div>
       <ScrollTop />
+      <DialogHost />
     </div>
   );
 }
@@ -2906,6 +2913,48 @@ function StatsLine({ s, full }) {
 }
 
 /* Modalno okno se izriše v .ix-root (portal): znotraj .ix-fade (animacija transform) bi position:fixed veljal glede na vsebino, ne na okno. */
+/* Lepa potrditvena/obvestilna okna namesto sistemskih confirm()/alert(). ixConfirm({ title, text, ok, cancel, danger }) -> Promise<boolean>,
+   ixAlert({ title, text }) -> Promise<void>. Gostitelj DialogHost je v App; če ga ni (test), pade nazaj na sistemsko okno. */
+let dialogApi = null;
+function ixConfirm(o) { const opts = typeof o === "string" ? { text: o } : o; return dialogApi ? dialogApi.open({ ...opts, kind: "confirm" }) : Promise.resolve(window.confirm(opts.text)); }
+function ixAlert(o) { const opts = typeof o === "string" ? { text: o } : o; return dialogApi ? dialogApi.open({ ...opts, kind: "alert" }) : Promise.resolve(window.alert(opts.text)); }
+function DialogHost() {
+  const [d, setD] = useState(null);
+  useEffect(() => {
+    dialogApi = { open: (opts) => new Promise((resolve) => setD({ ...opts, resolve })) };
+    window.__ixDialog = { confirm: ixConfirm, alert: ixAlert };
+    return () => { dialogApi = null; };
+  }, []);
+  const close = (v) => { if (!d) return; const r = d.resolve, kind = d.kind; setD(null); r(kind === "alert" ? undefined : v); };
+  useEffect(() => {
+    if (!d) return;
+    const k = (e) => { if (e.key === "Escape") { e.preventDefault(); close(false); } else if (e.key === "Enter") { e.preventDefault(); close(true); } };
+    window.addEventListener("keydown", k, true);
+    return () => window.removeEventListener("keydown", k, true);
+  }, [d]); // eslint-disable-line
+  if (!d) return null;
+  const host = document.querySelector(".ix-root") || document.body;
+  const isAlert = d.kind === "alert";
+  const icBg = d.danger || isAlert ? "var(--badbg)" : "var(--okbg)";
+  const ic = d.danger || isAlert ? <XCircle size={20} color="var(--red)" /> : <CheckCircle2 size={20} color="var(--teal)" />;
+  return createPortal(
+    <div className="ix-modalbg" style={{ zIndex: 90 }} onClick={() => close(false)}>
+      <div className="ix-modal ix-dialog" onClick={(e) => e.stopPropagation()} role="alertdialog" aria-label={d.title || (isAlert ? "Obvestilo" : "Potrditev")}>
+        <div style={{ padding: "18px 18px 6px", display: "flex", gap: 12, alignItems: "flex-start" }}>
+          <span className="ix-dialog-ic" style={{ background: icBg }}>{ic}</span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="ix-serif" style={{ fontWeight: 900, fontSize: 18, marginBottom: 4, lineHeight: 1.2 }}>{d.title || (isAlert ? "Obvestilo" : "Potrdi")}</div>
+            <div style={{ fontSize: 14.5, color: "var(--ink2)", lineHeight: 1.5, overflowWrap: "anywhere" }}>{d.text}</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", padding: "12px 18px 16px", flexWrap: "wrap" }}>
+          {!isAlert && <button onClick={() => close(false)} className="ix-btn" style={{ background: "transparent", color: "var(--ink)", border: "1px solid var(--line)", padding: "9px 16px" }}>{d.cancel || "Prekliči"}</button>}
+          <button autoFocus onClick={() => close(true)} className="ix-btn" style={{ background: d.danger ? "var(--red)" : "var(--ink)", color: d.danger ? "#fff" : "var(--paper)", border: "none", padding: "9px 16px" }}>{d.ok || (isAlert ? "V redu" : "Potrdi")}</button>
+        </div>
+      </div>
+    </div>, host);
+}
+
 function Modal({ title, icon, onClose, children }) {
   useEffect(() => { const k = (e) => { if (e.key === "Escape") onClose(); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, [onClose]);
   useEffect(() => { const prev = document.body.style.overflow; document.body.style.overflow = "hidden"; return () => { document.body.style.overflow = prev; }; }, []);
@@ -3063,7 +3112,7 @@ function SocialBanner({ soc, route, go, reload }) {
     setBusy(c.id);
     const { error } = await supabase.rpc("respond_challenge", { p_id: c.id, p_accept: accept });
     setBusy(null);
-    if (error) { alert(rpcErr(error)); return; }
+    if (error) { ixAlert({ title: "Ni uspelo", text: rpcErr(error) }); return; }
     reload();
     if (accept) go({ view: "duel", id: c.id });
   }
@@ -3082,7 +3131,7 @@ function SocialBanner({ soc, route, go, reload }) {
               <button onClick={() => respond(c, true)} disabled={busy === c.id} className="ix-pill on"><Check size={13} style={{ verticalAlign: -2 }} /> Sprejmi</button>
               <button onClick={() => respond(c, false)} disabled={busy === c.id} className="ix-pill bad">Zavrni</button>
             </span>
-          ) : <span style={{ display: "flex", gap: 6 }}><button onClick={() => go({ view: "duel", id: c.id })} className="ix-pill on">Odpri</button><button onClick={async () => { if (!confirm("Zapustim ta match? Zate ne šteje.")) return; setBusy(c.id); await supabase.rpc("abandon_challenge", { p_id: c.id }); setBusy(null); reload(); }} disabled={busy === c.id} className="ix-pill" title="Zapusti match">Zapusti</button></span>}
+          ) : <span style={{ display: "flex", gap: 6 }}><button onClick={() => go({ view: "duel", id: c.id })} className="ix-pill on">Odpri</button><button onClick={async () => { if (!(await ixConfirm({ title: "Zapusti match", text: "Zapustim ta match? Zate se ne šteje.", ok: "Zapusti", danger: true }))) return; setBusy(c.id); await supabase.rpc("abandon_challenge", { p_id: c.id }); setBusy(null); reload(); }} disabled={busy === c.id} className="ix-pill" title="Zapusti match">Zapusti</button></span>}
         </div>
       ))}
     </div>
@@ -3164,7 +3213,7 @@ function ProfileView({ user, soc, socErr, reload, go }) {
     setBusy(fn + JSON.stringify(args));
     const { error } = await supabase.rpc(fn, args);
     setBusy(null);
-    if (error) { alert(rpcErr(error)); return; }
+    if (error) { ixAlert({ title: "Ni uspelo", text: rpcErr(error) }); return; }
     reload(); if (after) after();
   }
   const chs = (soc && soc.challenges) || [];
@@ -3300,7 +3349,7 @@ function ProfileView({ user, soc, socErr, reload, go }) {
                 {open[f.id] && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{f.bio || "Brez opisa."}{f.character ? ` · Lik: ${charById(f.character).name}${splitItems(f.perk).length ? " + " + splitItems(f.perk).map((x) => itemById(x).name).join(" + ") : ""}` : ""}</div>}
               </button>
               <button onClick={() => setPicker({ friend: f })} className="ix-pill on"><Swords size={13} style={{ verticalAlign: -2 }} /> Izzovi</button>
-              <button onClick={() => { if (confirm(`Odstranim ${f.username} s seznama prijateljev?`)) rpc("remove_friend", { p_id: f.id }); }} className="ix-pill" title="Odstrani prijatelja"><X size={13} /></button>
+              <button onClick={async () => { if (await ixConfirm({ title: "Odstrani prijatelja", text: `Odstranim ${f.username} s seznama prijateljev? Prošnjo lahko kadarkoli pošlješ znova.`, ok: "Odstrani", danger: true })) rpc("remove_friend", { p_id: f.id }); }} className="ix-pill" title="Odstrani prijatelja"><X size={13} /></button>
             </div>
           )) : <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 4 }}>Še nimaš prijateljev. Vpiši uporabniško ime sošolca in mu pošlji prošnjo; ko jo sprejme, ga lahko izzoveš.</div>}
         </div>
@@ -3621,7 +3670,7 @@ function DuelView({ route, go, userId, formulas, soc, setNavGuard }) {
   const guardOn = !!(st && st.status === "accepted" && me && me.ready_at && !me.finished && !localDone && !spectator);
   useEffect(() => {
     if (!setNavGuard) return;
-    if (guardOn) setNavGuard({ hash: "#/izziv/" + id, ask: () => confirm(startAt ? "Zapustiš match? To je predaja: ti poraz, nasprotnik zmaga." : "Zapustiš pripravo? Match se zate konča.") });
+    if (guardOn) setNavGuard({ hash: "#/izziv/" + id, ask: () => ixConfirm({ title: "Zapusti match", text: startAt ? "Zapustiš match? To je predaja: ti poraz, nasprotnik zmaga." : "Zapustiš pripravo? Match se zate konča.", ok: "Zapusti", danger: true }) });
     else setNavGuard(null);
     return () => setNavGuard(null);
   }, [guardOn, id, startAt]); // eslint-disable-line
@@ -3662,7 +3711,7 @@ function DuelView({ route, go, userId, formulas, soc, setNavGuard }) {
   }
   function leave() {
     const msg = !startAt ? "Zapustiš pripravo? Match se zate konča." : activeP.length > 2 ? "Zapustiš match? To je predaja: zate poraz, ostali nadaljujejo." : "Zapustiš match? To je predaja: ti poraz, nasprotnik zmaga.";
-    if (confirm(msg)) act("abandon_challenge");
+    ixConfirm({ title: "Zapusti match", text: msg, ok: "Zapusti", danger: true }).then((ok) => { if (ok) act("abandon_challenge"); });
   }
   async function rematch() {
     if (!res || res.error) return;
