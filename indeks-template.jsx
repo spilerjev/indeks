@@ -3,7 +3,7 @@ import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
   BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search,
-  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap
+  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { createPortal } from "react-dom";
@@ -39,6 +39,7 @@ const store = (() => {
 })();
 const STATS_KEY = "indeks.stats.v1";
 const MIX_KEY = "indeks.mixuse.v1";
+const READ_KEY = "indeks.readpos.v1";    // zaznamek v zapiskih (zadnje prebrano mesto) po delu
 const RESUME_KEY = "indeks.resume.v1";   // nedokončani kvizi (vrstni red vprašanj, odgovori) po kompletu
 const RANKED_N = 10;                     // ranked: število vprašanj
 const RANKED_SECONDS = 600;              // ranked: časovna omejitev (10 min)
@@ -687,6 +688,19 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-notes img,.ix-notes svg,.ix-notes figure{max-width:100%;height:auto;box-sizing:border-box;}
 .ix-notes h2{font-family:'Fraunces',serif;font-size:21px;font-weight:900;margin:28px 0 12px;color:var(--terra);letter-spacing:-.01em;}
 .ix-notes h2:first-child{margin-top:0;}
+.ix-sec-head{width:100%;text-align:left;background:none;border:none;padding:14px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;color:var(--ink);font:inherit;}
+.ix-sec-head:hover{background:var(--paper2);}
+.ix-sec-title{font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--terra);letter-spacing:-.01em;line-height:1.25;flex:1;min-width:0;overflow-wrap:anywhere;}
+.ix-sec-title i{font-weight:400;font-size:13px;color:var(--ink2);font-style:normal;}
+.ix-toc-item{width:100%;text-align:left;background:none;border:none;border-top:1px solid var(--line);padding:9px 6px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--ink);font:inherit;font-size:14px;}
+.ix-toc-item:first-child{border-top:none;}
+.ix-toc-item:hover{background:var(--paper2);}
+.ix-toc-item .ix-toc-n{min-width:24px;height:24px;border-radius:7px;background:var(--paper2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--ink2);flex-shrink:0;}
+.ix-toc-item.on .ix-toc-n{background:var(--terra);color:#fff;border-color:var(--terra);}
+.ix-sub-chip{font-size:12.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink2);cursor:pointer;text-align:left;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ix-sub-chip:hover{border-color:var(--ink);color:var(--ink);}
+.ix-sub-chip.bm{border-color:var(--teal);color:var(--teal);}
+.ix-float-toc{position:fixed;left:14px;bottom:18px;z-index:40;display:flex;align-items:center;gap:6px;padding:9px 13px;border-radius:999px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;font:600 13px/1 inherit;box-shadow:0 6px 18px rgba(0,0,0,.18);}
 .ix-notes h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin:0 0 8px;}
 .ix-notes .note-card{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--terra);border-radius:12px;padding:14px 16px;margin:12px 0;}
 .ix-notes ul{margin:6px 0;padding-left:20px;}
@@ -4185,21 +4199,156 @@ function wrapTables(html) {
   return html.replace(/<table[\s\S]*?<\/table>/g, (m, off) => (/<div class="tbl">\s*$/.test(html.slice(Math.max(0, off - 40), off)) ? m : '<div class="tbl">' + m + "</div>"));
 }
 
+/* Zapiski: razdeljeni po predavanjih (vsak <h2> je razdelek), s kazalom, zložljivimi razdelki, skoki na podteme (<h3>)
+   in zaznamkom. Zaznamek se shrani v brskalnik (READ_KEY): samodejno (zadnje mesto, mimo katerega si drsel) ali ročno (pripni). */
+const notesLabel = (t) => t.replace(/<[^>]+>/g, "").replace(/\s*\([^()]*\.(pdf|docx|md|html|xlsx|key|pptx)[^()]*\)/gi, "").replace(/\s+/g, " ").trim();
+function splitNotes(html) {
+  const secs = [];
+  const chunks = (html || "").split(/(?=<h2[\s>])/);
+  chunks.forEach((chunk) => {
+    const m = /^<h2[^>]*>([\s\S]*?)<\/h2>/.exec(chunk);
+    let body = m ? chunk.slice(m[0].length) : chunk;
+    if (!m && !body.replace(/<[^>]+>/g, "").trim()) return;
+    const idx = secs.length, subs = [];
+    let k = 0;
+    body = body.replace(/<h3([^>]*)>([\s\S]*?)<\/h3>/g, (mm, attrs, t) => { const id = "nsec" + idx + "-h" + (k++); subs.push({ id, title: notesLabel(t) }); return "<h3" + attrs + ' id="' + id + '">' + t + "</h3>"; });
+    const title = m ? m[1] : "Uvod";
+    secs.push({ id: "nsec" + idx, title, label: notesLabel(title), body: wrapTables(body), subs });
+  });
+  return secs;
+}
+function loadReadPos(key) { const all = store.get(READ_KEY, {}); return all[key] || null; }
+function saveReadPos(key, pos) { const all = store.get(READ_KEY, {}); if (pos) all[key] = { ...pos, t: Date.now() }; else delete all[key]; store.set(READ_KEY, all); }
+function scrollToEl(id) { const el = document.getElementById(id); if (!el) return; const y = el.getBoundingClientRect().top + window.scrollY - 14; window.scrollTo({ top: y, behavior: "smooth" }); }
+
 function NotesView({ route, go }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const part = subj.parts.find((p) => p.id === route.part);
+  const key = `${sem.id}/${subj.id}/${part.id}`;
+  const secs = useMemo(() => splitNotes(part.notes), [part]);
+  const [bm, setBm] = useState(() => loadReadPos(key));
+  const bmSec = bm ? (secs.find((x) => x.id === bm.sec && x.label === bm.label) || secs.find((x) => x.label === bm.label) || null) : null;
+  const [open, setOpen] = useState(() => new Set(bmSec ? [bmSec.id] : secs.length ? [secs[Math.min(1, secs.length - 1)].id] : []));
+  const [showFloat, setShowFloat] = useState(false);
+  const manual = useRef(false);
+  const toggle = (id) => setOpen((o) => { const n = new Set(o); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+  const openAll = () => setOpen(new Set(secs.map((x) => x.id)));
+  const closeAll = () => setOpen(new Set());
+  const jumpTo = (secId, subId) => { setOpen((o) => new Set([...o, secId])); setTimeout(() => scrollToEl(subId || "hd-" + secId), 60); };
+  const pin = (sec, sub) => { const pos = { sec: sec.id, label: sec.label, sub: sub ? sub.id : null, subTitle: sub ? sub.title : null, manual: true }; saveReadPos(key, pos); setBm({ ...pos, t: Date.now() }); manual.current = true; };
+  const clearBm = () => { saveReadPos(key, null); setBm(null); manual.current = false; };
+
+  // samodejni zaznamek: zadnji naslov (h2/h3), mimo katerega si drsel; ročno pripetega ne prepišemo
+  useEffect(() => {
+    let tm = null;
+    const onScroll = () => {
+      setShowFloat(window.scrollY > 600);
+      if (tm) return;
+      tm = setTimeout(() => {
+        tm = null;
+        if (manual.current || window.scrollY < 120) return;
+        let best = null;
+        for (const sec of secs) {
+          if (!open.has(sec.id)) continue;
+          const hd = document.getElementById("hd-" + sec.id);
+          if (hd && hd.getBoundingClientRect().top <= 140) best = { sec: sec.id, label: sec.label, sub: null, subTitle: null };
+          else if (hd) break;
+          for (const sub of sec.subs) { const el = document.getElementById(sub.id); if (el && el.getBoundingClientRect().top <= 140) best = { sec: sec.id, label: sec.label, sub: sub.id, subTitle: sub.title }; }
+        }
+        if (best) { const cur = loadReadPos(key); if (!cur || cur.manual || cur.sec !== best.sec || cur.sub !== best.sub) { if (!(cur && cur.manual)) { saveReadPos(key, best); setBm({ ...best, t: Date.now() }); } } }
+      }, 500);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); if (tm) clearTimeout(tm); };
+  }, [secs, open, key]);
+
+  const bmTitle = bm ? (bm.subTitle ? bm.label + " › " + bm.subTitle : bm.label) : "";
+  const continueReading = () => { if (!bmSec) return; jumpTo(bmSec.id, bm.sub && bmSec.subs.some((x) => x.id === bm.sub) ? bm.sub : null); };
+  const allOpen = open.size >= secs.length;
+
   return (
     <div className="ix-fade">
       <button onClick={() => go({ view: "part", sem: sem.id, subj: subj.id, part: part.id })} className="ix-chip"
         style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 16 }}>
         <ChevronLeft size={15} /> {part.name}
       </button>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
         <BookOpen size={22} color="var(--terra)" />
         <h1 className="ix-serif" style={{ fontSize: 24, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Zapiski · {part.name}</h1>
       </div>
-      <div className="ix-notes" dangerouslySetInnerHTML={{ __html: wrapTables(part.notes) }} />
+
+      {bm && bmSec && (
+        <div className="ix-card" style={{ padding: "12px 14px", marginBottom: 14, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", borderLeft: "3px solid var(--teal)" }}>
+          <BookmarkCheck size={18} color="var(--teal)" />
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <div style={{ fontWeight: 600, fontSize: 14 }}>Nadaljuj branje{bm.manual ? " (pripeto)" : ""}</div>
+            <div className="ix-chip" style={{ marginTop: 2, textTransform: "none", letterSpacing: 0 }}>{bmTitle}</div>
+          </div>
+          <button onClick={continueReading} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "8px 14px" }}>Pojdi tja</button>
+          <button onClick={clearBm} title="Odstrani zaznamek" style={{ background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "6px 10px", cursor: "pointer", color: "var(--ink2)", fontSize: 12.5 }}>Počisti</button>
+        </div>
+      )}
+
+      <div id="notes-toc" className="ix-card" style={{ padding: "12px 12px 6px", marginBottom: 18 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+          <div className="ix-sec" style={{ color: "var(--ink)", margin: 0 }}><List size={14} /> Kazalo · {secs.length} {secs.length === 1 ? "razdelek" : secs.length === 2 ? "razdelka" : secs.length < 5 ? "razdelki" : "razdelkov"}</div>
+          <button onClick={allOpen ? closeAll : openAll} style={{ marginLeft: "auto", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "5px 11px", cursor: "pointer", color: "var(--ink)", fontSize: 12.5, display: "flex", alignItems: "center", gap: 5 }}>
+            {allOpen ? <><ChevronsDownUp size={13} /> Strni vse</> : <><ChevronsUpDown size={13} /> Razširi vse</>}
+          </button>
+        </div>
+        {secs.map((sec, i) => (
+          <button key={sec.id} className={"ix-toc-item" + (open.has(sec.id) ? " on" : "")} onClick={() => jumpTo(sec.id)}>
+            <span className="ix-toc-n">{i + 1}</span>
+            <span style={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>{sec.label}</span>
+            {bm && bm.sec === sec.id && <Bookmark size={14} color="var(--teal)" />}
+            {sec.subs.length > 0 && <span className="ix-chip" style={{ flexShrink: 0 }}>{sec.subs.length} tem</span>}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ display: "grid", gap: 12 }}>
+        {secs.map((sec, i) => {
+          const isOpen = open.has(sec.id);
+          const isBm = bm && bm.sec === sec.id;
+          return (
+            <div key={sec.id} id={"hd-" + sec.id} className="ix-card" style={{ padding: 0, overflow: "hidden", borderLeft: isBm ? "3px solid var(--teal)" : undefined }}>
+              <button className="ix-sec-head" onClick={() => toggle(sec.id)} aria-expanded={isOpen}>
+                <span className="ix-toc-n" style={{ marginTop: 2 }}>{i + 1}</span>
+                <span className="ix-sec-title" dangerouslySetInnerHTML={{ __html: sec.title }} />
+                <span style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0, marginTop: 2 }}>
+                  {sec.subs.length > 0 && <span className="ix-chip">{sec.subs.length} tem</span>}
+                  {isOpen ? <ChevronUp size={18} color="var(--ink2)" /> : <ChevronDown size={18} color="var(--ink2)" />}
+                </span>
+              </button>
+              {isOpen && (
+                <div style={{ padding: "0 16px 16px" }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", marginBottom: sec.subs.length ? 12 : 4 }}>
+                    {sec.subs.map((sub) => (
+                      <button key={sub.id} className={"ix-sub-chip" + (bm && bm.sub === sub.id ? " bm" : "")} onClick={() => scrollToEl(sub.id)} title={sub.title}>{sub.title}</button>
+                    ))}
+                    <button onClick={() => pin(sec)} title="Pripni zaznamek na začetek tega razdelka"
+                      style={{ marginLeft: "auto", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "4px 10px", cursor: "pointer", color: isBm && bm.manual && !bm.sub ? "var(--teal)" : "var(--ink2)", fontSize: 12.5, display: "flex", alignItems: "center", gap: 5 }}>
+                      <Bookmark size={13} /> Pripni
+                    </button>
+                  </div>
+                  <div className="ix-notes" dangerouslySetInnerHTML={{ __html: sec.body }} />
+                  {i + 1 < secs.length && (
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 14 }}>
+                      <button onClick={() => jumpTo(secs[i + 1].id)} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "9px 14px", display: "flex", alignItems: "center", gap: 6 }}>
+                        Naprej: {secs[i + 1].label.slice(0, 40)}{secs[i + 1].label.length > 40 ? "…" : ""} <ChevronRight size={15} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {showFloat && (
+        <button className="ix-float-toc" onClick={() => scrollToEl("notes-toc")}><List size={14} /> Kazalo</button>
+      )}
     </div>
   );
 }
