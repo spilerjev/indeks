@@ -13,8 +13,92 @@ function inline(s) {
   return s;
 }
 
+/* Zasebnost: ZAPISKI.md so osebni zapiski, app pa berejo vsi. Pred pretvorbo:
+   - izpustimo vrstice in razdelke (do naslednjega naslova iste ali višje ravni) z oznako 🔒 ali s sestavo skupin/osebnimi roki,
+   - osebne fraze (»moje rešitve«, »Leon s predavanja«, »Majini zapiski, ko me ni bilo« ...) prepišemo v nevtralne. */
+const PRIVATE_SECTION = /🔒|\bnaš[ae]? seminarsk|\bmoj del\b|\bmoja skupina\b|\bpredstavitev\b.*\bmoj/i;
+const PRIVATE_LINE = /🔒|\b(Skupina|skupine|Delitev dela|Oblikovanje seminarskih skupin)\b.*\b(Leon|Hana|Tinkara|Aljaž|Maja|Matjaž)\b|\bmoja skupina\b|\bprijavljen\b.*\boddano\b/i;
+const PRIVATE_REPLACE = [
+  [/→ ✅ \*\*prijavljen\*\* \(oddano[^)]*\)\.?/g, ''],
+  [/Dopolnjujem sproti, ko Leon kaj sliši na predavanjih ali vajah\./g, 'Dopolnjeno sproti po navodilih s predavanj in vaj.'],
+  [/Vir: Leon z vaj,?/g, 'Vir: vaje,'],
+  [/\(Predavanje [^)]*sem zamudil, povzetek je narejen iz prosojnic\.\)/g, '(Povzetek je narejen iz prosojnic.)'],
+  [/Praznine sem izpolnil vnaprej iz učbeniške logike; ko prof razloži, preveri\./g, 'Praznine so izpolnjene vnaprej po učbeniški logiki; preveri z razlago profesorice.'],
+  [/Kjer sem ugibal, je 🔎/g, 'Negotova mesta so označena s 🔎'],
+  [/ - Leon Špiler \(osnutek\)/g, ' (osnutek)'],
+  [/📒 Majini zapiski — /g, '📒 Dopolnilni zapiski — '],
+  [/, ko me ni bilo\)/g, ')'],
+  [/Majine izpolnjene prosojnice potrjujejo, kar sem zgoraj izpolnil sam \(tudi 🔎 ugibanja\)/g, 'Izpolnjene prosojnice s predavanj potrjujejo zgornje (tudi 🔎 ugibanja)'],
+  [/Majine prosojnice z ročnimi zapiski/g, 'prosojnice z ročnimi zapiski s predavanj'],
+  [/Njene številke se ujemajo z mojimi rešitvami zgoraj/g, 'Številke se ujemajo z rešitvami zgoraj'],
+  [/\(Majin zapis s predavanja\)/g, '(zapis s predavanja)'],
+  [/\(po Majinih zapiskih\)/g, '(po zapiskih s predavanja)'],
+  [/prej sem napačno sklepal na/g, 'prejšnji zapis je napačno navajal'],
+  [/rešitve z vaj \(Maja\)/g, 'rešitve z vaj'],
+  [/Vse se ujema z mojimi:/g, 'Vse se ujema z rešitvami zgoraj:'],
+  [/Majine ročne rešitve z vaj 1–4 se \*\*ujemajo z mojimi V01–V04\*\*/g, 'Ročne rešitve z vaj 1–4 se **ujemajo z V01–V04**'],
+  [/Vaje 5 in 6 v njenem PDF-ju nimajo rešitev\. Dve njeni številki sta prepisni napaki/g, 'Vaje 5 in 6 v tem PDF-ju nimajo rešitev. Dve številki sta prepisni napaki'],
+  [/Rezultati so enaki mojim zgoraj/g, 'Rezultati so enaki zgornjim'],
+  [/\(moje zgoraj z b = /g, '(zgornji z b = '],
+  [/Leon piše v VELIKI DVORANI \(VD\)\*\* \(priimki S–Ž\)/g, 'priimki S–Ž pišejo v VELIKI DVORANI (VD)**'],
+  [/verjetnost, da je Leon v ekipi/g, 'verjetnost, da je določen študent v ekipi'],
+  [/\(oba naša CSV-ja/g, '(oba CSV-ja'],
+  [/\(ta je moj, preveri z R\.\)/g, '(lasten izračun, preveri z R.)'],
+  [/\(Izračun je moj, ker je vaja prazna; preveri\.\)/g, '(lasten izračun, ker je vaja prazna; preveri.)'],
+  [/nisem prepričan, kaj točno je mišljeno/g, 'ni jasno, kaj točno je mišljeno'],
+  [/\(moja razvrstitev, preveri/g, '(razvrstitev, preveri'],
+  [/Vse številke spodaj sem preveril z izračunom\./g, 'Vse številke spodaj so preverjene z izračunom.'],
+  [/Leonovi zapiski s predavanja:/g, 'Zapiski s predavanja:'],
+  [/Leonova ugotovitev:/g, 'Ugotovitev s predavanja:'],
+  [/\(Leon s predavanja ✅:/g, '(s predavanja:'],
+  [/Leon s predavanja ✅:/g, 'S predavanja:'],
+  [/✅ Leon:/g, 'S predavanja:'],
+  [/Leon ✅:/g, 'S predavanja:'],
+  [/\(Leon ✅\)/g, '(s predavanja)'],
+  [/\(Leon: /g, '(s predavanja: '],
+  [/ Leon: \*/g, ' S predavanja: *'],
+  [/\(Leon, (\d{1,2}\. \d{1,2}\. \d{4})\)/g, '(zapis z vaj, $1)'],
+  [/\(moj zapis na vajah\)/g, '(zapis z vaj)'],
+  [/\bMoje rešitve\b/g, 'Rešitve'],
+  [/\bmoje rešitve\b/g, 'rešitve'],
+  [/\bMoj primer\b/g, 'Primer'],
+  [/\bMoj izračun\b/g, 'Izračun'],
+  [/\bmoj izračun\b/g, 'izračun'],
+  [/\bMoj amortizacijski načrt\b/g, 'Amortizacijski načrt'],
+  [/\bMoja razlaga\b/g, 'Razlaga'],
+  [/\bmoja razlaga\b/g, 'razlaga'],
+  [/\bMoja presoja\b/g, 'Presoja'],
+  [/\bMoj predlog\b/g, 'Predlog'],
+  [/je moj dodatek/g, 'je dodatek k prosojnicam'],
+  [/\(moji odgovori za razumevanje\)/g, '(odgovori za razumevanje)'],
+  [/potrebe moje raziskave/g, 'potrebe raziskave'],
+  [/mene pa zanima/g, 'raziskovalca pa zanima'],
+  [/\(koliko lahko zaslužim drugje\)/g, '(koliko je mogoče zaslužiti drugje)'],
+  [/ali bom 107 € res dobil/g, 'ali bo 107 € res izplačanih'],
+  [/ta je moj, preveri z R\./g, 'lasten izračun, preveri z R.'],
+  [/ - Maja\.pdf/g, '.pdf'],
+  [/\(jaz 39,24/g, '(tu 39,24'],
+];
+function scrubPrivate(md) {
+  for (const [re, to] of PRIVATE_REPLACE) md = md.replace(re, to);
+  const out = []; let skipLevel = 0;
+  for (const line of md.replace(/\r/g, '').split('\n')) {
+    const h = line.match(/^(#{1,6})\s+(.*)$/);
+    if (h) {
+      const level = h[1].length;
+      if (skipLevel && level > skipLevel) continue;
+      skipLevel = 0;
+      if (PRIVATE_SECTION.test(h[2])) { skipLevel = level; continue; }
+    } else if (skipLevel) continue;
+    if (PRIVATE_LINE.test(line)) continue;
+    out.push(line);
+  }
+  return out.join('\n');
+}
+
 function render(md, opts = {}) {
   for (const [a, b] of opts.replace || []) md = typeof a === 'string' ? md.split(a).join(b) : md.replace(a, b);
+  md = scrubPrivate(md);
   const skip = (opts.skip || []).map((x) => x.toLowerCase());
   const lines = md.replace(/\r/g, '').split('\n');
   const out = [];
@@ -84,4 +168,4 @@ function render(md, opts = {}) {
   return out.join('\n').replace(/<ul><li>\s*<\/li><\/ul>/g, '').replace(/ ?— ?/g, ' - ');
 }
 
-module.exports = { render };
+module.exports = { render, scrubPrivate };
