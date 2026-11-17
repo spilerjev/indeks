@@ -671,6 +671,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
   border-radius:13px;padding:14px 16px;cursor:pointer;transition:all .14s;font-size:15px;}
 .ix-opt:hover:not(:disabled),.ix-opt.kbsel{border-color:var(--ink);transform:translateX(3px);}
 .ix-opt.kbsel{box-shadow:0 0 0 3px color-mix(in srgb, var(--ink) 14%, transparent);}
+.ix-opts.kbnav .ix-opt:hover:not(.kbsel){border-color:transparent;transform:none;}
 .ix-opt:disabled{cursor:default;}
 .ix-kbd{display:inline-block;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink2);background:var(--paper2);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:3px 6px;min-width:12px;text-align:center;}
 .ix-kbdhint{display:none;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12px;color:var(--ink2);margin-top:14px;}
@@ -2677,7 +2678,7 @@ function QuizView({ route, go, record, userId, duel }) {
           )}
         </div>
       ) : (
-      <div style={{ display: "grid", gap: 10 }}>
+      <div className={"ix-opts" + (!answered && cur != null ? " kbnav" : "")} onMouseMove={() => { if (!answered && cur != null) setCur(null); }} style={{ display: "grid", gap: 10 }}>
         {q.options.map((opt, idx) => {
           let st = {};
           if (answered) {
@@ -2687,7 +2688,7 @@ function QuizView({ route, go, record, userId, duel }) {
           } else if (idx === hideOpt) st = { opacity: 0.3, textDecoration: "line-through" };
           else if (reveal && idx === q.correct) st = { borderColor: "var(--teal)", background: "var(--okbg)" };
           return (
-            <button key={idx} className={"ix-opt" + (!answered && idx === cur ? " kbsel" : "")} disabled={answered || idx === hideOpt} onClick={() => choose(idx)} onMouseEnter={() => { if (!answered && cur != null) setCur(null); }} style={st}>
+            <button key={idx} className={"ix-opt" + (!answered && idx === cur ? " kbsel" : "")} disabled={answered || idx === hideOpt} onClick={() => choose(idx)} style={st}>
               <span style={{ display: "flex", alignItems: "center", gap: 11 }}>
                 <span style={{ fontWeight: 700, color: "var(--ink2)", fontSize: 13 }}><span className="ix-optkey-letter">{"ABCDEF"[idx]}</span><kbd className="ix-kbd ix-optkey-num">{idx + 1}</kbd></span>
                 <span style={{ flex: 1 }}>{opt}</span>
