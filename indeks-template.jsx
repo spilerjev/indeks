@@ -3,7 +3,7 @@ import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
   BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search,
-  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List
+  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List, ListChecks, Plus
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { createPortal } from "react-dom";
@@ -39,7 +39,8 @@ const store = (() => {
 })();
 const STATS_KEY = "indeks.stats.v1";
 const MIX_KEY = "indeks.mixuse.v1";
-const READ_KEY = "indeks.readpos.v1";    // zaznamek v zapiskih (zadnje prebrano mesto) po delu
+const READ_KEY = "indeks.readpos.v1";
+const CHECK_KEY = "indeks.checklist.v1";  // osebni seznam opravil na profilu (prijave na kolokvije ipd.)    // zaznamek v zapiskih (zadnje prebrano mesto) po delu
 const RESUME_KEY = "indeks.resume.v1";   // nedokončani kvizi (vrstni red vprašanj, odgovori) po kompletu
 const RANKED_N = 10;                     // ranked: število vprašanj
 const RANKED_SECONDS = 600;              // ranked: časovna omejitev (10 min)
@@ -3307,6 +3308,8 @@ function ProfileView({ user, soc, socErr, reload, go }) {
         )}
       </div>
 
+      <Checklist user={user} year={p.letnik ? +p.letnik : storedYear()} />
+
       {/* PRIJATELJI */}
       <div className="ix-card" style={{ padding: 22, marginBottom: 18 }}>
         <div className="ix-sec" style={{ color: "var(--teal)" }}><Users size={14} /> Prijatelji {soc && soc.friends && soc.friends.length ? `(${soc.friends.length})` : ""}</div>
@@ -4113,6 +4116,71 @@ function Stat({ big, label }) {
    skupnost (povprečje, lestvica rankeda) in naslednji roki. Dele brez datuma preskoči; dan po roku izgine. */
 const DAYS_SL = ["ned", "pon", "tor", "sre", "čet", "pet", "sob"];
 function fmtExamDate(iso) { const d = new Date(iso); const t = /T(\d{2}:\d{2})/.exec(iso); return `${DAYS_SL[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.` + (t ? ` ob ${t[1]}` : ""); }
+/* Osebni seznam opravil na profilu: samodejne postavke za prihajajoče kolokvije z datumom (prijava v Canvasu), ki jih vsak označi zase,
+   plus lastne postavke. Shrani se v brskalnik (CHECK_KEY) in na račun (user_metadata.checklist); novejši vnos (t) zmaga. */
+function mergeChecks(a, b) { const out = { ...(a || {}) }; Object.keys(b || {}).forEach((k) => { if (!out[k] || (b[k].t || 0) > (out[k].t || 0)) out[k] = b[k]; }); return out; }
+let checksTimer = null;
+function pushChecks(user) {
+  if (!user) return;
+  if (checksTimer) clearTimeout(checksTimer);
+  checksTimer = setTimeout(() => {
+    const all = store.get(CHECK_KEY, {});
+    const keys = Object.keys(all).sort((x, y) => (all[y].t || 0) - (all[x].t || 0)).slice(0, 60);
+    const trimmed = {}; keys.forEach((k) => { trimmed[k] = all[k]; });
+    supabase.auth.updateUser({ data: { checklist: trimmed } }).then(({ error }) => { if (error) console.warn("indeks seznam: " + error.message); });
+  }, 1200);
+}
+function autoChecks(year) {
+  const now = Date.now();
+  return DATA.filter((sem) => !year || sem.year === year).flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => p.date).map((p) => ({
+    id: `auto:${sem.id}/${subj.id}/${p.id}`, t0: new Date(p.date).getTime(),
+    text: `Prijava na ${subj.name} · ${p.name}`,
+    sub: p.signup ? `rok ${fmtExamDate(p.signup)}` : `${p.type === "izpit" ? "izpit" : "kolokvij"} ${fmtExamDate(p.date)}`,
+    late: p.signup ? new Date(p.signup).getTime() < now : false,
+  })))).filter((x) => x.t0 > now - 36e5).sort((a, b) => a.t0 - b.t0);
+}
+function Checklist({ user, year }) {
+  const [all, setAll] = useState(() => store.get(CHECK_KEY, {}));
+  const [draft, setDraft] = useState("");
+  useEffect(() => {
+    if (!user) return;
+    let c = false;
+    supabase.auth.getUser().then(({ data }) => {
+      if (c) return;
+      const cloud = data && data.user && data.user.user_metadata && data.user.user_metadata.checklist;
+      if (!cloud) return;
+      const merged = mergeChecks(store.get(CHECK_KEY, {}), cloud); store.set(CHECK_KEY, merged); setAll(merged);
+    }).catch(() => {});
+    return () => { c = true; };
+  }, [user && user.id]); // eslint-disable-line
+  function put(id, patch) { const next = { ...store.get(CHECK_KEY, {}) }; next[id] = { ...(next[id] || {}), ...patch, t: Date.now() }; store.set(CHECK_KEY, next); setAll(next); pushChecks(user); }
+  function add() { const text = draft.trim(); if (!text) return; put("c:" + Date.now().toString(36), { text, done: false }); setDraft(""); }
+  const auto = autoChecks(year).filter((x) => !(all[x.id] && all[x.id].del));
+  const custom = Object.keys(all).filter((k) => k.startsWith("c:") && !all[k].del).map((k) => ({ id: k, text: all[k].text, custom: true })).sort((a, b) => (all[a.id].t0 || 0) - (all[b.id].t0 || 0));
+  const items = [...auto, ...custom];
+  const left = items.filter((x) => !(all[x.id] && all[x.id].done)).length;
+  return (
+    <div className="ix-card" style={{ padding: 22, marginBottom: 18 }}>
+      <div className="ix-sec" style={{ color: "var(--terra)" }}><ListChecks size={14} /> Moj seznam {items.length ? `(${left} odprtih)` : ""}</div>
+      <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55, marginBottom: 6 }}>Tvoj osebni seznam: prijave na kolokvije in kar si še želiš zapomniti. Vidiš ga samo ti, shrani se na račun.</div>
+      {items.length === 0 && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 4 }}>Trenutno ni napovedanih kolokvijev. Dodaj si lastno opravilo spodaj.</div>}
+      {items.map((x) => { const st = all[x.id] || {}; const done = !!st.done; return (
+        <div key={x.id} className="ix-row" style={{ flexWrap: "nowrap" }}>
+          <button onClick={() => put(x.id, { done: !done })} aria-label={done ? "Označi kot neopravljeno" : "Označi kot opravljeno"} style={{ width: 22, height: 22, borderRadius: 6, border: "1.5px solid " + (done ? "var(--teal)" : "var(--line)"), background: done ? "var(--teal)" : "transparent", color: "var(--paper)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0, padding: 0 }}>{done && <Check size={14} strokeWidth={3} />}</button>
+          <span style={{ flex: 1, fontSize: 14, minWidth: 0, textDecoration: done ? "line-through" : "none", color: done ? "var(--ink2)" : "var(--ink)" }}>
+            {x.text}{x.sub && <span style={{ color: !done && x.late ? "var(--red)" : "var(--ink2)", fontSize: 12.5 }}> · {x.sub}{!done && x.late ? " (potekel)" : ""}</span>}
+          </span>
+          <button onClick={() => put(x.id, { del: true })} aria-label="Odstrani" title="Odstrani s seznama" style={{ background: "none", border: 0, color: "var(--ink2)", cursor: "pointer", padding: 4, flexShrink: 0 }}><X size={15} /></button>
+        </div>
+      ); })}
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <input value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") add(); }} placeholder="Novo opravilo (npr. preveri Canvas)" maxLength={80} className="ix-input" style={{ flex: 1, minWidth: 0 }} />
+        <button onClick={add} disabled={!draft.trim()} className="ix-pill on" style={{ flexShrink: 0 }}><Plus size={13} style={{ verticalAlign: -2 }} /> Dodaj</button>
+      </div>
+    </div>
+  );
+}
+
 function NextUp({ sems, stats, comm, go, userId }) {
   const now = Date.now();
   const items = sems.flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => p.date).map((p) => ({ sem, subj, part: p, t: new Date(p.date).getTime() }))))

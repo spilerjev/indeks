@@ -190,7 +190,7 @@ module.exports = {
   id: 'eeu',
   parts: [
     {
-      id: 'k1', name: 'Kolokvij (24. 11.)', type: 'kolokvij', date: '2026-11-24T17:00',
+      id: 'k1', name: 'Kolokvij (24. 11.)', type: 'kolokvij', date: '2026-11-24T17:00', signup: '2026-11-22T23:59',
       notes: {
         file: '2. letnik (2026-27)/1. semester/Ekonomika EU in Slovenija/ZAPISKI.md',
         skip: ['naša seminarska'],

@@ -28,7 +28,7 @@ for (const mod of MODULES) {
   if (!subj) throw new Error('Ni predmeta ' + mod.id);
   subj.parts = mod.parts.map((mp) => {
     const ex = subj.parts.find((p) => p.id === mp.id) || {};
-    const part = { ...ex, id: mp.id, name: mp.name, type: mp.type, ...(mp.date ? { date: mp.date } : {}), decks: ex.decks ? [...ex.decks] : [] };
+    const part = { ...ex, id: mp.id, name: mp.name, type: mp.type, ...(mp.date ? { date: mp.date } : {}), ...(mp.signup ? { signup: mp.signup } : {}), decks: ex.decks ? [...ex.decks] : [] };
     upsert(part.decks, mp.decks);
     if (mp.flashcards) { part.flashcards = part.flashcards ? [...part.flashcards] : []; upsert(part.flashcards, mp.flashcards); }
     if (mp.notes) {

@@ -19,7 +19,7 @@ function inline(s) {
 const PRIVATE_SECTION = /🔒|\bnaš[ae]? seminarsk|\bmoj del\b|\bmoja skupina\b|\bpredstavitev\b.*\bmoj/i;
 const PRIVATE_LINE = /🔒|\b(Skupina|skupine|Delitev dela|Oblikovanje seminarskih skupin)\b.*\b(Leon|Hana|Tinkara|Aljaž|Maja|Matjaž)\b|\bmoja skupina\b|\bprijavljen\b.*\boddano\b/i;
 const PRIVATE_REPLACE = [
-  [/→ ✅ \*\*prijavljen\*\* \(oddano[^)]*\)\.?/g, ''],
+  [/\s*→ ✅ \*\*prijavljen\*\* \(oddano[^)]*\)\.?/g, '.'],
   [/Dopolnjujem sproti, ko Leon kaj sliši na predavanjih ali vajah\./g, 'Dopolnjeno sproti po navodilih s predavanj in vaj.'],
   [/Vir: Leon z vaj,?/g, 'Vir: vaje,'],
   [/\(Predavanje [^)]*sem zamudil, povzetek je narejen iz prosojnic\.\)/g, '(Povzetek je narejen iz prosojnic.)'],
