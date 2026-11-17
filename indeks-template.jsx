@@ -77,23 +77,37 @@ const RANKED_RECENT = 3;
 const RANKED_SEEN_KEY = "indeks.rankedseen.v1";
 function rankedSample(pool, n, partKey) {
   const seen = new Set((store.get(RANKED_SEEN_KEY, {})[partKey]) || []);
-  const items = pool.map((q) => ({ q, w: seen.has(qid(q)) ? 0.3 : 1 }));
-  const out = [];
-  n = Math.min(n, items.length);
-  for (let k = 0; k < n; k++) {
-    let tot = 0;
-    for (const it of items) tot += it.w;
-    let r = Math.random() * tot, idx = items.length - 1;
-    for (let i = 0; i < items.length; i++) { r -= items[i].w; if (r <= 0) { idx = i; break; } }
-    out.push(items[idx].q);
-    items.splice(idx, 1);
-  }
+  const pick = (from, k) => {
+    const items = from.map((q) => ({ q, w: seen.has(qid(q)) ? 0.3 : 1 }));
+    const res = [];
+    k = Math.min(k, items.length);
+    for (let j = 0; j < k; j++) {
+      let tot = 0;
+      for (const it of items) tot += it.w;
+      let r = Math.random() * tot, idx = items.length - 1;
+      for (let i = 0; i < items.length; i++) { r -= items[i].w; if (r <= 0) { idx = i; break; } }
+      res.push(items[idx].q);
+      items.splice(idx, 1);
+    }
+    return res;
+  };
+  const out = withOneMatch(pool, Math.min(n, pool.length), pick);
   const all = store.get(RANKED_SEEN_KEY, {});
   all[partKey] = out.map(qid).concat(all[partKey] || []).slice(0, n * RANKED_RECENT);
   store.set(RANKED_SEEN_KEY, all);
   return out;
 }
-const rankedPool = (part) => part.decks.flatMap((d) => d.questions).filter((q) => q.options && q.options.length >= 2);
+const isMatchQ = (q) => q.type === "match" && Array.isArray(q.pairs) && q.pairs.length >= 3;
+const MATCH_MULT = 1.5;   // naloga povezovanja: 1,5× točk (ranked) in 1,5× škoda/točke (1v1)
+const rankedPool = (part) => part.decks.flatMap((d) => d.questions).filter((q) => (q.options && q.options.length >= 2) || isMatchQ(q));
+/* V vsak ranked/1v1 niz vzamemo največ eno nalogo povezovanja (če obstaja) na naključno mesto; pick(items, k) izbere k elementov. */
+function withOneMatch(pool, n, pick) {
+  const m = pool.filter(isMatchQ), rest = pool.filter((q) => !isMatchQ(q));
+  if (!m.length || n < 2 || !rest.length) return pick(pool.filter((q) => !isMatchQ(q)).length >= n ? rest : pool, n);
+  const out = pick(rest, Math.min(n - 1, rest.length));
+  out.splice(Math.floor(Math.random() * (out.length + 1)), 0, pick(m, 1)[0]);
+  return out;
+}
 /* Nedokončan kviz: shranimo celoten potek (največ 12 kompletov, največ 14 dni). */
 function loadResume() { return store.get(RESUME_KEY, {}); }
 function saveResume(key, state) {
@@ -2426,10 +2440,11 @@ function QuizView({ route, go, record, userId, duel }) {
     const allCorrect = q.pairs.every((_, t) => mMap[t] === t);
     setPicked(allCorrect ? 1 : 0);
     recordQ(q, allCorrect);
+    if (ranked) pointsRef.current += Math.round(MATCH_MULT * rankedQPoints(allCorrect, (Date.now() - qStartT.current) / 1000));
     const nc = correctCount + (allCorrect ? 1 : 0), nw = allCorrect ? wrong : [...wrong, { ...q, mMap: { ...mMap } }];
     setCorrect(nc); setWrong(nw);
     sfx(allCorrect ? "correct" : "wrong");
-    if (duel) duel.onAnswer(allCorrect, allCorrect ? null : { ...q, mMap: { ...mMap } });
+    if (duel) duel.onAnswer(allCorrect, allCorrect ? null : { ...q, mMap: { ...mMap } }, MATCH_MULT);
     if (!exam) { liveRecord(nc, i + 1, false); persist(nc, nw, i, allCorrect ? 1 : 0); }
   }
   const poolVal = (pid) => { const p = (q._pool || []).find((x) => x.id === pid); return p ? p.val : null; };
@@ -2584,6 +2599,7 @@ function QuizView({ route, go, record, userId, duel }) {
 
       {q.type === "match" ? (
         <div>
+          {exam && <div className="ix-chip" style={{ color: "var(--terra)", marginBottom: 6 }}>Povezovanje · {MATCH_MULT.toString().replace(".", ",")}× {ranked ? "točk" : "škode in točk"}</div>}
           <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 12 }}>Klikni pojem, nato ustrezno definicijo. Ko povežeš vse, klikni „Preveri".</div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             <div style={{ display: "grid", gap: 8 }}>
@@ -2833,7 +2849,7 @@ function rpcErr(error, fallback) {
 }
 /* ID vprašanja za match: besedilo + možnosti (qid uporablja samo besedilo, ki se lahko ponovi). */
 function duelQid(q) {
-  const s = (q.q || "") + "|" + (q.options || []).join("|");
+  const s = (q.q || "") + "|" + (q.options || []).join("|") + (q.pairs ? "|" + q.pairs.map((p) => p.term).join("|") : "");
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
   return "d" + (h >>> 0).toString(36);
@@ -2864,7 +2880,8 @@ async function createChallenge(opponentIds, sem, subj, part, mode, winId) {
   const wr = (!battle && WIN_RULES.find((w) => w.id === winId)) || WIN_RULES[0];
   const want = battle ? DUEL_BATTLE_N : wr.rule === "questions" ? wr.value : 60;
   const seen = new Set(); const ids = [];
-  shuffle(pool).forEach((q) => { const id = duelQid(q); if (ids.length < want && !seen.has(id)) { seen.add(id); ids.push(id); } });
+  const uniq = (from, k) => { const res = []; const s2 = new Set(); shuffle(from).forEach((q) => { const id = duelQid(q); if (res.length < k && !s2.has(id)) { s2.add(id); res.push(q); } }); return res; };
+  withOneMatch(pool, want, uniq).forEach((q) => { const id = duelQid(q); if (!seen.has(id)) { seen.add(id); ids.push(id); } });
   const { data, error } = await supabase.rpc("create_challenge", { p_opponents: opponentIds, p_part_key: `${sem.id}/${subj.id}/${part.id}`, p_part_name: `${subj.name} · ${part.name}`, p_question_ids: ids, p_mode: mode || "classic",
     p_seconds_limit: battle ? DUEL_BATTLE_SECONDS : wr.rule === "time" ? wr.value : wr.rule === "points" ? 900 : RANKED_SECONDS, p_win_rule: wr.rule, p_win_value: wr.rule === "points" ? wr.value : null });
   return { id: data, error: rpcErr(error) };
@@ -3717,9 +3734,14 @@ function DuelView({ route, go, userId, formulas, soc, setNavGuard }) {
     if (data && data.server_now) applySt(data); else await load();
     if (after) after();
   }
-  function onAnswer(ok, entry) {
+  function onAnswer(ok, entry, mult) {
     if (!ok && entry) setWrong((w) => [...w, entry]);
-    supabase.rpc("duel_answer", { p_id: id, p_ok: !!ok }).then(({ data, error }) => { if (error) setErr(rpcErr(error)); applySt(data); });
+    const base = { p_id: id, p_ok: !!ok };
+    const call = (args) => supabase.rpc("duel_answer", args);
+    (mult && mult !== 1 ? call({ ...base, p_mult: mult }) : call(base)).then(({ data, error }) => {
+      if (error && mult && mult !== 1 && /p_mult|duel_answer\(/.test(error.message || "")) return call(base);   // strežnik še brez množitelja
+      return { data, error };
+    }).then(({ data, error }) => { if (error) setErr(rpcErr(error)); applySt(data); });
   }
   function onFinish() {
     setLocalDone(true);

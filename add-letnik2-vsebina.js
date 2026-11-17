@@ -45,6 +45,17 @@ for (const mod of MODULES) {
   console.log(`${subj.name}: ${q} vprašanj, ${c} kartic, zapiski: ${subj.parts.filter((p) => p.notes).map((p) => p.id).join(', ') || '-'}`);
 }
 
+// Naloge povezovanja (letnik2-src/povezi.js): dodane k obstoječim delom, sklopi se zamenjajo po id
+for (const mod of require('./letnik2-src/povezi')) {
+  const subj = sem.subjects.find((s) => s.id === mod.id);
+  if (!subj) throw new Error('Ni predmeta ' + mod.id);
+  for (const mp of mod.parts) {
+    const part = subj.parts.find((p) => p.id === mp.id);
+    if (!part) throw new Error('Ni dela ' + mod.id + '/' + mp.id);
+    upsert(part.decks, mp.decks);
+  }
+}
+
 // Težji odgovori (letnik2-src/harden/<predmet>*.js, glej harden-lib.js)
 const { applyHarden } = require('./harden-lib');
 for (const subj of sem.subjects) {
