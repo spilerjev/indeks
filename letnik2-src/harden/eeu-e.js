@@ -32,7 +32,7 @@ module.exports = [
     'Dogovor o postopni uvedbi skupne valute',
     'Pravila in merila za pristop novih članic'], 3,
     'Praktični veto pri ključnih nacionalnih interesih'],
-  ['Kateri dogodek je sprožil 2. naftni šok (1979)?', [
+  ['Kateri dogodek je sprožil 2. naftni šok?', [
     'Jomkipurska vojna (1973)', 'Zalivska vojna (1990)', 'Razpad Sovjetske zveze (1991)'], 0, 'Iranska revolucija (1979)'],
   ['Katera je bila svetla točka obdobja evropesimizma?', [
     'Politika praznega stola in luksemburški kompromis',

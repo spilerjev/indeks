@@ -80,7 +80,7 @@ const krogi = [
     'Evro je prišel 1999/2002. Šoki: Bretton Woods, propadel Wernerjev plan, naftna šoka in stagflacija, tehnične ovire, stroški SKP.'),
   Q('Kaj je stagflacija?', ['Visoka rast in nizka inflacija', 'Visoka inflacija in hkrati stagnacija (nizka rast, brezposelnost)', 'Deflacija', 'Hitra rast cen delnic'], 1,
     'Dražja nafta = šok na strani ponudbe; ekspanzivna politika je inflacijo še pospešila.'),
-  Q('Kateri dogodek je sprožil 2. naftni šok (1979)?', ['Jomkipurska vojna', 'Iranska revolucija (padec šaha)', 'Zalivska vojna', 'Razpad SZ'], 1,
+  Q('Kateri dogodek je sprožil 2. naftni šok?', ['Jomkipurska vojna', 'Iranska revolucija (padec šaha)', 'Zalivska vojna', 'Razpad SZ'], 1,
     '1. šok (1973): Egipt in Sirija napadeta Izrael, embargo OAPEC, cena nafte se početveri.'),
   Q('Katera je bila svetla točka obdobja evropesimizma?', ['Politika praznega stola', 'Demokratizacija juga (širitve 1981 Grčija, 1986 Španija in Portugalska) in EMS (1979)', 'Propad Wernerjevega plana', 'Britanski rabat'], 1,
     'Tudi: prve neposredne volitve v EP (1979), ustanovitev Evropskega sveta (1974), proračunski pogodbi, Cassis de Dijon.'),
