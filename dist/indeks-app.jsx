@@ -1452,7 +1452,7 @@ export default function App() {
             {route.view === "profile" && <ProfileView user={session.user} soc={soc} socErr={socErr} reload={reloadSocial} go={setRoute} />}
             {route.view === "duel" && <GlossCtx.Provider value={false}><DuelView route={route} go={setRoute} userId={userId} formulas={formulas} soc={soc} setNavGuard={setNavGuard} /></GlossCtx.Provider>}
             {route.view === "notes" && <NotesView route={route} go={setRoute} user={session && session.user} />}
-            {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView route={route} go={setRoute} record={record} userId={userId || null} /></GlossCtx.Provider>}
+            {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView key={[route.sem, route.subj, route.part, route.deck].join("/")} route={route} go={setRoute} record={record} userId={userId || null} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
             {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
             {formulas && route.subj && ["quiz", "cards", "notes", "part", "subject"].indexOf(route.view) >= 0 && !(route.view === "quiz" && route.deck === "__ranked" && RANKED_FORMULAS.indexOf(route.subj) < 0) && <FormulaDock key={route.subj} subjId={route.subj} />}
@@ -2193,6 +2193,8 @@ function QuizView({ route, go, record, userId, duel }) {
   const mixN = duel ? duel.questions.length : ranked ? Math.min(RANKED_N, pool.length) : mixed ? Math.min(20, pool.length) : pool.length;
   const key = `${sem.id}/${subj.id}/${part.id}/${deck.id}`;
   const backToPart = () => go({ view: "part", sem: sem.id, subj: subj.id, part: part.id });
+  const nextDeck = (!duel && !ranked && !mixed && deck) ? (part.decks[part.decks.indexOf(deck) + 1] || null) : null;   // naslednji sklop v istem delu (tipka N)
+  const goNext = () => { if (nextDeck) go({ view: "quiz", sem: sem.id, subj: subj.id, part: part.id, deck: nextDeck.id }); };
 
   function buildRun(doShuffle) {
     let base;
@@ -2256,7 +2258,7 @@ function QuizView({ route, go, record, userId, duel }) {
         else if (!st.mixed && (k === "m" || k === "M")) { e.preventDefault(); st.begin(true); }
         return;
       }
-      if (st.done) { if (k === "r" || k === "R") { e.preventDefault(); st.restart(); } return; }
+      if (st.done) { if (k === "r" || k === "R") { e.preventDefault(); st.restart(); } else if ((k === "n" || k === "N") && st.goNext) { e.preventDefault(); st.goNext(); } return; }
       const q = st.q; if (!q) return;
       if (!st.answered) {
         if (q.type === "match" || q.type === "grid") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
@@ -2273,7 +2275,7 @@ function QuizView({ route, go, record, userId, duel }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-  kb.current = { started, done, mixed, begin, restart };
+  kb.current = { started, done, mixed, begin, restart, goNext: nextDeck ? goNext : null };
 
   function reset() { setI(0); setPicked(null); setCorrect(0); setWrong([]); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({}); saved.current = false; attemptT.current = Date.now(); setLeft(RANKED_SECONDS); qStartT.current = Date.now(); pointsRef.current = 0; setLastRun(null); }
   function begin(doShuffle) { if (duel) return; setShuffleQ(doShuffle); const r = buildRun(doShuffle); setRun(r); reset(); setStarted(true); if (!exam) saveResume(key, null); }
@@ -2494,11 +2496,14 @@ function QuizView({ route, go, record, userId, duel }) {
             <button onClick={restart} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "11px 18px", display: "flex", alignItems: "center", gap: 7 }}>
               <RotateCcw size={16} /> Ponovi
             </button>
+            {nextDeck && <button onClick={goNext} className="ix-btn" style={{ background: "var(--terra)", color: "var(--paper)", border: "1px solid var(--terra)", padding: "11px 18px", display: "flex", alignItems: "center", gap: 7, maxWidth: "100%" }}>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Naprej: {nextDeck.name}</span> <ChevronRight size={16} style={{ flexShrink: 0 }} />
+            </button>}
             <button onClick={backToPart} className="ix-btn" style={{ background: "transparent", color: "var(--ink)", border: "1px solid var(--ink)", padding: "11px 18px" }}>
               Nazaj na kolokvij
             </button>
           </div>
-          <div className="ix-kbdhint" style={{ justifyContent: "center" }}><span><kbd className="ix-kbd">R</kbd> ponovi</span></div>
+          <div className="ix-kbdhint" style={{ justifyContent: "center" }}><span><kbd className="ix-kbd">R</kbd> ponovi</span>{nextDeck && <span><kbd className="ix-kbd">N</kbd> naslednji sklop</span>}</div>
         </div>
         {ranked && <Leaderboard partKey={key} userId={userId} partName={part.name} bump={lbBump} />}
 
