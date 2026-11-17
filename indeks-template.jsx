@@ -669,7 +669,8 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-chip{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink2);}
 .ix-opt{text-align:left;width:100%;background:var(--paper2);border:1.5px solid transparent;
   border-radius:13px;padding:14px 16px;cursor:pointer;transition:all .14s;font-size:15px;}
-.ix-opt:hover:not(:disabled){border-color:var(--ink);transform:translateX(3px);}
+.ix-opt:hover:not(:disabled),.ix-opt.kbsel{border-color:var(--ink);transform:translateX(3px);}
+.ix-opt.kbsel{box-shadow:0 0 0 3px color-mix(in srgb, var(--ink) 14%, transparent);}
 .ix-opt:disabled{cursor:default;}
 .ix-kbd{display:inline-block;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink2);background:var(--paper2);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:3px 6px;min-width:12px;text-align:center;}
 .ix-kbdhint{display:none;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12px;color:var(--ink2);margin-top:14px;}
@@ -2207,6 +2208,8 @@ function QuizView({ route, go, record, userId, duel }) {
   const [run, setRun] = useState(() => (duel ? buildRun(true) : []));
   const [i, setI] = useState(duel ? Math.min(duel.resumeAnswered || 0, Math.max(0, duel.questions.length - 1)) : 0);
   const [picked, setPicked] = useState(null);
+  const [cur, setCur] = useState(null);          // s puščicami označen odgovor (potrdi Enter/presledek)
+  useEffect(() => { setCur(null); }, [i, run, started]);
   const [correctCount, setCorrect] = useState(duel ? (duel.resumeCorrect || 0) : 0);
   const [wrong, setWrong] = useState([]);
   const [done, setDone] = useState(false);
@@ -2257,6 +2260,8 @@ function QuizView({ route, go, record, userId, duel }) {
       const q = st.q; if (!q) return;
       if (!st.answered) {
         if (q.type === "match" || q.type === "grid") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
+        if (k === "ArrowDown" || k === "ArrowUp") { e.preventDefault(); st.move(k === "ArrowDown" ? 1 : -1); return; }
+        if ((k === "Enter" || k === " ") && st.cur != null) { e.preventDefault(); st.choose(st.cur); return; }
         const n = parseInt(k, 10);
         if (n >= 1 && n <= q.options.length) { e.preventDefault(); st.choose(n - 1); return; }
         const li = k.length === 1 ? "abcdef".indexOf(k.toLowerCase()) : -1;
@@ -2372,7 +2377,8 @@ function QuizView({ route, go, record, userId, duel }) {
   const questions = run;
   const q = questions[i];
   const answered = picked !== null;
-  kb.current = { ...kb.current, q, answered, choose, next,
+  kb.current = { ...kb.current, q, answered, choose, next, cur,
+    move: (d) => { if (!q.options) return; const n = q.options.length; let c = cur == null ? (d > 0 ? 0 : n - 1) : (cur + d + n) % n; if (c === hideOpt) c = (c + d + n) % n; setCur(c); },
     canSubmit: q.type === "match" ? Object.keys(mMap).length >= q.pairs.length : q.type === "grid" ? Object.keys(gMap).length >= q._blanks.length : false,
     submit: q.type === "match" ? submitMatch : submitGrid };
   const stemLow = (q.q || "").toLowerCase();
@@ -2676,7 +2682,7 @@ function QuizView({ route, go, record, userId, duel }) {
           } else if (idx === hideOpt) st = { opacity: 0.3, textDecoration: "line-through" };
           else if (reveal && idx === q.correct) st = { borderColor: "var(--teal)", background: "var(--okbg)" };
           return (
-            <button key={idx} className="ix-opt" disabled={answered || idx === hideOpt} onClick={() => choose(idx)} style={st}>
+            <button key={idx} className={"ix-opt" + (!answered && idx === cur ? " kbsel" : "")} disabled={answered || idx === hideOpt} onClick={() => choose(idx)} onMouseEnter={() => { if (!answered && cur != null) setCur(null); }} style={st}>
               <span style={{ display: "flex", alignItems: "center", gap: 11 }}>
                 <span style={{ fontWeight: 700, color: "var(--ink2)", fontSize: 13 }}><span className="ix-optkey-letter">{"ABCDEF"[idx]}</span><kbd className="ix-kbd ix-optkey-num">{idx + 1}</kbd></span>
                 <span style={{ flex: 1 }}>{opt}</span>
@@ -2699,7 +2705,7 @@ function QuizView({ route, go, record, userId, duel }) {
         <div className="ix-kbdhint">
           {q.type === "match" || q.type === "grid"
             ? <span><kbd className="ix-kbd">Enter</kbd> preveri</span>
-            : <span><kbd className="ix-kbd">1</kbd>–<kbd className="ix-kbd">{q.options.length}</kbd> izberi odgovor</span>}
+            : <><span><kbd className="ix-kbd">1</kbd>–<kbd className="ix-kbd">{q.options.length}</kbd> izberi odgovor</span><span><kbd className="ix-kbd">↑</kbd> <kbd className="ix-kbd">↓</kbd> označi{cur != null ? <>, <kbd className="ix-kbd">Enter</kbd> potrdi</> : ""}</span></>}
         </div>
       )}
 
