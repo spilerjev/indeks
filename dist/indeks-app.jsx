@@ -1440,6 +1440,18 @@ export default function App() {
     seenCh.current = cur;
   }, [soc, setRoute]);
 
+  // letnik iz profila je privzeti letnik za reševanje (ob prijavi / spremembi profila), smer se shrani za filtriranje vsebine
+  const appliedProfile = useRef("");
+  useEffect(() => {
+    const p = soc && soc.profile; if (!p || !userId) return;
+    const sig = userId + "|" + (p.letnik || "") + "|" + (p.smer || "");
+    if (appliedProfile.current === sig) return;
+    appliedProfile.current = sig;
+    store.set("indeks.smer", p.smer || "");
+    const y = +p.letnik;
+    if (YEARS.includes(y) && y !== storedYear()) { store.set("indeks.year", y); if (route.view === "home" || route.view === "welcome") setRoute({ view: "home", year: y }); }
+  }, [soc && soc.profile && soc.profile.letnik, soc && soc.profile && soc.profile.smer, userId]); // eslint-disable-line
+
   // ob odjavi ali menjavi računa nazaj na domačo stran
   const prevUser = useRef(userId);
   useEffect(() => {
@@ -1687,7 +1699,7 @@ function YearSwitch({ year, setYear }) {
 
 function Home({ go, stats, year, setYear, comm, userId }) {
   const agg = aggregate(stats, year);
-  const sems = DATA.filter((s) => s.year === year);
+  const sems = yearSems(year);
   return (
     <div>
       <div className="ix-fade" style={{ marginBottom: 30 }}>
@@ -2818,6 +2830,12 @@ const SIZE_LABEL = { 2: "Duel", 3: "Trio", 4: "Četverka" };
 const MODE_LABEL = { classic: "Klasika", basic: "Bitka", battle: "Bitka z liki" };
 const isBattle = (mode) => mode === "basic" || mode === "battle";   // oba bojna načina (HP)
 const LETNIK_LABELS = { 1: "1. letnik", 2: "2. letnik", 3: "3. letnik", 4: "1. letnik mag.", 5: "2. letnik mag." };
+const SMERI = ["Poslovna", "Ekonomska"];                 // smeri od 2. letnika naprej (1. letnik je skupen)
+const smerKey = (s) => (s || "").toLowerCase().startsWith("ekonom") ? "ekonomska" : (s || "").toLowerCase().startsWith("poslov") ? "poslovna" : null;
+const mySmer = () => smerKey(store.get("indeks.smer", ""));
+const subjVisible = (su) => !su.smer || !mySmer() || su.smer === mySmer();
+/* Semestri letnika s predmeti, ki ustrezajo izbrani smeri (neoznačena vsebina se vidi vsem). */
+const yearSems = (year) => DATA.filter((s) => s.year === year && (!s.smer || !mySmer() || s.smer === mySmer())).map((s) => ({ ...s, subjects: s.subjects.filter(subjVisible) })).filter((s) => s.subjects.length);
 const SMER_SUGGEST = ["UPEŠ", "VPŠ", "Bančni in finančni management", "Računovodstvo in revizija", "Trženje", "Management", "Mednarodno poslovanje", "Poslovna informatika", "Podjetništvo", "Poslovna logistika", "Turizem", "Ekonomija", "Denar in finance"];
 const charById = (id) => (id === "basic" ? CHARS.BASIC : CHARS.CHARACTERS.find((c) => c.id === id)) || CHARS.CHARACTERS[0];
 const itemById = (id) => CHARS.ITEMS.find((p) => p.id === id) || null;
@@ -3238,7 +3256,9 @@ function ProfileView({ user, soc, socErr, reload, go }) {
 
   async function saveProfile() {
     setSaving(true); setMsg(null);
-    const { error } = await supabase.rpc("update_profile", { p_letnik: d.letnik ? +d.letnik : null, p_smer: d.smer, p_bio: d.bio });
+    const lv = String(d.letnik || "");
+    const smer = lv === "1" ? "" : (lv === "2" || lv === "3") ? (SMERI.includes(d.smer) ? d.smer : "") : d.smer;
+    const { error } = await supabase.rpc("update_profile", { p_letnik: d.letnik ? +d.letnik : null, p_smer: smer, p_bio: d.bio });
     setSaving(false);
     if (error) { setMsg({ err: rpcErr(error) }); return; }
     setEdit(false); reload();
@@ -3344,10 +3364,23 @@ function ProfileView({ user, soc, socErr, reload, go }) {
                 {Object.keys(LETNIK_LABELS).map((k) => <option key={k} value={k}>{LETNIK_LABELS[k]}</option>)}
               </select>
             </label>
-            <label style={{ fontSize: 13, color: "var(--ink2)", display: "grid", gap: 4 }}>Smer / program
-              <input className="ix-input" list="ix-smer" value={d.smer} onChange={(e) => setD({ ...d, smer: e.target.value })} maxLength={60} placeholder="npr. UPEŠ, Bančni in finančni management" />
-              <datalist id="ix-smer">{SMER_SUGGEST.map((s) => <option key={s} value={s} />)}</datalist>
-            </label>
+            <div style={{ fontSize: 12.5, color: "var(--ink2)", marginTop: -4 }}>Letnik iz profila je tvoj privzeti letnik: app se ob prijavi odpre na njem.</div>
+            {(String(d.letnik) === "2" || String(d.letnik) === "3") ? (
+              <label style={{ fontSize: 13, color: "var(--ink2)", display: "grid", gap: 4 }}>Smer
+                <select className="ix-input" value={SMERI.includes(d.smer) ? d.smer : ""} onChange={(e) => setD({ ...d, smer: e.target.value })}>
+                  <option value="">—</option>
+                  {SMERI.map((sm) => <option key={sm} value={sm}>{sm}</option>)}
+                </select>
+                <span style={{ fontSize: 12 }}>Vsebina, ki velja samo za eno smer, se pokaže le izbrani smeri.</span>
+              </label>
+            ) : String(d.letnik) === "1" ? (
+              <div style={{ fontSize: 12.5, color: "var(--ink2)" }}>1. letnik je skupen za obe smeri; smer izbereš, ko nastaviš 2. ali 3. letnik.</div>
+            ) : (
+              <label style={{ fontSize: 13, color: "var(--ink2)", display: "grid", gap: 4 }}>Smer / program
+                <input className="ix-input" list="ix-smer" value={d.smer} onChange={(e) => setD({ ...d, smer: e.target.value })} maxLength={60} placeholder="npr. Bančni in finančni management" />
+                <datalist id="ix-smer">{SMER_SUGGEST.map((s) => <option key={s} value={s} />)}</datalist>
+              </label>
+            )}
             <label style={{ fontSize: 13, color: "var(--ink2)", display: "grid", gap: 4 }}>Kratek opis <span style={{ fontSize: 11 }}>({d.bio.length}/200)</span>
               <textarea className="ix-input" value={d.bio} onChange={(e) => setD({ ...d, bio: e.target.value.slice(0, 200) })} rows={3} placeholder="Kdo si, kaj študiraš, za kaj se učiš…" style={{ resize: "vertical" }} />
             </label>
@@ -4195,7 +4228,7 @@ function pushChecks(user) {
 }
 function autoChecks(year) {
   const now = Date.now();
-  return DATA.filter((sem) => !year || sem.year === year).flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => partDate(p)).map((p) => ({
+  return DATA.filter((sem) => !year || sem.year === year).flatMap((sem) => sem.subjects.filter(subjVisible).flatMap((subj) => subj.parts.filter((p) => partDate(p)).map((p) => ({
     id: `auto:${sem.id}/${subj.id}/${p.id}`, t0: new Date(partDate(p)).getTime(),
     text: `Prijava na ${subj.name} · ${p.name}`,
     sub: p.signup ? `rok ${fmtExamDate(p.signup)}` : `${p.type === "izpit" ? "izpit" : "kolokvij"} ${fmtExamDate(partDate(p))}`,
