@@ -8,7 +8,7 @@ const { render } = require('./letnik2-src/md-notes');
 
 const DATA_PATH = path.join(__dirname, 'data.json');
 const SRC = path.join(__dirname, 'letnik1-src');
-const MODULES = fs.readdirSync(SRC).filter((f) => f.endsWith('.js')).map((f) => require(path.join(SRC, f)));
+const MODULES = fs.readdirSync(SRC).filter((f) => f.endsWith('.js')).flatMap((f) => { const m = require(path.join(SRC, f)); return Array.isArray(m) ? m : [m]; });   // modul je lahko seznam predmetov (roki.js)
 
 const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
 const bak = DATA_PATH + '.bak-prelet1';
@@ -30,6 +30,9 @@ for (const mod of MODULES) {
     if (!part) { part = { id: mp.id, decks: [] }; subj.parts.push(part); }
     if (mp.name) part.name = mp.name;
     if (mp.type) part.type = mp.type;
+    if (mp.date) part.date = mp.date;
+    if (mp.dates) part.dates = mp.dates;
+    if (mp.signup) part.signup = mp.signup;
     part.decks = part.decks || [];
     upsert(part.decks, mp.decks);
     if (mp.flashcards) { part.flashcards = part.flashcards || []; upsert(part.flashcards, mp.flashcards); }

@@ -4172,6 +4172,12 @@ function Stat({ big, label }) {
    eno glavno priporočilo (nedokončan kviz > najšibkejši kviz < 60 % > še neodprt kviz > ranked < 5 testov > mešani kviz),
    skupnost (povprečje, lestvica rankeda) in naslednji roki. Dele brez datuma preskoči; dan po roku izgine. */
 const DAYS_SL = ["ned", "pon", "tor", "sre", "čet", "pet", "sob"];
+/* Del ima lahko en datum (date) ali več rokov (dates); vrnemo najbližji prihodnji rok, sicer zadnjega. */
+function partDate(p) {
+  const ds = (p.dates || (p.date ? [p.date] : [])).map(String).sort();
+  const lim = Date.now() - 8 * 36e5;
+  return ds.find((d) => new Date(d).getTime() > lim) || ds[ds.length - 1] || null;
+}
 function fmtExamDate(iso) { const d = new Date(iso); const t = /T(\d{2}:\d{2})/.exec(iso); return `${DAYS_SL[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.` + (t ? ` ob ${t[1]}` : ""); }
 /* Osebni seznam opravil na profilu: samodejne postavke za prihajajoče kolokvije z datumom (prijava v Canvasu), ki jih vsak označi zase,
    plus lastne postavke. Shrani se v brskalnik (CHECK_KEY) in na račun (user_metadata.checklist); novejši vnos (t) zmaga. */
@@ -4189,10 +4195,10 @@ function pushChecks(user) {
 }
 function autoChecks(year) {
   const now = Date.now();
-  return DATA.filter((sem) => !year || sem.year === year).flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => p.date).map((p) => ({
-    id: `auto:${sem.id}/${subj.id}/${p.id}`, t0: new Date(p.date).getTime(),
+  return DATA.filter((sem) => !year || sem.year === year).flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => partDate(p)).map((p) => ({
+    id: `auto:${sem.id}/${subj.id}/${p.id}`, t0: new Date(partDate(p)).getTime(),
     text: `Prijava na ${subj.name} · ${p.name}`,
-    sub: p.signup ? `rok ${fmtExamDate(p.signup)}` : `${p.type === "izpit" ? "izpit" : "kolokvij"} ${fmtExamDate(p.date)}`,
+    sub: p.signup ? `rok ${fmtExamDate(p.signup)}` : `${p.type === "izpit" ? "izpit" : "kolokvij"} ${fmtExamDate(partDate(p))}`,
     late: p.signup ? new Date(p.signup).getTime() < now : false,
   })))).filter((x) => x.t0 > now - 36e5).sort((a, b) => a.t0 - b.t0);
 }
@@ -4240,7 +4246,7 @@ function Checklist({ user, year }) {
 
 function NextUp({ sems, stats, comm, go, userId }) {
   const now = Date.now();
-  const items = sems.flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => p.date).map((p) => ({ sem, subj, part: p, t: new Date(p.date).getTime() }))))
+  const items = sems.flatMap((sem) => sem.subjects.flatMap((subj) => subj.parts.filter((p) => partDate(p)).map((p) => ({ sem, subj, part: p, t: new Date(partDate(p)).getTime() }))))
     .filter((x) => x.t > now - 8 * 36e5).sort((a, b) => a.t - b.t);
   const first = items[0];
   const key = first ? `${first.sem.id}/${first.subj.id}/${first.part.id}` : null;
@@ -4286,7 +4292,7 @@ function NextUp({ sems, stats, comm, go, userId }) {
     <section className="ix-card ix-fade" style={{ padding: "16px 18px", marginBottom: 18, borderLeft: `3px solid ${urgent ? "var(--red)" : "var(--terra)"}` }}>
       <div style={{ display: "flex", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
         <div style={{ flex: "1 1 260px", minWidth: 0 }}>
-          <div className="ix-chip" style={{ color: urgent ? "var(--red)" : "var(--terra)" }}>Naslednji kolokvij · {fmtExamDate(part.date)}</div>
+          <div className="ix-chip" style={{ color: urgent ? "var(--red)" : "var(--terra)" }}>{part.type === "izpit" ? "Naslednji izpit" : "Naslednji kolokvij"} · {fmtExamDate(partDate(part))}{part.dates && part.dates.length > 1 ? " · " + part.dates.length + " roka" : ""}</div>
           <div className="ix-serif" style={{ fontSize: 22, fontWeight: 900, lineHeight: 1.15, margin: "4px 0 6px", letterSpacing: "-.01em" }}>{subj.name} · {part.name}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
             <div style={{ flex: "1 1 160px", height: 8, borderRadius: 6, background: "var(--paper)", border: "1px solid var(--line)", overflow: "hidden" }}>
@@ -4321,7 +4327,7 @@ function NextUp({ sems, stats, comm, go, userId }) {
           <span className="ix-chip">Nato:</span>
           {items.slice(1, 4).map((x) => (
             <button key={x.sem.id + x.subj.id + x.part.id} onClick={() => go({ view: "part", sem: x.sem.id, subj: x.subj.id, part: x.part.id })} className="ix-pill" style={{ fontWeight: 500, whiteSpace: "normal", textAlign: "left", lineHeight: 1.35 }}>
-              {x.subj.name} · {x.part.name} · {fmtExamDate(x.part.date).replace(/ ob .*$/, "")}
+              {x.subj.name} · {x.part.name} · {fmtExamDate(partDate(x.part)).replace(/ ob .*$/, "")}
             </button>
           ))}
         </div>
