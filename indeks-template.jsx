@@ -47,6 +47,28 @@ const RANKED_SECONDS = 600;              // ranked: časovna omejitev (10 min)
 const RANKED_MIN_RUNS = 5;               // ranked: najmanj rešenih za uvrstitev na lestvico
 const RANKED_FORMULAS = ["stat", "stana"];  // ranked: brez slovarčka in formul, razen formul pri statistiki (statistični priročnik je dovoljen na izpitu)
 /* Fraunces nariše makron (ȳ, x̄) zamaknjen v desno čez oklepaj; v serifnih naslovih ga zamenjamo s kombinirano nadčrto U+0305, ki jo pisava postavi pravilno. */
+/* Vprašanja s trditvami v besedilu ("Kaj je pravilno? a) ... b) ... c) ...") - trditve prikažemo po vrsti, vsako v svoji vrstici. */
+function splitStem(stem) {
+  const re = /(?:^|\s)(?:\(?([a-e])\)|(\d)\))\s+/g; let m; const marks = [];
+  while ((m = re.exec(stem || ""))) marks.push({ k: m[1] || m[2], i: m.index, len: m[0].length });
+  if (marks.length < 3) return null;
+  const keys = marks.map((x) => x.k).join(""), seq = /^[a-e]$/.test(marks[0].k) ? "abcde" : "123456789";
+  if (keys !== seq.slice(0, marks.length)) return null;
+  const items = marks.map((x, j) => ({ k: x.k, text: stem.slice(x.i + x.len, j + 1 < marks.length ? marks[j + 1].i : undefined).trim().replace(/[;,]$/, "") }));
+  return { lead: stem.slice(0, marks[0].i).trim(), items };
+}
+function StemText({ text }) {
+  const sp = splitStem(text);
+  if (!sp) return serifBars(text);
+  return (
+    <>
+      {sp.lead && <div style={{ marginBottom: 10 }}>{serifBars(sp.lead)}</div>}
+      <div style={{ display: "grid", gap: 6, fontSize: 17, fontWeight: 500, lineHeight: 1.4 }}>
+        {sp.items.map((it) => <div key={it.k} style={{ display: "flex", gap: 10 }}><span style={{ color: "var(--terra)", fontWeight: 800, minWidth: 22 }}>{it.k})</span><span>{serifBars(it.text)}</span></div>)}
+      </div>
+    </>
+  );
+}
 const serifBars = (s) => (typeof s === "string" ? s.replace(/ȳ/g, "y\u0305").replace(/Ȳ/g, "Y\u0305").replace(/\u0304/g, "\u0305").replace(/ŷ/g, "y\u0302").replace(/Ŷ/g, "Y\u0302") : s);
 /* Ranked točke in rank (ista formula je v bazi: supabase/ranked-tocke.sql, funkciji ranked_points in ranked_delta).
    Točke na vprašanje: pravilen odgovor 100 + do 50 za hitrost (linearno v okviru RANKED_Q_SECONDS), napačen 0.
@@ -2608,7 +2630,7 @@ function QuizView({ route, go, record, userId, duel }) {
       <div className="ix-bar" style={{ marginBottom: duel ? 12 : 22 }}><span style={{ width: `${(i / questions.length) * 100}%` }} /></div>
       {duel && <DuelLive live={duel.live} />}
 
-      <h2 className="ix-serif" style={{ fontSize: 21, fontWeight: 600, lineHeight: 1.3, margin: "0 0 20px" }}>{serifBars(q.q)}</h2>
+      <h2 className="ix-serif" style={{ fontSize: 21, fontWeight: 600, lineHeight: 1.3, margin: "0 0 20px" }}><StemText text={q.q} /></h2>
 
       {gloss.length > 0 && (
         <div style={{ marginBottom: 20 }}>

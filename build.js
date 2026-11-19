@@ -2,7 +2,7 @@
    Pipeline je bil rekonstruiran iz zgrajenega artefakta (vsebina 100% ohranjena).
    DATA je zaenkrat en JSON (data.json). Za urejanje: spreminjaj data.json (ali ga razbij na module in tu sestavi). */
 const fs = require('fs');
-const DATA = require(require('path').join(__dirname,'data.json'));
+const DATA = require('./regroup')(JSON.parse(JSON.stringify(require(require('path').join(__dirname,'data.json')))));   // sklopi po temah (regroup.js)
 
 // (po želji) pomožnik za iskanje dela predmeta:
 function findPart(sid, pid) {
