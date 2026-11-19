@@ -73,6 +73,7 @@ const kartice = [
 const v2 = require('./mpsp-v2');
 const v3 = require('./mpsp-v3');
 const maja = require('./mpsp-maja');
+const v56 = require('./mpsp-v56');
 
 module.exports = {
   id: 'mpsp',
@@ -98,6 +99,9 @@ module.exports = {
         { id: 'mpsp-c-3', name: 'Razmestitev in napovedovanje', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij' },
-    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Stara izpitna vprašanja', questions: izpit }, { id: 'mpsp-izpit3', name: 'Vprašanja iz preteklih izpitov (preverjene rešitve)', questions: require('./mpsp-stari2') }, { id: 'mpsp-izpit2', name: 'Stari izpit: zaloge, MRP, planiranje, kakovost', questions: require('./mpsp-stari') }] },
+    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Stara izpitna vprašanja', questions: izpit },
+      { id: 'mpsp-v56-drevo', name: 'Vaje 5-6: drevo odločanja (dopolni drevo)', questions: v56.drevo },
+      { id: 'mpsp-v56-teorija', name: 'Vaje 5-6: planiranje zmogljivosti, simulacija, lokacija (ni za kolokvij)', questions: v56.teorija },
+      { id: 'mpsp-v56-rac', name: 'Računske: Vaje 5-6 (prelomne točke, zamenjava stroja, drevo, simulacija, lokacija)', calc: true, questions: v56.rac }, { id: 'mpsp-izpit3', name: 'Vprašanja iz preteklih izpitov (preverjene rešitve)', questions: require('./mpsp-stari2') }, { id: 'mpsp-izpit2', name: 'Stari izpit: zaloge, MRP, planiranje, kakovost', questions: require('./mpsp-stari') }] },
   ],
 };

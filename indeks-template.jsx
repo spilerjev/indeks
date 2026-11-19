@@ -686,6 +686,14 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-opt:hover:not(:disabled),.ix-opt.kbsel{border-color:var(--ink);transform:translateX(3px);}
 .ix-opt.kbsel{box-shadow:0 0 0 3px color-mix(in srgb, var(--ink) 14%, transparent);}
 .ix-opts.kbnav .ix-opt:hover:not(.kbsel){border-color:transparent;transform:none;}
+.ix-root .ix-tshape{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;background:var(--paper);box-sizing:border-box;}
+.ix-root .ix-tshape.dec{border:2px solid var(--terra);border-radius:7px;color:var(--terra);}
+.ix-root .ix-tshape.chance{border:2px solid var(--teal);border-radius:50%;color:var(--teal);}
+.ix-root .ix-tslot{font:inherit;font-size:12.5px;font-weight:700;color:var(--ink);background:var(--paper);border:1.5px solid transparent;border-radius:8px;padding:2px 8px;min-width:46px;white-space:nowrap;line-height:1.3;cursor:default;}
+.ix-root .ix-tslot.blank{border-style:dashed;border-color:var(--ink2);cursor:pointer;transition:box-shadow .15s,border-color .15s,background .15s;}
+.ix-root .ix-tslot.blank:disabled{cursor:default;}
+.ix-root .ix-poolchip{transition:transform .12s,background .15s,color .15s;}
+.ix-root .ix-poolchip:active{transform:scale(.94);}
 .ix-opt:disabled{cursor:default;}
 .ix-kbd{display:inline-block;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink2);background:var(--paper2);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:3px 6px;min-width:12px;text-align:center;}
 .ix-kbdhint{display:none;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12px;color:var(--ink2);margin-top:14px;}
@@ -2110,14 +2118,15 @@ function WrongReview({ wrong }) {
                   </div>
                 ))}
               </div>
-            ) : w.type === "grid" ? (
+            ) : w.type === "grid" || w.type === "tree" ? (
               <div style={{ display: "grid", gap: 4 }}>
                 {w._blanks.map((b) => {
                   const pid = w.gMap[b.key]; const placed = pid != null ? ((w._pool.find((x) => x.id === pid) || {}).val) : "—";
-                  const ok = placed === b.val; const rc = b.key.split("-").map(Number);
+                  const ok = placed === b.val; const rc = w.type === "grid" ? b.key.split("-").map(Number) : null;
+                  const name = w.type === "grid" ? w.rows[rc[0]].label + " · " + w.cols[rc[1]] : b.name;
                   return (
                     <div key={b.key} style={{ fontSize: 13, color: ok ? "var(--teal)" : "var(--red)" }}>
-                      {w.rows[rc[0]].label} · {w.cols[rc[1]]}: {placed}{ok ? " ✓" : ` (pravilno: ${b.val})`}
+                      {name}: {placed}{ok ? " ✓" : " (pravilno: " + b.val + ")"}
                     </div>
                   );
                 })}
@@ -2226,6 +2235,7 @@ function QuizView({ route, go, record, userId, duel }) {
   const [i, setI] = useState(duel ? Math.min(duel.resumeAnswered || 0, Math.max(0, duel.questions.length - 1)) : 0);
   const [picked, setPicked] = useState(null);
   const [cur, setCur] = useState(null);          // s puščicami označen odgovor (potrdi Enter/presledek)
+  const [gTarget, setGTarget] = useState(null);   // najprej kliknjeno prazno polje (nato klik odgovora ga zapolni)
   useEffect(() => { setCur(null); }, [i, run, started]);
   const [correctCount, setCorrect] = useState(duel ? (duel.resumeCorrect || 0) : 0);
   const [wrong, setWrong] = useState([]);
@@ -2276,7 +2286,7 @@ function QuizView({ route, go, record, userId, duel }) {
       if (st.done) { if (k === "r" || k === "R") { e.preventDefault(); st.restart(); } else if ((k === "n" || k === "N") && st.goNext) { e.preventDefault(); st.goNext(); } return; }
       const q = st.q; if (!q) return;
       if (!st.answered) {
-        if (q.type === "match" || q.type === "grid") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
+        if (q.type === "match" || q.type === "grid" || q.type === "tree") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
         if (k === "ArrowDown" || k === "ArrowUp") { e.preventDefault(); st.move(k === "ArrowDown" ? 1 : -1); return; }
         if ((k === "Enter" || k === " ") && st.cur != null) { e.preventDefault(); st.choose(st.cur); return; }
         const n = parseInt(k, 10);
@@ -2301,7 +2311,7 @@ function QuizView({ route, go, record, userId, duel }) {
     const r = resumeState; if (!r) return;
     let ii = r.i, pk = r.picked;
     const cq = r.run[ii];
-    if (pk != null && cq && (cq.type === "match" || cq.type === "grid")) { ii = ii + 1; pk = null; } // ovire z mapami ne obnavljamo - naprej
+    if (pk != null && cq && (cq.type === "match" || cq.type === "grid" || cq.type === "tree")) { ii = ii + 1; pk = null; } // ovire z mapami ne obnavljamo - naprej
     setShuffleQ(!!r.shuffleQ); setRun(r.run); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({});
     setCorrect(r.correctCount || 0); setWrong(r.wrong || []); saved.current = false; attemptT.current = r.attemptT || Date.now(); setLeft(RANKED_SECONDS);
     if (ii >= r.run.length) { // vse je bilo že odgovorjeno - samo še zaključi in zapiši
@@ -2396,13 +2406,13 @@ function QuizView({ route, go, record, userId, duel }) {
   const answered = picked !== null;
   kb.current = { ...kb.current, q, answered, choose, next, cur,
     move: (d) => { if (!q.options) return; const n = q.options.length; let c = cur == null ? (d > 0 ? 0 : n - 1) : (cur + d + n) % n; if (c === hideOpt) c = (c + d + n) % n; setCur(c); },
-    canSubmit: q.type === "match" ? Object.keys(mMap).length >= q.pairs.length : q.type === "grid" ? Object.keys(gMap).length >= q._blanks.length : false,
+    canSubmit: q.type === "match" ? Object.keys(mMap).length >= q.pairs.length : (q.type === "grid" || q.type === "tree") ? Object.keys(gMap).length >= q._blanks.length : false,
     submit: q.type === "match" ? submitMatch : submitGrid };
   const stemLow = (q.q || "").toLowerCase();
   const restLow = ((q.options ? q.options.join(" ") : (q.pairs ? q.pairs.map((p) => p.term + " " + p.def).join(" ") : "")) + " " + (q.explanation || "") + " " + (q.more || "")).toLowerCase();
   const inTxt = (g, t) => (g.b ? new RegExp("\\b" + g.s + "\\b").test(t) : t.includes(g.s));
   const defQ = /\bkaj (pomeni|je|prikazuje|opisuje|označuje|razumemo)\b|\bkako (opredelimo|definiramo)\b|\bopredeli\b|definicij|\bkatere vrste\b|\bkateri tip\b|\bza kaj se uporablja\b/.test(stemLow);
-  const gloss = (!glossOn || exam || q.type === "match" || q.type === "grid") ? [] : GLOSSARY.filter((g) => {
+  const gloss = (!glossOn || exam || q.type === "match" || q.type === "grid" || q.type === "tree") ? [] : GLOSSARY.filter((g) => {
     if (g.subj && (Array.isArray(g.subj) ? g.subj.indexOf(subj.id) < 0 : g.subj !== subj.id)) return false;
     const inRest = inTxt(g, restLow), inStem = inTxt(g, stemLow);
     if (!inRest && !inStem) return false;
@@ -2448,16 +2458,37 @@ function QuizView({ route, go, record, userId, duel }) {
     if (!exam) { liveRecord(nc, i + 1, false); persist(nc, nw, i, allCorrect ? 1 : 0); }
   }
   const poolVal = (pid) => { const p = (q._pool || []).find((x) => x.id === pid); return p ? p.val : null; };
+  function commitPlace(key, pid) {
+    setGMap((prev) => { const m = { ...prev }; for (const k in m) if (m[k] === pid) delete m[k]; m[key] = pid; return m; });
+    setGSel(null); setGTarget(null);
+  }
   function placeGrid(key) {
     if (answered) return;
-    setGMap((prev) => {
-      const m = { ...prev };
-      if (gSel != null) { for (const k in m) if (m[k] === gSel) delete m[k]; m[key] = gSel; }
-      else if (m[key] != null) { delete m[key]; }
-      return m;
-    });
-    if (gSel != null) setGSel(null);
+    if (gSel != null) { const pid = gSel; flyTo(document.querySelector('[data-pool="' + pid + '"]'), document.querySelector('[data-slot="' + key + '"]'), () => commitPlace(key, pid)); return; }
+    if (gMap[key] != null) { setGMap((prev) => { const m = { ...prev }; delete m[key]; return m; }); setGTarget(null); return; }
+    setGTarget((t) => (t === key ? null : key));
   }
+  function pickPool(pid) {
+    if (answered) return;
+    if (gTarget != null) { const key = gTarget; flyTo(document.querySelector('[data-pool="' + pid + '"]'), document.querySelector('[data-slot="' + key + '"]'), () => commitPlace(key, pid)); return; }
+    setGSel((v) => (v === pid ? null : pid));
+  }
+  const poolChips = () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}>
+      {q._pool.filter((p) => !Object.values(gMap).includes(p.id)).map((p) => (
+        <button key={p.id} data-pool={p.id} onClick={() => pickPool(p.id)} className="ix-poolchip"
+          style={{ padding: "8px 14px", borderRadius: 999, border: "1px solid " + (gSel === p.id ? "var(--terra)" : "var(--line)"), background: gSel === p.id ? "var(--terra)" : "var(--paper)", color: gSel === p.id ? "#fff" : "var(--ink)", cursor: "pointer", fontWeight: 700, fontSize: 13 }}>
+          {p.val}
+        </button>
+      ))}
+    </div>
+  );
+  const submitBtn = () => (
+    <button onClick={submitGrid} disabled={Object.keys(gMap).length < q._blanks.length} className="ix-btn"
+      style={{ background: Object.keys(gMap).length < q._blanks.length ? "var(--line)" : "var(--terra)", color: "#fff", border: "none", padding: "12px 22px", cursor: Object.keys(gMap).length < q._blanks.length ? "default" : "pointer" }}>
+      Preveri ({Object.keys(gMap).length}/{q._blanks.length})
+    </button>
+  );
   function submitGrid() {
     if (answered) return;
     const ok = q._blanks.every((b) => gMap[b.key] != null && poolVal(gMap[b.key]) === b.val);
@@ -2665,7 +2696,7 @@ function QuizView({ route, go, record, userId, duel }) {
                       if (answered) { const ok = placed === val; cs = { ...cs, color: ok ? "var(--teal)" : "var(--red)", background: ok ? "var(--okbg)" : "var(--badbg)", fontWeight: 700 }; }
                       else if (placed != null) cs = { ...cs, fontWeight: 700, background: "var(--paper2)" };
                       return (
-                        <td key={c} onClick={() => placeGrid(key)} style={cs}>
+                        <td key={c} data-slot={key} onClick={() => placeGrid(key)} style={gTarget === key && !answered ? { ...cs, outline: "2px solid var(--terra)", outlineOffset: -2 } : cs}>
                           {placed != null ? placed : <span style={{ color: "var(--ink2)", opacity: 0.5, fontSize: 16 }}>＋</span>}
                           {answered && placed !== val && <div style={{ fontSize: 11, color: "var(--teal)", fontWeight: 600, marginTop: 2 }}>{val}</div>}
                         </td>
@@ -2676,22 +2707,14 @@ function QuizView({ route, go, record, userId, duel }) {
               </tbody>
             </table>
           </div>
-          {!answered && (
-            <>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}>
-                {q._pool.filter((p) => !Object.values(gMap).includes(p.id)).map((p) => (
-                  <button key={p.id} onClick={() => setGSel((s) => (s === p.id ? null : p.id))}
-                    style={{ padding: "8px 14px", borderRadius: 999, border: `1px solid ${gSel === p.id ? "var(--terra)" : "var(--line)"}`, background: gSel === p.id ? "var(--terra)" : "var(--paper)", color: gSel === p.id ? "#fff" : "var(--ink)", cursor: "pointer", fontWeight: 700, fontSize: 13 }}>
-                    {p.val}
-                  </button>
-                ))}
-              </div>
-              <button onClick={submitGrid} disabled={Object.keys(gMap).length < q._blanks.length} className="ix-btn"
-                style={{ background: Object.keys(gMap).length < q._blanks.length ? "var(--line)" : "var(--terra)", color: "#fff", border: "none", padding: "12px 22px", cursor: Object.keys(gMap).length < q._blanks.length ? "default" : "pointer" }}>
-                Preveri ({Object.keys(gMap).length}/{q._blanks.length})
-              </button>
-            </>
-          )}
+          {!answered && <>{poolChips()}{submitBtn()}</>}
+        </div>
+      ) : q.type === "tree" ? (
+        <div>
+          {exam && <div className="ix-chip" style={{ color: "var(--terra)", marginBottom: 6 }}>Drevo odločanja</div>}
+          <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 12 }}>Klikni odgovor spodaj, nato prazno polje v drevesu (ali obratno). Kvadrat = odločitev, krog = naključni dogodek. Klik na zapolnjeno polje ga izprazni.</div>
+          <TreeQ q={q} gMap={gMap} gTarget={gTarget} answered={answered} poolVal={poolVal} onSlot={placeGrid} />
+          {!answered && <>{poolChips()}{submitBtn()}</>}
         </div>
       ) : (
       <div className={"ix-opts" + (!answered && cur != null ? " kbnav" : "")} onMouseMove={() => { if (!answered && cur != null) setCur(null); }} style={{ display: "grid", gap: 10 }}>
@@ -2725,7 +2748,7 @@ function QuizView({ route, go, record, userId, duel }) {
       {duel && duel.ability && duel.ability.armed && !answered && <div style={{ fontSize: 12.5, color: "var(--terra)", marginTop: 8, fontWeight: 600 }}>Vse ali nič je aktivno: pravilen odgovor = 3× škoda, napačen = −20 HP.</div>}
       {!answered && (
         <div className="ix-kbdhint">
-          {q.type === "match" || q.type === "grid"
+          {q.type === "match" || q.type === "grid" || q.type === "tree"
             ? <span><kbd className="ix-kbd">Enter</kbd> preveri</span>
             : <><span><kbd className="ix-kbd">1</kbd>–<kbd className="ix-kbd">{q.options.length}</kbd> izberi odgovor</span><span><kbd className="ix-kbd">↑</kbd> <kbd className="ix-kbd">↓</kbd> označi{cur != null ? <>, <kbd className="ix-kbd">Enter</kbd> potrdi</> : ""}</span></>}
         </div>
@@ -4742,6 +4765,80 @@ function shuffle(arr) {
   for (let k = a.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [a[k], a[j]] = [a[j], a[k]]; }
   return a;
 }
+/* Animacija: izbrani odgovor (čip) prileti v polje; po koncu se stanje posodobi (onDone). */
+function flyTo(fromEl, toEl, onDone) {
+  if (!fromEl || !toEl) { onDone(); return; }
+  const a = fromEl.getBoundingClientRect(), b = toEl.getBoundingClientRect();
+  const ghost = fromEl.cloneNode(true);
+  ghost.className = "ix-fly"; ghost.removeAttribute("data-pool");
+  Object.assign(ghost.style, { position: "fixed", left: a.left + "px", top: a.top + "px", width: a.width + "px", height: a.height + "px", margin: 0, zIndex: 9999, pointerEvents: "none",
+    display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "999px", background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", fontWeight: 700, fontSize: "13px", boxSizing: "border-box", transition: "transform .34s cubic-bezier(.2,.8,.2,1), opacity .34s" });
+  const root = document.querySelector(".ix-root") || document.body; root.appendChild(ghost);
+  const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
+  const sc = Math.min(1, (b.width - 6) / Math.max(1, a.width));
+  let done = false; const finish = () => { if (done) return; done = true; ghost.remove(); onDone(); };
+  ghost.addEventListener("transitionend", finish);
+  setTimeout(finish, 420);
+  requestAnimationFrame(() => { ghost.style.transform = "translate(" + dx + "px," + dy + "px) scale(" + sc.toFixed(3) + ")"; ghost.style.opacity = "0.92"; });
+}
+/* Drevo odločanja: vozlišča { id, kind: decision|chance|end, label, edge (napis na povezavi od starša), value (fiksen prikaz),
+   slot (pravilna vrednost praznega polja), children }. Postavitev: stolpci po globini, listi po vrsticah, starš na sredini otrok. */
+function layoutTree(root) {
+  const items = []; let row = 0, depth = 0;
+  (function walk(n, d, parent) {
+    const it = { n, d, parent, kids: [] }; items.push(it); if (d > depth) depth = d;
+    if (n.children && n.children.length) { n.children.forEach((c) => it.kids.push(walk(c, d + 1, it))); it.row = it.kids.reduce((s, k) => s + k.row, 0) / it.kids.length; }
+    else it.row = row++;
+    return it;
+  })(root, 0, null);
+  return { items, rows: row, depth };
+}
+function TreeQ({ q, gMap, gTarget, answered, poolVal, onSlot }) {
+  const { items, rows, depth } = useMemo(() => layoutTree(q.root), [q]);
+  const wrap = useRef(null);
+  const [cw, setCw] = useState(0);   // širina kartice: stolpce stisnemo, da drevo po možnosti ne potrebuje drsenja
+  useEffect(() => { const m = () => setCw(wrap.current ? wrap.current.clientWidth : 0); m(); window.addEventListener("resize", m); return () => window.removeEventListener("resize", m); }, []);
+  const narrow = cw ? cw <= 560 : (typeof window !== "undefined" && window.innerWidth <= 760);
+  const rowH = narrow ? 56 : 62, padL = 10, padT = 26;
+  const endW = Math.max(60, ...items.filter((it) => it.n.kind === "end").map((it) => String(it.n.label || "").length * 8 + 16));   // prostor za napise na koncih vej
+  const colW = cw ? Math.max(140, Math.min(185, (cw - endW - padL * 2) / Math.max(1, depth))) : 185;
+  const W = padL * 2 + depth * colW + endW, H = padT + rows * rowH + 10;
+  const cx = (it) => padL + it.d * colW + 22, cy = (it) => padT + it.row * rowH + rowH / 2;
+  return (
+    <div ref={wrap} className="ix-tree" style={{ overflowX: "auto", marginBottom: 14 }}>
+      <div style={{ position: "relative", width: W, height: H }}>
+        <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
+          {items.filter((it) => it.parent).map((it) => <line key={it.n.id} x1={cx(it.parent) + 20} y1={cy(it.parent)} x2={cx(it) - (it.n.kind === "end" ? 4 : 20)} y2={cy(it)} stroke="var(--line)" strokeWidth={1.6} />)}
+        </svg>
+        {items.filter((it) => it.parent && it.n.edge).map((it) => {
+          const x = (cx(it.parent) + 20 + cx(it) - 20) / 2, y = (cy(it.parent) + cy(it)) / 2;
+          return <div key={"e" + it.n.id} style={{ position: "absolute", left: x, top: y - 9, transform: "translateX(-50%)", fontSize: 11.5, color: "var(--ink2)", background: "var(--paper)", padding: "0 4px", borderRadius: 4, whiteSpace: "nowrap" }}>{it.n.edge}</div>;
+        })}
+        {items.map((it) => {
+          const n = it.n, x = cx(it), y = cy(it);
+          const blank = n.slot != null, pid = blank ? gMap[n.id] : null, placed = pid != null ? poolVal(pid) : null;
+          let slotStyle = {};
+          if (blank && answered) { const ok = placed === String(n.slot); slotStyle = { color: ok ? "var(--teal)" : "var(--red)", background: ok ? "var(--okbg)" : "var(--badbg)", borderColor: ok ? "var(--teal)" : "var(--red)" }; }
+          else if (blank && gTarget === n.id) slotStyle = { borderColor: "var(--terra)", boxShadow: "0 0 0 3px color-mix(in srgb, var(--terra) 18%, transparent)" };
+          else if (blank && placed != null) slotStyle = { background: "var(--paper2)", borderStyle: "solid" };
+          return (
+            <div key={n.id} style={n.kind === "end" ? { position: "absolute", left: x, top: y, transform: "translate(0,-50%)", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3 }
+              : { position: "absolute", left: x, top: y, transform: "translate(-50%,-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
+              {(blank || n.value) && (
+                <button type="button" data-slot={blank ? n.id : undefined} onClick={blank ? () => onSlot(n.id) : undefined} disabled={!blank || answered} className={"ix-tslot" + (blank ? " blank" : "")} style={slotStyle}>
+                  {blank ? (placed != null ? placed : "?") : n.value}
+                  {blank && answered && placed !== String(n.slot) && <span style={{ display: "block", fontSize: 10.5, color: "var(--teal)", fontWeight: 700 }}>{String(n.slot)}</span>}
+                </button>
+              )}
+              {n.kind === "end" ? <div style={{ fontSize: 13, fontWeight: 700, whiteSpace: "nowrap", background: "var(--paper)", padding: "2px 4px" }}>{n.label}</div>
+                : <div className={"ix-tshape " + (n.kind === "decision" ? "dec" : "chance")}>{n.label}</div>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 const GTH = { border: "1px solid var(--line)", padding: "7px 10px", background: "var(--paper2)", textAlign: "center", fontWeight: 600, fontSize: 12.5 };
 const GTD = { border: "1px solid var(--line)", padding: "7px 10px", textAlign: "center", minWidth: 70 };
 
@@ -4756,6 +4853,13 @@ function processQuestion(q) {
     const blanks = [];
     q.rows.forEach((row, r) => row.cells.forEach((val, c) => { const key = r + "-" + c; if (!fixed.has(key)) blanks.push({ key, val }); }));
     const _pool = shuffle(blanks.map((b, idx) => ({ id: idx, val: b.val })));
+    return { ...q, _blanks: blanks, _pool };
+  }
+  if (q.type === "tree") {
+    // prazna polja = vozlišča s "slot" (pravilna vrednost); zaloga = vrednosti polj + odvečni odgovori (distractors)
+    const blanks = [];
+    (function walk(n) { if (n.slot != null) blanks.push({ key: n.id, val: String(n.slot), name: n.edge || n.label || n.id }); (n.children || []).forEach(walk); })(q.root);
+    const _pool = shuffle(blanks.map((b) => b.val).concat((q.distractors || []).map(String)).map((val, idx) => ({ id: idx, val })));
     return { ...q, _blanks: blanks, _pool };
   }
   // možnosti, ki se sklicujejo na druge možnosti (A in B, nič od naštetega, ...), obdržijo vrstni red
