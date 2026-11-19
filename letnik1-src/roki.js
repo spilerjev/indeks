@@ -10,6 +10,7 @@ module.exports = [
     { id: 'izpit', dates: ['2027-01-25', '2027-02-09'] },
   ] },
   { id: 'pravo', parts: [
+    { id: 'k1', date: '2026-11-24' },   // Kolokvij I, ura še ni objavljena (Canvas)
     { id: 'k2', date: '2027-01-05' },
     { id: 'izpit', dates: ['2027-01-20', '2027-02-03'] },
   ] },
