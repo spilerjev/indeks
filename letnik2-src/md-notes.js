@@ -1,6 +1,7 @@
 /* ZAPISKI.md -> HTML za part.notes (h2 = sklop, h3/h4 = note-card, > = tip, tabele, seznami).
    opts.skip: seznam naslovov (začetek besedila), katerih razdelki se izpustijo (skupaj s podrazdelki).
    opts.replace: [[regex|string, zamenjava], ...] - pred pretvorbo (npr. odstrani osebne opombe). */
+const fs = require('fs');
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 function inline(s) {
@@ -96,9 +97,34 @@ function scrubPrivate(md) {
   return out.join('\n');
 }
 
+/* Slike v zapiskih: vrstica "![opis](relativna/pot.webp)" ali omemba `pot.webp|png|jpg|svg` v besedilu
+   (npr. "Fotografija: `Predavanja/...webp`"). opts.img = {base: mapa ZAPISKI.md, outDir: docs/img/<predmet>, url: 'img/<predmet>/'}.
+   Datoteka se kopira v docs (objavljeno), v zapiskih pa se prikaže kot slika (klik = odpre v polni velikosti). */
+const IMG_EXT = /\.(webp|png|jpe?g|svg|gif)$/i;
+function imgFigure(rel, cap, img) {
+  const path = require('path');
+  rel = rel.replace(/^<|>$/g, '');
+  const src = path.join(img.base, rel);
+  if (!fs.existsSync(src)) { console.warn('  ! ni slike:', rel); return null; }
+  const name = rel.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9.]+/g, '_').replace(/^_+/, '');
+  fs.mkdirSync(img.outDir, { recursive: true });
+  fs.copyFileSync(src, path.join(img.outDir, name));
+  const url = img.url + name, alt = esc(cap || '');
+  return `<figure class="nimg"><a href="${url}" target="_blank" rel="noopener"><img src="${url}" alt="${alt}" loading="lazy"></a>${cap ? '<figcaption>' + inline(cap) + '</figcaption>' : ''}</figure>`;
+}
+
 function render(md, opts = {}) {
   for (const [a, b] of opts.replace || []) md = typeof a === 'string' ? md.split(a).join(b) : md.replace(a, b);
   md = scrubPrivate(md);
+  if (opts.img) {
+    // omemba slike v besedilu -> dodatna vrstica s sliko (z enakim zamikom, da ostane v isti alineji)
+    md = md.split('\n').flatMap((l) => {
+      if (/^\s*!\[/.test(l)) return [l];
+      const refs = [...l.matchAll(/`([^`]+)`/g)].map((m) => m[1]).filter((p) => IMG_EXT.test(p));
+      const ind = (l.match(/^(\s*)([-*]|\d+\.)?\s*/) || [''])[0].replace(/[-*\d.]/g, ' ');
+      return [l, ...refs.map((p) => ind + '![](' + p + ')')];
+    }).join('\n');
+  }
   const skip = (opts.skip || []).map((x) => x.toLowerCase());
   const lines = md.replace(/\r/g, '').split('\n');
   const out = [];
@@ -144,6 +170,14 @@ function render(md, opts = {}) {
     }
     if (skipLevel) continue;
     if (/^\s*(Vir|Viri|Gradivo)\s*:/.test(raw) || /^---+\s*$/.test(raw)) { flushAll(); continue; }
+    const im = raw.match(/^(\s*)!\[([^\]]*)\]\(([^)]+)\)\s*$/);
+    if (im) {
+      const fig = opts.img ? imgFigure(im[3].trim(), im[2].trim(), opts.img) : null;
+      flushPara(); flushTable(); flushQuote();
+      if (!(listStack.length && im[1].length > 0)) closeLists();
+      if (fig) out.push(fig);
+      continue;
+    }
     if (/^\s*\|/.test(raw)) { flushPara(); closeLists(); flushQuote(); (table = table || []).push(raw); continue; }
     flushTable();
     const q = raw.match(/^\s*>\s?(.*)$/);

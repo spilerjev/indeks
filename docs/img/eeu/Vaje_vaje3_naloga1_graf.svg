@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Helvetica, Arial, sans-serif">
+  <rect width="960" height="600" fill="#ffffff"/>
+  <text x="480" y="28" text-anchor="middle" font-size="20" font-weight="bold" fill="#222">Vaje 3, naloga 1: trg belega grozdja v Sloveniji</text>
+
+  <!-- CS and PS -->
+  <polygon points="80,91.4 508.6,348.6 80,348.6" fill="#4C8BF5" fill-opacity="0.30"/>
+  <polygon points="80,348.6 508.6,348.6 80,477.1" fill="#F5A04C" fill-opacity="0.40"/>
+
+  <!-- axes -->
+  <line x1="80" y1="520" x2="900" y2="520" stroke="#222" stroke-width="2"/>
+  <polygon points="900,520 888,514 888,526" fill="#222"/>
+  <line x1="80" y1="520" x2="80" y2="45" stroke="#222" stroke-width="2"/>
+  <polygon points="80,45 74,57 86,57" fill="#222"/>
+  <text x="900" y="568" text-anchor="end" font-size="16" fill="#222">Q (1000 kg)</text>
+  <text x="40" y="50" font-size="16" fill="#222">P (€)</text>
+
+  <!-- x ticks -->
+  <g font-size="14" fill="#444" text-anchor="middle">
+    <line x1="222.9" y1="520" x2="222.9" y2="527" stroke="#222"/><text x="222.9" y="545">100</text>
+    <line x1="365.7" y1="520" x2="365.7" y2="527" stroke="#222"/><text x="365.7" y="545">200</text>
+    <line x1="508.6" y1="520" x2="508.6" y2="527" stroke="#222"/><text x="500" y="545">300</text>
+    <line x1="522.9" y1="520" x2="522.9" y2="527" stroke="#222"/><text x="535" y="562">310</text>
+    <line x1="651.4" y1="520" x2="651.4" y2="527" stroke="#222"/><text x="651.4" y="545">400</text>
+    <line x1="794.3" y1="520" x2="794.3" y2="527" stroke="#222"/><text x="794.3" y="545">500</text>
+    <text x="70" y="545">0</text>
+  </g>
+  <!-- y ticks -->
+  <g font-size="14" fill="#444" text-anchor="end">
+    <line x1="73" y1="91.4" x2="80" y2="91.4" stroke="#222"/><text x="68" y="96">5</text>
+    <line x1="73" y1="177.1" x2="80" y2="177.1" stroke="#222"/><text x="68" y="182">4</text>
+    <line x1="73" y1="262.9" x2="80" y2="262.9" stroke="#222"/><text x="68" y="268">3</text>
+    <line x1="73" y1="348.6" x2="80" y2="348.6" stroke="#222"/><text x="68" y="350">2</text>
+    <line x1="73" y1="357.1" x2="80" y2="357.1" stroke="#222"/><text x="68" y="368">1,9</text>
+    <line x1="73" y1="434.3" x2="80" y2="434.3" stroke="#222"/><text x="68" y="439">1</text>
+    <line x1="73" y1="477.1" x2="80" y2="477.1" stroke="#222"/><text x="68" y="479">0,5</text>
+    <line x1="73" y1="490" x2="80" y2="490" stroke="#222"/><text x="68" y="497">0,35</text>
+  </g>
+
+  <!-- guide lines -->
+  <g stroke="#888" stroke-dasharray="4 4" stroke-width="1">
+    <line x1="80" y1="357.1" x2="522.9" y2="357.1"/>
+    <line x1="508.6" y1="348.6" x2="508.6" y2="520"/>
+    <line x1="522.9" y1="357.1" x2="522.9" y2="520"/>
+  </g>
+
+  <!-- curves -->
+  <line x1="80" y1="91.4" x2="794.3" y2="520" stroke="#222" stroke-width="3"/>
+  <text x="760" y="490" font-size="22" font-weight="bold" fill="#222">D</text>
+  <line x1="80" y1="477.1" x2="794.3" y2="262.9" stroke="#C0392B" stroke-width="3"/>
+  <text x="802" y="262" font-size="22" font-weight="bold" fill="#C0392B">S</text>
+  <line x1="80" y1="490" x2="794.3" y2="275.7" stroke="#C0392B" stroke-width="2.5" stroke-dasharray="9 6"/>
+  <text x="802" y="290" font-size="18" fill="#C0392B">S′ (MC − 0,15)</text>
+
+  <!-- equilibria -->
+  <circle cx="508.6" cy="348.6" r="6" fill="#222"/>
+  <text x="520" y="335" font-size="16" font-weight="bold" fill="#222">E (300; 2)</text>
+  <circle cx="522.9" cy="357.1" r="6" fill="#C0392B"/>
+  <text x="535" y="385" font-size="16" font-weight="bold" fill="#C0392B">E′ (310; 1,9)</text>
+
+  <!-- area labels -->
+  <text x="140" y="300" font-size="17" font-weight="bold" fill="#1F5FC4">CS = ½·3·300 = 450</text>
+  <text x="120" y="395" font-size="17" font-weight="bold" fill="#B5651D">PS = ½·1,5·300 = 225</text>
+
+  <!-- legend -->
+  <g font-size="14" fill="#333">
+    <rect x="620" y="60" width="18" height="14" fill="#4C8BF5" fill-opacity="0.30"/><text x="645" y="72">potrošnikov presežek (CS)</text>
+    <rect x="620" y="85" width="18" height="14" fill="#F5A04C" fill-opacity="0.40"/><text x="645" y="97">proizvajalčev presežek (PS)</text>
+    <text x="620" y="125">Po znižanju MC: CS = 480,5 (+30,5)</text>
+    <text x="620" y="145">PS = 240,25 (+15,25), blaginja +45,75</text>
+  </g>
+</svg>
