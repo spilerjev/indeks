@@ -4,7 +4,7 @@ const { trade, tariff, pref, surplus } = require('./lib');
 
 const figs = {
   // pojmovni (simbolni) grafi — številke iz primera paradižnika (SLO/IT) zagotavljajo pravilna razmerja
-  'eeu-uvoznica': trade({ qd: [160, -2], qs: [-40, 2], pw: 40, symbolic: true, pmin: 0, pmax: 72 }),
+  'eeu-uvoznica': trade({ qd: [160, -2], qs: [-40, 2], pw: 40, symbolic: true, pmin: 22, pmax: 62 }),
   'eeu-izvoznica': trade({ qd: [60, -1], qs: [20, 1], pw: 40, symbolic: true, pmin: 0, pmax: 56 }),
   'eeu-carina-majhna': tariff({ qd: [18, -2], qs: [-6, 4], pw: 2, pt: 3, symbolic: true, pmin: 0, pmax: 5.2 }),
   'eeu-carina-majhna-q': tariff({ qd: [18, -2], qs: [-6, 4], pw: 2, pt: 3, symbolic: true, neutral: true, pmin: 0, pmax: 5.2 }),
@@ -43,7 +43,7 @@ const figs = {
 const attach = [
   // pojmovna vprašanja
   ['Kaj je potrošnikov presežek?', 'eeu-presezek'],
-  ['Kaj se zgodi ob prosti trgovini v državi UVOZNICI', 'eeu-uvoznica'],
+  ['Kaj se zgodi ob prosti trgovini v državi UVOZNICI', 'eeu-uvoznica', { expl: 'Cena pade s P* na P_W. Potrošnikov presežek naraste za trapez ABDE, proizvajalčev se zmanjša za trapez ABCE. Razlika ABDE − ABCE = trikotnik CDE je neto dobiček blaginje (C = ponudba pri P_W, D = povpraševanje pri P_W, E = avtarkično ravnotežje).' }],
   ['Kaj se zgodi ob prosti trgovini v državi IZVOZNICI', 'eeu-izvoznica', { expl: 'Višja cena poveča proizvajalčev presežek (ACED) bolj, kot zmanjša potrošnikovega (ABED); neto korist je trikotnik BEC. Obe državi pridobita, znotraj države pa pride do prerazdelitve od potrošnikov k proizvajalcem.' }],
   ['Kaj je uvozno povpraševanje države (MD)?', 'eeu-uvoznica'],
   ['Kaj velja za carino MAJHNE države?', 'eeu-carina-majhna'],
@@ -62,13 +62,13 @@ const attach = [
   ['Kdaj uvedba carine veliki državi poveča blaginjo?', 'eeu-carina-velika'],
   ['Kaj je ustvarjanje trgovine (trade creation)?', 'eeu-pref-boljsa'],
   ['Kaj je preusmerjanje trgovine (trade diversion)?', 'eeu-pref-slabsa'],
-  ['Kaj je Vinerjeva nejasnost?', 'eeu-pref-slabsa'],
-  ['Kaj se zgodi, če se država združi s stroškovno učinkovitejšo partnerko A', 'eeu-pref-boljsa'],
+  ['Kaj je Vinerjeva nejasnost?', 'eeu-pref-slabsa', { expl: 'Ustvarjanje trgovine (B + D) poveča blaginjo, preusmerjanje (G: dražji uvoz od partnerice in izguba carinskih prihodkov) jo zmanjša. Če je B + D > G, je neto učinek pozitiven, sicer negativen; vnaprej ni jasno.' }],
+  ['Kaj se zgodi, če se država združi s stroškovno učinkovitejšo partnerko A', 'eeu-pref-boljsa', { expl: 'Država že pred integracijo uvaža od najcenejše partnerice, zato odprava carine le zniža domačo ceno s P_P + T na P_P. Preusmerjanja ni (ni ploskve G): enako kot MFN liberalizacija, ΔW = B + D > 0. Diskriminirana je le tretja država. (Na grafu so A–D ploskve, ne države.)' }],
   ['Zakaj ima preferencialna liberalizacija s stroškovno učinkovitejšo partnerico', 'eeu-pref-boljsa'],
   ['Pri preferencialni liberalizaciji z manj učinkovito partnerico je ΔJF = −(C + G).', 'eeu-pref-slabsa'],
   ['Kako se ob preferencialni liberalizaciji spremeni obseg uvoza', 'eeu-pref-boljsa'],
-  ['(Izpit 2017) Katera trditev o učinkih preferencialne (diskriminacijske) liberalizacije', 'eeu-pref-slabsa'],
-  ['(Izpit 2020) Domača država (majhna) odpravi MFN carino le za uvoz iz države', 'eeu-pref-slabsa'],
+  ['(Izpit 2017) Katera trditev o učinkih preferencialne (diskriminacijske) liberalizacije', 'eeu-pref-slabsa', { expl: 'Tudi pri manj učinkoviti partnerici cena doma pade (s P_W + T na P_P), zato se uvoz poveča: ustvarjanje trgovine B + D. Hkrati se prvotni uvoz preusmeri k dražji partnerici (G). Neto učinek je nejasen (Vinerjeva nejasnost).' }],
+  ['(Izpit 2020) Domača država (majhna) odpravi MFN carino le za uvoz iz države', 'eeu-pref-slabsa', { expl: 'Cena doma pade s P_W + T na P_P (ustvarjanje trgovine B + D), uvoz pa se preusmeri od cenejšega ostalega sveta k dražji partnerici (G: izguba carinskih prihodkov brez nižje cene na meji). ΔW = (B + D) − G je lahko pozitiven ali negativen.' }],
 
   // računske
   ['Madžarska, pšenica: S = 4P − 6, D = −2P + 18, svetovna cena 2 (prosta trgovina', 'eeu-madzarska-mt'],
