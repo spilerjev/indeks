@@ -200,6 +200,8 @@ module.exports = {
         { id: 'eeu-ep3', n: 3, title: 'Teorija primerjalnih prednosti (P02 + V02)', sub: 'Logika primerjalnih prednosti in oportunitetnih stroškov', file: 'podcast/eeu-k1/03-primerjalne-prednosti.m4a', sec: 1032 },
         { id: 'eeu-ep4', n: 4, title: 'Učinki proste mednarodne trgovine (P03 + V03)', sub: 'Zmagovalci in poraženci proste trgovine', file: 'podcast/eeu-k1/04-prosta-trgovina.m4a', sec: 1589 },
         { id: 'eeu-ep5', n: 5, title: 'Učinki uvedbe carin in carinska reforma EU (P04 + V04)', sub: 'Anatomija carin in trgovinskih vojn', file: 'podcast/eeu-k1/05-carine.m4a', sec: 1324 },
+        { id: 'eeu-ep6', n: 6, title: 'Preferencialna liberalizacija (P05 + V05)', sub: 'Ustvarjanje in preusmerjanje trgovine po Vinerju', file: 'podcast/eeu-k1/06-preferencialna-liberalizacija.m4a', sec: 1450 },
+        { id: 'eeu-ep7', n: 7, title: 'Ekonomske integracije in WTO (P06, 1. del)', sub: 'Stopnje ekonomskih integracij in kriza WTO', file: 'podcast/eeu-k1/07-integracije-WTO.m4a', sec: 1701 },
       ],
       notes: {
         file: '2. letnik (2026-27)/1. semester/Ekonomika EU in Slovenija/ZAPISKI.md',
