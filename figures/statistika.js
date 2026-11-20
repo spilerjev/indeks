@@ -104,7 +104,7 @@ function testDesno() {
   f.xtick(0, 'μ_{0}').xtick(1.645, 'ȳ_{k}');
   f.legend(null, 'na vodoravni osi je ȳ, na navpični gostota verjetnosti');
   f.legend(null, 'μ_{0} in kritična vrednost ȳ_{k} sta le točki na osi');
-  f.legend('a5', 'α = P(ȳ > ȳ_{k}) ob H_{0}; standardna napaka σ/√n = 2 cm');
+  f.legend('a5', 'α = P(ȳ > ȳ_{k}) ob H_{0}; standardna napaka σ/√n = 120/√36 = 20 ur');
   return f.svg();
 }
 function ogiva() {
@@ -127,14 +127,14 @@ function matXX2() {
   return f.svg();
 }
 function matXln() {
-  const g = (x) => x * Math.log(5 - x);
-  const f = new Fig({ qmin: -0.3, qmax: 5.2, pmin: -2.4, pmax: 3.6, xl: 'x', yl: 'y', title: 'f(x) = x · ln(5 − x)', mr: 24, ml: 30 });
-  f.area([[0, 0], ...range(0, 4, 60).map((x) => [x, g(x)]), [4, 0]], 'a1', '≈ 6,12', [2.2, 1.2]);
-  f.hline(0, -0.3, 5.1, 'ax');
-  f.fn(g, -0.3, 4.97, 'c3', 200);
-  f.dot(0, 0).dot(4, 0).text(4, 0, '4', { dy: 14, dx: 4 }).text(0, 0, '0', { dy: 14, dx: -6 });
-  f.legend('a1', 'ničli: x = 0 in 5 − x = 1 → x = 4');
-  f.legend(null, '∫₀⁴ x ln(5 − x) dx = (25/2) ln 5 − 14 ≈ 6,12');
+  const g = (x) => x * Math.log(3 - x);
+  const f = new Fig({ qmin: -0.3, qmax: 3.2, pmin: -2.6, pmax: 1.4, xl: 'x', yl: 'y', title: 'f(x) = x · ln(3 − x)', mr: 24, ml: 30 });
+  f.area([[0, 0], ...range(0, 2, 60).map((x) => [x, g(x)]), [2, 0]], 'a1', '≈ 0,94', [1.05, 0.3]);
+  f.hline(0, -0.3, 3.1, 'ax');
+  f.fn(g, -0.3, 2.62, 'c3', 200);
+  f.dot(0, 0).dot(2, 0).text(2, 0, '2', { dy: 14, dx: 4 }).text(0, 0, '0', { dy: 14, dx: -6 });
+  f.legend('a1', 'ničli: x = 0 in 3 − x = 1 → x = 2');
+  f.legend(null, '∫₀² x ln(3 − x) dx = (9/2) ln 3 − 4 ≈ 0,94');
   return f.svg();
 }
 
@@ -165,8 +165,8 @@ const A = (subj, list) => list.map(([q, fig, o]) => ({ subj, q, fig, ...(o || {}
 const attach = [
   ...A('stana', [
     ['ȳ = 30,5 in Me = 25,05', 'st-asim'],
-    ['Čas študija študentov v preteklem tednu (n = 150, od 0 do 45 ur)', 'st-asim'],
-    ['(Zgled 2010) Na tekmah reprezentance', 'st-asim'],
+    ['Čas za domače naloge (n = 120, od 0 do 180 minut)', 'st-asim'],
+    ['Število obiskov fitnesa v mesecu', 'st-asim'],
     ['Kaj je f(y) pri zvezni porazdelitvi?', 'st-ab'],
     ['Kaj je F(y)?', 'st-cdf'],
     ['P(Y = a) pri zvezni slučajni spremenljivki je:', 'st-zero'],
@@ -181,15 +181,15 @@ const attach = [
     ['Normalna porazdelitev: kolikšen delež enot ni več kot 1,7σ', 'st-17'],
     ['Kje ima porazdelitvena funkcija normalne porazdelitve prevoj?', 'st-cdf'],
     ['Kako se spremenita α in β', 'st-alfa-beta'],
-    ['(Zgled izpita) Preizkus H₀: μ ≤ μ₀, H₁: μ > μ₀ (n = 25', 'st-test-desno'],
+    ['Preizkus H₀: μ ≤ μ₀, H₁: μ > μ₀ (n = 36, σ = 120 ur)', 'st-test-desno'],
   ]),
   ...A('stat', [
-    ['(Izpit 2013) S katerim grafikonom prikažemo kumulativo frekvenc?', 'st-ogiva'],
+    ['Kateri grafikon pokaže, koliko enot ima vrednost do posamezne meje', 'st-ogiva'],
     ['Demografski prehod opisuje:', 'mk-demo'],
   ]),
   ...A('mat', [
     ['Ploščina med y = x in y = x² na [0, 1]?', 'mat-xx2'],
-    ['(Izpit 2021) f(x) = x·ln(5 − x).', 'mat-xln'],
+    ['f(x) = x·ln(3 − x).', 'mat-xln'],
   ]),
 ];
 

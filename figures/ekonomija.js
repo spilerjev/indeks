@@ -53,14 +53,25 @@ const ELAST_400 = (() => {
   f.legend(null, 'na sredini (P = 50, Q = 200): E = −4 · 50/200 = −1');
   return f.svg();
 })();
-const ELAST_25 = (() => {
-  const f = new Fig({ qmax: 135, pmax: 28, title: 'Elastičnost pri P = 5' });
-  f.fn((q) => 25 - 0.2 * q, 0, 62.5, 'c4').fn((q) => 25 - 0.2 * q, 62.5, 125, 'c5');
-  f.guideH(12.5, 62.5).guideV(62.5, 12.5).dot(62.5, 12.5).text(62.5, 12.5, '|E| = 1', { dx: 26, dy: -6, cls: 'tc' });
-  f.guideH(5, 100).guideV(100, 5).pt(100, 5, 'E = −0,25', 0, -9);
-  f.ytick(25, '25').ytick(12.5, '12,5').ytick(5, '5').xtick(62.5, '62,5').xtick(100, '100').xtick(125, '125');
-  f.legend(null, 'Q = 125 − 5P; pri P = 5 je Q = 100');
-  f.legend(null, 'E = −5 · 5/100 = −0,25: spodnji, neelastični del');
+const ELAST_LIN = (() => {
+  const f = new Fig({ qmax: 430, pmax: 112, title: 'Elastičnost vzdolž premice Q = a − bP' });
+  f.fn((q) => 100 - q / 4, 0, 200, 'c4').fn((q) => 100 - q / 4, 200, 400, 'c5');
+  f.guideH(50, 200).guideV(200, 50).pt(200, 50, '|E| = 1', 30, -8);
+  f.text(80, 86, '|E| > 1: elastično', { cls: 'tc', anchor: 'start' }); f.text(290, 18, '|E| < 1: neelastično', { cls: 'tc', anchor: 'start' });
+  f.ytick(100, 'a/b').ytick(50, 'a/2b').xtick(200, 'a/2').xtick(400, 'a').text(400, 0, 'D', { cls: 'tD', dy: -6, dx: 8 });
+  f.legend(null, 'naklon premice je povsod enak');
+  f.legend(null, 'E = −b · P/Q se spreminja z razmerjem P/Q');
+  f.legend(null, 'na sredini (P = a/2b, Q = a/2) je |E| = 1');
+  return f.svg();
+})();
+const ELAST_40 = (() => {
+  const f = new Fig({ qmax: 86, pmax: 44, title: 'Elastičnost pri P = 10' });
+  f.fn((q) => 40 - 0.5 * q, 0, 40, 'c4').fn((q) => 40 - 0.5 * q, 40, 80, 'c5');
+  f.guideH(20, 40).guideV(40, 20).dot(40, 20).text(40, 20, '|E| = 1', { dx: 26, dy: -6, cls: 'tc' });
+  f.guideH(10, 60).guideV(60, 10).pt(60, 10, 'E ≈ −0,33', 0, -9);
+  f.ytick(40, '40').ytick(20, '20').ytick(10, '10').xtick(40, '40').xtick(60, '60').xtick(80, '80');
+  f.legend(null, 'Q = 80 − 2P; pri P = 10 je Q = 60');
+  f.legend(null, 'E = −2 · 10/60 ≈ −0,33: spodnji, neelastični del');
   return f.svg();
 })();
 
@@ -92,8 +103,7 @@ function ppf(o) {
     f.arrow(8.15, 0.5, 6.35, 0.5).arrow(0.5, 8.2, 0.5, 9.7);
     f.text(5.3, 6.6, 'prej', { cls: 'tc', anchor: 'start' }); f.text(4.2, 8.6, 'potem', { cls: 'tc', anchor: 'start' });
     f.xtick(8, 'prej').xtick(6, 'potem');
-    f.legend(null, 'manj delavcev v kmetijstvu → največ jabolk pade');
-    f.legend(null, 'boljša tehnologija avtomobilov → največ avtomobilov zraste');
+    (o.legend || []).forEach((l) => f.legend(null, l));
   } else {
     f.path(pts((x) => 9 * Math.sqrt(Math.max(0, 1 - (x / 9) ** 2)), 0, 9, 90), 'c3');
     f.path([[0, 9], [9, 0]], 'c32');
@@ -130,25 +140,25 @@ function twoPanel(o) {
   (o.legend || []).forEach((l) => f.legend(null, l));
   return f.svg();
 }
-function jakob() {
-  const f = new Fig({ qmax: 34, pmax: 66, xl: 'hamburgerji', yl: 'piva', title: 'Popolna komplementa (Jakob)', mr: 20 });
-  f.path([[0, 60], [30, 0]], 'cS'); f.text(22, 14, '6H + 3P = 180', { cls: 'tS', anchor: 'start', dx: 4 });
-  f.path([[0, 0], [31, 62]], 'gd'); f.text(29, 58, 'P = 2H', { anchor: 'end', dx: -6 });
-  [[10, 20], [15, 30], [21, 42]].forEach(([h, p], k) => f.path([[h, 64], [h, p], [33, p]], k === 1 ? 'c3' : 'c32'));
-  f.guideH(30, 15).guideV(15, 30).pt(15, 30, 'E', -9, -6).xtick(15, '15').ytick(30, '30').xtick(30, '30').ytick(60, '60');
-  f.legend(null, 'paket 1 H + 2 P stane 6 + 2 · 3 = 12 € → 180/12 = 15 paketov');
-  f.legend(null, 'optimum je v oglišču L-krivulje na žarku P = 2H');
-  f.legend(null, 'dražji hamburger → premica se zasuče navznoter → nižja L');
+function miha() {
+  const f = new Fig({ qmax: 34, pmax: 66, xl: 'sendviči', yl: 'čaji', title: 'Popolna komplementa: 1 sendvič + 3 čaji', mr: 20 });
+  f.path([[0, 60], [30, 0]], 'cS'); f.text(22, 16, '4S + 2Č = 120', { cls: 'tS', anchor: 'start', dx: 4 });
+  f.path([[0, 0], [21, 63]], 'gd'); f.text(20, 60, 'Č = 3S', { anchor: 'end', dx: -6 });
+  [[8, 24], [12, 36], [16, 48]].forEach(([x, y], k) => f.path([[x, 64], [x, y], [33, y]], k === 1 ? 'c3' : 'c32'));
+  f.guideH(36, 12).guideV(12, 36).pt(12, 36, 'E', -9, -6).xtick(12, '12').ytick(36, '36').xtick(30, '30').ytick(60, '60');
+  f.legend(null, 'paket 1 S + 3 Č stane 4 + 3 · 2 = 10 € → 120/10 = 12 paketov');
+  f.legend(null, 'optimum je v oglišču L-krivulje na žarku Č = 3S');
+  f.legend(null, 'dražji čaj → premica se zasuče navznoter → nižja L');
   return f.svg();
 }
-function marjanca() {
-  const f = new Fig({ qmax: 84, pmax: 56, xl: 'zelenjava', yl: 'sadje', title: 'Popolna substituta (Marjanca)', mr: 20 });
-  f.path([[0, 50], [75, 0]], 'cS'); f.text(9, 44, '2Z + 3S = 150', { cls: 'tS', anchor: 'start', dx: 8, dy: -4 });
-  [70, 110, 150].forEach((c, k) => f.path([c > 54 ? [(c - 54) / 2, 54] : [0, c], [c / 2, 0]], k === 2 ? 'c3' : 'c32'));
-  f.pt(75, 0, 'E', 0, -8).xtick(75, '75').ytick(50, '50');
-  f.legend(null, 'indiferenčne premice: 1 Z = 2 S (naklon −2)');
-  f.legend(null, 'proračunska premica: naklon −P_{Z}/P_{S} = −2/3');
-  f.legend(null, 'MRS 2 > 2/3 → kotna rešitev: samo zelenjava, 150/2 = 75');
+function tina() {
+  const f = new Fig({ qmax: 58, pmax: 88, xl: 'čaj', yl: 'kakav', title: 'Popolna substituta: 1 čaj = 1,5 kakava', mr: 20 });
+  f.path([[0, 80], [40, 0]], 'cS'); f.text(22, 36, '3Č + 1,5K = 120', { cls: 'tS', anchor: 'start', dx: 8 });
+  [50, 65, 80].forEach((c, k) => f.path([[0, c], [c / 1.5, 0]], k === 2 ? 'c3' : 'c32'));
+  f.pt(0, 80, 'E', 12, 4).xtick(40, '40').ytick(80, '80');
+  f.legend(null, 'indiferenčne premice: 1 Č = 1,5 K (naklon −1,5)');
+  f.legend(null, 'proračunska premica: naklon −P_{Č}/P_{K} = −3/1,5 = −2');
+  f.legend(null, 'MRS 1,5 < 2 → kotna rešitev: samo kakav, 120/1,5 = 80');
   return f.svg();
 }
 function izokv() {
@@ -162,22 +172,22 @@ function izokv() {
   return f.svg();
 }
 
-/* stroški: VC = Q³/3 − 2Q² + 10Q, FC = 100 (kolokvij 2021) */
-const MC = (q) => q * q - 4 * q + 10, AVC = (q) => q * q / 3 - 2 * q + 10, AFC = (q) => 100 / q, ATC = (q) => AVC(q) + AFC(q);
+/* stroški: VC = Q³/3 − 3Q² + 20Q, FC = 50 */
+const MC = (q) => q * q - 6 * q + 20, AVC = (q) => q * q / 3 - 3 * q + 20, AFC = (q) => 50 / q, ATC = (q) => AVC(q) + AFC(q);
 const atcMin = (() => { let b = 1, v = 1e9; for (let q = 1; q < 12; q += 0.001) if (ATC(q) < v) { v = ATC(q); b = q; } return { q: b, v }; })();
 function stroski(o = {}) {
-  const f = new Fig({ qmax: 10.5, pmax: 44, title: 'Krivulje stroškov', mr: 44, ml: 70 });
-  f.fn(AFC, 2.3, 10.2, 'c32').fn(AVC, 0.2, 10.2, 'c4').fn(ATC, 2.6, 10.2, 'c3');
-  if (o.fc) f.fn((q) => ATC(q) + 60 / q, 3.6, 10.2, 'c32');
-  f.fn(MC, 0.2, 9.4, 'cS');
-  if (o.supply) f.fn(MC, 3, 9.4, 'cS thick');
+  const f = new Fig({ qmax: 10.5, pmax: 48, title: 'Krivulje stroškov', mr: 44, ml: 70 });
+  f.fn(AFC, 1.2, 10.2, 'c32').fn(AVC, 0.2, 10.2, 'c4').fn(ATC, 1.6, 10.2, 'c3');
+  if (o.fc) f.fn((q) => ATC(q) + 30 / q, 2.2, 10.2, 'c32');
+  f.fn(MC, 0.2, 9.1, 'cS');
+  if (o.supply) f.fn(MC, 4.5, 9.1, 'cS thick');
   f.text(10.2, AFC(10.2), 'AFC', { anchor: 'start', dx: 4, dy: 4 }); f.text(10.2, AVC(10.2), 'AVC', { anchor: 'start', dx: 4, dy: 6, cls: 'tc' });
-  f.text(10.2, ATC(10.2), 'ATC', { anchor: 'start', dx: 4, dy: -2, cls: 'tc' }); f.text(8, 42, 'MC', { cls: 'tS', anchor: 'start', dx: 6, dy: 6 });
-  if (o.fc) f.text(10.2, ATC(10.2) + 6, 'ATC + davek', { anchor: 'start', dx: 4, dy: 4 });
-  f.guideH(7, 3).guideV(3, 7).pt(3, 7, '', 0, 0).text(3, 7, 'točka zaprtja', { dy: 15, cls: 'tc' });
+  f.text(10.2, ATC(10.2), 'ATC', { anchor: 'start', dx: 4, dy: -2, cls: 'tc' }); f.text(8.9, MC(8.9), 'MC', { cls: 'tS', anchor: 'start', dx: 6, dy: 6 });
+  if (o.fc) f.text(10.2, ATC(10.2) + 3, 'ATC + davek', { anchor: 'start', dx: 4, dy: -4 });
+  f.guideH(13.25, 4.5).guideV(4.5, 13.25).pt(4.5, 13.25, '', 0, 0).text(4.5, 13.25, 'točka zaprtja', { dy: 15, cls: 'tc' });
   f.guideH(atcMin.v, atcMin.q).guideV(atcMin.q, atcMin.v).dot(atcMin.q, atcMin.v).text(atcMin.q, atcMin.v, 'točka preloma', { dx: -8, dy: -8, anchor: 'end', cls: 'tc' });
-  f.ytick(7, 'AVC_{min} = 7').ytick(atcMin.v, 'ATC_{min} ≈ ' + num(Math.round(atcMin.v * 10) / 10)).xtick(3, '3').xtick(atcMin.q, num(Math.round(atcMin.q * 10) / 10));
-  f.legend(null, 'MC = Q² − 4Q + 10, FC = 100');
+  f.ytick(13.25, 'AVC_{min} = 13,25').ytick(atcMin.v, 'ATC_{min} ≈ ' + num(Math.round(atcMin.v * 10) / 10)).xtick(4.5, '4,5').xtick(atcMin.q, num(Math.round(atcMin.q * 10) / 10));
+  f.legend(null, 'MC = Q² − 6Q + 20, FC = 50');
   f.legend(null, 'MC seka AVC in ATC v njunih minimumih');
   f.legend(null, 'MC < povprečje → povprečje pada; MC > povprečje → narašča');
   if (o.fc) f.legend(null, 'fiksni davek dvigne le AFC in ATC; MC in AVC ostanejo');
@@ -436,18 +446,21 @@ function korel() {
   return f.svg();
 }
 function npv() {
-  const nA = (r) => -1000 + 450 * (1 - (1 + r) ** -3) / r, nB = (r) => -400 + 200 * (1 - (1 + r) ** -3) / r;
+  // A: −1320, 5 let po 400; B: −500, 5 let po 200 → profila se sekata pri 7 %
+  const ann = (r) => (1 - (1 + r) ** -5) / r;
+  const nA = (r) => -1320 + 400 * ann(r), nB = (r) => -500 + 200 * ann(r);
   const root = (fn) => { let lo = 0.001, hi = 0.9; for (let k = 0; k < 80; k++) { const m = (lo + hi) / 2; if (fn(m) > 0) lo = m; else hi = m; } return lo; };
   const irrA = root(nA), irrB = root(nB), x = root((r) => nA(r) - nB(r));
-  const f = new Fig({ qmax: 31, pmax: 400, pmin: -230, xl: 'r (%)', yl: 'NSV', title: 'Profila NSV izključujočih projektov', mr: 50 });
-  f.hline(0, 0, 30, 'ax');
-  f.fn((r) => nA(r / 100), 0.1, 30, 'c4').fn((r) => nB(r / 100), 0.1, 30, 'cS');
-  f.text(30, nA(0.3), 'A (večji)', { anchor: 'start', dx: 4, dy: 4, cls: 'tc' }); f.text(30, nB(0.3), 'B (manjši)', { anchor: 'start', dx: 4, dy: -2, cls: 'tS' });
-  f.dot(irrA * 100, 0).dot(irrB * 100, 0).guideV(x * 100, nA(x)).pt(x * 100, nA(x), 'križanje', 0, -9);
-  f.text(irrA * 100, 0, 'IRR_{A}', { dy: 14 }); f.text(irrB * 100, 0, 'IRR_{B}', { dy: 14 }); f.xtick(x * 100, num(Math.round(x * 1000) / 10) + ' %');
+  const f = new Fig({ qmax: 33, pmax: 760, pmin: -380, xl: 'r (%)', yl: 'NSV', title: 'Profila NSV izključujočih projektov', mr: 50 });
+  f.hline(0, 0, 32, 'ax');
+  f.fn((r) => nA(r / 100), 0.1, 32, 'c4').fn((r) => nB(r / 100), 0.1, 32, 'cS');
+  f.text(32, nA(0.32), 'A (večji)', { anchor: 'start', dx: 4, dy: 4, cls: 'tc' }); f.text(32, nB(0.32), 'B (manjši)', { anchor: 'start', dx: 4, dy: -2, cls: 'tS' });
+  f.dot(irrA * 100, 0).dot(irrB * 100, 0).guideV(x * 100, nA(x)).pt(x * 100, nA(x), 'križanje', 34, -4);
+  f.guideV(5, nA(0.05)).dot(5, nA(0.05)).dot(5, nB(0.05));
+  f.text(irrA * 100, 0, 'IRR_{A}', { dy: 14 }); f.text(irrB * 100, 0, 'IRR_{B}', { dy: 14 }); f.xtick(5, '5 %').xtick(x * 100, num(Math.round(x * 1000) / 10) + ' %');
   f.legend(null, `IRR_{A} ≈ ${num(Math.round(irrA * 1000) / 10)} % < IRR_{B} ≈ ${num(Math.round(irrB * 1000) / 10)} %`);
-  f.legend(null, 'pod stopnjo križanja ima višjo NSV projekt A (nižja IRR)');
-  f.legend(null, '→ odloča NSV pri dejanskem strošku kapitala, ne IRR');
+  f.legend(null, `pri 5 %: NSV_{A} ≈ ${num(Math.round(nA(0.05)))} > NSV_{B} ≈ ${num(Math.round(nB(0.05)))}`);
+  f.legend(null, 'pod 7 % ima višjo NSV projekt A (nižja IRR) → odloča NSV');
   return f.svg();
 }
 function donosnost() {
@@ -520,7 +533,7 @@ function hamburger() {
 
 const figs = {
   'm-ppf': ppf({ xl: 'dobrina X', yl: 'dobrina Y', title: 'Transformacijska krivulja' }),
-  'm-ppf-zasuk': ppf({ xl: 'jabolka', yl: 'avtomobili', title: 'Zasuk transformacijske krivulje', zasuk: true }),
+  'm-ppf-zasuk': ppf({ xl: 'stanovanja', yl: 'računalniki', title: 'Zasuk transformacijske krivulje', zasuk: true, legend: ['manj gradbenih delavcev → največ stanovanj pade', 'nova programska oprema → največ računalnikov zraste'] }),
   'm-d-desno': shiftFig({ s0: 1, d0: 9, d1: 11, arrowD: true, title: 'Povpraševanje se premakne v desno', legend: ['večji dohodek (normalna dobrina) → D desno', 'pri P_{0} presežek povpraševanja → P in Q narasteta'] }),
   'm-s-desno': shiftFig({ s0: 1, s1: -1, d0: 9, arrowS: true, title: 'Premik ponudbe v desno', legend: ['necenovni dejavnik (cenejše surovine, tehnologija) → S desno', 'sprememba lastne cene = gibanje PO krivulji, ne premik'] }),
   'm-s-levo-d-desno': shiftFig({ s0: 1, s1: 3, d0: 9, d1: 11, arrowS: true, arrowD: true, title: 'S levo in D desno hkrati', legend: ['oba premika dvigneta ceno → P zagotovo naraste', 'S levo zmanjša Q, D desno ga poveča → Q nedoločena', '(tu sta premika enako velika, zato Q ostane enaka)'] }),
@@ -528,20 +541,21 @@ const figs = {
   'm-mincena': priceControl({ p: 7, name: 'P_{min}', gap: 'presežek ponudbe', title: 'Minimalna cena', leg: 'P_{min} > P_{0}: Q_{S} > Q_{D} → presežek (npr. brezposelnost pri min. plači)' }),
   'm-trosarina': trosarina(),
   'm-elast-400': ELAST_400,
-  'm-elast-25': ELAST_25,
+  'm-elast-lin': ELAST_LIN,
+  'm-elast-40': ELAST_40,
   'm-indif': indif(),
   'm-subst-kompl': twoPanel({ xl: 'X', yl: 'Y', t1: 'popolna substituta', t2: 'popolna komplementa', title: 'Oblike indiferenčnih krivulj', legend: ['substituta: premice, MRS je konstantna', 'komplementa: L-oblika, optimum v oglišču (na žarku)'] }),
   'm-izokv-oblike': twoPanel({ xl: 'L', yl: 'K', t1: 'popolni substituti', t2: 'popolni komplementi', title: 'Oblike izokvant', legend: ['Q = aK + bL: premica, MRTS = b/a je konstantna', 'stalno razmerje dejavnikov: izokvanta v obliki L'] }),
-  'm-jakob': jakob(),
-  'm-marjanca': marjanca(),
+  'm-miha': miha(),
+  'm-tina': tina(),
   'm-izokv': izokv(),
   'm-stroski': stroski({ supply: true }),
   'm-stroski-fc': stroski({ fc: true }),
   'm-pk-profit': pkProfit(),
   'm-lac': lac(),
   'm-monopol': monopol({ a: 100, b: 2, mc: 20, elastic: true, title: 'Monopol: P = 100 − 2Q, MC = 20' }),
-  'm-monopol-biker': monopol({ a: 40, b: 0.25, mc: 2, title: 'Monopolist Biker: P = 40 − Q/4, MC = 2' }),
-  'm-monopol-occ': monopol({ a: 250, b: 1, mc: 100, show: 'cs', title: 'Monopolist OCC: P = 250 − Q, MC = 100' }),
+  'm-monopol-dwl': monopol({ a: 40, b: 0.2, mc: 4, title: 'Monopol: P = 40 − Q/5, MC = 4' }),
+  'm-monopol-cs': monopol({ a: 150, b: 0.5, mc: 30, show: 'cs', title: 'Monopol: P = 150 − Q/2, MC = 30' }),
   'm-monkonk': monkonk(),
   'm-cournot': cournot(),
   'mk-adas': adas({ title: 'Agregatna ponudba in povpraševanje', sras: [1], ad: [9], eq: [[1, 9, 'E']], legend: ['kratkoročno: SRAS narašča (toge plače in cene)', 'dolgoročno: LRAS navpična pri potencialnem BDP Y*', '→ sprememba AD dolgoročno vpliva le na P'] }),
@@ -558,11 +572,11 @@ const figs = {
   'mk-demo': demo(),
   'u-produkt': produkt(),
   'u-prag': prag({ P: 8.5, v: 7, FC: 45000, cap: 90000, symbolic: true }),
-  'u-prag-90k': prag({ P: 8.5, v: 7, FC: 45000, cap: 90000 }),
-  'u-prag-32k': prag({ P: 8.5, v: 6.5, FC: 48000, cap: 32000 }),
+  'u-prag-60k': prag({ P: 12, v: 9, FC: 54000, cap: 60000 }),
+  'u-prag-25k': prag({ P: 15, v: 11, FC: 80000, cap: 25000 }),
   'u-prag-120k': prag({ P: 7000, v: 5000, FC: 160000000, cap: 120000 }),
-  'u-prag-200k': prag({ P: 50, v: 30, FC: 400000, cap: 200000, at: 0.6 }),
-  'u-prag-30k': prag({ P: 500, v: 400, FC: 2000000, cap: 30000 }),
+  'u-prag-150k': prag({ P: 40, v: 25, FC: 450000, cap: 150000, at: 0.7 }),
+  'u-prag-40k': prag({ P: 300, v: 240, FC: 1800000, cap: 40000 }),
   'pf-sml': sml(),
   'pf-sml-a': sml({ a: true }),
   'pf-sml-c': sml({ c: true }),
@@ -583,8 +597,8 @@ const A = (subj, list) => list.map(([q, fig, o]) => ({ subj, q, fig, ...(o || {}
 const attach = [
   ...A('mikro', [
     ['Zakaj je transformacijska krivulja izbočena', 'm-ppf'],
-    ['(Kolokvij 2021) Kapital in delo sta enako učinkovita', 'm-ppf'],
-    ['(Kolokvij 2021) Država izgubi del kmetijskih delavcev', 'm-ppf-zasuk'],
+    ['Država proizvaja sir in jogurt; vsi proizvodni dejavniki so pri obeh', 'm-ppf'],
+    ['Del gradbenih delavcev se izseli, nova programska oprema pa poveča', 'm-ppf-zasuk'],
     ['Kaj povzroči premik (ne gibanje po) krivulje ponudbe', 'm-s-desno'],
     ['Ob povečanju razpoložljivega dohodka', 'm-d-desno'],
     ['Kaj povzroči predpisana maksimalna cena', 'm-maxcena'],
@@ -592,51 +606,51 @@ const attach = [
     ['Od česa je odvisen delež trošarine', 'm-trosarina'],
     ['Ali je pomembno, ali trošarino', 'm-trosarina'],
     ['Qd = 286 − 15Pd, Qs = 86 + 25Ps', 'm-trosarina'],
-    ['(Kolokvij 2025, 2021) Zmrzal', 'm-s-levo-d-desno'],
-    ['(Kolokvij 2021) Trg masla:', 'm-s-levo-d-desno'],
+    ['Suša zmanjša pridelek krompirja, hkrati pa zaradi priljubljenosti', 'm-s-levo-d-desno'],
+    ['Trg medu: bolezen čebel zmanjša število panjev', 'm-s-levo-d-desno'],
     ['Povpraševanje Qd = 400 − 4Pd.', 'm-elast-400'],
-    ['(Kolokvij 2022) Vzdolž katerekoli padajoče linearne', 'm-elast-400'],
-    ['P = 25 − 0,2Q.', 'm-elast-25'],
+    ['Za padajočo premico povpraševanja Q = a − bP velja', 'm-elast-lin'],
+    ['Inverzno povpraševanje P = 40 − 0,5Q.', 'm-elast-40'],
     ['Kaj izraža mejna stopnja nadomestljivosti (MRS)?', 'm-indif'],
     ['Kaj velja v optimalni potrošni izbiri', 'm-indif'],
-    ['(Kolokvij 2022) Vzdolž običajne konveksne', 'm-indif'],
+    ['Kaj se dogaja z MRS, ko se pomikamo navzdol po običajni konveksni', 'm-indif'],
     ['Kakšne so indiferenčne krivulje za popolna substituta?', 'm-subst-kompl'],
-    ['(Kolokvij 2025, 2021) Jakob vsak hamburger', 'm-jakob'],
-    ['(Kolokvij 2021) Jakob vsak hamburger', 'm-jakob'],
-    ['(Kolokvij 2021) Marjanca', 'm-marjanca'],
+    ['Miha k vsakemu sendviču vedno popije tri skodelice čaja', 'm-miha'],
+    ['Miha (1 sendvič + 3 čaji, popolna komplementa)', 'm-miha'],
+    ['Tina pije čaj in kakav; za dodaten čaj', 'm-tina'],
     ['Čemu je enaka mejna stopnja tehnične nadomestljivosti', 'm-izokv'],
     ['Kakšna je izokvanta pri popolni nadomestljivosti', 'm-izokv-oblike', { expl: 'Pri popolni nadomestljivosti (Q = aK + bL) je izokvanta premica s konstantno MRTS = b/a. Pri stalnem razmerju dejavnikov (popolni komplementi) je izokvanta v obliki črke L.' }],
     ['Kateri pogoj velja v optimalni kombinaciji dejavnikov?', 'm-izokv'],
-    ['Podjetje mora plačati fiksni letni davek.', 'm-stroski-fc'],
-    ['Cena ravno pokrije ATC; nato se uvede davek na zemljo', 'm-stroski-fc'],
-    ['Mejni stroški naraščajo, povprečni variabilni stroški pa padajo.', 'm-stroski'],
+    ['Občina podjetju zaračuna letno takso v enakem znesku', 'm-stroski-fc'],
+    ['Popolni konkurent posluje pri P = ATCmin. Država nato uvede pavšalni', 'm-stroski-fc'],
+    ['Podjetje opazi, da povprečni variabilni stroški še padajo', 'm-stroski'],
     ['Kje mejni stroški sekajo povprečne celotne stroške?', 'm-stroski'],
-    ['Cena pokriva le povprečne variabilne stroške', 'm-stroski'],
+    ['Pri kateri ceni je popolnemu konkurentu vseeno, ali proizvaja', 'm-stroski'],
     ['AVCmin < P < ATCmin.', 'm-stroski'],
     ['Kaj je kratkoročna krivulja ponudbe popolnega konkurenta?', 'm-stroski'],
-    ['MC = Q² − 4Q + 10, FC = 100.', 'm-stroski'],
+    ['MC = Q² − 6Q + 20, FC = 50.', 'm-stroski'],
     ['Kaj je krivulja LAC?', 'm-lac'],
     ['Kakšna je krivulja povpraševanja za posamezno popolnokonkurenčno', 'm-pk-profit'],
     ['TC = 100 + 10Q + Q². Pri kateri ceni', 'm-pk-profit'],
     ['Popolni konkurent: TC = 100 + 10Q + Q², P = 50.', 'm-pk-profit'],
-    ['Katera značilnost velja za monopolista?', 'm-monopol'],
+    ['Katera trditev o monopolistu drži?', 'm-monopol'],
     ['Na katerem delu povpraševanja proizvaja monopolist?', 'm-monopol'],
-    ['Linearno povpraševanje in konstantni MC', 'm-monopol'],
+    ['Povpraševanje je premica, mejni stroški so stalni', 'm-monopol'],
     ['P = 100 − 2Q, MC = 20.', 'm-monopol'],
-    ['Monopolist "Biker"', 'm-monopol-biker'],
-    ['Monopolist OCC', 'm-monopol-occ'],
-    ['Kaj velja za monopolistično konkurenco na dolgi rok?', 'm-monkonk'],
+    ['Monopolist: Q = 200 − 5P, VC = 4Q, FC = 150.', 'm-monopol-dwl'],
+    ['Monopolist: Q = 300 − 2P, ATC = 30 + 80/Q.', 'm-monopol-cs'],
+    ['Kakšen je izid na trgu z monopolistično konkurenco, ko se vstopanje', 'm-monkonk'],
     ['Cournot: P = 30 − Q', 'm-cournot'],
     ['Stackelberg: P = 30 − Q', 'm-cournot'],
   ]),
   ...A('makro', [
     ['Kaj meri Ginijev koeficient?', 'mk-lorenz'],
     ['Kakšna je dolgoročna krivulja agregatne ponudbe', 'mk-adas'],
-    ['(Izpit) Kakšna je kratkoročna krivulja AS po klasični', 'mk-as-sole'],
+    ['Kako je videti kratkoročna krivulja agregatne ponudbe pri klasikih', 'mk-as-sole'],
     ['Kaj je stagflacija?', 'mk-stagflacija'],
     ['Kaj stori centralna banka ob inflaciji?', 'mk-ad-levo'],
-    ['(Izpit) CB poveča stopnjo obveznih rezerv. Kakšni so učinki?', 'mk-ad-levo'],
-    ['(Izpit) S katero kombinacijo politik bi znižali visoko inflacijo?', 'mk-ad-levo'],
+    ['Banke morajo po novem v obveznih rezervah držati večji delež vlog', 'mk-ad-levo'],
+    ['Katera kombinacija politik zniža visoko inflacijo?', 'mk-ad-levo'],
     ['Kaj se dolgoročno zgodi po povečanju AD', 'mk-ad-dolg'],
     ['Kako ekspanzivna monetarna politika vpliva na BDP', 'mk-islm'],
     ['Kaj predstavlja IS krivulja v modelu IS-LM?', 'mk-islm'],
@@ -648,25 +662,25 @@ const attach = [
     ['Kaj je NAIRU', 'mk-phillips'],
     ['Kaj prikazuje Lafferjeva krivulja?', 'mk-laffer'],
     ['Kaj je demografska tranzicija?', 'mk-demo'],
-    ['(Izpit) Kaj je alokacijska neučinkovitost monopola?', 'm-monopol'],
-    ['(Izpit) Kaj je davčno breme (incidenca)?', 'm-trosarina'],
+    ['Zakaj je monopol alokacijsko neučinkovit?', 'm-monopol'],
+    ['Trošarino formalno plača prodajalec, a cena za kupce zraste', 'm-trosarina'],
   ]),
   ...A('uvod', [
     ['Koliko je elastičnost produkta glede na faktor v njegovi ekstenzivni meji?', 'u-produkt'],
     ['Kako se gibljejo povprečni fiksni stroški (AFC)', 'm-stroski'],
     ['Kakšna je povezava med MC in AC?', 'm-stroski'],
     ['Kaj predstavlja optimalni obseg, ko je P = AVCmin?', 'm-stroski'],
-    ['Podjetje v popolni konkurenci proizvaja optimalni obseg.', 'm-stroski'],
+    ['Popolni konkurent proizvaja obseg, pri katerem je P = MC', 'm-stroski'],
     ['Kje je optimalni obseg poslovanja?', 'm-pk-profit'],
     ['Kaj je prag rentabilnosti (točka preloma)?', 'u-prag'],
     ['Koliko pragov rentabilnosti ima podjetje pri proporcionalnih', 'u-prag'],
     ['Kateri je obrazec za prag rentabilnosti', 'u-prag'],
     ['Kako podjetje zniža prag rentabilnosti?', 'u-prag'],
     ['Zmogljivost 120.000 enot, FC = 160 mio EUR', 'u-prag-120k'],
-    ['Zmogljivost 90.000 proizvodov', 'u-prag-90k'],
-    ['Zmogljivost 32.000 proizvodov', 'u-prag-32k'],
-    ['(Izpit) Zmogljivost 200.000 enot', 'u-prag-200k'],
-    ['(Izpit) Zmogljivost 30.000 enot, P = 500', 'u-prag-30k'],
+    ['Zmogljivost je 60.000 izdelkov, P = 12 EUR', 'u-prag-60k'],
+    ['Zmogljivost je 25.000 izdelkov, P = 15 EUR', 'u-prag-25k'],
+    ['Zmogljivost je 150.000 enot, P = 40 EUR', 'u-prag-150k'],
+    ['Zmogljivost je 40.000 enot, P = 300 EUR', 'u-prag-40k'],
   ]),
   ...A('pf1', [
     ['Kaj je krivulja donosnosti in kaj je obrnjena krivulja?', 'pf-donosnost'],
@@ -677,12 +691,12 @@ const attach = [
     ['Kaj prikazuje premica trga vrednostnih papirjev (SML)?', 'pf-sml'],
     ['Delnica A: pričakovana donosnost E = 13 %', 'pf-sml-a'],
     ['Delnica C: pričakovana donosnost E = 25 %', 'pf-sml-c'],
-    ['(Stari izpiti) Kaj drži za tveganje in donosnost naložbe, ki je del dobro razpršenega', 'pf-sml'],
+    ['Investitor ima dobro razpršeno premoženje. Za katero tveganje', 'pf-sml'],
     ['Kaj se zgodi s SML, če se pričakovana inflacija', 'pf-sml-infl'],
     ['Delnica X: β = 1,2, rf 4 %, rm 9 %. Pričakovana inflacija', 'pf-sml-infl'],
     ['Delnica X: β = 1,2, rf 4 %, rm 9 %. Tržna premija', 'pf-sml-prem'],
     ['Delnica X: β = 1,2, rf 4 %, rm 9 % (zahtevana donosnost 10 %)', 'pf-sml-x'],
-    ['(Stari izpiti) Krivulji NSV dveh medsebojno izključujočih', 'pf-npv'],
+    ['Projekta A in B se medsebojno izključujeta in se razlikujeta po obsegu', 'pf-npv'],
   ]),
   ...A('mpsp', [
     ['Trije delavci, 5 operacij', 'mp-mreza'],
