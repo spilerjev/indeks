@@ -848,6 +848,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-notes figure.nimg img{max-width:100%;max-height:520px;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff;display:inline-block;cursor:zoom-in;}
 .ix-notes figure.nimg figcaption{font-size:12.5px;color:var(--ink2);margin-top:5px;line-height:1.4;}
 .ix-notes li figure.nimg{text-align:left;}
+@media (max-width:560px){.ix-notes figure.nimg{margin:10px -8px;}.ix-notes figure.nimg img{border-radius:6px;max-height:none;}}
 .ix-notes .tl-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:12.5px;color:var(--ink2);margin:4px 0 10px;}
 .ix-notes .tl-ust{--tlc:var(--terra);}
 .ix-notes .tl-spr{--tlc:var(--teal);}
