@@ -161,67 +161,67 @@ module.exports = [
     'Z analizo preteklih cen lahko zanesljivo napovemo prihodnje gibanje cen',
     'Cene delnic vedno sledijo rasti BDP z enoletnim zamikom (slučajni hod)',
     'Cene delnic nihajo okoli vrednosti, ki jo določa centralna banka z obrestmi'], 3],
-  ['(Izpit) Kaj je dezinflacija?', [
+  ['Inflacija se je znižala s 6 % na 2 %. Kaj opisuje izraz dezinflacija?', [
     'Padanje splošne ravni cen skozi daljše obdobje (negativna inflacija)',
     'Hkratna visoka inflacija in visoka brezposelnost ob stagnaciji',
     'Inflacija, pri kateri se relativne cene dobrin ne spremenijo'], 0],
-  ['(Izpit) Katere so funkcije denarja?', [
+  ['Katere vloge (funkcije) opravlja denar v gospodarstvu?', [
     'Plačilno sredstvo, investicijsko sredstvo, rezerva CB, merilo cen, svetovni denar',
     'Hranilec vrednosti, vir posojil, merilec BDP, zavarovanje in svetovni denar',
     'Menjalno sredstvo, vir dobička, merilo blaginje, vir davkov, svetovni denar'], 2],
-  ['(Izpit) Kakšna je razlika med davkom in prispevkom?', [
+  ['Po čem se prispevek za socialno varnost razlikuje od davka?', [
     'Davek je prostovoljen, prispevek je obvezen za vse zaposlene in podjetja',
     'Prispevek plačujejo samo delodajalci, davek samo gospodinjstva in podjetja',
     'Davek je vedno sorazmeren, prispevek pa vedno progresiven glede na dohodek'], 1],
-  ['(Izpit) Katera so načela obdavčenja?', [
+  ['Na katerih načelih naj temelji pravičen davčni sistem?', [
     'Načelo nediskriminacije, recipročnosti ter vodoravne in navpične arbitraže',
     'Načelo enake stopnje, enkratnega plačila, prostovoljnosti in preglednosti',
     'Načelo dobička, likvidnosti in varnosti davčnega zavezanca ter države'], 3],
-  ['(Izpit) Kaj je davčno breme (incidenca)?', [
+  ['Trošarino formalno plača prodajalec, a cena za kupce zraste. Kaj opisuje pojem davčnega bremena (incidence)?', [
     'Skupni znesek davkov, ki jih država pobere v enem letu',
     'Delež vseh davkov in prispevkov v BDP posamezne države',
     'Strošek davčne uprave pri pobiranju in nadzoru davkov'], 0],
-  ['(Izpit) Zakaj je proticiklična fiskalna politika možna le z neuravnoteženim proračunom?', [
+  ['Zakon bi zahteval, da je proračun vsako leto uravnotežen. Zakaj bi to onemogočilo proticiklično fiskalno politiko?', [
     'Uravnotežen proračun v recesiji samodejno poveča izdatke in BDP, zato ni potreben',
     'Ker fiskalni pakt prepoveduje proračunski presežek v času konjunkture in razcveta',
     'Ker centralna banka ne sme financirati uravnoteženega proračuna z nakupom obveznic'], 2],
-  ['(Izpit) Kako na gospodarstvo vpliva dvig rediskontne stopnje centralne banke?', [
+  ['Centralna banka zviša obrestno mero, po kateri posoja bankam (rediskontno stopnjo). Kakšen je učinek?', [
     'Poveča presežne rezerve poslovnih bank in s tem njihovo kreditiranje',
     'Ne vpliva na banke, spremeni le devizni tečaj domače valute do evra',
     'Poveča obseg kreditov CB bankam, obrestne mere bank padejo'], 1],
-  ['(Izpit) CB poveča stopnjo obveznih rezerv. Kakšni so učinki?', [
+  ['Banke morajo po novem v obveznih rezervah držati večji delež vlog. Kakšni so učinki na gospodarstvo?', [
     'Manj kreditov, a višji AD zaradi večjega varčevanja v bankah in višjih cen',
     'Višje obresti, a višji BDP, ker banke dobijo več depozitov in več rezerv',
     'Več presežnih rezerv in kreditov, nižje obresti, višji AD, BDP in cene'], 3],
-  ['(Izpit) Kaj je multiplikator v odprtem gospodarstvu?', [
+  ['Kako uvoz vpliva na velikost multiplikatorja v odprtem gospodarstvu?', [
     '1 / (MNV − MNU) - večji, ker izvoz poveča domači dohodek',
     '1 / MNV - enak kot v zaprtem gospodarstvu, uvoz ne vpliva',
     'MNP / (MNV + MNU) - manjši, ker davki odtekajo v proračun'], 0],
-  ['(Izpit 2012) Tečaj se spremeni z 1,5 $/€ na 1,1 $/€.', [
+  ['Tečaj se spremeni z 1,30 $/€ na 1,05 $/€.', [
     'Dolar depreciira, evro apreciira; ameriški izvoz v evroobmočje zraste',
     'Pri drsečem tečaju gre za revalvacijo evra in devalvacijo dolarja',
     'Evro apreciira, dolar depreciira; ameriški uvoz iz evroobmočja pade'], 2],
-  ['(Izpit) Kaj velja po fiskalnem paktu za strukturni primanjkljaj?', [
+  ['Katero pravilo za strukturni primanjkljaj določa fiskalni pakt?', [
     'Na letni ravni ne sme presegati 3 % BDP',
     'Na letni ravni ne sme presegati 60 % BDP',
     'Na letni ravni ne sme presegati 1,0 % BDP'], 1],
-  ['(Izpit) Katero je eno od temeljnih načel Svetovne trgovinske organizacije (WTO)?', [
+  ['Katero od naslednjih pravil je eno od temeljnih načel WTO?', [
     'Trgovinske spore rešujejo države s povračilnimi carinami in kvotami',
     'Pomoč državam v tranziciji pri plačilnobilančnih težavah s posojili',
     'Vsaka država lahko carine prosto zviša brez nadomestila drugim'], 3],
-  ['(Izpit) Kakšna je vloga Svetovne banke v primerjavi z IMF?', [
+  ['Kako se razlikujeta nalogi Svetovne banke in Mednarodnega denarnega sklada?', [
     'Svetovna banka pomaga pri plačilnobilančnih težavah, IMF financira razvojne projekte',
     'Svetovna banka rešuje trgovinske spore, IMF financira infrastrukturo v državah v razvoju',
     'Svetovna banka vodi svetovno monetarno politiko, IMF nadzira mednarodno trgovino'], 0],
-  ['(Izpit) Kaj je začaran krog revščine?', [
+  ['Kako poteka začarani krog revščine v nerazvitih državah?', [
     'Hiperinflacija → beg kapitala → tiskanje denarja → hiperinflacija',
     'Razvite države izkoriščajo nerazvite z nizkimi cenami surovin (odvisnost)',
     'Beg možganov → manj izobraženih → nižje plače → še večji beg možganov'], 1],
-  ['(Izpit) Kaj je tragedija skupnega (nezajemljivi viri)?', [
+  ['Ribiči v skupnem jezeru lovijo, dokler rib ne zmanjka. Kaj pojasnjuje ta primer tragedije skupnega?', [
     'Premajhna ponudba javnih dobrin, ker posameznik ne plača svojega deleža',
     'Izguba blaginje zaradi monopolne cene, ki je višja od mejnih stroškov',
     'Sočasni padec BDP v vseh državah ob izbruhu svetovne finančne krize'], 2],
-  ['(Izpit) S katero kombinacijo politik bi znižali visoko inflacijo?', [
+  ['Katera kombinacija politik zniža visoko inflacijo?', [
     'Restriktivna monetarna politika in ekspanzivna fiskalna politika',
     'Ekspanzivna monetarna politika in restriktivna fiskalna politika',
     'Ekspanzivna monetarna politika in hkrati ekspanzivna fiskalna politika'], 1,

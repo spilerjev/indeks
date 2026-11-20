@@ -203,9 +203,4 @@ module.exports = [
     'Ni optimalno, naj troši več B (2,5 > 0,75)'],
 
   // K2 (kolokvij 2021)
-  ['Ali je trditev pravilna: "Ko mejni proizvod variabilnega dejavnika narašča', [
-    'Da, ker MC takrat narašča - TC narašča po naraščajoči stopnji',
-    'Da, ker AFC takrat pada - TC narašča po naraščajoči stopnji',
-    'Ne, ker TC takrat pada - podjetje ima negativne mejne stroške'], 2,
-    'Ne, ker MC takrat pada - TC narašča po padajoči stopnji'],
 ];

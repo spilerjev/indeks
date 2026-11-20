@@ -9,7 +9,7 @@ const CFG = {
     { id: 'mikro-k1-trg', name: 'Razmišljati kot ekonomist, trg in ravnotežje', from: ['mikro-k1-ekonomist', 'mikro-k1-ponudba'] },
     { id: 'mikro-k1-elast', name: 'Elastičnost, vloga države in potrošnik (+ povezovanje)', from: ['mikro-k1-elasticnost', 'mikro-k1-potrosnik', 'mikro-k1-povezi'] },
     'mikro-k1-stari',
-    { id: 'mikro-k1-rac', name: 'Računske naloge (tudi stari kolokviji)', from: ['mikro-k1-racunske', 'mikro-k1-stari-rac'], calc: true },
+    { id: 'mikro-k1-rac', name: 'Računske naloge (tudi v slogu kolokvija)', from: ['mikro-k1-racunske', 'mikro-k1-stari-rac'], calc: true },
   ],
   's1/mikro/k2': [
     { id: 'mikro-k2-proiz', name: 'Proizvodnja in proizvodni stroški', from: ['mikro-k2-proizvodnja', 'mikro-k2-stroski'] },
@@ -113,7 +113,7 @@ const CFG = {
     { id: 'eeu-mm2', name: 'Mednarodna menjava: primerjalne prednosti in mikroekonomska orodja', from: ['eeu-mm', 'eeu-mikro'] },
     { id: 'eeu-carine', name: 'Carine: majhna in velika država, MFN (P04)', from: ['eeu-carine-teorija', 'eeu-maja'] },
     { id: 'eeu-pref-all', name: 'Preferencialna liberalizacija (Viner), partnerica, tretje države in empirija (P05)', from: ['eeu-pref', 'eeu-pref2'] },
-    { id: 'eeu-integr', name: 'Stopnje integracije in sporazumi (tudi stari kolokviji)', from: ['eeu-integr2', 'eeu-integracije'] },
+    { id: 'eeu-integr', name: 'Stopnje integracije in sporazumi (z vajami v slogu kolokvija)', from: ['eeu-integr2', 'eeu-integracije'] },
     'eeu-wto', 'eeu-p6b', 'eeu-p7', 'eeu-stari', 'eeu-povezi',
     { id: 'eeu-rac-mm-presezki', name: 'Računske: primerjalne prednosti in presežki (vaje 2–3)', from: ['eeu-rac-mm', 'eeu-rac-v3'], calc: true },
     { id: 'eeu-rac-carine-cu', name: 'Računske: carine in carinska unija (vaje 4)', from: ['eeu-rac-carine', 'eeu-rac-v4'], calc: true },

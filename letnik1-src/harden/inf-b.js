@@ -147,7 +147,7 @@ module.exports = [
     'Podpirajo načrtovanje in nadzor ter dejansko stanje primerjajo z načrtovanim stanjem',
     'Samodejno iščejo prej neznane vzorce v velikih količinah podatkov podjetja',
     'Managerjem ponujajo agregirane, ne nujno zelo natančne podatke o poslovanju'], 2],
-  ['Kaj je značilno za poslovnointeligenčne sisteme (BI)?', [
+  ['Katera lastnost velja za poslovnointeligenčne sisteme (BI)?', [
     'Izvajajo vsakodnevne transakcije, kot je izstavitev računa kupcu, skoraj avtomatizirano',
     'Podatke vnašajo ročno operativni uporabniki ob vsakem poslovnem dogodku v podjetju',
     'Rezultate uporabljajo predvsem zunanji uporabniki, npr. davčna uprava in banke'], 0],
@@ -159,7 +159,7 @@ module.exports = [
     'Ko ima podjetje več kot 50 zaposlenih v službi za informatiko in razvoj',
     'Vedno, ker je nakup rešitve vedno cenejši in hitrejši od lastnega razvoja',
     'Ko so stroški licenc večji od stroškov uvajanja in prilagajanja rešitve'], 1],
-  ['Kaj so matični podatki v ERP?', [
+  ['Kaj v ERP sistemu imenujemo matični podatki?', [
     'Podatki, ki beležijo poslovne dogodke, npr. količina, cena in datum posameznega naročila',
     'Podatki o organizacijski strukturi, npr. oddelki, stroškovna mesta in delovna mesta',
     'Zgodovinski podatki, preneseni v podatkovno skladišče, npr. prodaja po letih'], 2],
@@ -191,7 +191,7 @@ module.exports = [
     'Prenos zgodovinskih podatkov iz operativne baze v skladišče (ETL)',
     'Ročni pregled poročil, ki jih pripravi služba za informatiko',
     'Izdelava poljubnih pogledov na podatke v obliki vrtilnih tabel'], 1],
-  ['Kakšna je razlika med OLAP in podatkovnim rudarjenjem?', [
+  ['Po čem se OLAP razlikuje od podatkovnega rudarjenja?', [
     'OLAP je podatkovno vodeno (sistem sam išče vzorce), rudarjenje je uporabniško vodeno',
     'OLAP deluje na operativni bazi, rudarjenje pa izključno na podatkovnem skladišču',
     'Med njima ni razlike, rudarjenje je le novejše ime za OLAP v podatkovnem skladišču'], 2],
@@ -306,7 +306,7 @@ module.exports = [
     'Model, v katerem kupec sam predlaga ceno, ki jo je za izdelek pripravljen plačati',
     'Prilagajanje izdelka potrebam posameznega kupca na podlagi podatkov o nakupih'], 0],
   // ---- izpitna vprašanja
-  ['Kateri način uvajanja IS je najmanj tvegan?', [
+  ['Pri katerem načinu prehoda na nov informacijski sistem je tveganje najmanjše?', [
     'Neposreden (takojšnji) prehod na nov sistem',
     'Postopen prehod po posameznih oddelkih',
     'Pilotni prehod v eni poslovni enoti'], 2],
@@ -318,63 +318,63 @@ module.exports = [
     'Da, vsaka naložba v IT samodejno poveča dobiček in tržni delež',
     'Ne, IT nima vpliva, ker jo enako uporabljajo vsa podjetja',
     'Da, a samo pri podjetjih, ki prodajajo izključno prek spleta'], 3],
-  ['(Izpit) Katere so štiri značilnosti masovnih podatkov (big data)?', [
+  ['Po katerih štirih lastnostih prepoznamo masovne podatke (big data)?', [
     'Količina, cena hrambe, zgoščenost in objektivnost podatkov',
     'Točnost, pravočasnost, popolnost in razumljivost podatkov',
     'Strukturiranost, normaliziranost, integriranost, zanesljivost'], 0],
-  ['(Izpit 2018) Kaj je značilno za okolje "pajkove mreže"?', [
+  ['Podjetje ima za vsak oddelek svojo, nepovezano bazo podatkov ("pajkova mreža"). Kakšne so posledice?', [
     'Ena centralna baza, do katere imajo vsi oddelki enak in hkraten dostop prek omrežja',
     'Podatki se samodejno sinhronizirajo med vsemi oddelki prek spleta brez podvajanja',
     'Omrežje strežnikov, povezanih v obliki zvezde okoli podatkovnega skladišča'], 2],
-  ['(Izpit) Kako se postopni prehod na nov IS primerja z ostalimi načini uvajanja?', [
+  ['Podjetje nov IS uvaja modul za modulom (postopni prehod). Kako se ta način primerja z ostalimi?', [
     'Manj tvegan in dražji od vzporednega, bolj tvegan in cenejši od neposrednega',
     'Najmanj tvegan in najdražji, ker stari in novi sistem nekaj časa tečeta sočasno',
     'Najhitrejši in najcenejši, uporabimo ga, kadar starega sistema sploh ni'], 1],
-  ['(Izpit) Kako se vrednost informacije spreminja s časom?', [
+  ['Kaj se praviloma dogaja z vrednostjo informacije, ko čas teče?', [
     'Praviloma raste, ker se informacija sčasoma potrdi v praksi',
     'Ostaja enaka, odvisna je le od stroškov njene pridobitve',
     'Raste do zastaranja podatkov, nato hitro pade na nič'], 3],
-  ['(Izpit) Kaj je zgoščenost kot lastnost kakovosti informacije?', [
+  ['Kaj pri kakovosti informacije pomeni zgoščenost?', [
     'Informacija vsebuje prav vse elemente, ki so potrebni za odločitev, brez izjeme',
     'Informacija čim bolj nepristransko in natančno odraža dejansko stanje sistema',
     'Informacija je uporabniku na voljo v najkrajšem času od trenutka zahteve'], 0],
-  ['(Izpit) Kako merimo TOČNOST informacije?', [
+  ['S čim izrazimo TOČNOST informacij v poročilu?', [
     'S časom od spremembe v realnosti do zapisa spremembe v bazi podatkov',
     'S časom od zahteve po informaciji do njene pridobitve (odzivnost)',
     'S številom podrobnosti, ki jih poročilo vsebuje za uporabnika'], 2],
-  ['(Izpit) Kako delimo e-tržnice glede na usmerjenost?', [
+  ['Katera delitev e-tržnic izhaja iz njihove usmerjenosti?', [
     'Javne (za vse kupce) in zasebne (za izbrane poslovne partnerje)',
     'Horizontalne (več panog) in vertikalne (ena država ali regija)',
     'Nakupne (za kupce) in prodajne (za trgovce na drobno in debelo)'], 1],
-  ['(Izpit) Prejemnik je podpis uspešno dešifriral s pošiljateljevim javnim ključem', [
+  ['Boris je Anin podpis uspešno dešifriral z Aninim javnim ključem in podpis se ujema z besedilom. Kaj s tem ve?', [
     'Da je prejemnikov zasebni ključ še vedno varen in tajen',
     'Da je pošiljatelj sporočilo šifriral s prejemnikovim javnim ključem',
     'Da sporočila na poti ni nihče prebral niti prestregel'], 3],
-  ['(Izpit) Katera NI ena od treh osnovnih etičnih teorij?', [
+  ['Katero načelo NE sodi med tri osnovne etične teorije?', [
     'Maksimirati splošno družbeno dobro (utilitarizem)',
     'Maksimirati osebno dobro (egoizem)',
     'Pravilno obravnavati druge (dolžnost)'], 0, 'Maksimirati dobiček organizacije (profit)'],
-  ['(Izpit) Kaj je informacijska zasebnost?', [
+  ['Katera oblika zasebnosti se nanaša na osebne podatke (informacijska zasebnost)?', [
     'Zasebnost pošte, telefonskih pogovorov in elektronskih sporočil posameznika',
     'Pravica posameznika, da ga drugi pustijo pri miru in ga ne nadlegujejo',
     'Zaščita informacij, ki so intelektualna lastnina podjetja ali avtorja'], 2],
-  ['(Izpit) Kaj velja za stroške nakupa celovite programske rešitve (ERP)?', [
+  ['Podjetje kupuje celovito programsko rešitev (ERP). Kaj velja za stroške?', [
     'Licence predstavljajo večino skupnih stroškov lastništva rešitve v prvih letih',
     'Po nakupu licenc dodatnih stroškov uvajanja in prilagajanja praviloma ni',
     'Stroški prilagajanja so nižji, če organizacija vnaprej ne opredeli svojih potreb'], 1],
-  ['(Izpit) ERP ne pokrije vseh potreb podjetja. Katere so tri možnosti?', [
+  ['Kupljeni ERP ne pokrije vseh potreb podjetja. Katere tri možnosti ima podjetje?', [
     'Kupiti drugi ERP, razviti lastno rešitev ali zaposliti več informatikov',
     'Uvesti sistem vzporedno, postopno ali pilotno v eni poslovni enoti',
     'Prenesti IS v oblak, na lastni strežnik ali k zunanjemu izvajalcu'], 3],
-  ['(Izpit) Kaj je hrošč (bug)?', [
+  ['Kaj v informatiki imenujemo hrošč (bug)?', [
     'Program, ki se razmnožuje po omrežju brez gostitelja (črv)',
     'Koristen program s skritimi škodljivimi ukazi (trojanski konj)',
     'Program, ki vrine kopijo sebe v druge programe (virus)'], 0],
-  ['(Izpit) Kakšen dostop do podatkovne baze je značilen za analitične uporabnike', [
+  ['Kakšen dostop do podatkov potrebujejo analitiki na višjih ravneh odločanja?', [
     'Vnaprej pripravljene zaslonske maske za vnos in popravljanje podatkov',
     'Pripravljena tedenska poročila, ki se po vsebini in obliki ne spreminjajo',
     'Neposredno ažuriranje trenutnih vrednosti v operativni bazi podatkov'], 2],
-  ['(Izpit) Kaj je funkcijska razdrobljenost (funkcijski silosi)?', [
+  ['Kaj pomeni funkcijska razdrobljenost (funkcijski silosi) v podjetju?', [
     'Vsak oddelek ima popoln pregled nad procesom, zamude nastanejo le pri kupcu',
     'Podjetje ima en sam IS, ki tesno povezuje vse poslovne funkcije in oddelke',
     'Poslovni procesi potekajo v celoti znotraj enega samega oddelka'], 1],

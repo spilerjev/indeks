@@ -11,7 +11,7 @@ const NOTES_K1 = `
 ## Funkcije in elastičnost
 ### Definicijsko območje in zaloga vrednosti
 - **Definicijsko območje** D_f: vse x, pri katerih lahko izračunamo f(x). Pazi na: imenovalec ≠ 0, koren iz nenegativnega, ln samo iz pozitivnega.
-- **Ekonomsko definicijsko območje**: dodatno zahtevamo smiselne vrednosti (cena p ≥ 0 in količina q ≥ 0). Kolokvij 2023: q(p) = 6 − √p → DM = [0, ∞), DE = [0, 36].
+- **Ekonomsko definicijsko območje**: dodatno zahtevamo smiselne vrednosti (cena p ≥ 0 in količina q ≥ 0). Primer: q(p) = 8 − √p → DM = [0, ∞), DE = [0, 64].
 - **Zaloga vrednosti** Z_f: vse vrednosti, ki jih funkcija zavzame.
 ### Koeficient elastičnosti
 - **E_y,x = (x / y) · y′** - za koliko % se spremeni y, če x povečamo za 1 %.
@@ -26,7 +26,7 @@ const NOTES_K1 = `
 ### Ekstremi in potek
 - **Stacionarne točke**: f′(x) = 0 (in v D_f!). f″ < 0 → **maksimum**, f″ > 0 → **minimum**.
 - f′ > 0 → narašča, f′ < 0 → pada. f″ > 0 → konveksna, f″ < 0 → konkavna; prevoj: f″ menja predznak.
-- Kolokvij 2023: f(x) = 4 ln(1 − x) − x²: D_f = (−∞, 1), f′ = 2(x − 2)(x + 1)/(1 − x), stacionarni točki 2 ∉ D_f in −1 → maksimum M(−1, 4 ln 2 − 1), pada na (−1, 1).
+- Primer: f(x) = 6 ln(2 − x) − x²: D_f = (−∞, 2), f′ = 2(x − 3)(x + 1)/(2 − x), stacionarni točki 3 ∉ D_f in −1 → maksimum M(−1, 6 ln 3 − 1), pada na (−1, 2).
 ### Ekonomske uporabe
 - **Mejni stroški** MC = C′(q); **povprečni stroški** AC = C(q)/q; mejni prihodek MR = R′(q); dobiček π = R − C, max pri MR = MC.
 
@@ -88,7 +88,7 @@ const NOTES_K2 = `
 const funkcije = calc([
   Q('Kakšno je definicijsko območje f(x) = ln(1 − x)?', ['(−∞, 1)', '(1, ∞)', '(−∞, 1]', 'ℝ \\ {1}'], 0, 'ln je definiran samo za pozitivne argumente: 1 − x > 0 → x < 1.'),
   Q('Kakšno je definicijsko območje f(x) = √(x − 2)/(x − 5)?', ['[2, 5) ∪ (5, ∞)', '(2, ∞)', '[2, ∞)', 'ℝ \\ {5}'], 0, 'Pod korenom ≥ 0 (x ≥ 2) in imenovalec ≠ 0 (x ≠ 5).'),
-  Q('Povpraševanje q(p) = 6 − √p. Ekonomsko definicijsko območje?', ['[0, 36]', '[0, 6]', '[0, ∞)', '[6, 36]'], 0, 'p ≥ 0 in q ≥ 0 → √p ≤ 6 → 0 ≤ p ≤ 36 (kolokvij 2023).'),
+  Q('Povpraševanje q(p) = 8 − √p. Ekonomsko definicijsko območje?', ['[0, 64]', '[0, 8]', '[0, ∞)', '[8, 64]'], 0, 'p ≥ 0 in q ≥ 0 → √p ≤ 8 → 0 ≤ p ≤ 64.'),
   Q('q(p) = 6 − √p. Koeficient elastičnosti povpraševanja?', ['−√p / (2(6 − √p))', '−1/(2√p)', '−p/(6 − √p)', '−√p/(6 − √p)'], 0, 'q′ = −1/(2√p); E = (p/q)·q′ = −√p/(2(6 − √p)).'),
   Q('q(p) = 6 − √p. Pri kateri ceni je E = −1?', ['p = 16', 'p = 4', 'p = 36', 'p = 9'], 0, '√p/(2(6 − √p)) = 1 → √p = 12 − 2√p → √p = 4 → p = 16.'),
   Q('D(p) = −30p + 900. Elastičnost pri p = 20 in kaj pomeni?', ['−2; elastično', '−0,5; neelastično', '−2; neelastično', '−1; usklajeno elastično'], 0, 'q(20) = 300; E = 20/300 · (−30) = −2. |E| > 1: +1 % cene → ≈ −2 % povpraševanja.'),

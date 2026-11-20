@@ -1,181 +1,180 @@
-/* Mikroekonomija 1 - 1. kolokvij: stari kolokviji (12. 11. 2025, 7. 11. 2022 A in B, 8. 11. 2021 A in B).
-   Vir: Neja - dodatno gradivo / Mikroekonomija / Izpiti in kolokviji. Vse rešitve preračunane;
-   naloge, ki brez slike ali manjkajoče enačbe niso rešljive, so izpuščene. */
+/* Mikroekonomija 1 - 1. kolokvij: lastne vaje v slogu kolokvija (teorija in računske).
+   Naloge so napisane na novo (lastna formulacija, novi primeri in številke); rešitve so preračunane. */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 const C = (q, options, correct, explanation) => ({ q, options, correct, explanation, calc: true });
 
 const teorija = [
-  Q('(Kolokvij 2025) Cena dobrine A se poveča, hkrati se krivulja povpraševanja po dobrini B premakne v levo. Kaj lahko sklepamo?', [
-    'A in B sta komplementa', 'A in B sta substituta', 'A in B sta neodvisni dobrini', 'B je Giffenova dobrina'], 0,
-    'Dražji A → manj kupljenega A → manj povpraševanja po B, ki se uporablja skupaj z A. Pri substitutih bi se povpraševanje po B premaknilo desno.'),
-  Q('(Kolokvij 2025, 2022) Katera trditev drži za UČINEK DOHODKA ob znižanju cene (brez učinka substitucije)?', [
-    'Večjo potrošnjo povzroči le pri normalnih dobrinah',
-    'Večjo potrošnjo povzroči vedno, ne glede na dobrino',
-    'Večjo potrošnjo povzroči le pri inferiornih dobrinah',
-    'Večjo potrošnjo povzroči le pri Giffenovih dobrinah'], 0,
+  Q('Ko se podražijo tiskalniki, trgovci opazijo, da se krivulja povpraševanja po kartušah premakne v levo. Kakšni dobrini sta tiskalnik in kartuša?', [
+    'Komplementa', 'Substituta', 'Neodvisni dobrini', 'Kartuša je Giffenova dobrina'], 0,
+    'Dražji tiskalnik → manj kupljenih tiskalnikov → manj povpraševanja po kartušah, ki se uporabljajo skupaj s tiskalnikom. Pri substitutih bi se povpraševanje premaknilo desno.'),
+  Q('Dobrina se poceni. Pri kateri vrsti dobrine sam UČINEK DOHODKA (brez učinka substitucije) poveča kupljeno količino?', [
+    'Pri normalni dobrini',
+    'Pri vsaki dobrini, ker se realni dohodek poveča',
+    'Samo pri inferiorni dobrini',
+    'Samo pri Giffenovi dobrini'], 0,
     'Nižja cena poveča realni dohodek. Pri normalni dobrini to poveča potrošnjo, pri inferiorni (in Giffenovi) jo zmanjša.'),
-  Q('(Kolokvij 2025) "Cena kave se je zvišala, zato se bo Tinin potrošniški presežek zmanjšal, njeno zadovoljstvo pa povečalo." Ali trditev drži?', [
-    'Ne - zmanjšala se bosta oba, presežek in zadovoljstvo',
-    'Da - presežek se zmanjša, zadovoljstvo pa se poveča',
-    'Ne - presežek se poveča, zadovoljstvo pa se zmanjša',
-    'Ne - presežek ostane enak, zmanjša se le zadovoljstvo'], 0,
-    'Višja cena zmanjša trikotnik pod krivuljo povpraševanja nad ceno (presežek), potrošnik pa pride na nižjo indiferenčno krivuljo.'),
-  Q('(Kolokvij 2025) Koeficient cenovne elastičnosti povpraševanja po bencinu je −0,4. Kaj se zgodi s celotnimi prihodki, če se cena bencina poveča?', [
+  Q('Podražijo se vstopnice za fitnes, ki ga Luka redno obiskuje. Kaj se zgodi z njegovim potrošniškim presežkom in koristnostjo?', [
+    'Zmanjšata se oba',
+    'Presežek se zmanjša, koristnost ostane enaka',
+    'Presežek se poveča, koristnost se zmanjša',
+    'Presežek ostane enak, zmanjša se le koristnost'], 0,
+    'Višja cena zmanjša ploščino pod krivuljo povpraševanja nad ceno (presežek), premica cene se zasuka navznoter in potrošnik pride na nižjo indiferenčno krivuljo.'),
+  Q('Cenovna elastičnost povpraševanja po cigaretah je −0,3. Država zviša trošarino in cena cigaret zraste. Kaj se zgodi s skupnimi izdatki kupcev za cigarete?', [
     'Povečajo se, ker je povpraševanje neelastično',
     'Povečajo se, ker je povpraševanje elastično',
     'Zmanjšajo se, ker je povpraševanje elastično',
     'Zmanjšajo se, ker je povpraševanje neelastično'], 0,
-    '|E| = 0,4 < 1: količina pade za manjši odstotek, kot cena zraste, zato TR = P · Q naraste.'),
-  Q('(Kolokvij 2025, 2021) Zmrzal in vroče poletje zmanjšata pridelek jabolk, hkrati pa potrošniki zaradi lokalne hrane raje kupujejo jabolka kot banane. Kaj se zgodi z ravnotežjem?', [
-    'Cena zraste, količina se lahko poveča, zmanjša ali ostane enaka',
+    '|E| = 0,3 < 1: količina pade za manjši odstotek, kot cena zraste, zato izdatki (= prihodki prodajalcev P · Q) narastejo.'),
+  Q('Suša zmanjša pridelek krompirja, hkrati pa zaradi priljubljenosti domače hrane naraste povpraševanje po njem. Kaj lahko zanesljivo sklepamo o ravnotežju?', [
+    'Cena zraste, sprememba količine je nedoločena',
     'Cena zraste, ravnotežna količina se zagotovo zmanjša',
     'Cena pade, ravnotežna količina se zagotovo poveča',
-    'Cena se lahko spremeni v obe smeri, količina se zmanjša'], 0,
+    'Cena je nedoločena, količina se zmanjša'], 0,
     'Ponudba levo (P↑, Q↓), povpraševanje desno (P↑, Q↑). Oba premika dvigneta ceno; vpliv na količino je odvisen od velikosti premikov.'),
-  Q('(Kolokvij 2021, 2025) Kakšni dobrini sta jabolko in banana in kakšna je križna elastičnost med njima?', [
-    'Substituta, križna elastičnost je pozitivna',
-    'Komplementa, križna elastičnost je negativna',
-    'Substituta, križna elastičnost je negativna',
-    'Neodvisni dobrini, križna elastičnost je 0'], 0,
-    'Potrošniki zamenjujejo banane z jabolki: dražja banana → več povpraševanja po jabolkih, E_križna > 0.'),
-  Q('(Kolokvij 2022) Vzdolž katerekoli padajoče linearne krivulje povpraševanja:', [
-    'Se elastičnost spreminja, naklon je konstanten',
-    'Se naklon spreminja, elastičnost je konstantna',
-    'Sta elastičnost in naklon oba konstantna',
-    'Se spreminjata elastičnost in tudi naklon'], 0,
-    'Naklon premice je povsod enak, E = (ΔQ/ΔP) · P/Q pa se spreminja z razmerjem P/Q: zgoraj elastično, spodaj neelastično.'),
-  Q('(Kolokvij 2022) Vzdolž običajne konveksne (Cobb-Douglasove) indiferenčne krivulje:', [
-    'Se spreminjata MRS in naklon krivulje',
-    'Se MRS spreminja, naklon je konstanten',
-    'Se naklon spreminja, MRS je konstantna',
-    'Sta MRS in naklon krivulje konstantna'], 0,
-    'MRS je (absolutna vrednost) naklona indiferenčne krivulje, zato se spreminjata skupaj; pri konveksni krivulji MRS pada. Konstantna je le pri popolnih substitutih.'),
-  Q('(Kolokvij 2022) Cena X se spreminja, cena Y ostane enaka. Kaj predstavlja cenovno-potrošna krivulja (PCC) za X?', [
-    'Kombinacije X in Y, ki maksimirajo korist pri različnih cenah X',
-    'Kombinacije X in Y, ki maksimirajo korist pri različnih dohodkih',
-    'Razmerje med ceno X in količino povpraševanja po dobrini Y',
-    'Kombinacije X in Y, ki maksimirajo korist pri različnih količinah X'], 0,
-    'PCC poveže optimalne točke ob vrtenju premice cene. Iz nje izpeljemo krivuljo povpraševanja po X. Pri spremembi dohodka dobimo ICC (in Engelovo krivuljo).'),
-  Q('(Kolokvij 2021) Katera trditev je pravilna?', [
-    'Pri popolnih komplementih sta PCC in ICC enaki',
-    'Pri popolnih substitutih sta PCC in ICC enaki',
-    'Pri popolnoma neelastičnem povpraševanju je potrošniški presežek 0',
-    'Učinek substitucije in dohodka vedno delujeta v isto smer'], 0,
-    'Pri popolnih komplementih so vse optimalne točke na žarku skozi oglišča L-krivulj, ne glede na to, ali se spremeni cena ali dohodek. Pri inferiornih dobrinah učinka delujeta nasprotno.'),
-  Q('(Kolokvij 2021) Janko nanaša torto na x os, bonbone na y os. Njegova MRS bonbonov za dodatno torto je 9. Janko: "Indiferenčna krivulja je tu strma." Metka: "Ne, položna je." Kdo ima prav?', [
-    'Janko - za 1 torto se odpove 9 bonbonom, naklon je −9',
-    'Metka - naklon je −1/9, zato je krivulja položna',
-    'Nihče - oba govorita o mejni koristnosti, ne o MRS',
-    'Ne vemo, ker ne poznamo cen torte in bonbonov'], 0,
-    'MRS = ΔY/ΔX (y os bonboni, x os torta) = 9 → naklon −9, krivulja je strma. Cene za naklon indiferenčne krivulje niso potrebne.'),
-  Q('(Kolokvij 2021) Janko nanaša bonbone na x os, torto na y os. Njegova MRS bonbonov za dodatno torto je 3. Janko: "Indiferenčna krivulja je tu strma." Metka: "Ne, položna je." Kdo ima prav?', [
-    'Metka - ena torta (y) je vredna 3 bonbone (x), naklon je −1/3',
-    'Janko - za 1 torto se odpove 3 bonbonom, naklon je −3',
-    'Nihče - oba govorita o oportunitetnem strošku',
-    'Ne vemo, ker ne poznamo cen torte in bonbonov'], 0,
-    'Ker je torta na y osi: −ΔY/ΔX = 1 torta / 3 bonboni = 1/3 → položna krivulja. Ista MRS da drugačen videz glede na to, kaj je na kateri osi.'),
-  Q('(Kolokvij 2022) Restavracija hitre prehrane (inferiorna dobrina) zniža ceno obroka. Kaj velja za učinke na količino obrokov?', [
-    'Substitucija jo poveča, dohodek zmanjša, skupno običajno naraste',
-    'Substitucija in dohodek jo povečata, skupno zagotovo naraste',
-    'Substitucija jo zmanjša, dohodek poveča, skupno običajno pade',
-    'Substitucija jo poveča, dohodek zmanjša, skupno vedno pade'], 0,
-    'Učinek substitucije je pri znižanju cene vedno pozitiven. Pri inferiorni dobrini višji realni dohodek zmanjša potrošnjo. Skupno pade le pri Giffenovi dobrini.'),
-  Q('(Kolokvij 2022) Kakšen naklon ima Engelova krivulja za inferiorno dobrino?', [
-    'Negativen - z višjim dohodkom potrošnja pada',
-    'Pozitiven - z višjim dohodkom potrošnja raste',
-    'Navpična - potrošnja ni odvisna od dohodka',
-    'Pozitiven, a vse strmejši - luksuzna dobrina'], 0,
-    'Engelova krivulja prikazuje količino v odvisnosti od dohodka. Inferiorna: dohodkovna elastičnost < 0, krivulja pada.'),
-  Q('(Kolokvij 2021) Nejcu se podraži pomarančni sok, dohodek in cena kruha ostaneta enaka. Dohodkovna elastičnost po soku je 1,5. Kaj velja?', [
-    'Učinek substitucije in dohodka zmanjšata nakup soka',
-    'Učinek substitucije zmanjša, učinek dohodka poveča nakup soka',
-    'Učinek substitucije poveča, učinek dohodka zmanjša nakup soka',
-    'Učinek dohodka je nič, ker se nominalni dohodek ne spremeni'], 0,
-    'E_M = 1,5 > 0 → normalna (luksuzna) dobrina. Podražitev zniža realni dohodek, zato oba učinka delujeta v isto smer.'),
-  Q('(Kolokvij 2021) Kapital in delo sta enako učinkovita v proizvodnji masla in mleka. Kakšna je transformacijska krivulja?', [
-    'Premica - oportunitetni strošek je konstanten',
-    'Konkavna - oportunitetni strošek narašča',
-    'Konveksna - oportunitetni strošek pada',
-    'Navpična - proizvede se lahko le ena dobrina'], 0,
-    'Izbočenost transformacijske krivulje izhaja iz specializiranosti dejavnikov. Če so enako učinkoviti povsod, je oportunitetni strošek stalen.'),
-  Q('(Kolokvij 2021) Država izgubi del kmetijskih delavcev (odidejo v Avstrijo), tehnološki napredek pa poveča produktivnost v proizvodnji avtomobilov. Kaj se zgodi s transformacijsko krivuljo (jabolka, avtomobili)?', [
-    'Na osi avtomobilov se premakne navzven, na osi jabolk navznoter',
+  Q('Ko se podražijo vlakovne vozovnice, več ljudi potuje z avtobusom. Kakšni dobrini sta to in kakšen je predznak križne elastičnosti?', [
+    'Nadomestka (substituta) s pozitivno križno elastičnostjo',
+    'Dopolnili (komplementa) z negativno križno elastičnostjo',
+    'Nadomestka (substituta) z negativno križno elastičnostjo',
+    'Nepovezani dobrini s križno elastičnostjo blizu 0'], 0,
+    'Dražji vlak → več povpraševanja po avtobusu: cena ene in količina druge se gibljeta v isto smer, E_križna > 0.'),
+  Q('Za padajočo premico povpraševanja Q = a − bP velja:', [
+    'Naklon je povsod enak, elastičnost pa se spreminja',
+    'Elastičnost je povsod enaka, naklon pa se spreminja',
+    'Naklon in elastičnost sta povsod enaka',
+    'Spreminjata se naklon in elastičnost'], 0,
+    'Naklon premice je konstanten, E = (ΔQ/ΔP) · P/Q pa se spreminja z razmerjem P/Q: v zgornjem delu je povpraševanje elastično, v spodnjem neelastično.'),
+  Q('Kaj se dogaja z MRS, ko se pomikamo navzdol po običajni konveksni indiferenčni krivulji (več X, manj Y)?', [
+    'MRS pada, ker se z njo spreminja tudi naklon krivulje',
+    'MRS ostaja enaka, spreminja se le naklon krivulje',
+    'MRS raste, naklon krivulje pa ostaja enak',
+    'MRS in naklon krivulje sta konstantna'], 0,
+    'MRS je absolutna vrednost naklona indiferenčne krivulje, zato se spreminjata skupaj. Pri konveksni krivulji je potrošnik pripravljen za dodatni X dati vse manj Y (padajoča MRS). Konstantna je le pri popolnih substitutih.'),
+  Q('Kaj dobimo, če povežemo optimalne košarice, ko se spreminja le dohodek, cene pa ostanejo enake?', [
+    'Dohodkovno-potrošno krivuljo (ICC), iz katere izpeljemo Engelovo krivuljo',
+    'Cenovno-potrošno krivuljo (PCC), iz katere izpeljemo krivuljo povpraševanja',
+    'Krivuljo povpraševanja po dobrini X',
+    'Indiferenčno krivuljo z največjo koristnostjo'], 0,
+    'Vzporedni premiki premice cene (sprememba dohodka) dajo ICC in iz nje Engelovo krivuljo. Vrtenje premice cene (sprememba cene) da PCC in iz nje krivuljo povpraševanja.'),
+  Q('Pri katerih preferencah ležijo vse optimalne košarice - ne glede na to, ali se spremeni cena ali dohodek - na istem žarku iz izhodišča?', [
+    'Pri popolnih komplementih',
+    'Pri popolnih substitutih',
+    'Pri Cobb-Douglasovih preferencah',
+    'Pri inferiornih dobrinah'], 0,
+    'Pri popolnih komplementih je optimum vedno v oglišču L-krivulje, oglišča pa ležijo na žarku z razmerjem porabe (PCC = ICC). Pri Cobb-Douglasu je žarek le ICC; ob spremembi cene X ostane količina Y enaka (vodoravna PCC).'),
+  Q('Ana ima na x osi ure teka, na y osi ure kolesarjenja. Za dodatno uro teka se je pripravljena odpovedati 4 uram kolesarjenja. Kakšna je njena indiferenčna krivulja v tej točki?', [
+    'Strma, naklon je −4',
+    'Položna, naklon je −1/4',
+    'Vodoravna, ker je MRS konstantna',
+    'Ne vemo, ker ne poznamo cen obeh dejavnosti'], 0,
+    'Naklon = −ΔY/ΔX = −4 kolesarjenja / 1 tek = −4 → strma krivulja. Cene za naklon indiferenčne krivulje niso potrebne.'),
+  Q('Ana ima zdaj na x osi ure kolesarjenja, na y osi ure teka. Za dodatno uro teka se še vedno odpove 4 uram kolesarjenja. Kakšna je indiferenčna krivulja v tej točki?', [
+    'Položna, naklon je −1/4',
+    'Strma, naklon je −4',
+    'Strma, naklon je −1/4',
+    'Ne vemo, ker ne poznamo cen obeh dejavnosti'], 0,
+    'Tek je na y osi: −ΔY/ΔX = 1 ura teka / 4 ure kolesarjenja = 1/4 → položna krivulja. Ista menjalna pripravljenost je videti drugače, ko zamenjamo osi.'),
+  Q('Cena instant rezancev (inferiorna dobrina, ki ni Giffenova) se zviša. Kaj velja za učinke na kupljeno količino?', [
+    'Substitucija jo zmanjša, dohodek poveča, skupno se zmanjša',
+    'Oba učinka jo zmanjšata, skupno zagotovo pade',
+    'Substitucija jo poveča, dohodek zmanjša, skupno naraste',
+    'Substitucija jo zmanjša, dohodek poveča, skupno vedno naraste'], 0,
+    'Učinek substitucije je vedno nasproten spremembi cene (dražje → manj). Nižji realni dohodek pri inferiorni dobrini potrošnjo POVEČA. Ker dobrina ni Giffenova, prevlada substitucija in količina pade.'),
+  Q('Dohodkovna elastičnost povpraševanja po mestnem avtobusu je −0,6. Kakšen je naklon Engelove krivulje?', [
+    'Krivulja pada: bogatejši se z avtobusom vozijo manj',
+    'Krivulja raste: bogatejši se z avtobusom vozijo več',
+    'Krivulja je navpična: vožnje niso odvisne od dohodka',
+    'Krivulja raste vse hitreje, ker gre za luksuzno dobrino'], 0,
+    'Engelova krivulja kaže kupljeno količino pri različnih dohodkih. E_M < 0 pomeni inferiorno dobrino, zato krivulja pada.'),
+  Q('Petri se podražijo kino vstopnice, njen dohodek in druge cene ostanejo enaki. Dohodkovna elastičnost po kinu je 0,8. Kaj velja?', [
+    'Oba učinka, substitucije in dohodka, zmanjšata obiske kina',
+    'Substitucija zmanjša, dohodek pa poveča obiske kina',
+    'Substitucija poveča, dohodek pa zmanjša obiske kina',
+    'Učinka dohodka ni, ker se nominalni dohodek ne spremeni'], 0,
+    'E_M = 0,8 > 0 → normalna dobrina. Podražitev zniža REALNI dohodek, zato pri normalni dobrini oba učinka delujeta v isto smer.'),
+  Q('Država proizvaja sir in jogurt; vsi proizvodni dejavniki so pri obeh izdelkih enako produktivni. Kakšna je transformacijska krivulja?', [
+    'Ravna črta, ker vsak dodatni jogurt stane enako sira',
+    'Izbočena navzven, ker vsak dodatni jogurt stane vse več sira',
+    'Vbočena proti izhodišču, ker dodatni jogurt stane vse manj sira',
+    'Pravokotna, ker se dejavnikov ne da prerazporediti'], 0,
+    'Izbočenost transformacijske krivulje izhaja iz specializiranosti dejavnikov. Če so dejavniki povsod enako produktivni, je oportunitetni strošek stalen in krivulja je premica.'),
+  Q('Del gradbenih delavcev se izseli, nova programska oprema pa poveča produktivnost v proizvodnji računalnikov. Kaj se zgodi s transformacijsko krivuljo (stanovanja, računalniki)?', [
+    'Na osi računalnikov se premakne navzven, na osi stanovanj navznoter',
     'Celotna krivulja se vzporedno premakne navzven',
-    'Na osi jabolk se premakne navzven, na osi avtomobilov navznoter',
+    'Na osi stanovanj se premakne navzven, na osi računalnikov navznoter',
     'Celotna krivulja se vzporedno premakne navznoter'], 0,
-    'Vsak sektorski šok premakne le "svoje" presečišče: največja količina avtomobilov zraste, največja količina jabolk pade, krivulja se zasuka.'),
-  Q('(Kolokvij 2021) Trg masla: države zaradi podnebja omejijo živinorejo, potrošniki pa namesto margarine raje kupujejo maslo. Kaj se zgodi?', [
-    'Cena masla zraste, vpliv na količino ni določen',
-    'Cena in količina masla zagotovo zrasteta',
-    'Cena masla zraste, količina se zagotovo zmanjša',
-    'Cena masla pade, količina se zagotovo poveča'], 0,
-    'Ponudba levo, povpraševanje desno → cena zagotovo zraste, količina je odvisna od velikosti premikov. Maslo in margarina sta substituta (E_križna > 0).'),
-  Q('(Kolokvij 2022) Kava in čaj sta substituta. Država uvede davek na kavo, ki ga plača potrošnik, poleg tega pravična trgovina zviša stroške proizvodnje kave. Kaj se zgodi na trgu ČAJA?', [
-    'Povpraševanje po čaju se premakne desno, cena in količina čaja zrasteta',
-    'Ponudba čaja se premakne levo, cena zraste, količina pade',
-    'Povpraševanje po čaju se premakne levo, cena in količina padeta',
-    'Na trgu čaja se nič ne spremeni, saj davek velja le za kavo'], 0,
-    'Na trgu kave: davek potrošniku → povpraševanje levo, višji stroški → ponudba levo; kava je za kupce dražja. Kupci preidejo na substitut, zato povpraševanje po čaju naraste.'),
-  Q('(Kolokvij 2022) Sok in ledeni čaj sta substituta. Proizvajalci plačajo takso na vsako plastenko ledenega čaja. Kaj se zgodi na trgu SOKA?', [
-    'Povpraševanje po soku se premakne desno, cena in količina soka zrasteta',
-    'Ponudba soka se premakne levo, cena soka zraste, količina pade',
-    'Povpraševanje po soku se premakne levo, cena in količina padeta',
-    'Ponudba soka se premakne desno, cena soka pade, količina zraste'], 0,
-    'Taksa premakne ponudbo ledenega čaja levo, ledeni čaj se podraži, kupci preidejo na sok (substitut).'),
+    'Vsak sektorski šok premakne le "svoje" presečišče: največja možna količina računalnikov zraste, največja količina stanovanj pade, krivulja se zasuka.'),
+  Q('Trg medu: bolezen čebel zmanjša število panjev, zdravniki pa priporočajo med namesto sladkorja. Kaj se zgodi?', [
+    'Cena medu zraste, vpliv na količino ni določen',
+    'Cena in količina medu zagotovo zrasteta',
+    'Cena medu zraste, količina se zagotovo zmanjša',
+    'Cena medu pade, količina se zagotovo poveča'], 0,
+    'Ponudba levo, povpraševanje desno → cena zagotovo zraste, količina je odvisna od velikosti premikov. Med in sladkor sta substituta (E_križna > 0).'),
+  Q('Pivo in vino sta substituta. Država zviša trošarino na pivo (plačajo jo proizvajalci), slaba letina ječmena pa podraži proizvodnjo piva. Kaj se zgodi na trgu VINA?', [
+    'Povpraševanje po vinu se premakne desno, cena in količina vina zrasteta',
+    'Ponudba vina se premakne levo, cena zraste, količina pade',
+    'Povpraševanje po vinu se premakne levo, cena in količina padeta',
+    'Na trgu vina se nič ne spremeni, saj oba šoka zadeneta le pivo'], 0,
+    'Na trgu piva se ponudba dvakrat premakne levo, pivo se podraži. Kupci preidejo na substitut, zato povpraševanje po vinu naraste (desno): cena in količina vina zrasteta.'),
+  Q('Kolo in skiro sta substituta. Država proizvajalcem skirojev izplača subvencijo za vsak prodani skiro. Kaj se zgodi na trgu KOLES?', [
+    'Povpraševanje po kolesih se premakne levo, cena in količina padeta',
+    'Ponudba koles se premakne desno, cena pade, količina zraste',
+    'Povpraševanje po kolesih se premakne desno, cena in količina zrasteta',
+    'Ponudba koles se premakne levo, cena zraste, količina pade'], 0,
+    'Subvencija premakne ponudbo skirojev desno, skiro se poceni. Del kupcev preide s kolesa na skiro, zato se povpraševanje po kolesih zmanjša (levo).'),
 ];
 
 const racunske = [
-  C('(Kolokvij 2025) Anamarija ima 75 €, kava stane 1,5 €. Prvih 20 piškotov stane 3 € na kos, vsak nadaljnji 1,5 €. Katera trditev drži?', [
-    'Pri 22 piškotih je oportunitetni strošek dodatnega piškota 1 kava',
-    'Pri 10 piškotih je oportunitetni strošek dodatnega piškota 2/5 kave',
-    'Pri 21 piškotih je oportunitetni strošek dodatnega piškota 2,5 kave',
-    'Če kupuje samo piškote, jih lahko kupi največ 20'], 0,
-    'Do 20 piškotov: 3 € / 1,5 € = 2 kavi na piškot. Nad 20: 1,5 € / 1,5 € = 1 kava. Samo piškoti: 20 · 3 = 60 €, ostane 15 € → še 10, skupaj 30 piškotov.'),
-  C('(Kolokvij 2025, 2021) Jakob vsak hamburger poplakne z dvema pivoma. Ima 180 €, hamburger stane 6 €, pivo 3 €. Koliko hamburgerjev kupi v ravnotežju?', [
-    '15', '10', '12', '30'], 0,
-    'Popolna komplementa: "paket" 1 H + 2 P stane 6 + 2 · 3 = 12 €. 180 / 12 = 15 hamburgerjev (in 30 piv).'),
-  C('(Kolokvij 2021) Jakob vsak hamburger poplakne z dvema pivoma (popolna komplementa; ima 180 €, hamburger stane 6 €, pivo 3 €). Cena hamburgerja se poveča. "Potrošniški presežek se mu zmanjša, zadovoljstvo pa poveča." Ali trditev drži?', [
-    'Ne - zmanjšata se oba, presežek in zadovoljstvo',
-    'Da - presežek se zmanjša, zadovoljstvo se poveča',
-    'Ne - presežek se poveča, zadovoljstvo se zmanjša',
-    'Ne - pri popolnih komplementih se nič ne spremeni'], 0,
-    'Dražji paket → manj paketov → nižja L-krivulja (manj zadovoljstva) in manjši presežek pod krivuljo povpraševanja.'),
-  C('(Kolokvij 2022 A) Za domačo nalogo iz matematike porabite pol ure, za nalogo iz mikroekonomije dve uri. Koliko je oportunitetni strošek DVEH nalog iz matematike?', [
-    '1/2 naloge iz mikroekonomije', '1 naloga iz mikroekonomije', '2 nalogi iz mikroekonomije', '4 naloge iz mikroekonomije'], 0,
-    '2 nalogi · 0,5 h = 1 h. V 1 uri naredimo 1/2 naloge iz mikroekonomije (2 h na nalogo).'),
-  C('(Kolokvij 2022 B) Za domačo nalogo iz mikroekonomije porabite pol ure, za nalogo iz matematike dve uri. Koliko je oportunitetni strošek DVEH nalog iz matematike?', [
-    '8 nalog iz mikroekonomije', '4 naloge iz mikroekonomije', '2 nalogi iz mikroekonomije', '1/2 naloge iz mikroekonomije'], 0,
-    '2 nalogi · 2 h = 4 h. V 4 urah naredimo 4 / 0,5 = 8 nalog iz mikroekonomije.'),
-  C('(Kolokvij 2022) U = 3XY², Px = 10 €, Py = 5 €, M = 500 €. Katero kombinacijo izbere potrošnik?', [
-    'X = 16,7, Y = 66,7', 'X = 33,3, Y = 33,3', 'X = 66,7, Y = 16,7', 'X = 12, Y = 24'], 0,
-    'MRS = MUx/MUy = Y²/(2XY) = Y/(2X) = Px/Py = 2 → Y = 4X. 10X + 5 · 4X = 500 → X = 16,7, Y = 66,7. (Cobb-Douglas: X dobi 1/3, Y 2/3 dohodka.)'),
-  C('(Kolokvij 2021 B) U = 3F^0,5 M². Koliko je mejna stopnja substitucije obiska McDonaldsa za dodaten obisk fitnesa (MRS_M/F)?', [
-    '0,25 M/F', '0,25 F/M', '4 F/M', '6 F^0,5 M'], 0,
-    'MUF = 1,5 F^−0,5 M², MUM = 6 F^0,5 M. MRS_M/F = MUF/MUM = 1,5M / (6F) = 0,25 M/F.'),
-  C('(Kolokvij 2021 A) U = 3F^0,5 M². Koliko je mejna stopnja substitucije obiska fitnesa za dodaten obisk McDonaldsa (MRS_F/M)?', [
-    '4 F/M', 'F/(4M)', '0,25 M/F', '1,5 F^−0,5 M²'], 0,
-    'MRS_F/M = MUM/MUF = 6F^0,5 M / (1,5F^−0,5 M²) = 4F/M - obratna vrednost MRS_M/F.'),
-  C('(Kolokvij 2021) Slovenija: PA = 10, PB = 20; Avstrija: PA = 12, PB = 23. Dobrina A je na ordinati. Kje je premica cene bolj strma?', [
-    'V Sloveniji - oportunitetni strošek dodatnega A je tam nižji',
-    'V Sloveniji - oportunitetni strošek dodatnega A je tam višji',
-    'V Avstriji - oportunitetni strošek dodatnega A je tam višji',
-    'V Avstriji - oportunitetni strošek dodatnega A je tam nižji'], 0,
-    'Naklon = −PB/PA: Slovenija −2, Avstrija −1,92 → Slovenija bolj strma. Dodatni A stane PA/PB enot B: SLO 0,5 < AUT 0,52.'),
-  C('(Kolokvij 2021) Marjanca troši zelenjavo in sadje, MRS sadja za dodatno zelenjavo je stalno 2. Ima 150 €, zelenjava stane 2 €, sadje 3 €. Koliko zelenjave kupi?', [
-    '75 enot (sadja nič)', '50 enot (sadja nič)', '30 enot in 30 enot sadja', '0 enot (samo 50 sadja)'], 0,
-    'Popolna substituta: 1 zelenjava = 2 sadja. Zelenjava stane le 2/3 sadja, a je vredna 2 sadji (MRS 2 > Pz/Ps = 0,67) → kotna rešitev, 150 / 2 = 75.'),
-  C('(Kolokvij 2022 A) Cena nafte zraste za 15 %, obseg povpraševanja pade za 3 %. Kakšno je povpraševanje in kaj se zgodi s prihodki proizvajalcev?', [
-    'Neelastično (E = −0,2), prihodki zrastejo',
-    'Neelastično (E = −0,2), prihodki padejo',
-    'Elastično (E = −5), prihodki padejo',
-    'Elastično (E = −5), prihodki zrastejo'], 0,
-    'E = −3 % / 15 % = −0,2. |E| < 1 → višja cena poveča TR.'),
-  C('(Kolokvij 2022 B) Dvig cene smuči za 3 % bi znižal prodajo za 15 %. "Podjetje bi moralo ceno znižati, da poveča prihodke." Ali drži?', [
-    'Da - povpraševanje je elastično (E = −5)',
-    'Ne - povpraševanje je neelastično (E = −0,2)',
-    'Ne - povpraševanje je elastično (E = −5)',
-    'Da - povpraševanje je neelastično (E = −0,2)'], 0,
-    'E = −15 % / 3 % = −5, |E| > 1 → nižja cena poveča količino za več odstotkov in s tem TR.'),
+  C('Lana ima 84 €, kava stane 2 €. Prvih 12 kosov peciva stane 4 € na kos, vsak nadaljnji 2 €. Katera trditev drži?', [
+    'Pri 15 kosih je oportunitetni strošek dodatnega kosa 1 kava',
+    'Pri 6 kosih je oportunitetni strošek dodatnega kosa 1/2 kave',
+    'Pri 14 kosih je oportunitetni strošek dodatnega kosa 2 kavi',
+    'Če kupuje samo pecivo, ga lahko kupi največ 21 kosov'], 0,
+    'Do 12 kosov: 4 € / 2 € = 2 kavi na kos. Nad 12: 2 € / 2 € = 1 kava. Samo pecivo: 12 · 4 = 48 €, ostane 36 € → še 18 kosov, skupaj 30 (ne 84 / 4 = 21).'),
+  C('Miha k vsakemu sendviču vedno popije tri skodelice čaja. Ima 120 €, sendvič stane 4 €, čaj 2 €. Koliko sendvičev kupi v ravnotežju?', [
+    '12', '30', '20', '36'], 0,
+    'Popolna komplementa: "paket" 1 sendvič + 3 čaji stane 4 + 3 · 2 = 10 €. 120 / 10 = 12 sendvičev (in 36 čajev).'),
+  C('Miha (1 sendvič + 3 čaji, popolna komplementa) ima še vedno 120 €, podraži pa se čaj. Kaj velja?', [
+    'Zmanjšata se njegov potrošniški presežek in zadovoljstvo',
+    'Presežek se zmanjša, zadovoljstvo ostane enako, ker razmerje 1 : 3 ostane',
+    'Zmanjša se le poraba čaja, sendvičev kupi enako',
+    'Nič se ne spremeni, ker se sendvič ni podražil'], 0,
+    'Dražji čaj podraži celoten paket → manj paketov (manj sendvičev IN čaja) → nižja L-krivulja (manj zadovoljstva) in manjši presežek.'),
+  C('Prevod ene strani besedila vam vzame 20 minut, ena stran povzetka učbenika pa 1 uro. Koliko je oportunitetni strošek TREH strani prevoda?', [
+    '1 stran povzetka', '1/3 strani povzetka', '3 strani povzetka', '9 strani povzetka'], 0,
+    '3 strani · 20 min = 60 min. V 60 minutah naredimo 1 stran povzetka (60 min na stran).'),
+  C('Stran povzetka vam vzame 15 minut, stran prevoda pa 1,5 ure. Koliko je oportunitetni strošek DVEH strani prevoda?', [
+    '12 strani povzetka', '6 strani povzetka', '3 strani povzetka', '1/6 strani povzetka'], 0,
+    '2 strani · 1,5 h = 3 h = 180 min. V 180 minutah naredimo 180 / 15 = 12 strani povzetka. (6 je strošek ENE strani prevoda.)'),
+  C('U = 2X²Y, Px = 4 €, Py = 8 €, M = 600 €. Katero kombinacijo izbere potrošnik?', [
+    'X = 100, Y = 25', 'X = 50, Y = 50', 'X = 75, Y = 37,5', 'X = 150, Y = 0'], 0,
+    'MRS = MUx/MUy = 4XY / 2X² = 2Y/X = Px/Py = 0,5 → Y = X/4. 4X + 8 · X/4 = 6X = 600 → X = 100, Y = 25. (Cobb-Douglas: X dobi 2/3, Y 1/3 dohodka; zamenjani deleži dajo 50 in 50.)'),
+  C('U = 5A^0,4 B³ (A = obiski kina, B = koncerti). Koliko koncertov se je potrošnik pripravljen odpovedati za dodaten obisk kina (MRS = MU_A / MU_B)?', [
+    '(2/15) · B/A', '7,5 · A/B', '(2/15) · A/B', '2A^−0,6 B³'], 0,
+    'MU_A = 2A^−0,6 B³, MU_B = 15A^0,4 B². MU_A/MU_B = 2B / (15A) = (2/15) · B/A.'),
+  C('U = 5A^0,4 B³. Koliko obiskov kina se je potrošnik pripravljen odpovedati za dodaten koncert (MRS = MU_B / MU_A)?', [
+    '7,5 · A/B', '(2/15) · B/A', '7,5 · B/A', '15A^0,4 B²'], 0,
+    'MU_B/MU_A = 15A^0,4 B² / (2A^−0,6 B³) = 7,5 · A/B - obratna vrednost prejšnje MRS.'),
+  C('Cene v dveh državah: na Hrvaškem stane dobrina A 8 €, dobrina B 12 €; na Madžarskem A 9 €, B 14 €. A merimo na navpični osi, B na vodoravni. V kateri državi ima premica proračuna večji naklon (po absolutni vrednosti) in kaj to pomeni?', [
+    'Na Madžarskem; en dodatni A tam terja odpoved manjšemu delu enote B',
+    'Na Madžarskem; en dodatni A tam terja odpoved večjemu delu enote B',
+    'Na Hrvaškem; en dodatni A tam terja odpoved večjemu delu enote B',
+    'Na Hrvaškem; en dodatni A tam terja odpoved manjšemu delu enote B'], 0,
+    'Naklon = −PB/PA: Hrvaška −1,5, Madžarska −1,56 → Madžarska bolj strma. Dodatni A stane PA/PB enot B: HU 0,643 < HR 0,667.'),
+  C('Tina pije čaj in kakav; za dodaten čaj se je vedno pripravljena odpovedati 1,5 kakava. Ima 120 €, čaj stane 3 €, kakav 1,5 €. Koliko čaja kupi?', [
+    '0 (samo 80 kakavov)', '40 (kakava nič)', '20 čajev in 40 kakavov', '24 čajev in 32 kakavov'], 0,
+    'Popolna substituta: 1 čaj je vreden 1,5 kakava, stane pa 3 / 1,5 = 2 kakava. MRS 1,5 < Pč/Pk = 2 → kotna rešitev samo s kakavom: 120 / 1,5 = 80.'),
+  C('Prevoznik podraži avtobusne vozovnice za 20 % in proda 5 % manj vozovnic. Kako ocenite povpraševanje in kaj se zgodi s prihodkom od vozovnic?', [
+    'Neelastično (E = −0,25), prihodki zrastejo',
+    'Neelastično (E = −0,25), prihodki padejo',
+    'Elastično (E = −4), prihodki padejo',
+    'Elastično (E = −4), prihodki zrastejo'], 0,
+    'E = −5 % / 20 % = −0,25. |E| < 1 → višja cena poveča TR.'),
+  C('Znižanje cene koncertnih vstopnic za 4 % bi povečalo prodajo za 10 %. "Organizator naj ceno zviša, da poveča prihodke." Ali drži?', [
+    'Ne - povpraševanje je elastično (E = −2,5), višja cena prihodke zniža',
+    'Da - povpraševanje je neelastično (E = −0,4)',
+    'Da - povpraševanje je elastično (E = −2,5)',
+    'Ne - povpraševanje je neelastično (E = −0,4)'], 0,
+    'E = 10 % / (−4 %) = −2,5, |E| > 1 → prihodke poveča nižja cena, višja jih zmanjša.'),
 ];
 
 module.exports = {
@@ -183,14 +182,14 @@ module.exports = {
   parts: [{
     id: 'k1',
     decks: [
-      { id: 'mikro-k1-stari', name: 'Stari kolokviji 2021-2025', questions: teorija },
-      { id: 'mikro-k1-stari-rac', name: 'Stari kolokviji - računske', calc: true, questions: racunske },
+      { id: 'mikro-k1-stari', name: 'Vaje v slogu kolokvija', questions: teorija },
+      { id: 'mikro-k1-stari-rac', name: 'Računske v slogu kolokvija', calc: true, questions: racunske },
     ],
     appendNotesMd: `
-## Stari kolokviji (2021, 2022, 2025) - kaj se ponavlja
-- **Format 2025**: 35 min, 33 točk, kalkulator. Izbirna vprašanja (4 točke) z obveznim izračunom ali sliko, nato daljše naloge s sliko (trg, potrošnikovo ravnotežje).
-- **Vsako leto**: oportunitetni strošek (domače naloge, piškoti s popustom), sprememba ponudbe IN povpraševanja hkrati (jabolka, maslo, kava/čaj), cenovna elastičnost in prihodki, popolni komplementi (hamburger + 2 piva = 15).
-- **Pogosto**: MRS iz U = 3F^0,5 M², Cobb-Douglas ravnotežje (U = 3XY² → X = 16,7, Y = 66,7), Janko in Metka (strma/položna indiferenčna krivulja), učinek substitucije in dohodka za inferiorno dobrino + Engelova krivulja.
+## Kolokvij - teme, ki se ponavljajo
+- **Format**: 35 min, 33 točk, kalkulator. Izbirna vprašanja z obveznim izračunom ali sliko, nato daljše naloge s sliko (trg, potrošnikovo ravnotežje).
+- **Pogoste teme**: oportunitetni strošek (čas za naloge, cena s popustom nad določeno količino), hkratna sprememba ponudbe IN povpraševanja, cenovna elastičnost in prihodki, popolni komplementi (paket dobrin).
+- **Tudi**: MRS iz Cobb-Douglasove funkcije koristnosti, potrošnikovo ravnotežje (delež dohodka = eksponent / vsota eksponentov), strma ali položna indiferenčna krivulja glede na to, kaj je na kateri osi, učinek substitucije in dohodka pri inferiorni dobrini + Engelova krivulja.
 - **Pasti**: pri dveh hkratnih premikih je ena spremenljivka nedoločena. Potrošniški presežek in zadovoljstvo se ob podražitvi zmanjšata **oba**. Pri MRS vedno preveri, katera dobrina je na kateri osi.
 `,
   }],

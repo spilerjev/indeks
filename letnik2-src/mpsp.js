@@ -1,5 +1,5 @@
 /* Management proizvodnih in storitvenih procesov - vir: School/.../MPSP/Vaje/ZAPISKI.md (Vaje 1, študija primera YG)
-   + EF Zapiski: Vprašanja iz preteklih izpitov (samo trditve z nedvoumnim odgovorom). */
+   + vaje v slogu izpita (napisane na novo, pogoste izpitne teme). */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 const PN = (q, drzi, explanation) => ({ q, options: ['Drži', 'Ne drži'], correct: drzi ? 0 : 1, explanation });
 
@@ -29,19 +29,18 @@ const strategija = [
 ];
 
 const izpit = [
-  PN('Kritična pot je najdaljša pot v mrežnem diagramu projekta in določa najkrajši možni čas izvedbe projekta.', true, 'Kritične aktivnosti določajo minimalni potreben čas.'),
-  PN('Skrajšanje trajanja projekta dosežemo tako, da delujemo na kritične aktivnosti.', true, 'Skrajšanje nekritičnih aktivnosti projekta ne skrajša.'),
-  PN('Alternativna korist pomeni, da odločitve o vzvodih hkrati pozitivno in negativno vplivajo na različne konkurenčne prednostne naloge.', true,
-    'Ni mogoče hkrati doseči najboljših rezultatov pri vseh nalogah (kakovost, stroški, fleksibilnost, hitrost dobave).'),
-  PN('Pri montažni liniji povečanje zmogljivosti zahteva podaljšanje cikla.', false, 'Cikel = čas med zaporednimi izdelki; večja dnevna proizvodnja pomeni KRAJŠI cikel.'),
-  Q('Katera trditev o strateškem planiranju NI pravilna?', ['Poslovna strategija določa konkurenčno prednost', 'Poslovna strategija sprejema odločitve o vzvodih za doseganje dejavnikov zmagovanja', 'Strategija sestavljenega podjetja razporeja finančna sredstva po področjih', 'Strategija poslovne funkcije upošteva poslovno strategijo'], 1,
-    'O vzvodih (resursi, procesi) odloča strategija POSLOVNE FUNKCIJE (izdelavne), ne poslovna strategija.'),
-  Q('Kaj velja za kazalec KNN (kumulativna napaka v napovedi)? Izberi NAPAČNO trditev.', ['Je lahko pozitiven ali negativen', 'Pove smer odklanjanja napovedi', 'Je vsota napak v napovedi', 'Če je 0, se v napovedi nismo zmotili'], 3,
-    'KNN je blizu 0 tudi, če so napovedi deloma previsoke, deloma prenizke - napake se izničijo. Velikost odstopanj meri povprečna absolutna napaka.'),
-  Q('Če se pri neodvisnem povpraševanju povečajo stroški skladiščenja:', ['Se količina naročila poveča', 'Se količina naročila zmanjša, naročamo pogosteje', 'Se dobavni rok podaljša', 'Ni spremembe'], 1,
-    'Dražje skladiščenje → manjše zaloge → manjša in pogostejša naročila.'),
-  Q('Pri metodi drseče sredine majhen N pomeni:', ['Visoko stabilnost napovedi', 'Visoko odzivnost napovedi', 'Večjo natančnost vedno', 'Ni vpliva'], 1,
-    'Čim večje je število obdobij, tem manjša odzivnost in večja stabilnost.'),
+  PN('Projekt ne more biti končan prej, kot traja najdaljša pot v mrežnem diagramu.', true, 'Najdaljša pot je kritična pot; določa najkrajši možni čas izvedbe projekta.'),
+  PN('Če skrajšamo aktivnost, ki ima časovno rezervo, se trajanje projekta skrajša.', false, 'Nekritična aktivnost ima rezervo; trajanje določa kritična pot.'),
+  PN('Odločitev za večjo avtomatizacijo lahko zniža stroške, a zmanjša fleksibilnost.', true, 'To je alternativna korist (trade-off) med konkurenčnimi prednostnimi nalogami.'),
+  PN('Montažna linija mora za večjo planirano zmogljivost delovati s krajšim ciklom.', true, 'Cikel = razpoložljivi čas / planirana zmogljivost.'),
+  Q('Katera trditev o ravneh strateškega planiranja NI pravilna?', ['O vzvodih izdelavnega procesa odloča strategija sestavljenega podjetja', 'Poslovna strategija določa, kako bo poslovna enota konkurirala', 'Strategija sestavljenega podjetja razporeja vire med poslovne enote', 'Strategija poslovne funkcije (npr. izdelavna) odloča o vzvodih svoje funkcije'], 0,
+    'O vzvodih izdelavnega procesa odloča izdelavna (funkcijska) strategija.'),
+  Q('Kumulativna napaka napovedi (KNN) je po petih mesecih enaka 0. Kaj to pomeni?', ['Pozitivne in negativne napake so se izničile; napovedi so bile lahko kljub temu netočne', 'Vse napovedi so bile popolnoma točne', 'Napovedi so bile sistematično previsoke', 'Tudi povprečna absolutna napaka je 0'], 0,
+    'KNN meri pristranskost (smer), velikost napak pa PANN.'),
+  Q('Kaj se zgodi z optimalno količino naročila (EOQ), če se stroški skladiščenja enote povečajo?', ['Zmanjša se, naročamo pogosteje', 'Poveča se, naročamo redkeje', 'Ne spremeni se', 'Zmanjša se, naročamo redkeje'], 0,
+    'EOQ = √(2DS/H): višji H → manjša količina naročila in pogostejša naročila.'),
+  Q('Pri drsečih sredinah izberemo majhno število obdobij N. Kaj dosežemo?', ['Napoved se hitro odziva na spremembe, a je manj stabilna', 'Napoved je zelo stabilna in se počasi odziva', 'Napoved je vedno natančnejša', 'Število obdobij na napoved ne vpliva'], 0,
+    'Majhen N → visoka odzivnost, večji vpliv naključnih nihanj; velik N → stabilnost.'),
 ];
 
 const rac = [
@@ -99,9 +98,9 @@ module.exports = {
         { id: 'mpsp-c-3', name: 'Razmestitev in napovedovanje', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij' },
-    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Stara izpitna vprašanja', questions: izpit },
+    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Vaje v slogu izpita', questions: izpit },
       { id: 'mpsp-v56-drevo', name: 'Vaje 5-6: drevo odločanja (dopolni drevo)', questions: v56.drevo },
       { id: 'mpsp-v56-teorija', name: 'Vaje 5-6: planiranje zmogljivosti, simulacija, lokacija (ni za kolokvij)', questions: v56.teorija },
-      { id: 'mpsp-v56-rac', name: 'Računske: Vaje 5-6 (prelomne točke, zamenjava stroja, drevo, simulacija, lokacija)', calc: true, questions: v56.rac }, { id: 'mpsp-izpit3', name: 'Vprašanja iz preteklih izpitov (preverjene rešitve)', questions: require('./mpsp-stari2') }, { id: 'mpsp-izpit2', name: 'Stari izpit: zaloge, MRP, planiranje, kakovost', questions: require('./mpsp-stari') }] },
+      { id: 'mpsp-v56-rac', name: 'Računske: Vaje 5-6 (prelomne točke, zamenjava stroja, drevo, simulacija, lokacija)', calc: true, questions: v56.rac }, { id: 'mpsp-izpit3', name: 'Vaje v slogu izpita (2. sklop)', questions: require('./mpsp-stari2') }, { id: 'mpsp-izpit2', name: 'Vaje v slogu izpita: zaloge, MRP, planiranje, kakovost', questions: require('./mpsp-stari') }] },
   ],
 };

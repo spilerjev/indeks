@@ -1,5 +1,5 @@
 /* Statistična analiza (2. letnik, zimski semester 2026/27) - vir: School/.../Statisticna analiza/ZAPISKI.md
-   + EF Zapiski (stari kolokviji z rešitvami: zgled 1. preizkušnje, dodatne naloge, kolokvij 18. 11. 2022). */
+   + vaje v slogu kolokvija in preizkušenj (napisane na novo, lastni primeri in podatki). */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
 const pojmi = [
@@ -182,34 +182,35 @@ const racOpisna = [
 racOpisna.forEach((q) => { q.calc = true; });
 
 const stariKolokviji = [
-  Q('Zgled 1. preizkušnje: izbrali so 20 krajev, v vsakem 10 hotelov, v vsakem hotelu 25 gostov (vse slučajno). Katera vrsta vzorčenja?', ['Stratificirano', 'Vzorčenje v skupinicah', 'Vzorčenje v več stopnjah', 'Kvotno'], 2,
-    'Slučajni izbor poteka v več zaporednih korakih (kraj → hotel → gost) = vzorčenje v več stopnjah. (Snov sledi na predavanjih o vzorčenju.)'),
-  Q('Katera trditev o vzorčenju v več stopnjah NI pravilna?', ['Primerno je za hierarhično urejene populacije', 'Primarne in elementarne enote niso iste', 'Pri dani velikosti vzorca doseže najboljšo natančnost med vsemi slučajnimi vzorčenji', 'Ne potrebujemo seznama vseh enot populacije'], 2,
+  Q('Raziskovalci slučajno izberejo 15 občin, v vsaki 8 trgovin in v vsaki trgovini 30 kupcev. Katera vrsta vzorčenja je to?', ['Vzorčenje v več stopnjah', 'Stratificirano vzorčenje', 'Vzorčenje v skupinicah', 'Kvotno vzorčenje'], 0,
+    'Slučajni izbor poteka v več zaporednih korakih (občina → trgovina → kupec) = vzorčenje v več stopnjah. Pri skupinicah bi v izbranih trgovinah anketirali vse kupce.'),
+  Q('Katera trditev o vzorčenju v več stopnjah NI pravilna?', ['Pri dani velikosti vzorca je najnatančnejše od vseh slučajnih vzorčenj', 'Primerno je za hierarhično urejene populacije', 'Primarne in elementarne enote niso iste', 'Ne potrebujemo seznama vseh elementarnih enot populacije'], 0,
     'Najboljšo natančnost praviloma doseže stratificirano vzorčenje. Večstopenjsko je cenejše na enoto, a manj natančno.'),
-  Q('Katera trditev o vzorčnih ocenah je pravilna?', ['Porazdelitev vzorčnih ocen je za manjše vzorce bolj sploščena kot za večje', 'Večji vzorec pomeni večjo variabilnost ocen', 'Standardna napaka aritmetične sredine je praviloma večja od standardnega odklona', 'Z večanjem vzorca je porazdelitev ocen manj podobna normalni'], 0,
-    'Manjši vzorec → večja variabilnost ocen → bolj sploščena porazdelitev. SE(ȳ) = σ/√n je manjša od σ; z večanjem n se porazdelitev približa normalni.'),
-  Q('Čas, ki so ga študenti v preteklem tednu namenili študiju (n = 150). Katera je opazovana spremenljivka?', ['Ure', 'Čas, ki so ga študenti namenili študiju', 'Povprečni čas študija', 'Število študentov, ki so študirali'], 1,
-    '"Ure" je merska enota, "povprečni čas" je parameter. Spremenljivka je lastnost enote: čas študija.'),
-  Q('Čas študija študentov v preteklem tednu (n = 150, od 0 do 45 ur): porazdelitev je izrazito asimetrična v desno. Kaj drži?', ['Porazdelitev je podobna normalni', 'Ocena aritmetične sredine je večja od ocene mediane', 'Ocena KV je 45 ur', 'Variacijskega razmika ne moremo izračunati'], 1,
-    'Desna asimetrija → ȳ > Me. vr lahko izračunamo (0 do 45 ur = 45 ur); KV nima enote.'),
-  Q('Košarkarski klub je na pripravah v gorskem letovišču. Za prvo peterko (Bojan, Simon, Janez, Miha, Luka) zbiramo podatke o višini in točkah. Kaj je statistična enota?', ['Prva peterka', 'Član košarkarskega kluba na pripravah', 'Košarkarska ekipa', 'Gorsko letovišče'], 1,
-    'Enota je posamezen igralec. Prva peterka je populacija (množica enot).'),
-  Q('Za košarkarje prve peterke beležimo ime, pozicijo (center, krilo, organizator), višino in točke na tekmo. Najvišje merske lestvice teh spremenljivk?', ['nominalna (ime, pozicija), razmernostna (višina, točke)', 'nominalna (ime), ordinalna (pozicija), intervalna (višina)', 'nominalna (ime, pozicija), intervalna (višina, točke)', 'vse razmernostne'], 0,
-    'Pozicij (center, krilo, organizator) ne moremo urediti → nominalna. Višina in točke imata naravno ničlo → razmernostni.'),
-  Q('Iz prve peterke košarkarjev (5 igralcev, med njimi Luka) slučajno izberejo par. Koliko različnih parov je mogočih in kolikšna je verjetnost, da je v paru Luka?', ['10 parov; 40 %', '5 parov; 33 %', '10 parov; 16 %', '32 parov; 16 %'], 0,
-    'C(5,2) = 10 parov; Luka je v 4 od 10 parov → 0,4.'),
-  Q('Višine: 203, 203, 198, 196, 187 cm. Neka srednja vrednost je 203 cm. Katera?', ['Mediana', 'Aritmetična sredina', 'Modus', 'Geometrijska sredina'], 2,
-    '203 se pojavi dvakrat → modus. Mediana je 198, povprečje 197,4.'),
-  Q('Kaj velja za cenilko?', ['Je slučajna spremenljivka, katere vrednosti se razlikujejo od enote do enote', 'Je funkcija vzorčnih podatkov; njen rezultat na posameznem vzorcu je točkovna ocena', 'Njen rezultat je prava vrednost parametra', 'Ista formula velja za vse parametre'], 1,
-    'Cenilka = pravilo (funkcija vzorca), ocena = njen rezultat na konkretnem vzorcu. (Kolokvij 2022.)'),
-  Q('Kaj velja za standardno napako?', ['Meri variabilnost spremenljivke med enotami', 'Standardna napaka aritmetične sredine je v splošnem manjša od standardnega odklona osnovne spremenljivke', 'Za manjše vzorce je manjša', 'Ocena SE deleža je neodvisna od točkovne ocene'], 1,
-    'SE(ȳ) = σ/√n < σ. Variabilnost med enotami meri standardni odklon; SE z manjšim vzorcem naraste.'),
-  Q('Kaj velja, če zvišamo stopnjo tveganja α (ob nespremenjenem vzorcu)?', ['Odklon zaupanja se zmanjša', 'Intervalna ocena je manj natančna', 'Velikost vzorca se poveča', 'α je verjetnost pravilne ocene'], 0,
+  Q('Kaj velja za porazdelitev vzorčnih ocen aritmetične sredine?', ['Pri manjših vzorcih je bolj sploščena (bolj razpršena) kot pri večjih', 'Z večanjem vzorca se njena variabilnost povečuje', 'Njena standardna napaka je praviloma večja od standardnega odklona spremenljivke', 'Z večanjem vzorca je vse manj podobna normalni'], 0,
+    'Manjši vzorec → večja variabilnost ocen. SE(ȳ) = σ/√n je manjša od σ; z večanjem n se porazdelitev ocen približuje normalni.'),
+  Q('Zanima nas, koliko minut so dijaki včeraj porabili za domače naloge (n = 120). Katera je opazovana spremenljivka?', ['Čas, ki so ga dijaki porabili za domače naloge', 'Minute', 'Povprečni čas za domače naloge', 'Število dijakov, ki so delali naloge'], 0,
+    '»Minute« so merska enota, »povprečni čas« je parameter. Spremenljivka je lastnost enote: čas za naloge.'),
+  Q('Čas za domače naloge (n = 120, od 0 do 180 minut): večina porabi manj kot uro, nekateri tudi tri ure; porazdelitev je izrazito asimetrična v desno. Kaj drži?', ['Ocena aritmetične sredine je večja od ocene mediane', 'Porazdelitev je podobna normalni', 'Ocena koeficienta variacije je 180 minut', 'Variacijskega razmika ne moremo izračunati'], 0,
+    'Desna asimetrija → ȳ > Me. Variacijski razmik je 180 minut; koeficient variacije nima enote.'),
+  Q('Odbojkarska ekipa je na pripravah. Za šesterico prvih igralk (Ana, Eva, Lea, Mia, Zala, Nika) zbiramo podatke o višini in številu točk. Kaj je statistična enota?', ['Igralka', 'Prva šesterica', 'Odbojkarska ekipa', 'Priprave'], 0,
+    'Enota je posamezna igralka. Prva šesterica je populacija (množica enot).'),
+  Q('Za igralke prve šesterice beležimo ime, igralno mesto (podajalka, korektorka, libero, sprejemalka), višino in točke na tekmo. Katere so najvišje merske lestvice teh spremenljivk?', [
+    'imenska (ime, igralno mesto), razmernostna (višina, točke)', 'imenska (ime), urejenostna (igralno mesto), razmična (višina, točke)', 'imenska (ime, igralno mesto), razmična (višina, točke)', 'vse so razmernostne'], 0,
+    'Igralnih mest ne moremo smiselno urediti → imenska lestvica. Višina in točke imata naravno ničlo → razmernostni.'),
+  Q('Iz prve šesterice odbojkaric (6 igralk, med njimi Zala) slučajno izberemo par za intervju. Koliko različnih parov je mogočih in kolikšna je verjetnost, da je v paru Zala?', ['15 parov; 33,3 %', '6 parov; 16,7 %', '15 parov; 6,7 %', '30 parov; 16,7 %'], 0,
+    'C(6,2) = 15 parov; Zala je v 5 od 15 parov → 1/3.'),
+  Q('Višine igralk: 182, 178, 182, 175, 186, 171 cm. Neka srednja vrednost je 182 cm. Katera?', ['Modus', 'Mediana', 'Aritmetična sredina', 'Geometrijska sredina'], 0,
+    '182 se pojavi dvakrat → modus. Mediana je (178 + 182)/2 = 180, povprečje 179.'),
+  Q('Kaj velja za cenilko?', ['Je funkcija vzorčnih podatkov; njen rezultat na posameznem vzorcu je točkovna ocena', 'Je vedno enaka pravi vrednosti parametra', 'Za vse parametre uporabimo isto formulo', 'Je število, ki ga izračunamo iz celotne populacije'], 0,
+    'Cenilka je pravilo (funkcija vzorca), ocena je njen rezultat na konkretnem vzorcu; kot slučajna spremenljivka ima svojo porazdelitev.'),
+  Q('Kaj velja za standardno napako aritmetične sredine?', ['V splošnem je manjša od standardnega odklona osnovne spremenljivke', 'Meri variabilnost spremenljivke med enotami', 'Pri manjših vzorcih je manjša', 'Ocena standardne napake deleža ni odvisna od točkovne ocene'], 0,
+    'SE(ȳ) = σ/√n < σ. Variabilnost med enotami meri standardni odklon; SE se z manjšim vzorcem poveča.'),
+  Q('Kaj se zgodi, če (ob nespremenjenem vzorcu) zvišamo stopnjo tveganja α?', ['Odklon zaupanja se zmanjša', 'Intervalna ocena postane manj natančna', 'Velikost vzorca se poveča', 'α postane verjetnost pravilne ocene'], 0,
     'Višji α → manjši z → ožji interval (manjši odklon zaupanja), a večje tveganje napačnega sklepa.'),
-  Q('Kdaj je med nepristranskimi cenilkami za isti parameter ena bolj učinkovita?', ['Ko ima manjšo stopnjo tveganja', 'Ko ima manjšo variabilnost vzorčnih ocen (manjšo standardno napako)', 'Ko ima večjo standardno napako', 'Ko je dosledna'], 1,
-    'Učinkovitost = manjša variabilnost ocen. Ocene, ki se z večanjem vzorca bližajo parametru, opisuje doslednost.'),
-  Q('Delež avtomobilov z zimsko opremo: π ≈ 0,7, dopustna napaka največ 0,10, α = 0,01, N = 2000 avtomobilov, vzorčenje brez ponavljanja. Kolikšen vzorec?', ['Vsaj 131 avtomobilov', '140 avtomobilov', '130 ali manj', '81 avtomobilov'], 0,
-    'nₛ = 2,58² · 0,3 · 0,7 / 0,1² ≈ 139,8; n = nₛ/(1 + nₛ/N) = 139,8/1,0699 ≈ 130,7 → zaokrožimo NAVZGOR: 131.'),
+  Q('Kdaj je med nepristranskimi cenilkami istega parametra ena bolj učinkovita?', ['Ko ima manjšo variabilnost vzorčnih ocen (manjšo standardno napako)', 'Ko ima manjšo stopnjo tveganja', 'Ko ima večjo standardno napako', 'Ko je dosledna'], 0,
+    'Učinkovitost = manjša variabilnost ocen. Doslednost opisuje, da se ocene z večanjem vzorca bližajo parametru.'),
+  Q('Delež stanovanj z ločevanjem odpadkov: π ≈ 0,8, dopustna napaka največ 0,05, α = 0,05, N = 1.500 stanovanj, vzorčenje brez ponavljanja. Kolikšen vzorec potrebujemo?', ['Vsaj 212 stanovanj', '246 stanovanj', '211 ali manj', '62 stanovanj'], 0,
+    'n₀ = 1,96² · 0,8 · 0,2 / 0,05² = 245,9; n = n₀/(1 + n₀/N) = 245,9/1,164 = 211,2 → zaokrožimo NAVZGOR: 212. (246 = brez popravka za končno populacijo.)'),
 ];
 
 const kartice = [
@@ -269,8 +270,8 @@ module.exports = {
         { id: 'stana-pojmi', name: 'Osnovni pojmi in merske lestvice', questions: pojmi },
         { id: 'stana-opisna', name: 'Opisna statistika in frekvenčne porazdelitve', questions: opisna },
         { id: 'stana-porazd', name: 'Verjetnostne porazdelitve in normalna porazdelitev', questions: porazdelitve },
-        { id: 'stana-stari', name: 'Iz starih kolokvijev (tudi vzorčenje)', questions: stariKolokviji },
-        { id: 'stana-stari2', name: 'Preizkušnja 2019 in uradni zgled (z rešitvami)', questions: require('./stana-stari2') },
+        { id: 'stana-stari', name: 'Vaje v slogu kolokvija (tudi vzorčenje)', questions: stariKolokviji },
+        { id: 'stana-stari2', name: 'Vaje v slogu 1. preizkušnje (z rešitvami)', questions: require('./stana-stari2') },
         { id: 'stana-rac-normalna', name: 'Računske naloge: normalna porazdelitev', calc: true, questions: racNormalna },
         { id: 'stana-rac-opisna', name: 'Računske naloge: opisna statistika', calc: true, questions: racOpisna },
         { id: 'stana-vzorcenje', name: 'Vzorčenje: načini izbire, cenilke, SE (P03)', questions: [...p03.vzorcenje, ...p03.pravilnoNe] },
@@ -289,10 +290,10 @@ module.exports = {
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij', date: '2026-12-18', decks: [
       { id: 'stana-domneve', name: 'Osnove preizkušanja domnev (P06, V06)', questions: p04.domneve },
       { id: 'stana-rac-domneve', name: 'Računske naloge: preizkus domnev (Z)', calc: true, questions: p04.racDomneve },
-      { id: 'stana-2pp-stari', name: '2. preizkušnja 2019 in uradni zgled (z rešitvami)', questions: require('./stana-2pp') },
+      { id: 'stana-2pp-stari', name: 'Vaje v slogu 2. preizkušnje (z rešitvami)', questions: require('./stana-2pp') },
     ] },
     { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [
-      { id: 'stana-izpit-zgled', name: 'Uradni zgled izpita (z rešitvami)', questions: require('./stana-izpit') },
+      { id: 'stana-izpit-zgled', name: 'Vaje v slogu izpita (z rešitvami)', questions: require('./stana-izpit') },
     ] },
   ],
 };

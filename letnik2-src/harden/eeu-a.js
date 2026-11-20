@@ -34,7 +34,7 @@ module.exports = [
     'Države obdržijo vso suverenost, odločanje je s soglasjem',
     'Odločanje z vetom vsake države, primer je EFTA',
     'Sodelovanje brez skupnih institucij'], 3, 'Prenos dela suverenosti na skupne institucije'],
-  ['Kaj NE velja za federalni pristop', [
+  ['Katera značilnost NE sodi k federalnemu pristopu', [
     'Prenos dela suverenosti na skupne organe',
     'Nadnacionalne institucije z zavezujočimi odločitvami',
     'Primer je ESPJ iz leta 1951'], 3, 'Države v celoti zadržijo suverenost'],
@@ -164,18 +164,6 @@ module.exports = [
     'Ovir ni več',
     'Enake 5-odstotni carini',
     'Le pri kmetijstvu'], 3, '45 % za blago, 110 % za storitve'],
-  ['Kaj preprečujejo pravila o poreklu blaga v FTA?', [
-    'Uvoz iz članic',
-    'Izvoz v tretje države',
-    'Dvojno obdavčitev'], 3, 'Preusmeritev uvoza prek članice z najnižjo carino'],
-  ['Kaj velja za regionalne trgovinske sporazume (RTA) in WTO?', [
-    'RTA so v skladu z načelom MFN',
-    'Države ne morejo biti hkrati v WTO in RTA',
-    'Cilj WTO je stabilnost tečajev'], 3, 'RTA kršijo nediskriminacijo, a jih dovoljuje člen 24 GATT'],
-  ['Kdaj WTO dovoljuje carinsko unijo?', [
-    'Vedno, ker spodbuja prosto trgovino',
-    'Samo za razvite države',
-    'Nikoli'], 3, 'Če zajema skoraj vse blago in carina ne naraste'],
   ['Kaj je prinesla Lizbonska pogodba?', [
     'Uvedbo eura',
     'Carinsko unijo',

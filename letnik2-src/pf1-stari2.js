@@ -1,204 +1,164 @@
-/* Poslovne finance 1 - "Izbrani izpiti" (EF Zapiski/2. letnik/Poslovne finance/Izpiti/Izbrani izpiti.docx):
-   teoretična in računska vprašanja s starih izpitov Poslovnih financ (tudi iz leta 2012). Vse rešitve so preračunane;
-   vprašanja v obliki "pravilni sta trditvi 2. in 4." so preoblikovana v neposredna vprašanja (odgovori se v appu premešajo).
-   Izpuščene so naloge, ki jim v viru manjkajo podatki (Jabolko WACC, Tri Jezera, Abhold, Marelica, Dimnik, Dolče, Jagoda). */
+/* Poslovne finance 1 - izbrane vaje v slogu izpita (teorija in računske naloge, 2. sklop).
+   Vprašanja so napisana na novo (lastni primeri, podjetja in številke); vse rešitve so preračunane. */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
 const teorija = [
-  Q('(Stari izpiti) Dnevi vezave zalog in dnevi vezave terjatev do kupcev so skupaj KRAJŠI od dobe vezave obveznosti do dobaviteljev. Kaj to pomeni?', [
-    'Podjetje za financiranje zalog in terjatev ne potrebuje dodatnih zunanjih virov', 'Podjetje mora za zaloge in terjatve pridobiti dodatne zunanje vire financiranja',
-    'Podjetje ima likvidnostne težave, ker dobaviteljem plačuje prepozno', 'Podjetje mora dneve vezave obveznosti skrajšati na raven dni vezave zalog'], 0,
-    'Denarni cikel = DVZ + DVT − DVO je negativen: dobavitelji financirajo zaloge in terjatve dlje, kot sta vezani, zato dodatni viri niso potrebni.'),
-  Q('(Stari izpiti) Kaj drži za določila bank pri najemanju kratkoročnih posojil?', [
-    'Pri anticipativnem obrestovanju ima podjetje na voljo manj denarja, kot je znesek, od katerega tečejo obresti', 'Zahteva po minimalnem stanju na transakcijskem računu (kompenzacijsko stanje) zniža strošek posojila', 'Kreditna linija je obveznost podjetja, da odobreno posojilo v celoti črpa najpozneje v roku enega leta', 'Pri dekurzivnem obrestovanju mora podjetje najeti večje posojilo od zneska, ki ga za transakcijo potrebuje'], 0,
-    'Anticipativno = obresti odštete vnaprej → razpoložljivega manj, zato je treba najeti več. Kompenzacijsko stanje strošek poveča; kreditna linija je možnost črpanja, ne obveznost.'),
-  Q('(Stari izpiti) Krivulji NSV dveh medsebojno izključujočih projektov, ki se razlikujeta po obsegu, se sekata. Kaj iz tega sledi?', [
-    'Po metodi IRR lahko izberemo napačen projekt, odvisno od stroška kapitala glede na stopnjo križanja', 'Oba projekta imata pri stopnji križanja enako IRR, zato odločitev po nobeni metodi ni mogoča', 'Metoda NSV je pri različnem obsegu projektov nezanesljiva, zato odločimo po dobi povračila', 'Projekt z višjo IRR ima pri vsakem strošku kapitala tudi višjo NSV, zato križanje ni pomembno'], 0,
-    'Pod stopnjo križanja ima višjo NSV projekt z NIŽJO IRR. Pri izključujočih projektih odloča NSV pri dejanskem strošku kapitala.'),
-  Q('(Stari izpiti) Katera trditev o investicijskih kriterijih drži?', [
-    'IRR nas pri dveh izključujočih projektih zavede, kadar se krivulji NSV križata',
-    'NSV nas zavede pri primerjavi dveh medsebojno izključujočih projektov',
-    'Popravljena IRR (MIRR) ima povsem enake slabosti kot navadna IRR',
-    'Doba povračila upošteva vse denarne tokove, le časovne vrednosti ne'], 0,
-    'Doba povračila ne upošteva tokov PO trenutku povračila; MIRR odpravi predpostavko reinvestiranja po IRR in problem več rešitev.'),
-  Q('(Stari izpiti) Katera trditev o vrednotenju navadnih delnic s sestavljeno (večstopenjsko) enačbo drži?', [
-    'Manjša kot je razlika med zahtevano donosnostjo in stopnjo rasti dividend, višja je vrednost delnice', 'Višje prihodnje dividende pomenijo nižjo sedanjo vrednost teh dividend in s tem nižjo vrednost delnice', 'Stopnja rasti dividend do neskončnosti ne more biti negativna, ker bi bila vrednost delnice negativna', 'Višja zahtevana donosnost pomeni višjo sedanjo vrednost prihodnjih dividend in višjo vrednost delnice'], 0,
+  Q('Podjetje ima zaloge vezane 15 dni, terjatve do kupcev 20 dni, dobaviteljem pa plačuje v 45 dneh. Kaj to pomeni za financiranje?', [
+    'Dobavitelji financirajo zaloge in terjatve, dodatni viri zanje niso potrebni', 'Podjetje potrebuje dodatne zunanje vire za zaloge in terjatve',
+    'Podjetje ima likvidnostne težave, ker dobaviteljem plačuje prepozno', 'Podjetje mora plačilni rok dobaviteljem skrajšati na 15 dni'], 0,
+    'Denarni cikel = 15 + 20 − 45 = −10 dni: dobavitelji financirajo zaloge in terjatve dlje, kot sta vezani.'),
+  Q('Banka odobri kratkoročno posojilo z anticipativnim obračunom obresti. Kaj to pomeni za podjetje?', [
+    'Prejme manj denarja, kot je znesek, od katerega tečejo obresti, zato je dejanski strošek višji', 'Prejme celoten znesek, obresti plača šele ob vračilu',
+    'Dejanski strošek je nižji od navedene obrestne mere', 'Posojilo mora v celoti počrpati v enem letu'], 0,
+    'Anticipativno = obresti so odštete vnaprej → razpoložljivega denarja je manj, zato je treba najeti več. Kompenzacijsko stanje strošek prav tako poveča.'),
+  Q('Projekta A in B se medsebojno izključujeta in se razlikujeta po obsegu; njuni krivulji NSV se sekata pri 7 %. Strošek kapitala je 5 %. Kaj velja?', [
+    'Po IRR lahko izberemo napačen projekt; odločimo se po NSV pri 5 %', 'Pri 5 % imata oba projekta enako NSV',
+    'Pri različnem obsegu je NSV nezanesljiva, zato odločimo po dobi povračila', 'Projekt z višjo IRR ima pri vsakem strošku kapitala tudi višjo NSV'], 0,
+    'Pod stopnjo križanja ima višjo NSV projekt z NIŽJO IRR. Pri izključujočih se projektih odloča NSV pri dejanskem strošku kapitala.'),
+  Q('Kateri investicijski kriterij lahko zavede pri izbiri med izključujočima se projektoma, katerih krivulji NSV se križata?', [
+    'Notranja stopnja donosa (IRR)', 'Neto sedanja vrednost pri dejanskem strošku kapitala', 'Enakovredna letna anuiteta pri enakih dobah projektov', 'Nobeden, vsi dajo enak vrstni red'], 0,
+    'IRR ne upošteva obsega projekta in predpostavlja reinvestiranje po IRR. MIRR odpravi predpostavko reinvestiranja, doba povračila pa ne upošteva tokov po povračilu.'),
+  Q('Pri vrednotenju delnice z modelom stalne rasti se razlika med zahtevano donosnostjo in stopnjo rasti dividend zmanjša. Kaj se zgodi z vrednostjo delnice?', [
+    'Vrednost delnice se poveča', 'Vrednost delnice se zmanjša', 'Vrednost delnice se ne spremeni', 'Vrednost delnice postane negativna'], 0,
     'P = D₁/(r − g): manjši imenovalec → višja vrednost. g je lahko tudi negativen; višji r vrednost znižuje.'),
-  Q('(Stari izpiti) Kateri strošek kapitala uporabimo pri vrednotenju investicije (WACC)?', [
-    'Tehtano povprečje stroškov DODATNEGA kapitala ob ciljni (optimalni) strukturi kapitala',
-    'Tehtano povprečje stroškov že obstoječega kapitala ob dani strukturi kapitala',
-    'Navadno (netehtano) povprečje stroškov vseh vrst kapitala podjetja',
-    'Zahtevano donosnost virov brez upoštevanja davčnih učinkov in stroškov izdaje'], 0,
-    'Relevantni so mejni stroški novega kapitala, uteži so ciljna struktura, dolg upoštevamo po davku, stroške izdaje pa vključimo.'),
-  Q('(Stari izpiti) Podjetje omili kreditno politiko (daljši rok, večji popust, daljše brezplačno financiranje kupcev). Katera posledica NI verjetna?', [
-    'Manj slabih terjatev in manj odpisov', 'Daljši dnevi vezave terjatev do kupcev',
-    'Višji prihodki, a tudi višji stroški proizvodnje', 'Višje terjatve in stroški njihovega financiranja tudi brez rasti prodaje'], 0,
-    'Milejša kreditna politika privabi tudi slabše plačnike, zato slabih terjatev ni manj, ampak več.'),
-  Q('(Stari izpiti) Katera trditev o politiki financiranja kratkoročnih naložb NE drži?', [
-    'Najbolj tvegana je politika, pri kateri vsa gibljiva sredstva financiramo z lastniškim kapitalom',
-    'Financiranje začasnih in dela stalnih gibljivih sredstev s kratkoročnimi viri je tvegano, ker virov morda ni mogoče obnoviti',
-    'Konzervativna politika financira stalna in del začasnih gibljivih sredstev z dolgoročnimi viri',
-    'Financiranje dolgoročnih naložb s kratkoročnimi viri je izjemno tvegano'], 0,
-    'Lastniški kapital nima dospetja, zato je taka politika najmanj tvegana (a najdražja).'),
-  Q('(Stari izpiti) Katera trditev o prihodnji vrednosti denarja drži?', [
-    'Ob vsem drugem enakem je prihodnja vrednost višja, če se obresti pripisujejo večkrat letno',
-    'Prihodnja vrednost je višja pri navadnem kot pri obrestno-obrestnem obrestovanju',
-    'Prihodnja vrednost je tem višja, čim manjša je začetna glavnica',
-    'Prihodnja vrednost je tem nižja, čim dlje je glavnica naložena'], 0,
-    'Pogostejši pripis → obresti na obresti znotraj leta → višja efektivna obrestna mera.'),
-  Q('(Stari izpiti) Presihajoči sklad (sinking fund): kdaj podjetje obveznice izžreba in odkupi po NOMINALNI vrednosti?', [
-    'Ko je tržna cena obveznic višja od nominalne (zahtevana donosnost je pod kuponsko)',
-    'Ko je tržna cena obveznic nižja od nominalne (zahtevana donosnost je nad kuponsko)',
-    'Vedno, ker je žrebanje edini dovoljeni način odkupa',
-    'Nikoli, obveznice vedno odkupi na sekundarnem trgu'], 0,
-    'Podjetje izbere cenejšo pot: cena nad nominalno → žreb in odkup po nominalni; cena pod nominalno → nakup na sekundarnem trgu z diskontom.'),
-  Q('(Stari izpiti) Kaj od naštetega NI pomanjkljivost financiranja z navadnimi delnicami?', [
-    'Delnice ne dospejo, zato ni pritiska za vračilo glavnice', 'Obstoječi delničarji se morda odrečejo delu nadzora',
-    'Novi delničarji so udeleženi v dobičku podjetja', 'Dividende niso davčno priznan odhodek'], 0,
-    'Odsotnost dospetja je prednost; stroški izdaje in stroški kapitala delnic so sicer višji kot pri obveznicah.'),
-  Q('(Stari izpiti) Katera trditev o dejavnikih optimalne strukture kapitala drži?', [
-    'Zrela podjetja z visokimi izplačili dividend se običajno financirajo z višjim deležem dolga',
-    'Podjetja z nižjimi donosi iz poslovanja se financirajo z višjim deležem dolga',
-    'Visoka stopnja poslovnega vzvoda praviloma pomeni višji delež dolga',
-    'Večja variabilnost cen in stroškov pomeni višji delež dolga'], 0,
-    'Stabilni denarni tokovi prenesejo več dolga; visok poslovni vzvod in variabilnost zahtevata manj finančnega vzvoda.'),
-  Q('(Stari izpiti) Kaj NI predpostavka modela CAPM?', [
-    'Transakcijski stroški so proporcionalni in večji od nič', 'Trg kapitala je učinkovit - vse informacije se odražajo v cenah',
-    'Investitorji so tveganju nenaklonjeni', 'Vsi investitorji imajo enaka pričakovanja o porazdelitvi donosnosti'], 0,
-    'CAPM predpostavlja trg brez trenja: brez transakcijskih stroškov in davkov, neomejeno zadolževanje po netvegani meri.'),
-  Q('(Stari izpiti) Kaj drži za tveganje in donosnost naložbe, ki je del dobro razpršenega premoženja (CAPM)?', [
-    'Premija za tveganje je višja za naložbe z višjim sistematičnim tveganjem (beto)',
-    'Investitor je poplačan za sistematično in nesistematično tveganje',
-    'Zahtevana donosnost naložbe je neodvisna od netvegane donosnosti',
-    'Tržno premoženje ni optimalno razmerje med tveganjem in donosom'], 0,
-    'Nesistematično tveganje se z razpršitvijo odpravi, zato zanj ni premije. r = rf + β(rm − rf).'),
-  Q('(Stari izpiti) Katera trditev o nalogah finančnega direktorja NE drži?', [
-    'Zbere sredstva po najnižji ceni, nato se v nadaljnje faze investiranja ne vmešava več', 'Izbira vire sredstev in naložbe podjetja, s katerimi najbolje sledi cilju poslovanja podjetja', 'Najde vire sredstev in ugotavlja stroške, ki so povezani s posameznimi viri financiranja', 'Ocenjuje tveganje in donosnost vsake poslovne aktivnosti ter koristi in stroške uporabe sredstev'], 0,
-    'Finančna funkcija spremlja naložbe ves čas (koristi in stroški uporabe sredstev), ne le ob zbiranju virov.'),
-  Q('(Stari izpiti) Zakaj so lastniki bolj naklonjeni tveganju kot upniki?', [
-    'Ob uspehu tvegane naložbe večina donosa pripade lastnikom, upniki dobijo le pogodbeni donos', 'Lastniki zaradi omejene odgovornosti ne nosijo nobenega tveganja, zato jim je vseeno za izid naložbe', 'Upniki imajo višje zahtevane donosnosti kot lastniki, zato tveganih naložb ne želijo financirati', 'Lastniki lahko tvegano naložbo kadarkoli prodajo brez izgube, upniki pa terjatve ne morejo prodati'], 0,
-    'Asimetrija izplačil: upnikov donos je omejen, izgubo ob stečaju pa nosi tudi on → v pogodbo vgradi omejitve (covenants).'),
-  Q('(Stari izpiti) Strošek kapitala je 10,25 %, projekta A (IRR 14 %) in B (IRR 12,25 %) imata normalne tokove in enako tveganje, stopnja križanja je 8 %. Kaj drži?', [
-    'Oba imata pozitivno NSV in A ima pri 10,25 % višjo NSV kot B',
-    'Oba imata pozitivno NSV, a višjo ima B, ker je stopnja križanja pod stroškom kapitala',
-    'Pozitivno NSV ima samo projekt A',
-    'Pri izključujočih projektih bi A izbrali pri vsakem strošku kapitala'], 0,
-    'IRR > WACC → NSV > 0 za oba. Nad stopnjo križanja (8 %) ima višjo NSV projekt z višjo IRR (A); pod 8 % bi bil boljši B.'),
-  Q('(Stari izpiti) Kako pri oceni projekta upoštevamo zmanjšanje prodaje obstoječih izdelkov zaradi novega izdelka?', [
-    'Kot negativno eksternalijo - strošek (denarni odtok) projekta', 'Kot nepovratni strošek (sunk cost) - ga ne upoštevamo', 'Kot oportunitetni priliv projekta - ga prištejemo', 'Ne upoštevamo ga, ker se nanaša na obstoječe izdelke'], 0,
-    'Štejejo dodatni (inkrementalni) tokovi podjetja kot celote. Obresti pri tokovih NE upoštevamo (so v diskontni stopnji) - sicer NSV podcenimo.'),
-  Q('(Stari izpiti) Kaj je premija za ročnost pri obveznicah brez tveganja izostanka plačil?', [
-    'Nadomestilo, ki ga investitorji zahtevajo za naložbo v obveznice z daljšo ročnostjo',
-    'Nadomestilo za zavarovanje terjatve s kakovostnim premoženjem izdajatelja',
-    'Pribitek, ki ga plačujejo podjetja z najvišjo bonitetno oceno',
-    'Razlika med kuponsko obrestno mero in zahtevano donosnostjo'], 0,
-    'Daljša ročnost → večje tveganje obrestne mere: ob dvigu obrestnih mer cena dolgoročne obveznice pade bolj.'),
-  Q('(Stari izpiti) Gondola Lift: v sezoni gibljiva sredstva 190 in kratkoročne obveznosti 190; stalna sredstva 500 = dolgoročni dolg 190 + lastniški kapital 310. Katero politiko financiranja zasleduje?', [
-    'Politiko izenačevanja ročnosti', 'Agresivno politiko - del dolgoročnih naložb s kratkoročnimi viri',
-    'Konzervativno politiko - del kratkoročnih potreb z dolgoročnimi viri', 'Brez izkaza uspeha tega ni mogoče ugotoviti'], 0,
-    'Dolgoročne naložbe so natančno pokrite z dolgoročnimi viri, gibljiva sredstva pa s kratkoročnimi → ročnosti se ujemajo.'),
-  Q('(Stari izpiti) Plačilni pogoji se spremenijo iz 4/10 neto 50 na 5/15 neto 70. Kaj se zagotovo NE bo zgodilo?', [
-    'Dnevi vezave terjatev se bodo skrajšali (ob nespremenjeni prodaji na kredit)', 'Prodaja se bo verjetno povečala (novi kupci in večji nakupi starih kupcev)', 'Povečali se bodo stroški, povezani z odpisom slabih terjatev do kupcev', 'Zvišali se bodo stroški financiranja variabilnega dela terjatev do kupcev'], 0,
-    'Daljši rok (70 dni) in daljše obdobje popusta podaljšata dneve vezave terjatev.'),
-  Q('(Stari izpiti) Katera trditev o NSV nadomestitvene naložbe je NAPAČNA?', [
-    'Izguba ob prodaji stare opreme, pomnožena z davčno stopnjo, je na začetku projekta denarni odliv',
-    'Davčni ščit amortizacije (amortizacija × davčna stopnja) je denarni priliv',
-    'Znižanje stroškov po davkih zaradi nove naložbe je denarni priliv',
-    'Povečanje neto obratnega kapitala je na začetku odliv, na koncu projekta priliv'], 0,
-    'Izguba ob prodaji zniža davčno osnovo → davčni prihranek (izguba × t) je PRILIV, ne odliv.'),
-  Q('(Stari izpiti) Zahtevana donosnost delnice je 13 %, dividende stalno rastejo po 5 % letno. Kolikšen je dividendni donos?', [
-    '8 % - skupni donos minus kapitalski dobiček', '5 % - dividendni donos je enak stopnji rasti', '13 % - dividendni donos je enak zahtevani donosnosti', '18 % - vsota zahtevane donosnosti in rasti'], 0,
-    'r = D₁/P₀ + g → D₁/P₀ = 13 % − 5 % = 8 %. Pri stalni rasti je kapitalski dobiček enak g.'),
-  Q('(Stari izpiti) Katera trditev o finančnih trgih drži?', [
-    'Ekonomska funkcija finančnih trgov je učinkovit prenos prihrankov v najproduktivnejše namene',
-    'Na kapitalskih trgih se trguje izključno s prednostnimi in navadnimi delnicami',
-    'Izdaja novih delnic podjetja, ki že kotira, je transakcija na sekundarnem trgu',
-    'Finančni trgi ne omogočajo prilagajanja premoženja glede tveganja'], 0,
-    'Nova izdaja je vedno primarni trg; sekundarni trg je trgovanje z že izdanimi papirji (likvidnost).'),
-  Q('(Stari izpiti) Kateri dogodek NE spremeni pospešenega koeficienta (quick ratio)?', [
-    'Kupci plačajo vse terjatve', 'Z denarjem plačamo obveznosti do dobaviteljev', 'Stalna sredstva prodamo za denar', 'Z denarjem kupimo zaloge'], 0,
-    'Pospešeni koeficient = (gibljiva sredstva − zaloge)/kratkoročne obveznosti. Terjatve → denar pusti števec enak; nakup zalog z denarjem ga zniža.'),
-  Q('(Stari izpiti) Zakaj je prednostna pravica obstoječih delničarjev do nakupa novih delnic pomembna?', [
-    'Varuje obstoječe lastnike pred razvodenitvijo lastniških deležev', 'Zagotavlja obstoječim lastnikom višjo dividendo na delnico po izdaji', 'Varuje upnike pred spremembo strukture kapitala, ki bi povečala tveganje', 'Managerjem omogoča izdajo in prodajo delnic pod trenutno tržno ceno'], 0,
-    'Obstoječi delničar lahko kupi sorazmeren del nove izdaje in ohrani svoj delež glasov in dobička.'),
-  Q('(Stari izpiti) Česa NE štejemo med denarne tokove investicijskega projekta?', [
-    'Nepovratnih stroškov (sunk costs)', 'Sprememb neto obratnega kapitala', 'Oportunitetnih stroškov', 'Stroškov prevoza in montaže opreme'], 0,
-    'Nepovratni stroški so že nastali ne glede na odločitev; oportunitetni stroški in NOK pa so dodatni tokovi projekta.'),
-  Q('(Stari izpiti) Kaj drži za finančni najem (zakup)?', [
-    'Traja približno celotno življenjsko dobo predmeta; obroki pokrijejo večino njegove vrednosti',
-    'Traja manjši del življenjske dobe predmeta; obroki pokrijejo manjši del vrednosti',
-    'Uporablja se predvsem za financiranje poslovnih stavb in nepremičnin',
-    'Predmet najema se izkazuje samo v bilanci stanja najemodajalca'], 0,
-    'Finančni najem je ekonomsko nakup na kredit (nepreklicen); poslovni (operativni) najem je kratkotrajen in preklicen.'),
-  Q('(Stari izpiti) Za koga je pomembno tveganje projekta ZNOTRAJ podjetja, ne le tržno (sistematično) tveganje?', [
-    'Za delničarje, managerje in posojilodajalce', 'Samo za managerje, ki jim gre za zaposlitev',
-    'Samo za posojilodajalce zaradi bonitete', 'Za nikogar, šteje le sistematično tveganje'], 0,
-    'Vpliva na posojilno sposobnost in dobiček (delničarji), stabilnost zaposlitve (managerji) in rating (posojilodajalci).'),
-  Q('(Stari izpiti) Kaj bi moral biti glavni cilj poslovanja javne delniške družbe?', [
-    'Maksimiranje cene delnice v daljšem obdobju', 'Maksimiranje dobička na delnico v tekočem letu',
-    'Maksimiranje prihodkov od prodaje', 'Maksimiranje cene delnice na ciljni datum'], 0,
-    'Maksimiranje dolgoročne tržne (notranje) vrednosti delnic = vrednosti za lastnike.'),
-  Q('(Stari izpiti) Katera trditev o finančnem sistemu NE drži?', [
-    'Najbolj tipične pogodbene finančne institucije so vzajemni skladi',
-    'Na denarnem trgu centralne banke vodijo denarno politiko',
-    'Finančni trgi posredno zagotavljajo likvidnost in želeno sestavo premoženja',
-    'Nadzor v Sloveniji izvajajo Banka Slovenije, AZN in ATVP'], 0,
-    'Pogodbene institucije so zavarovalnice in pokojninski skladi (pogodbeni prilivi); vzajemni skladi so investicijske institucije.'),
-  Q('(Stari izpiti) Katera trditev o IRR in NSV je NAPAČNA?', [
-    'Pri normalnih tokovih je NSV pozitivna, če je IRR nižja od stroška kapitala',
-    'Ko je IRR enaka strošku kapitala, je NSV enaka nič',
-    'NSV je lahko negativna, tudi če je IRR pozitivna',
-    'Neodvisni projekti, sprejemljivi po NSV, so sprejemljivi tudi po IRR'], 0,
-    'NSV > 0 natanko tedaj, ko je IRR > strošek kapitala (pri normalnih tokovih).'),
-  Q('(Stari izpiti) Kaj drži za strukturo kapitala in WACC?', [
-    'Struktura, ki minimizira WACC, hkrati maksimira vrednost delnice',
-    'Zadržani dobiček je brezplačen vir, ker ni stroškov izdaje',
-    'Če je dolg cenejši od lastniškega kapitala, višja zadolžitev vedno zniža WACC',
-    'Strošek zadržanega dobička je nižji od stroška dolga po davkih'], 0,
-    'Z zadolževanjem rasteta stroška obeh virov (tveganje), zato WACC ne pada v nedogled; zadržani dobiček stane toliko kot lastniški kapital.'),
+  Q('Katere stroške kapitala upoštevamo pri vrednotenju nove investicije?', [
+    'Stroške dodatnega kapitala, tehtane s ciljno strukturo kapitala', 'Stroške že obstoječega kapitala po knjigovodski strukturi',
+    'Navadno povprečje stroškov vseh virov', 'Stroške virov brez davčnih učinkov in stroškov izdaje'], 0,
+    'Relevantni so mejni stroški novega kapitala; uteži so ciljna struktura, dolg upoštevamo po davku, stroške izdaje vključimo.'),
+  Q('Podjetje kupcem podaljša plačilni rok in poveča popust za hitro plačilo. Kaj je NAJMANJ verjetna posledica?', [
+    'Delež slabih terjatev se zmanjša', 'Dnevi vezave terjatev se podaljšajo', 'Prodaja in stroški proizvodnje se povečajo', 'Stroški financiranja terjatev se povečajo'], 0,
+    'Milejša kreditna politika privabi tudi slabše plačnike, zato je slabih terjatev več, ne manj.'),
+  Q('Katera trditev o politikah financiranja gibljivih sredstev NE drži?', [
+    'Agresivna politika je najmanj tvegana, ker uporablja najcenejše vire', 'Lastniški kapital nima dospetja, zato je financiranje z njim najmanj tvegano (a drago)',
+    'Konzervativna politika del začasnih potreb financira z dolgoročnimi viri', 'Financiranje dolgoročnih naložb s kratkoročnimi viri je zelo tvegano'], 0,
+    'Agresivna politika del stalnih potreb financira kratkoročno; je cenejša, a najbolj tvegana, ker virov morda ni mogoče obnoviti.'),
+  Q('Banka A obresti pripisuje letno, banka B mesečno; obe po 4 % letno. Kje bomo imeli po 5 letih več?', [
+    'V banki B, ker se obresti obrestujejo že med letom', 'V banki A, ker je pripis redkejši', 'Povsod enako, ker je obrestna mera enaka', 'V banki A, če je glavnica majhna'], 0,
+    'Pogostejši pripis → obresti na obresti znotraj leta → višja efektivna obrestna mera (4,07 % namesto 4 %).'),
+  Q('Podjetje mora letos v okviru presihajočega sklada umakniti del obveznic. Tržna cena obveznic je 104 % nominalne vrednosti. Kako ravna?', [
+    'Obveznice izžreba in odkupi po nominalni vrednosti', 'Obveznice kupi na sekundarnem trgu po tržni ceni',
+    'Obveznic ne odkupi, dokler cena ne pade pod nominalo', 'Odkupi jih po tržni ceni sorazmerno od vseh imetnikov'], 0,
+    'Podjetje izbere cenejšo pot: pri ceni nad nominalno je ceneje žrebanje in odkup po nominalni; pri ceni pod nominalno nakup na trgu.'),
+  Q('Kaj je PREDNOST financiranja z navadnimi delnicami?', [
+    'Delnice ne dospejo, zato ni pritiska za vračilo glavnice', 'Dividende so davčno priznan odhodek', 'Obstoječi delničarji ohranijo ves nadzor', 'Stroški izdaje so nižji kot pri obveznicah'], 0,
+    'Pomanjkljivosti delnic: razvodenitev nadzora, delitev dobička z novimi lastniki, dividende niso davčno priznane, višji stroški izdaje in kapitala.'),
+  Q('Katero podjetje se lahko praviloma financira z višjim deležem dolga?', [
+    'Zrelo podjetje s stabilnimi denarnimi tokovi', 'Podjetje z visokim poslovnim vzvodom', 'Podjetje z zelo nihajočimi cenami in stroški', 'Podjetje z nizkimi donosi iz poslovanja'], 0,
+    'Stabilni denarni tokovi prenesejo več dolga; visok poslovni vzvod in nihanja zahtevajo manj finančnega vzvoda.'),
+  Q('Katera od naštetih NI predpostavka modela CAPM?', [
+    'Investitorji plačujejo visoke transakcijske stroške', 'Investitorji so tveganju nenaklonjeni', 'Vsi investitorji imajo enaka pričakovanja o donosnostih', 'Zadolževanje in posojanje je mogoče po netvegani obrestni meri'], 0,
+    'CAPM predpostavlja trg brez trenja: brez transakcijskih stroškov in davkov, učinkovit trg kapitala.'),
+  Q('Investitor ima dobro razpršeno premoženje. Za katero tveganje po CAPM dobi premijo?', [
+    'Za sistematično tveganje (beto)', 'Za nesistematično tveganje posameznega podjetja', 'Za sistematično in nesistematično tveganje', 'Za nobeno tveganje, donosnost je enaka netvegani'], 0,
+    'Nesistematično tveganje se z razpršitvijo odpravi, zato zanj ni premije. r = rf + β(rm − rf): višja beta, višja premija.'),
+  Q('Kaj NI naloga finančnega direktorja?', [
+    'Po pridobitvi virov se v uporabo sredstev ne vmešava več', 'Izbira vire in naložbe, ki najbolje sledijo cilju podjetja',
+    'Ugotavlja stroške posameznih virov financiranja', 'Presoja tveganje in donosnost poslovnih aktivnosti'], 0,
+    'Finančna funkcija spremlja naložbe ves čas (koristi in stroške uporabe sredstev), ne le ob zbiranju virov.'),
+  Q('Zakaj so lastniki pogosto bolj naklonjeni tveganim naložbam kot upniki?', [
+    'Ker ob uspehu večina dodatnega donosa pripade njim, upniki dobijo le dogovorjene obresti', 'Ker zaradi omejene odgovornosti ne nosijo nobenega tveganja',
+    'Ker upniki zahtevajo višjo donosnost kot lastniki', 'Ker lahko lastniki delnice vedno prodajo brez izgube'], 0,
+    'Asimetrija izplačil: donos upnika je omejen, ob neuspehu pa izgubo nosi tudi on. Zato upniki v pogodbe vgradijo omejitve (zaveze).'),
+  Q('Strošek kapitala je 9 %. Projekt C ima IRR 15 %, projekt D 11 %, krivulji NSV se sekata pri 6 %; tokovi so normalni, tveganje enako. Kaj velja?', [
+    'Oba imata pozitivno NSV, pri 9 % ima višjo NSV projekt C', 'Oba imata pozitivno NSV, višjo ima D, ker je stopnja križanja pod 9 %',
+    'Pozitivno NSV ima samo projekt C', 'Projekt C bi izbrali pri vsakem strošku kapitala'], 0,
+    'IRR > strošek kapitala → NSV > 0 za oba. Nad stopnjo križanja (6 %) ima višjo NSV projekt z višjo IRR (C); pod 6 % bi bil boljši D.'),
+  Q('Nov izdelek bo zmanjšal prodajo obstoječega izdelka podjetja. Kako to upoštevamo pri oceni projekta?', [
+    'Kot zmanjšanje denarnih tokov projekta (negativno eksternalijo)', 'Kot nepovratni strošek, ki ga ne upoštevamo', 'Kot dodatni priliv projekta', 'Ne upoštevamo ga, ker se nanaša na obstoječi izdelek'], 0,
+    'Štejejo dodatni (inkrementalni) tokovi podjetja kot celote. Obresti pri tokovih ne upoštevamo, ker so zajete v diskontni stopnji.'),
+  Q('Zakaj imajo dolgoročne državne obveznice praviloma višjo donosnost od kratkoročnih?', [
+    'Zaradi premije za ročnost - večjega tveganja spremembe obrestnih mer', 'Zaradi višjega tveganja neplačila države', 'Ker dolgoročne obveznice nimajo kuponov', 'Ker jih lahko kupijo le institucionalni investitorji'], 0,
+    'Ob dvigu obrestnih mer cena dolgoročne obveznice pade bolj, zato investitorji za daljšo ročnost zahtevajo premijo.'),
+  Q('Podjetje stalna sredstva (600) financira z dolgoročnim dolgom 250 in lastniškim kapitalom 350, sezonska gibljiva sredstva (150) pa s kratkoročnimi obveznostmi 150. Katero politiko financiranja zasleduje?', [
+    'Politiko izenačevanja ročnosti', 'Agresivno politiko', 'Konzervativno politiko', 'Tega brez izkaza poslovnega izida ni mogoče ugotoviti'], 0,
+    'Dolgoročne naložbe so pokrite z dolgoročnimi viri, začasna gibljiva sredstva s kratkoročnimi → ročnosti se ujemajo.'),
+  Q('Podjetje spremeni plačilne pogoje iz 2/10 neto 30 v 3/20 neto 60. Kaj se zagotovo NE zgodi?', [
+    'Dnevi vezave terjatev se skrajšajo', 'Prodaja se verjetno poveča', 'Stroški slabih terjatev se povečajo', 'Stroški financiranja terjatev se povečajo'], 0,
+    'Daljši rok (60 dni) in daljše obdobje popusta podaljšata dneve vezave terjatev.'),
+  Q('Katera trditev o denarnih tokovih nadomestitvene naložbe NE drži?', [
+    'Davek, prihranjen zaradi izgube ob prodaji stare opreme, je denarni odliv', 'Davčni ščit amortizacije je denarni priliv',
+    'Prihranek stroškov po davkih je denarni priliv', 'Povečanje neto obratnega kapitala je na začetku odliv, na koncu priliv'], 0,
+    'Izguba ob prodaji zniža davčno osnovo → davčni prihranek (izguba × t) je PRILIV.'),
+  Q('Zahtevana donosnost delnice je 11 %, dividende stalno rastejo po 3 % letno. Kolikšen je dividendni donos?', [
+    '8 %', '3 %', '11 %', '14 %'], 0,
+    'r = D₁/P₀ + g → D₁/P₀ = 11 % − 3 % = 8 %. Pri stalni rasti je kapitalski dobiček (rast cene) enak g.'),
+  Q('Podjetje, ki že kotira na borzi, izda nove delnice. Na katerem trgu poteka ta transakcija?', [
+    'Na primarnem trgu', 'Na sekundarnem trgu', 'Na denarnem trgu', 'Na terminskem trgu'], 0,
+    'Nova izdaja je vedno primarni trg; na sekundarnem trgu se trguje z že izdanimi papirji (likvidnost). Ekonomska funkcija trgov je prenos prihrankov v najproduktivnejše namene.'),
+  Q('Kateri dogodek NE spremeni hitrega (pospešenega) koeficienta likvidnosti?', [
+    'Kupec poravna terjatev', 'Z denarjem kupimo zaloge', 'Z denarjem plačamo dobavitelja', 'Prodamo stroj za gotovino'], 0,
+    'Hitri koeficient = (gibljiva sredstva − zaloge)/kratkoročne obveznosti. Terjatev → denar pusti števec enak; nakup zalog z denarjem ga zniža.'),
+  Q('Delniška družba izda nove delnice. Zakaj je za obstoječe delničarje pomembna prednostna pravica?', [
+    'Ker lahko kupijo sorazmeren del nove izdaje in ohranijo svoj delež', 'Ker jim zagotavlja višjo dividendo po izdaji',
+    'Ker varuje upnike pred spremembo strukture kapitala', 'Ker managerjem omogoča prodajo delnic pod tržno ceno'], 0,
+    'Prednostna pravica varuje pred razvodenitvijo deleža glasov in dobička.'),
+  Q('Podjetje je lani plačalo 20.000 € za tržno raziskavo novega izdelka. Kako ta znesek upoštevamo pri oceni projekta?', [
+    'Ne upoštevamo ga, ker je nepovratni strošek', 'Kot odliv v letu 0', 'Kot oportunitetni strošek', 'Prištejemo ga k začetni investiciji'], 0,
+    'Strošek je nastal ne glede na odločitev o projektu. Upoštevamo pa oportunitetne stroške, spremembe NOK ter stroške prevoza in montaže.'),
+  Q('Podjetje vzame stroj v najem za 9 od 10 let njegove življenjske dobe; obroki pokrijejo skoraj vso vrednost, najema ni mogoče prekiniti. Za kakšen najem gre?', [
+    'Finančni najem', 'Poslovni (operativni) najem', 'Kratkoročni najem', 'Najem brez obveznosti plačila'], 0,
+    'Finančni najem je ekonomsko nakup na kredit (nepreklicen, traja skoraj vso življenjsko dobo). Poslovni najem je kratkotrajen in praviloma preklicen.'),
+  Q('Komu je poleg sistematičnega pomembno tudi tveganje projekta znotraj podjetja?', [
+    'Delničarjem, managerjem in posojilodajalcem', 'Samo managerjem, ker jim gre za zaposlitev', 'Samo posojilodajalcem zaradi bonitete', 'Nikomur, šteje le sistematično tveganje'], 0,
+    'Vpliva na posojilno sposobnost in dobiček (delničarji), stabilnost zaposlitve (managerji) in boniteto (posojilodajalci).'),
+  Q('Kateri cilj naj zasleduje uprava javne delniške družbe?', [
+    'Čim višjo vrednost delnice na dolgi rok', 'Čim višji dobiček na delnico v tekočem letu', 'Čim višje prihodke od prodaje', 'Čim višjo ceno delnice na dan izteka mandata'], 0,
+    'Cilj je maksimiranje dolgoročne vrednosti za lastnike, ne kratkoročnih kazalnikov.'),
+  Q('Katera trditev o finančnih institucijah NE drži?', [
+    'Vzajemni skladi so tipične pogodbene finančne institucije', 'Zavarovalnice in pokojninski skladi so pogodbene institucije',
+    'Centralna banka vodi denarno politiko na denarnem trgu', 'V Sloveniji nadzor izvajajo Banka Slovenije, AZN in ATVP'], 0,
+    'Pogodbene institucije imajo pogodbene prilive (zavarovalnice, pokojninski skladi); vzajemni skladi so investicijske institucije.'),
+  Q('Katera trditev o NSV in IRR (normalni denarni tokovi) NE drži?', [
+    'Projekt z IRR 6 % ima pri strošku kapitala 8 % pozitivno NSV', 'Projekt z IRR 8 % ima pri strošku kapitala 8 % NSV enako 0',
+    'Projekt z IRR 3 % ima pri strošku kapitala 8 % negativno NSV', 'Neodvisen projekt sprejmemo po obeh kriterijih, če je IRR večja od stroška kapitala'], 0,
+    'Pri normalnih tokovih je NSV > 0 natanko tedaj, ko je IRR > strošek kapitala.'),
+  Q('Katera trditev o strukturi kapitala drži?', [
+    'Pri strukturi z najnižjim WACC je vrednost podjetja in delnice največja', 'Zadržani dobiček nima stroška, ker ga ni treba izdati',
+    'Vsak dodaten evro dolga zniža WACC, saj so obresti davčno priznane', 'Zadržani dobiček je cenejši od dolga po davkih'], 0,
+    'Z zadolževanjem rasteta stroška obeh virov (tveganje), zato WACC ne pada v nedogled. Zadržani dobiček stane toliko kot lastniški kapital (oportunitetni strošek).'),
 ];
 
 const racunske = [
-  Q('(Stari izpiti) Letalo Bing: 6 let, 132 mio €, 35 mio € letno; letalo Asub: 8 let, 160 mio €, 37 mio € letno; strošek kapitala 12 %. Enakovredna letna anuiteta (EAA) donosnejšega letala?', [
-    '4,79 mio €', '2,33 mio €', '10,87 mio €', '11,90 mio €'], 0,
-    'NSV Bing = 35 · 4,111 − 132 = 11,90 → EAA = 11,90/4,111 = 2,89; NSV Asub = 37 · 4,968 − 160 = 23,80 → EAA = 23,80/4,968 = 4,79. Različne dobe → primerjamo EAA.'),
-  Q('(Stari izpiti) Kumara: strošek kapitala 10,86 %, ± 1 o. t. za tveganje. A (manj tvegan): −334; 191, 169, 104, 150, 118. B (bolj tvegan): −261; 114, 133, 108, 156, 122. NSV projekta, ki ga izberemo?', [
-    '235,03 €', '221,91 €', '109,30 €', '322,00 €'], 0,
-    'A diskontiramo po 9,86 %: NSV = 235,0; B po 11,86 %: NSV = 193,7. Izberemo A (višja NSV).'),
-  Q('(Stari izpiti) Obveznica Neroda: nominalna 1.000 €, 4 % letni kupon; 10 let kuponov ne izplačajo, konec 11. leta plačajo vse zaostale kupone, kupon 11. leta in glavnico. Zahtevana donosnost 11 %. Cena danes?', [
-    '456,88 €', '1.000,00 €', '322,32 €', '1.034,50 €'], 0,
-    'Enkratni tok konec 11. leta: 11 · 40 + 1.000 = 1.440 €; PV = 1.440/1,11¹¹ = 456,88 €.'),
-  Q('(Stari izpiti) Delnica Zelje: 3 leta brez dividend, D₄ = 100 €, D₅ = 112 €, nato rast 4 % letno; zahtevana donosnost 10 %. Vrednost delnice?', [
-    '1.343,26 €', '1.980,74 €', '2.814,64 €', '3.080,39 €'], 0,
-    'D₆ = 116,48; P₅ = 116,48/(0,10 − 0,04) = 1.941,3; P₀ = 100/1,1⁴ + (112 + 1.941,3)/1,1⁵ = 68,3 + 1.275,0 = 1.343,3 €.'),
-  Q('(Stari izpiti) Premoženje 50.000 € je enakomerno naloženo v 4 delnice, β premoženja je 1,48. Delnico A (β 1,87) zamenjamo z delnico X in β premoženja postane 1,60. β delnice X?', [
-    '2,35', '2,09', '1,99', '1,60'], 0,
-    '1,60 = 1,48 − 0,25 · 1,87 + 0,25 · β_X → 0,25 · β_X = 0,5875 → β_X = 2,35.'),
-  Q('(Stari izpiti) Delnica Sonata: D₁ = 26 €, D₂ = 31 €, D₃ = 33 €, nato rast 2 % letno; zahtevana donosnost 14 %. Cena delnice?', [
-    '258,26 €', '254,55 €', '349,43 €', '169,97 €'], 0,
-    'P₃ = 33 · 1,02/(0,14 − 0,02) = 280,5; P₀ = 26/1,14 + 31/1,14² + (33 + 280,5)/1,14³ = 22,8 + 23,9 + 211,6 = 258,3 €.'),
-  Q('(Stari izpiti) Dobavitelj: rok 44,87 dni, popust 1 % za plačilo do 7,58. dne. Banka: 11,4 % navedena obrestna mera, 9 % kompenzacijsko stanje (leto 360 dni). Strošek neizkoriščenega popusta (EAR) in strošek bančnega financiranja?', [
-    '10,19 % in 12,53 %', '3,60 % in 41,04 %', '9,75 % in 11,88 %', '1,00 % in 11,40 %'], 0,
-    'EAR = (1 + 1/99)^(360/37,29) − 1 = 10,19 %; banka: 11,4 %/(1 − 0,09) = 12,53 %. Cenejši je dobaviteljski kredit.'),
-  Q('(Stari izpiti) Banka ponuja depozit po 3,48 % letno, obresti pripisuje 2-krat letno. Dejanska letna obrestna mera?', [
-    '3,51 %', '3,48 %', '3,45 %', '1,74 %'], 0,
-    'EAR = (1 + 0,0348/2)² − 1 = 3,51 %.'),
-  Q('(Stari izpiti) 1.000 € naložimo po 12 % letno z letnim pripisom obresti. Čez koliko let znesek naraste na 17.000 €?', [
-    '25 let', '18 let', '20 let', '20 let in 3 mesece'], 0,
-    'n = ln(17)/ln(1,12) = 2,833/0,1133 = 25,0 let.'),
-  Q('(Stari izpiti) Obveznica ACG: nominalna 10.000 €, 10-letna, izdana pred 7 leti, kuponi 3-krat letno (12 % letno), tržna obrestna mera 8 %, tečaj 112,3. Bi jo prodali?', [
-    'Da, obveznica je precenjena za okoli 175 €', 'Ne, obveznica je podcenjena za okoli 175 €',
-    'Da, ker kuponi prinašajo več kot tržna obrestna mera', 'Ne, obveznica je podcenjena za 12 €'], 0,
-    'Še 9 obdobij po 2,667 %, kupon 400: vrednost = 400 · 7,91 + 10.000/1,2673 = 11.055 €; tečaj 112,3 = 11.230 € → precenjena za ≈ 175 €.'),
-  Q('(Stari izpiti) Bing: 3 leta, 14,4 mio €, 7,3 mio € letno; Asub: 6 let, 46,4 mio €, 14,4 mio € letno; strošek kapitala 5,4 %. Katero letalo?', [
-    'Asub - višja EAA (5,14 mio €)', 'Bing - višja EAA (5,14 mio €)', 'Bing - višja NSV (5,33 mio €)', 'Asub - višja NSV (5,33 mio €)'], 0,
-    'NSV Bing = 7,3 · 2,703 − 14,4 = 5,33 (EAA 1,97); NSV Asub = 14,4 · 5,012 − 46,4 = 25,77 (EAA 5,14). Pri različnih dobah primerjamo EAA.'),
-  Q('(Stari izpiti) Projekt Mango: −100, +60, −20, −20, +60 (mio €), WACC 10 %. Popravljena notranja stopnja donosa (MIRR)?', [
-    '1,54 %', '12,55 %', '8,25 %', '11,48 %'], 0,
-    'PV odlivov = 100 + 20/1,1² + 20/1,1³ = 131,6; FV prilivov ob koncu = 60 · 1,1³ + 60 = 139,9; MIRR = (139,9/131,6)^(1/4) − 1 = 1,54 %.'),
-  Q('(Stari izpiti) Delnica Dol: σ = 24,61 %, korelacija s trgom 0,86; delnica Log: σ = 9,69 %, korelacija 0,90; σ trga 12 %. Kaj drži?', [
-    'β Dol = 1,76', 'β Log = 0,97', 'β premoženja 70:30 = 1,23', 'Premoženje 70:30 je manj tvegano od trga'], 0,
-    'β = ρ · σᵢ/σₘ: Dol 0,86 · 24,61/12 = 1,76; Log 0,90 · 9,69/12 = 0,73; premoženje 0,7 · 1,76 + 0,3 · 0,73 = 1,45 > 1.'),
+  Q('Stroj A: 5 let, 80 mio €, 24 mio € letno; stroj B: 7 let, 110 mio €, 26 mio € letno; strošek kapitala 10 %. Kolikšna je enakovredna letna anuiteta (EAA) donosnejšega stroja?', [
+    '3,41 mio €', '2,90 mio €', '16,58 mio €', '10,98 mio €'], 0,
+    'NSV A = 24 · 3,791 − 80 = 10,98 → EAA = 2,90; NSV B = 26 · 4,868 − 110 = 16,58 → EAA = 3,41. Različne dobe → primerjamo EAA, ne NSV.'),
+  Q('Strošek kapitala je 9 %, za tveganje ± 1,5 o. t. Projekt A (manj tvegan): −300; 120, 110, 90, 80, 60. Projekt B (bolj tvegan): −250; 70, 90, 100, 110, 80. Kolikšna je NSV projekta, ki ga izberemo?', [
+    '83,51 €', '80,96 €', '97,11 €', '111,59 €'], 0,
+    'A diskontiramo po 7,5 %: NSV = 80,96; B po 10,5 %: NSV = 83,51. Izberemo B (višja NSV). (97,11 = B brez prilagoditve za tveganje, 111,59 = B s prilagoditvijo v napačno smer.)'),
+  Q('Obveznica: nominalna 1.000 €, 5 % letni kupon; 8 let kuponov ne izplačajo, konec 9. leta plačajo vse zaostale kupone, kupon 9. leta in glavnico. Zahtevana donosnost 9 %. Kolikšna je cena danes?', [
+    '667,62 €', '760,19 €', '1.000,00 €', '1.450,00 €'], 0,
+    'Enkratni tok konec 9. leta: 9 · 50 + 1.000 = 1.450 €; SV = 1.450/1,09⁹ = 667,62 €. (760,19 € bi veljalo pri rednem izplačevanju kuponov.)'),
+  Q('Delnica: 2 leti brez dividend, D₃ = 80 €, D₄ = 90 €, nato rast 3 % letno; zahtevana donosnost 11 %. Kolikšna je vrednost delnice?', [
+    '881,09 €', '1.158,75 €', '822,59 €', '955,10 €'], 0,
+    'D₅ = 92,70; P₄ = 92,70/(0,11 − 0,03) = 1.158,75; P₀ = 80/1,11³ + (90 + 1.158,75)/1,11⁴ = 58,50 + 822,59 = 881,09 €.'),
+  Q('Premoženje je enakomerno naloženo v 5 delnic, β premoženja je 1,20. Delnico A (β 1,50) zamenjamo z delnico X in β premoženja postane 1,14. Kolikšna je β delnice X?', [
+    '1,20', '1,14', '0,90', '1,50'], 0,
+    '1,14 = 1,20 − 0,2 · 1,50 + 0,2 · β_X → 0,2 · β_X = 0,24 → β_X = 1,20.'),
+  Q('Delnica: D₁ = 20 €, D₂ = 24 €, D₃ = 27 €, nato rast 3 % letno; zahtevana donosnost 12 %. Kolikšna je cena delnice?', [
+    '276,15 €', '309,00 €', '239,16 €', '231,75 €'], 0,
+    'P₃ = 27 · 1,03/(0,12 − 0,03) = 309,0; P₀ = 20/1,12 + 24/1,12² + (27 + 309)/1,12³ = 17,86 + 19,13 + 239,16 = 276,15 €.'),
+  Q('Dobavitelj: rok 40 dni, popust 2 % za plačilo do 10. dne. Banka: 9 % letno z zahtevanim 10 % kompenzacijskim stanjem. Kolikšna sta strošek neizkoriščenega popusta (EAR) in strošek bančnega posojila?', [
+    '27,86 % in 10,00 %', '2,04 % in 9,00 %', '24,83 % in 9,90 %', '27,86 % in 9,00 %'], 0,
+    'EAR = (1 + 2/98)^(365/30) − 1 = 27,86 %; banka: 9 %/(1 − 0,10) = 10 %. Cenejše je bančno posojilo, s katerim izkoristimo popust.'),
+  Q('Banka ponuja depozit po 4,2 % letno, obresti pripisuje četrtletno. Kolikšna je dejanska letna obrestna mera?', [
+    '4,27 %', '4,20 %', '4,13 %', '1,05 %'], 0,
+    'EAR = (1 + 0,042/4)⁴ − 1 = 4,27 %.'),
+  Q('2.000 € naložimo po 9 % letno z letnim pripisom obresti. Čez koliko let znesek naraste na 10.000 €?', [
+    '18,7 leta', '44,4 leta', '20 let', '15,6 leta'], 0,
+    'n = ln(5)/ln(1,09) = 1,609/0,0862 = 18,7 leta. (44,4 = navadne obresti: 400 %/9 %.)'),
+  Q('Obveznica: nominalna 5.000 €, 8-letna, izdana pred 5 leti, polletni kuponi (10 % letno), tržna obrestna mera 6 %, tečaj 109,5. Bi jo prodali?', [
+    'Ne, obveznica je podcenjena za okoli 67 €', 'Da, obveznica je precenjena za okoli 67 €',
+    'Da, ker kuponi prinašajo več kot tržna obrestna mera', 'Ne, obveznica je podcenjena za 9,5 €'], 0,
+    'Še 6 polletij po 3 %, kupon 250 €: vrednost = 250 · 5,417 + 5.000/1,03⁶ = 5.541,72 €; tečaj 109,5 = 5.475 € → podcenjena za ≈ 67 €, zato je ne prodamo.'),
+  Q('Stroj X: 4 leta, 20 mio €, 7 mio € letno; stroj Y: 8 let, 45 mio €, 9,5 mio € letno; strošek kapitala 6 %. Katerega izberemo?', [
+    'Y - višja EAA (2,25 mio €)', 'X - višja EAA (2,25 mio €)', 'X - višja NSV (4,26 mio €)', 'Y - višja NSV (13,99 mio €), EAA ni potrebna'], 0,
+    'NSV X = 7 · 3,465 − 20 = 4,26 (EAA 1,23); NSV Y = 9,5 · 6,210 − 45 = 13,99 (EAA 2,25). Pri različnih dobah primerjamo EAA.'),
+  Q('Projekt: −80, +50, −10, −10, +50 (mio €), WACC 8 %. Kolikšna je popravljena notranja stopnja donosa (MIRR)?', [
+    '4,02 %', '8,00 %', '12,48 %', '1,54 %'], 0,
+    'SV odlivov = 80 + 10/1,08² + 10/1,08³ = 96,51; KV prilivov ob koncu = 50 · 1,08³ + 50 = 112,99; MIRR = (112,99/96,51)^(1/4) − 1 = 4,02 %.'),
+  Q('Delnica A: σ = 30 %, korelacija s trgom 0,8; delnica B: σ = 10 %, korelacija 0,6; σ trga 15 %. Kaj drži?', [
+    'β A = 1,60', 'β B = 0,67', 'β premoženja 60:40 = 1,00', 'Premoženje 60:40 je manj tvegano od trga'], 0,
+    'β = ρ · σᵢ/σₘ: A 0,8 · 30/15 = 1,60; B 0,6 · 10/15 = 0,40; premoženje 0,6 · 1,60 + 0,4 · 0,40 = 1,12 > 1, torej bolj tvegano od trga.'),
 ];
 
 module.exports = { teorija, racunske };

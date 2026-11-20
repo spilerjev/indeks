@@ -1,133 +1,129 @@
-/* Statistika (1. letnik) - naloge s starih izpitov: 3. rok 2013 (rešen) ter izpit in preizkušnji 4. 9. 2020.
-   Kombinirane rešitve (a+c ...) so pretvorjene v enojne odgovore. Vse vrednosti preračunane; 2020 nima ključa,
-   zato so rešitve izračunane tukaj. Vprašanja, ki potrebujejo sliko (porazdelitev, Lorenzove krivulje), so izpuščena. */
+/* Statistika (1. letnik) - naloge v slogu izpita in preizkušenj (rast, indeksi, opisne mere, klasifikacije, viri podatkov,
+   demografske stopnje). Naloge so napisane na novo z lastnimi primeri in številkami; vse vrednosti so preračunane. */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 const C = (q, options, correct, explanation) => ({ q, options, correct, explanation, calc: true });
 
 const stari = [
-  C('(Izpit 2013) Škofljica je imela 1. 1. 2009 8.413, 1. 1. 2013 pa 9.744 prebivalcev. Kolikšna je povprečna letna stopnja rasti?', [
-    '3,7 %', '4,0 %', '3,2 %', '15,8 %'], 0,
-    'G = (9.744 / 8.413)^(1/4) = 1,1582^0,25 = 1,037 → 3,7 %. Štiri leta, ne pet. 4,0 % = 15,8 % / 4 (aritmetično, napačno). Povprečni letni absolutni prirastek = 1.331 / 4 = 333.'),
-  C('(Izpit 2013) Škofljica je imela 1. 1. 2013 9.744 prebivalcev. Če bi prebivalstvo raslo s 3,7 % na leto naprej, koliko prebivalcev bi imela 1. 1. 2015?', [
-    '10.486', '10.410', '10.743', '10.077'], 0,
-    '9.744 × 1,037² ≈ 10.486. Trditev s 10.410 na izpitu ni držala. 10.077 = 9.744 + 333 (le eno leto).'),
-  C('(Izpit 2013) Jabolka: cena 1,2 → 1,4 €/kg, prodaja 80 → 60 kg; hruške: 2,3 → 2,2 €/kg, 100 → 120 kg. Za koliko se je spremenila vrednost prodaje?', [
-    'Povečala se je za 6,7 %', 'Povečala se je za 106,7 %', 'Zmanjšala se je za 6,3 %', 'Povečala se je za 2,5 %'], 0,
-    'Vrednost 2012 = 1,2·80 + 2,3·100 = 326 €. 2013 = 1,4·60 + 2,2·120 = 348 €. Iv = 106,7 → +6,7 %.'),
-  C('(Izpit 2013) Neto pokojnina: januar 562,54 €, junij 569,26 €. Indeks cen življenjskih potrebščin (dec 2012 = 100): januar 99,2, junij 101,4. Realna sprememba?', [
-    'Realno nižja za 1,0 %', 'Realno višja za 1,2 %', 'Realno višja za 3,2 %', 'Realno enaka'], 0,
-    'Nominalni indeks 569,26 / 562,54 = 1,0119. Indeks cen 101,4 / 99,2 = 1,0222. Realni indeks = 1,0119 / 1,0222 = 0,990 → −1,0 %.'),
-  C('(Izpit 2013) Podjetja v SLO 2011 po številu oseb: 0-1: 119.791, 2-9: 40.195, 10-49: 6.950, 50-249: 2.082, 250+: 342 (skupaj 169.360). Največ koliko oseb je imelo 80 % podjetij?', [
-    '4,6', '4,3', '5,0', '9,5'], 0,
-    '80 % = 135.488. Do 1 osebe: 119.791, manjka 15.697 iz razreda 2-9 (meje 1,5-9,5, širina 8): 1,5 + 15.697/40.195 · 8 = 4,6.'),
-  C('(Izpit 2013) Prebivalci 12 regij (tisoč): 118, 323, 72, 260, 44, 70, 143, 542, 204, 52, 119, 112. Kaj drži?', [
-    'Variacijski razmik je 498 tisoč, mediana 118,5 tisoč',
-    'Variacijski razmik je 498 tisoč, mediana 106,5 tisoč',
-    'Variacijski razmik je 542 tisoč, mediana 118,5 tisoč',
-    'Standardni odklon je 133,4 tisoč, mediana 106,5 tisoč'], 0,
-    'R = 542 − 44 = 498. Urejeno: 6. in 7. vrednost sta 118 in 119 → Me = 118,5. σ ≈ 138,4 (populacijski), KV ≈ 0,81 → razlike so velike.'),
-  Q('(Izpit 2013) Indeks strukturnih premikov plač junij/maj je 99,5. Kaj to pomeni?', [
+  C('Občina je imela 1. 1. 2018 12.500, 1. 1. 2023 pa 14.200 prebivalcev. Kolikšna je povprečna letna stopnja rasti?', [
+    '2,6 %', '2,7 %', '3,2 %', '13,6 %'], 0,
+    'G = (14.200 / 12.500)^(1/5) = 1,136^0,2 = 1,026 → 2,6 %. Pet let, ne štiri (3,2 %). 2,7 % = 13,6 % / 5 (aritmetično, napačno). Povprečni letni absolutni prirastek = 1.700 / 5 = 340.'),
+  C('Občina je imela 1. 1. 2023 14.200 prebivalcev. Če bi prebivalstvo naprej raslo z izračunano povprečno letno stopnjo (G = 1,02583), koliko prebivalcev bi imela 1. 1. 2025?', [
+    '14.943', '14.540', '14.880', '14.983'], 0,
+    '14.200 × 1,02583² ≈ 14.943. 14.540 = 14.200 + 340 (le eno leto, absolutno), 14.880 = linearno podaljšanje, 14.983 = z napačno stopnjo 2,72 %.'),
+  C('Slive: cena 1,5 → 1,8 €/kg, prodaja 50 → 40 kg; marelice: 2,5 → 2,4 €/kg, 80 → 90 kg. Za koliko se je spremenila vrednost prodaje?', [
+    'Povečala se je za 4,7 %', 'Povečala se je za 104,7 %', 'Zmanjšala se je za 4,5 %', 'Povečala se je za 1,5 %'], 0,
+    'Vrednost v 1. obdobju = 1,5·50 + 2,5·80 = 275 €. V 2. obdobju = 1,8·40 + 2,4·90 = 288 €. Iv = 104,7 → +4,7 %.'),
+  C('Neto plača: januar 1.250 €, junij 1.290 €. Indeks cen življenjskih potrebščin (december = 100): januar 98,5, junij 100,5. Kakšna je realna sprememba plače?', [
+    'Realno višja za 1,1 %', 'Realno nižja za 1,1 %', 'Realno višja za 3,2 %', 'Realno višja za 5,2 %'], 0,
+    'Nominalni indeks 1.290 / 1.250 = 1,032. Indeks cen 100,5 / 98,5 = 1,0203. Realni indeks = 1,032 / 1,0203 = 1,011 → +1,1 %.'),
+  C('Podjetja po številu oseb: 0-1: 90.000, 2-9: 45.000, 10-49: 10.000, 50-249: 3.000, 250+: 500 (skupaj 148.500). Največ koliko oseb ima 70 % podjetij?', [
+    '4,0', '3,7', '5,3', '9,5'], 0,
+    '70 % = 103.950. Do 1 osebe: 90.000, manjka 13.950 iz razreda 2-9 (meje 1,5-9,5, širina 8): 1,5 + 13.950/45.000 · 8 = 4,0. (5,3 bi veljalo za 75 %.)'),
+  C('Prebivalci 10 regij (tisoč): 95, 310, 64, 220, 51, 88, 160, 480, 175, 130. Kaj drži?', [
+    'Variacijski razmik je 429 tisoč, mediana 145 tisoč',
+    'Variacijski razmik je 480 tisoč, mediana 145 tisoč',
+    'Variacijski razmik je 429 tisoč, mediana 130 tisoč',
+    'Variacijski razmik je 429 tisoč, mediana 177,3 tisoč'], 0,
+    'R = 480 − 51 = 429. Urejeno: 5. in 6. vrednost sta 130 in 160 → Me = 145. Aritmetična sredina je 177,3, σ ≈ 125,4 (populacijski) → KV ≈ 0,71, razlike med regijami so velike.'),
+  Q('Indeks strukturnih premikov povprečne plače je 101,2. Kaj to pomeni?', [
+    'Povečal se je delež zaposlenih v skupinah z višjimi plačami',
     'Povečal se je delež zaposlenih z nižjimi plačami',
-    'Zmanjšal se je delež zaposlenih z nižjimi plačami',
-    'Število zaposlenih se je zmanjšalo za 0,5 %',
-    'Plače so se v vseh skupinah znižale za 0,5 %'], 0,
-    'ISP < 100: struktura se je premaknila k skupinam z nižjo povprečno vrednostjo - zaradi tega se je povprečna plača znižala za 0,5 %, četudi plače v skupinah ostanejo enake.'),
-  Q('(Izpit 2013) Podjetje opravlja 3 dejavnosti na 4 lokacijah. Katere statistične enote lahko določimo?', [
-    '3 enote enovrstne dejavnosti in 4 lokalne enote',
-    '4 enote enovrstne dejavnosti in 3 lokalne enote',
-    '3 lokacijske enote in 3 lokalne enote',
-    '4 enote enovrstne dejavnosti in 4 lokacijske enote'], 0,
-    'EED (KAU) je vezana na dejavnost, lokalna enota na geografsko lokacijo.'),
-  Q('(Izpit 2013) Kaj od naštetega NI relativno število?', [
-    'Število zaposlenih', 'Stopnja brezposelnosti', 'Indeks plač', 'Promet na zaposlenega'], 0,
-    'Relativna števila so razmerja: stopnje, indeksi, koeficienti (promet na zaposlenega). Število zaposlenih je absolutni podatek.'),
-  Q('(Izpit 2013) Trgovina analizira m² prodajne površine na zaposlenega v posamezni občini, kjer ima prodajalne. Kaj je enota opazovanja?', [
-    'Občina', 'Zaposleni', 'Prodajna površina', 'Trgovsko podjetje'], 0,
-    'Kazalec računamo za vsako občino posebej, zato je enota opazovanja občina; površina in zaposleni sta spremenljivki.'),
-  Q('(Izpit 2013) Kateri podatki so PRIMARNI?', [
-    'Podatki iz lastne spletne ankete in iz "skrivnostnega nakupovanja"',
-    'Časovna serija brezposelnih z domače strani zavoda za zaposlovanje',
-    'Podatki iz priloge magistrskega dela, zbrani z intervjujem',
-    'Podatki SURS, ki jih urad zbira od podjetij in gospodinjstev'], 0,
-    'Primarne podatke zberemo sami za svoj namen. Podatki drugih (zavod, avtor magistrske, SURS) so za nas sekundarni.'),
-  Q('(Izpit 2013) Katera kriterija spadata v ILO opredelitev brezposelne osebe?', [
-    'Aktivno išče delo (zadnji 4 tedni) in je takoj pripravljena sprejeti delo',
-    'Prijavljena je na zavodu za zaposlovanje in aktivno išče delo',
-    'Delala je manj kot 4 ure na dan in je prijavljena na zavodu',
-    'Prijavljena je na zavodu in je stara od 15 do 64 let'], 0,
-    'ILO (anketna brezposelnost): ni delala niti 1 uro, aktivno išče delo in je v 2 tednih pripravljena začeti. Prijava na zavodu je kriterij registrirane brezposelnosti.'),
-  Q('(Izpit 2013) S katerim grafikonom prikažemo kumulativo frekvenc?', [
-    'Z ogivo', 'S poligonom', 'S histogramom', 'Z Lorenzovim grafikonom'], 0,
-    'Ogiva je krivulja kumulativnih frekvenc. Histogram in poligon prikazujeta (gostote) frekvenc, Lorenzov grafikon koncentracijo.'),
-  Q('(Izpit 2013) Za 130 honorarjev (708-1.493 €) oblikujemo frekvenčno porazdelitev. Kaj izberemo?', [
-    'Enake širine razredov in 8 razredov',
-    'Enake širine razredov in 4 razrede',
-    'Spodnje meje rastejo s koeficientom 2, 8 razredov',
-    'Spodnje meje rastejo s koeficientom 3, 4 razrede'], 0,
-    'Razpon ni ekstremen (max/min ≈ 2), zato enake širine. Sturges: k = 1 + 3,3 · log 130 ≈ 8.'),
-  Q('(Izpit 2013, 2020) Katera trditev o PEST analizi NE drži?', [
-    'Je osnova za del SWOT, ki obravnava prednosti in slabosti',
-    'Je orodje za sistematično analizo zunanjega okolja podjetja',
-    'Zajema politično, ekonomsko, socialno in tehnološko okolje',
-    'Je osnova za del SWOT, ki obravnava priložnosti in nevarnosti'], 0,
-    'PEST analizira ZUNANJE okolje, zato napaja priložnosti in nevarnosti. Prednosti in slabosti so notranje. Črka P ni "patenti", temveč politika.'),
-  Q('(Izpit 2020) Katera trditev o zbiranju podatkov drži?', [
-    'Sledenje uporabniku po spletni trgovini je opazovalna študija',
+    'Število zaposlenih se je povečalo za 1,2 %',
+    'Plače so se v vseh skupinah zvišale za 1,2 %'], 0,
+    'ISP > 100: struktura se je premaknila k skupinam z višjo povprečno vrednostjo - samo zaradi tega se je povprečna plača zvišala za 1,2 %, četudi plače v skupinah ostanejo enake.'),
+  Q('Podjetje ima 5 poslovalnic na različnih naslovih in opravlja 2 dejavnosti. Katere statistične enote lahko določimo?', [
+    '2 enoti enovrstne dejavnosti in 5 lokalnih enot',
+    '5 enot enovrstne dejavnosti in 2 lokalni enoti',
+    '2 lokalni enoti in 2 enoti enovrstne dejavnosti',
+    '10 lokalnih enot enovrstne dejavnosti'], 0,
+    'Enota enovrstne dejavnosti (KAU) je vezana na dejavnost, lokalna enota na geografsko lokacijo.'),
+  Q('Kateri podatek je absolutno (ne relativno) število?', [
+    'Število prodanih avtomobilov v letu', 'Delež izvoza v prodaji', 'Indeks cen', 'Število prebivalcev na km²'], 0,
+    'Relativna števila so razmerja: deleži, indeksi, koeficienti (gostota prebivalstva). Število prodanih avtomobilov je absolutni podatek.'),
+  Q('Banka primerja število bankomatov na 1.000 prebivalcev v slovenskih regijah. Kaj je enota opazovanja?', [
+    'Regija', 'Bankomat', 'Prebivalec', 'Banka'], 0,
+    'Kazalec računamo za vsako regijo posebej, zato je enota opazovanja regija; število bankomatov in prebivalcev sta spremenljivki.'),
+  Q('Kateri podatki so za podjetje PRIMARNI?', [
+    'Podatki, ki jih zbere z lastno anketo med kupci', 'Podatki Eurostata o prodaji v EU', 'Podatki iz letnega poročila konkurenta', 'Podatki SURS o gibanju plač'], 0,
+    'Primarne podatke zberemo sami za svoj namen. Podatki, ki so jih zbrali drugi (Eurostat, konkurent, SURS), so za nas sekundarni.'),
+  Q('Kdo je brezposeln po ILO (anketni) opredelitvi?', [
+    'Kdor v referenčnem tednu ni delal, je v zadnjih 4 tednih aktivno iskal delo in lahko takoj začne delati',
+    'Kdor je prijavljen na zavodu za zaposlovanje',
+    'Kdor dela manj kot polni delovni čas',
+    'Kdor je star 15-64 let in nima redne zaposlitve'], 0,
+    'ILO: ni delal niti 1 uro, aktivno išče delo in je v 2 tednih pripravljen začeti. Prijava na zavodu je kriterij registrirane brezposelnosti.'),
+  Q('Kateri grafikon pokaže, koliko enot ima vrednost do posamezne meje (kumulativne frekvence)?', [
+    'Ogiva', 'Poligon', 'Histogram', 'Lorenzova krivulja'], 0,
+    'Ogiva je krivulja kumulativnih frekvenc. Histogram in poligon prikazujeta (gostote) frekvenc, Lorenzova krivulja koncentracijo.'),
+  Q('Za 250 mesečnih najemnin (420-980 €) pripravljamo frekvenčno porazdelitev. Kaj je najprimerneje?', [
+    'Razredi enakih širin, približno 9 razredov',
+    'Razredi enakih širin, 4 razredi',
+    'Spodnje meje rastejo s faktorjem 2, 9 razredov',
+    'Spodnje meje rastejo s faktorjem 3, 4 razredi'], 0,
+    'Razpon ni ekstremen (max/min ≈ 2,3), zato enake širine. Sturges: k = 1 + 3,3 · log 250 ≈ 8,9 → 9 razredov.'),
+  Q('Katera trditev o PEST analizi drži?', [
+    'Napaja del SWOT analize, ki obravnava priložnosti in nevarnosti',
+    'Napaja del SWOT analize, ki obravnava prednosti in slabosti',
+    'Analizira notranje vire in zmožnosti podjetja',
+    'Črka P v kratici pomeni patente'], 0,
+    'PEST (politično, ekonomsko, socialno, tehnološko okolje) analizira ZUNANJE okolje, zato napaja priložnosti in nevarnosti. Prednosti in slabosti so notranje.'),
+  Q('Katera trditev o načinih zbiranja podatkov drži?', [
+    'Štetje obiskovalcev pred trgovino je opazovalna študija',
     'Podatki SURS so za uporabnika primarni podatki',
-    'Analiza odpadkov je primer eksperimenta',
-    'Fokusna skupina je metoda zbiranja eksperimentalnih podatkov'], 0,
-    'Pri sledenju in analizi odpadkov samo opazujemo, ne posegamo. Fokusna skupina je kvalitativna metoda spraševanja. SURS-ovi podatki so za nas sekundarni.'),
-  Q('(Izpit 2020) Na dobavnici je šifra 20.41.32.400 iz Nomenklature industrijskih proizvodov (NIP). Kakšna je šifra dejavnosti po NACE?', [
-    '20.41', '20.41.3', '20.41.32', 'Ne moremo vedeti, gre za drugo klasifikacijo'], 0,
-    'Klasifikacije so hierarhično povezane: NIP (8 mest) → CPA (6 mest, 20.41.32) → NACE/SKD (4 mesta, 20.41).'),
-  Q('(Izpit 2020) S katero kratico označujemo klasifikacijo proizvodov po dejavnosti na ravni EU?', [
-    'CPA', 'CPC', 'ISIC', 'NIP'], 0,
-    'CPA = evropska klasifikacija proizvodov po dejavnostih. CPC je klasifikacija ZN, ISIC mednarodna klasifikacija dejavnosti, NIP slovenska nomenklatura industrijskih proizvodov.'),
-  Q('(Izpit 2020) 38 poslovalnic z zelo različnim številom zaposlenih prikazujemo s poligonom. Kaj nanesemo na ordinato?', [
-    'Gostoto frekvence', 'Relativno frekvenco', 'Kumulativo frekvenc', 'Absolutno frekvenco'], 0,
-    'Zelo različne vrednosti → razredi različnih širin → frekvence moramo preračunati v gostote (f / širina), sicer je slika zavajajoča.'),
-  Q('(Izpit 2020) "Prihodki na kvadratni meter prodajne površine" so tehnično gledano:', [
+    'Spletna anketa je primer eksperimenta',
+    'Pri eksperimentu raziskovalec ne spreminja nobenega dejavnika'], 0,
+    'Pri opazovalni študiji samo beležimo, ne posegamo. Pri eksperimentu namerno spreminjamo dejavnik. Anketa je spraševanje, ne eksperiment.'),
+  Q('Izdelek ima šifro iz Nomenklature industrijskih proizvodov (NIP) 10.71.11.100. Kakšna je šifra dejavnosti po SKD/NACE?', [
+    '10.71', '10.71.1', '10.71.11', 'Ne moremo vedeti, gre za drugo klasifikacijo'], 0,
+    'Klasifikacije so hierarhično povezane: NIP (8 mest) → CPA (6 mest, 10.71.11) → NACE/SKD (4 mesta, 10.71).'),
+  Q('Katera kratica označuje mednarodno klasifikacijo dejavnosti Združenih narodov?', [
+    'ISIC', 'CPA', 'NIP', 'CPC'], 0,
+    'ISIC = mednarodna (ZN) klasifikacija dejavnosti; NACE je njena evropska različica. CPC je klasifikacija proizvodov ZN, CPA evropska klasifikacija proizvodov po dejavnostih, NIP slovenska nomenklatura.'),
+  Q('Starost 500 kupcev prikazujemo z razredi različnih širin (npr. 18-25, 25-35, 35-65 let). Kaj nanesemo na ordinato histograma?', [
+    'Gostoto frekvence', 'Absolutno frekvenco', 'Kumulativo frekvenc', 'Relativno frekvenco'], 0,
+    'Pri razredih različnih širin moramo frekvence preračunati v gostote (f / širina), sicer bi bili širši razredi videti preveliki.'),
+  Q('"Število zdravnikov na 1.000 prebivalcev" je tehnično gledano:', [
     'Koeficient', 'Indeks', 'Struktura', 'Odstotni delež'], 0,
-    'Koeficient je razmerje med dvema različnima pojavoma (prihodki / površina). Struktura in delež primerjata del s celoto, indeks isti pojav v času ali prostoru.'),
-  C('(Izpit 2020) Registrirana brezposelnost: ženske 10,3 %, moški 8,4 %. Kaj drži?', [
-    'Pri ženskah je višja za 1,9 odstotne točke oz. za 22,6 %',
-    'Pri ženskah je višja za 1,9 % oz. za 1,9 odstotne točke',
-    'Pri ženskah je višja za 22,6 odstotne točke',
-    'Skupna stopnja je točno povprečje obeh, 9,35 %'], 0,
-    'Absolutna razlika 10,3 − 8,4 = 1,9 o. t.; relativna 10,3 / 8,4 = 1,226 → 22,6 %. Skupna stopnja je med 8,4 % in 10,3 %, a tehtana s številom aktivnih, ne navadno povprečje.'),
-  C('(Izpit 2020) Leta 2019 se je v SLO priselilo 31.319 oseb, prebivalcev je bilo 1. 7. 2019 2.089.310. Splošna stopnja priselitev?', [
-    '15,0 ‰', '13,7 ‰', '15,1 ‰', '1,5 ‰'], 0,
-    'Imenovalec je povprečno (sredi leta) prebivalstvo: 31.319 / 2.089.310 · 1000 = 15,0 ‰. (15,1 ‰ bi dobil s stanjem 1. 1.)'),
-  C('(Izpit 2020) Kaj dobimo, če indeks vrednosti delimo z Laspeyresovim indeksom cen?', [
-    'Paaschejev indeks količin', 'Laspeyresov indeks količin', 'Fisherjev indeks cen', 'Paaschejev indeks cen'], 0,
-    'Iv = Lp · Pq = Pp · Lq. Torej Iv / Lp = Pq in Iv / Pp = Lq.'),
-  C('(Izpit 2020) Čas priprave sladice pri 8 kuharjih (min): 47, 47, 47, 50, 51, 54, 54, 56. Mediana?', [
-    '50,5 minute', '47 minut', '51 minut', '50,75 minute'], 0,
-    'Sodo število enot: povprečje 4. in 5. vrednosti = (50 + 51) / 2 = 50,5. Modus je 47, aritmetična sredina 50,75.'),
-  C('(Izpit 2020) Bombonjera: Supermarket 8,30 → 7,90 € (90 kosov 2020), Na pumpi 9,90 → 9,70 € (40), Čez cesto 8,90 → 9,20 € (30). Paaschejev indeks cen?', [
-    'Cene so se znižale za 2,5 %', 'Cene so se znižale za 2,0 %', 'Cene so se znižale za 1,5 %', 'Cene so se znižale za 7,3 %'], 0,
-    'Pp = Σp₁q₁ / Σp₀q₁ = (711 + 388 + 276) / (747 + 396 + 267) = 1.375 / 1.410 = 0,975 → −2,5 %.'),
-  C('(Izpit 2020) Neto pokojnina 2015: 613,11 €, 2019: 662,97 €. Inflacija 2016-2019: −0,1 %, 1,4 %, 1,7 %, 1,6 %. Kaj drži?', [
-    'Nominalno +8,1 %, realno +3,3 %', 'Nominalno +8,1 %, realno +4,0 %', 'Nominalno +8,1 %, cene +4,1 %', 'Nominalno +4,6 %, realno +3,3 %'], 0,
-    'Iw = 662,97 / 613,11 = 108,1. Cene: 0,999 · 1,014 · 1,017 · 1,016 = 1,0467 (+4,7 %, ne 4,1 %). Realno 1,081 / 1,0467 = 1,033. Leta 2016 je bila realna rast pozitivna (+0,5 % ob deflaciji).'),
-  C('(Preizkušnja 2020) Oskrbovanci domov: 50-59 let moški 296, vseh 50-59 let 444, vseh moških 4.705, vseh 17.694. Kaj pomeni 66,7 %?', [
-    'Med oskrbovanci, starimi 50-59 let, je 66,7 % moških',
-    'Med moškimi oskrbovanci je 66,7 % starih 50-59 let',
-    'Med vsemi oskrbovanci je 66,7 % moških, starih 50-59 let',
-    'Moških, starih 50-59 let, je 66,7 % več kot žensk'], 0,
-    '296 / 444 = 66,7 % (struktura po vrstici). 296 / 4.705 = 6,3 % moških je starih 50-59 let. 296 / 17.694 = 1,7 % vseh.'),
-  C('(Preizkušnja 2020) Hotel: februarja 4.321 nočitev, gostov 1. 2. 350 in 1. 3. 372. Koliko nočitev na gosta?', [
-    '11,97', '12,35', '11,62', '10,75'], 0,
-    'Gostje so stanje, nočitve tok → povprečno stanje (350 + 372) / 2 = 361. 4.321 / 361 = 11,97. (12,35 = deljeno z začetnim stanjem.)'),
-  C('(Preizkušnja 2020) Točke na izpitu: 0-60: 95, 60-69: 40, 69-77: 38, 77-85: 32, 85-93: 20, 93-120: 9 študentov. Koliko odstotkov jih je preseglo 80 točk?', [
-    '20,9 %', '26,1 %', '12,4 %', '16,7 %'], 0,
-    'N = 234. V razredu 77-85 je nad 80 točk 5/8 · 32 = 20 študentov, plus 20 + 9 = 49. 49 / 234 = 20,9 %. (26,1 % = cel razred 77-85.)'),
-  C('(Preizkušnja 2020) 10.000 € vložimo 1. 1. 2019 s pričakovanim donosom 5 % letno. Stanje 1. 1. 2025?', [
-    '13.401 €', '13.000 €', '14.071 €', '12.763 €'], 0,
-    '6 let: 10.000 · 1,05⁶ = 13.400,96 €. (13.000 = navadne obresti, 14.071 = 7 let, 12.763 = 5 let.)'),
+    'Koeficient je razmerje med dvema različnima pojavoma. Struktura in delež primerjata del s celoto, indeks isti pojav v času ali prostoru.'),
+  C('Stopnja brezposelnosti mladih je 14,4 %, starejših 9,0 %. Kaj drži?', [
+    'Pri mladih je višja za 5,4 odstotne točke oz. za 60 %',
+    'Pri mladih je višja za 5,4 % oz. za 5,4 odstotne točke',
+    'Pri mladih je višja za 60 odstotnih točk',
+    'Skupna stopnja je navadno povprečje obeh, 11,7 %'], 0,
+    'Absolutna razlika 14,4 − 9,0 = 5,4 o. t.; relativna 14,4 / 9,0 = 1,6 → 60 %. Skupna stopnja je tehtana s številom aktivnih v obeh skupinah.'),
+  C('V letu se je iz države odselilo 18.400 oseb; prebivalcev je bilo 1. 1. 2.100.000, sredi leta (1. 7.) 2.110.000. Kolikšna je splošna stopnja odselitev?', [
+    '8,7 ‰', '8,8 ‰', '0,9 ‰', '87,2 ‰'], 0,
+    'Imenovalec je povprečno (sredi leta) prebivalstvo: 18.400 / 2.110.000 · 1000 = 8,7 ‰. (8,8 ‰ bi dobil s stanjem 1. 1.)'),
+  C('Kaj dobimo, če indeks vrednosti delimo s Paaschejevim indeksom cen?', [
+    'Laspeyresov indeks količin', 'Paaschejev indeks količin', 'Fisherjev indeks cen', 'Laspeyresov indeks cen'], 0,
+    'Iv = Lp · Pq = Pp · Lq. Torej Iv / Pp = Lq in Iv / Lp = Pq.'),
+  C('Čas dostave paketov pri 8 dostavljavcih (min): 22, 25, 25, 28, 30, 31, 35, 38. Kolikšna je mediana?', [
+    '29 minut', '25 minut', '28 minut', '29,25 minute'], 0,
+    'Sodo število enot: povprečje 4. in 5. vrednosti = (28 + 30) / 2 = 29. Modus je 25, aritmetična sredina 29,25.'),
+  C('Kava: trgovina A 4,20 → 4,50 € (60 kosov v 2. obdobju), B 4,80 → 4,60 € (30), C 5,00 → 5,40 € (20). Kolikšen je Paaschejev indeks cen?', [
+    'Cene so se zvišale za 4,0 %', 'Cene so se zvišale za 3,7 %', 'Cene so se zvišale za 3,6 %', 'Cene so se znižale za 4,0 %'], 0,
+    'Pp = Σp₁q₁ / Σp₀q₁ = (270 + 138 + 108) / (252 + 144 + 100) = 516 / 496 = 1,040 → +4,0 %. (3,7 % = netehtano povprečje indeksov, 3,6 % = vsota cen.)'),
+  C('Neto plača 2018: 1.100 €, 2022: 1.260 €. Inflacija 2019-2022: 1,6 %, −0,3 %, 1,9 %, 9,3 %. Kaj drži?', [
+    'Nominalno +14,5 %, realno +1,5 %', 'Nominalno +14,5 %, realno +2,0 %', 'Nominalno +14,5 %, cene +12,5 %', 'Nominalno +3,6 %, realno +1,5 %'], 0,
+    'Iw = 1.260 / 1.100 = 114,5. Cene: 1,016 · 0,997 · 1,019 · 1,093 = 1,128 (+12,8 %, ne seštevek 12,5 %). Realno 1,145 / 1,128 = 1,015.'),
+  C('Študenti: ženske na ekonomiji 1.020, vsi na ekonomiji 1.700, vse študentke 6.000, vsi študenti 10.000. Kaj pomeni podatek 60 %?', [
+    'Med študenti ekonomije je 60 % žensk',
+    'Med vsemi študentkami jih 60 % študira ekonomijo',
+    'Med vsemi študenti je 60 % študentk ekonomije',
+    'Študentk ekonomije je za 60 % več kot študentov'], 0,
+    '1.020 / 1.700 = 60 % (struktura znotraj ekonomije). 1.020 / 6.000 = 17 % študentk študira ekonomijo. 1.020 / 10.000 = 10,2 % vseh.'),
+  C('Kamp ima v juliju 9.300 nočitev, gostov je bilo 1. 7. 280 in 1. 8. 340. Koliko nočitev pride na gosta?', [
+    '30,0', '33,2', '27,4', '15,0'], 0,
+    'Gostje so stanje, nočitve tok → povprečno stanje (280 + 340) / 2 = 310. 9.300 / 310 = 30,0. (33,2 = deljeno z začetnim stanjem.)'),
+  C('Točke na preizkušnji: 0-50: 60, 50-60: 45, 60-70: 50, 70-80: 40, 80-90: 25, 90-100: 10 študentov. Koliko odstotkov jih je preseglo 75 točk?', [
+    '23,9 %', '32,6 %', '15,2 %', '21,7 %'], 0,
+    'N = 230. V razredu 70-80 je nad 75 točk polovica, 20 študentov, plus 25 + 10 = 55. 55 / 230 = 23,9 %. (32,6 % = cel razred 70-80, 15,2 % = le nad 80.)'),
+  C('8.000 € vložimo 1. 1. 2020 s pričakovanim donosom 4 % letno. Kolikšno je stanje 1. 1. 2026?', [
+    '10.123 €', '9.920 €', '10.527 €', '9.733 €'], 0,
+    '6 let: 8.000 · 1,04⁶ = 10.122,55 €. (9.920 = navadne obresti, 10.527 = 7 let, 9.733 = 5 let.)'),
 ];
 
 module.exports = {
   id: 'stat',
-  parts: [{ id: 'izpit', decks: [{ id: 'st-stari', name: 'Stari izpiti 2013 in 2020', calc: true, questions: stari }] }],
+  parts: [{ id: 'izpit', decks: [{ id: 'st-stari', name: 'Vaje v slogu izpita', calc: true, questions: stari }] }],
 };

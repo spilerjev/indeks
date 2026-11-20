@@ -1,11 +1,11 @@
-/* Makroekonomija 1 (1. letnik, 2. semester) - dodatni izpitni kvizi.
-   Viri: EF Zapiski "Stari izpiti" (zbrani roki 2012-2017), "1. izpitni rok 2020", "Snov na prvem izpitnem roku 2023".
+/* Makroekonomija 1 (1. letnik, 2. semester) - dodatni kvizi v slogu izpita.
+   Viri: predavanja in učbenik; seznam pogostih izpitnih tem. Vprašanja in računske naloge so napisani na novo.
    Izpit je opisni (kategorije, vprašanja, UMAR, ekonomska analiza IS-LM/AD-AS, debata). Rezultati so preračunani;
    nekatere rešitve v študentskih zbirkah so napačne (npr. računovodstvo rasti), zato veljajo izračuni tukaj. */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
 const NOTES_IZPIT = `
-## Kako je videti izpit (stari roki)
+## Kako je videti izpit
 1. **Ekonomske kategorije** - opredeli in razloži 4-5 pojmov (npr. likvidnostna past, NAIRU, seniorage, Humov mehanizem, zapornikova dilema, strukturni deficit, Bretton Woods).
 2. **UMAR** - branje napovedi in podatkov (BDP, brezposelnost, inflacija).
 3. **Vprašanja** z utemeljitvami, grafi in izračuni (BDP/BNP, multiplikatorji, davki, plačilna bilanca, keynesianizem).
@@ -25,7 +25,7 @@ const NOTES_IZPIT = `
 - **Racionalna pričakovanja**: ljudje predvidijo ukrepe vlade, zato pričakovani ukrepi ne vplivajo na realni BDP.
 - **HDI** (indeks človekovega razvoja): dohodek na prebivalca, pričakovana življenjska doba, izobrazba.
 - **Kvantitativno popuščanje**: CB kupuje dolgoročne obveznice, da zniža dolgoročne obrestne mere.
-- **BDP vs. BNP**: Renault v Sloveniji → slovenski BDP in francoski BNP; Gorenje v Srbiji → srbski BDP in slovenski BNP.
+- **BDP vs. BNP**: tovarna tujega podjetja v Sloveniji → slovenski BDP in BNP države lastnika; obrat slovenskega podjetja v tujini → BDP te države in slovenski BNP.
 - BDP ni dobro merilo blaginje: ne zajame gospodinjskega dela, sive ekonomije, onesnaževanja, prostega časa.
 
 ## Izračuni
@@ -42,7 +42,7 @@ const kategorije = [
     'Pri visokih obrestnih merah ljudje ne želijo držati denarja - fiskalna politika je neučinkovita',
     'Banke zaradi pomanjkanja rezerv ne morejo dajati kreditov, zato ponudba denarja pade',
     'Država zaradi visokega dolga ne more več prodajati obveznic na finančnih trgih'], 0,
-    'V likvidnostni pasti je špekulativno povpraševanje po denarju zelo elastično; LM je vodoravna, zato premik LM ne spremeni Y. Izpitna kategorija (2015, 2020, 2023).'),
+    'V likvidnostni pasti je špekulativno povpraševanje po denarju zelo elastično; LM je vodoravna, zato premik LM ne spremeni Y. Pogosta izpitna kategorija.'),
   Q('Kaj je NAIRU (najnižja vzdržna stopnja brezposelnosti)?', [
     'Najnižja stopnja brezposelnosti, ki še ne pospešuje inflacije',
     'Stopnja brezposelnosti, pri kateri je inflacija enaka nič',
@@ -109,12 +109,12 @@ const kategorije = [
     'Vlada znižuje davke, da poveča razpoložljivi dohodek gospodinjstev',
     'Centralna banka dvigne obvezne rezerve, da omeji kreditiranje'], 0,
     'Nekonvencionalni ukrep, ko so kratkoročne obrestne mere že blizu nič (ECB po 2015).'),
-  Q('Kam štejemo proizvodnjo Renaulta v Sloveniji in Gorenja v Srbiji?', [
-    'Renault: slovenski BDP in francoski BNP; Gorenje: srbski BDP in slovenski BNP',
-    'Renault: francoski BDP in slovenski BNP; Gorenje: slovenski BDP in srbski BNP',
+  Q('Kam štejemo proizvodnjo kanadskega podjetja Magna v Hočah in tovarne Krke na Hrvaškem?', [
+    'Magna: slovenski BDP in kanadski BNP; Krka: hrvaški BDP in slovenski BNP',
+    'Magna: kanadski BDP in slovenski BNP; Krka: slovenski BDP in hrvaški BNP',
     'Oba štejemo v slovenski BDP, ker gre za slovenske delavce oziroma lastnike',
-    'Renault: slovenski BDP in BNP; Gorenje: srbski BDP in BNP'], 0,
-    'BDP = proizvodnja na ozemlju države; BNP = proizvodnja rezidentov države, kjer koli. Pogosto izpitno vprašanje (2015, 2017, 2020).'),
+    'Magna: slovenski BDP in BNP; Krka: hrvaški BDP in BNP'], 0,
+    'BDP = proizvodnja na ozemlju države; BNP = proizvodnja rezidentov države, kjer koli. Pogosta izpitna tema.'),
   Q('Zakaj BDP ni dobro merilo blaginje?', [
     'Ne zajame gospodinjskega dela, sive ekonomije in onesnaževanja',
     'Ker poleg materialnih dobrin vključuje tudi storitve, ki niso otipljive',
@@ -126,7 +126,7 @@ const kategorije = [
     'Preseljevanje prebivalstva iz razvitih v manj razvite države',
     'Upad prebivalstva zaradi vojn in epidemij v razvitih državah',
     'Hitra rast prebivalstva v razvitih državah zaradi priseljevanja'], 0,
-    'Najprej pade smrtnost (prebivalstvo hitro raste), nato še rodnost. Izpitno vprašanje 2020.'),
+    'Najprej pade smrtnost (prebivalstvo hitro raste), nato še rodnost. Pogosta izpitna tema.'),
   Q('Kaj je UMAR?', [
     'Urad za makroekonomske analize in razvoj, ki napoveduje gospodarska gibanja',
     'Urad za meroslovje, ki meri inflacijo in sestavlja košarico IPC',
@@ -136,18 +136,18 @@ const kategorije = [
 ];
 
 const racunske = [
-  Q('C = 50 + 0,6Y, I = 20 (brez države in tujine). Koliko sta ravnotežni output in multiplikator? (izpit 2017)', [
-    'Y = 175, multiplikator 2,5', 'Y = 117, multiplikator 1,67', 'Y = 70, multiplikator 2,5', 'Y = 175, multiplikator 1,67'], 0,
-    'Y = 50 + 0,6Y + 20 → 0,4Y = 70 → Y = 175. m = 1/(1 − 0,6) = 2,5.'),
-  Q('CB zniža stopnjo obveznih rezerv s 45 % na 5 %. Kako se spremeni denarni multiplikator? (izpit 2015)', [
-    'Z 2,22 na 20', 'S 4,5 na 0,5', 'Z 0,45 na 0,05', 'Z 2,22 na 5'], 0,
-    'm = 1/r: 1/0,45 ≈ 2,22, 1/0,05 = 20. Banke lahko ustvarijo več depozitov in kreditov - ekspanzivna politika.'),
-  Q('Delo raste 1 % letno, kapital 4 %, tehnološke spremembe 1,5 %. Uteži: delo ¾, kapital ¼. Kolikšna je rast outputa? (izpit 2015)', [
-    '3,25 %', '4,0 %', '6,5 %', '2,25 %'], 0,
-    'gQ = ¾·1 + ¼·4 + 1,5 = 0,75 + 1 + 1,5 = 3,25 %.'),
-  Q('Delo raste 1 % letno, kapital 4 %, tehnološke spremembe 1,5 % (uteži ¾ in ¼). Kolikšna je rast outputa na delavca?', [
-    '2,25 %', '3,25 %', '1,5 %', '2,5 %'], 0,
-    'gQ − gL = 3,25 − 1 = 2,25 % (= ¼·(4 − 1) + 1,5: 0,75 iz poglabljanja kapitala in 1,5 iz tehnoloških sprememb).'),
+  Q('C = 80 + 0,75Y, I = 40 (brez države in tujine). Koliko sta ravnotežni output in multiplikator?', [
+    'Y = 480, multiplikator 4', 'Y = 160, multiplikator 1,33', 'Y = 120, multiplikator 4', 'Y = 480, multiplikator 1,33'], 0,
+    'Y = 80 + 0,75Y + 40 → 0,25Y = 120 → Y = 480. m = 1/(1 − 0,75) = 4. (1,33 = 1/0,75 je napačen obrazec.)'),
+  Q('Centralna banka zniža stopnjo obveznih rezerv s 25 % na 8 %. Kako se spremeni denarni multiplikator?', [
+    'S 4 na 12,5', 'Z 2,5 na 0,8', 'Z 0,25 na 0,08', 'S 4 na 8'], 0,
+    'm = 1/r: 1/0,25 = 4, 1/0,08 = 12,5. Banke lahko ustvarijo več depozitov in kreditov - ekspanzivna politika.'),
+  Q('Delo raste 2 % letno, kapital 6 %, tehnološke spremembe 1 %. Uteži: delo ¾, kapital ¼. Kolikšna je rast outputa?', [
+    '4 %', '3 %', '9 %', '2 %'], 0,
+    'gQ = ¾·2 + ¼·6 + 1 = 1,5 + 1,5 + 1 = 4 %. (3 % = brez tehnoloških sprememb, 9 % = brez uteži.)'),
+  Q('Delo raste 2 % letno, kapital 6 %, tehnološke spremembe 1 % (uteži ¾ in ¼). Kolikšna je rast outputa na delavca?', [
+    '2 %', '4 %', '1 %', '3 %'], 0,
+    'gQ − gL = 4 − 2 = 2 % (= ¼·(6 − 2) + 1: 1 iz poglabljanja kapitala in 1 iz tehnoloških sprememb).'),
   Q('MNP = 0,8. Za koliko se poveča BDP, če država poveča izdatke za 100?', [
     'Za 500', 'Za 400', 'Za 125', 'Za 80'], 0,
     'm = 1/(1 − 0,8) = 5 → 5 × 100 = 500.'),
@@ -250,7 +250,7 @@ module.exports = {
       id: 'izpit',
       appendNotesMd: NOTES_IZPIT,
       decks: [
-        { id: 'makro-kategorije', name: 'Ekonomske kategorije z izpitov', questions: kategorije },
+        { id: 'makro-kategorije', name: 'Ekonomske kategorije (pogoste izpitne teme)', questions: kategorije },
         { id: 'makro-racunske', name: 'Računske naloge', calc: true, questions: racunske },
         { id: 'makro-politike', name: 'Politike in ekonomska analiza', questions: politike },
       ],

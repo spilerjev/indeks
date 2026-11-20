@@ -1,136 +1,86 @@
-/* MPSP - vprašanja iz preteklih izpitov (EF Zapiski/2. letnik/Management proizvodnih in storitvenih procesov/Izpiti/
-   Izpit.docx in Vprašanja iz preteklih izpitov.docx). Študentske rešitve so preverjene s teorijo (Rusjan: MPSP);
-   vprašanja tipa "obkroži pravilne" so preoblikovana v eno pravilno izbiro. */
+/* MPSP - vaje v slogu izpita (2. sklop): strategija, napovedovanje, zaloge, MRP, zmogljivosti, kakovost, projekti, procesi.
+   Vprašanja so napisana na novo (lastni primeri, formulacije in napačne možnosti). */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
 module.exports = [
-  Q('(Stari izpiti) Kateri ukrep NE sodi med načine zmanjševanja sezonskih nihanj v prodaji (izravnavanje povpraševanja)?', [
-    'Spreminjanje števila zaposlenih', 'Diferenciacija cen', 'Odlogi dobave in rezervacije', 'Uvajanje proizvodov z drugačno sezonsko komponento'], 0,
-    'Spreminjanje števila zaposlenih prilagaja ZMOGLJIVOST povpraševanju (strategija lovljenja); drugi trije ukrepi vplivajo na povpraševanje.'),
-  Q('(Stari izpiti) Katera kategorija NE sodi v tabelo operativnega plana (MPS)?', [
-    'Kosovnica', 'Predvideno povpraševanje', 'Razpoložljivo za dobavo (ATP)', 'Sprejeta naročila'], 0,
-    'Operativni plan vsebuje predvideno povpraševanje, sprejeta naročila, končno zalogo, operativni plan in razpoložljivo za dobavo; kosovnica je vložek MRP.'),
-  Q('(Stari izpiti) Kateri korak NE sodi v postopek MRP?', [
-    'Določanje točke ponovnega naročila', 'Določanje neto potreb', 'Določanje velikosti serije', 'Vključevanje časovne komponente in eksplozija po kosovnici'], 0,
-    'Točka ponovnega naročila je del modelov za NEODVISNO povpraševanje; MRP uravnava odvisno povpraševanje.'),
-  Q('(Stari izpiti) Kaj je namen vhodno-izhodne kontrole?', [
-    'Kontrola čakalnih vrst in pretočnih časov s prilagajanjem hitrosti lansiranja nalogov zmogljivosti', 'Določanje pravilnega vrstnega reda izvajanja nalogov na delovnem mestu s prednostnimi pravili', 'Preverjanje kakovosti vhodnih materialov in izhodnih proizvodov na vsakem delovnem mestu', 'Oskrba delovnih mest z vsem potrebnim za izvedbo nalogov (material, orodja, dokumentacija)'], 0,
-    'Prevelika zaloga nedokončane proizvodnje → zmanjšamo hitrost lansiranja. Vrstni red določajo prednostna pravila; oskrbo delovnih mest dispečing.'),
-  Q('(Stari izpiti) Katera trditev o predvidevanju povpraševanja drži?', [
-    'Majhen N pri metodi drsečih sredin pomeni visoko odzivnost napovedi', 'V turbulentnem okolju so kvantitativne metode primernejše od kvalitativnih',
-    'Kvantitativne metode temeljijo na mnenjih in presoji posameznikov', 'PANN pove smer odstopanja napovedi od dejanskega povpraševanja'], 0,
-    'Manj obdobij v povprečju → hitrejši odziv, a manjša stabilnost. Kvantitativne metode izhajajo iz preteklih podatkov; smer odstopanja pove KNN.'),
-  Q('(Stari izpiti) Kaj NE drži o ravneh strateškega planiranja?', [
-    'Poslovna strategija sprejema odločitve o vzvodih izdelavnega procesa', 'Poslovna strategija določa konkurenčno prednost (dejavnike zmagovanja)',
-    'Strategija sestavljenega podjetja razporeja finančna sredstva po področjih delovanja', 'Strategija poslovne funkcije upošteva odločitve poslovne strategije'], 0,
-    'O vzvodih (zmogljivost, procesi, zaloge, kakovost, kadri …) odloča izdelavna (funkcijska) strategija.'),
-  Q('(Stari izpiti) Kaj NE velja za kumulativno napako v napovedi (KNN)?', [
-    'Če je KNN enaka 0, vemo, da se v napovedih nismo zmotili', 'Vrednost je lahko pozitivna ali negativna',
-    'Pove smer odklanjanja napovedi (napovedujemo preveč ali premalo)', 'Izračunamo jo kot vsoto napak v napovedi za proučevano obdobje'], 0,
-    'Napake z nasprotnim predznakom se izničijo; velikost napak meri PANN (povprečna absolutna napaka), ki je vedno ≥ 0.'),
-  Q('(Stari izpiti) Kaj velja za povprečno absolutno napako v napovedi (PANN)?', [
-    'Seštevamo absolutne vrednosti napak; PANN = 0 pomeni, da se nismo zmotili; ne more biti negativna', 'Negativna vrednost pomeni, da so napovedi praviloma višje od dejanskega povpraševanja',
-    'Pove smer odstopanja napovedi', 'Primerna je le za dolgoročno predvidevanje'], 0,
-    'PANN = Σ|napaka|/n meri velikost napak (zanesljivost) metod kratkoročnega predvidevanja; smer pove KNN.'),
-  Q('(Stari izpiti) Kaj pomeni alternativna korist (trade-off) pri izdelavni strategiji?', [
-    'Odločitve o vzvodih izdelavnega procesa hkrati pozitivno in negativno vplivajo na različne KPN', 'Da pri vsakem vzvodu izdelavne poslovne funkcije sprejmemo več različnih odločitev hkrati', 'Da lahko vse konkurenčne prednostne naloge dosežemo hkrati, če so vzvodi pravilno nastavljeni', 'Da dejavnike zmagovanja in kvalificiranja določi trg, podjetje pa jih ne more izbirati'], 0,
-    'Zaradi alternativnih koristi moramo izbrati, katere KPN bodo dejavniki zmagovanja in katere le dejavniki kvalificiranja.'),
-  Q('(Stari izpiti) Uravnoteženje montažne linije: kaj se zgodi s ciklom, če povečamo planirano zmogljivost linije?', [
-    'Cikel se skrajša', 'Cikel se podaljša', 'Cikel ostane enak, poveča se število delovnih mest', 'Cikel ostane enak, zmanjša se učinkovitost'], 0,
-    'c = razpoložljivi čas / planirana količina; več enot → krajši cikel. Minimalno število DM = Σt/c, zato podaljšanje cikla ŠTEVILO DM zmanjša.'),
-  Q('(Stari izpiti) Kateri stroški naraščajo z naraščanjem obsega zalog?', [
-    'Stroški skladiščenja, zastarevanja in vezanega kapitala', 'Stroški naročanja, prevoza in prevzema naročil', 'Stroški izčrpanja zaloge in izgubljene prodaje', 'Stroški nabavne cene enote in količinskih popustov'], 0,
-    'Stroški zalog (holding) rastejo z zalogo; stroški naročanja in izčrpanja z njo padajo. EOQ izenači stroške zalog in naročanja.'),
-  Q('(Stari izpiti) Kateri sta prednostni načeli (pravili) za razvrščanje nalogov na delovnem mestu?', [
-    'Najzgodnejši rok dobave in najkrajši čas izdelave', 'Največja serija in najvišja cena', 'Naključni izbor in najdaljši čas izdelave', 'Najnovejši nalog in najdražji kupec'], 0,
-    'EDD (minimalni rok dobave), SPT (najkrajši čas izdelave), FCFS, kritično razmerje … ; indeksna metoda razporeja naloge, kadar se DM razlikujejo po časih.'),
-  Q('(Stari izpiti) S katerim ukrepom pri strategiji LOVLJENJA povpraševanja usklajujemo potrebno in razpoložljivo zmogljivost?', [
-    'S spreminjanjem števila zaposlenih', 'S proizvodnjo na zalogo v obdobjih nizkega povpraševanja', 'Z diferenciacijo cen', 'S spreminjanjem dolgoročnih fiksnih zmogljivosti'], 0,
-    'Lovljenje (chase) sledi povpraševanju z zaposlovanjem/odpuščanjem in nadurami; izravnavanje (level) proizvaja enakomerno na zalogo.'),
-  Q('(Stari izpiti) Kdaj je pri dodajanju fiksnih zmogljivosti primerna strategija SLEDENJA povpraševanja (zmogljivost dodamo šele po rasti povpraševanja)?', [
-    'Ko je strošek presežne zmogljivosti zelo visok', 'Ko je strošek nepokritega povpraševanja zelo visok', 'Ko podjetje želi povečati tržni delež', 'Ko je povpraševanje zelo negotovo in želimo prehiteti konkurenco'], 0,
-    'Sledenje je manj tvegano glede presežnih zmogljivosti; prehitevanje povpraševanja je primerno, ko so stroški nepokritega povpraševanja visoki.'),
-  Q('(Stari izpiti) Katera trditev o kakovosti NE drži?', [
-    'Za notranji vidik kakovosti je značilna subjektivnost', 'Pri notranji kakovosti želje kupcev prevedemo v tehnični jezik (specifikacije)',
-    'Z notranjega vidika smo kakovostni, ko je izdelek narejen skladno s specifikacijami', 'Zunanji vidik kakovosti je povezan s pričakovanji kupcev'], 0,
-    'Notranji vidik (skladnost s specifikacijami) je objektiven; zunanji vidik (kupčeva pričakovanja) je subjektiven in je izhodišče kroga kakovosti.'),
-  Q('(Stari izpiti) Katere so konkurenčne prednostne naloge (KPN) izdelavne poslovne funkcije?', [
-    'Kakovost, stroški, fleksibilnost in dobava (hitrost, zanesljivost)', 'Zmogljivost, informacijski tokovi, kadri in organizacija', 'Lokacija, razmestitev, tehnologija in stopnja avtomatizacije', 'Dobiček, tržni delež, rast prodaje in donosnost kapitala'], 0,
-    'Dejavniki zmagovanja so KPN, s katerimi pridobivamo konkurenčno prednost; dejavniki kvalificiranja so pogoj za vstop na trg. Zmogljivost, procesi, kadri … so VZVODI.'),
-  Q('(Stari izpiti) Kaj so dejavniki kvalificiranja?', [
-    'KPN, ki jih moramo doseči na ravni konkurence, da sploh pridemo v poštev pri kupcu', 'KPN, na podlagi katerih pridobivamo konkurenčno prednost in dobimo naročilo kupca', 'Vzvodi izdelavnega procesa, o katerih odloča poslovna strategija podjetja', 'Finančni viri, ki jih strategija sestavljenega podjetja razporeja po področjih delovanja'], 0,
-    'Dejavniki zmagovanja (order winners) prinašajo naročilo; dejavniki kvalificiranja (order qualifiers) so vstopnica.'),
-  Q('(Stari izpiti) Kateri so primeri disekonomij obsega?', [
-    'Stroški distribucije, birokratizacija in občutljivost na tveganja', 'Degresivno naraščanje stroškov z velikostjo obrata in učinek učenja', 'Nižji fiksni stroški na enoto in boljša izkoriščenost zmogljivosti', 'Specializacija dela, množična proizvodnja in količinski popusti'], 0,
-    'Ekonomije obsega = degresivno naraščanje stroškov z velikostjo obrata; nad optimalno velikostjo se pojavijo disekonomije.'),
-  Q('(Stari izpiti) Kaj je vzrok za serijsko zalogo in kako jo zmanjšamo?', [
-    'Ekonomije obsega pri proizvodnji in nabavi; zmanjšamo jo z znižanjem stroškov naročanja/preureditve', 'Negotovost povpraševanja v dobavnem roku; zmanjšamo jo s skrajšanjem dobavnega roka in boljšimi napovedmi', 'Dolgi in nezanesljivi dobavni roki; zmanjšamo jo z izbiro zanesljivejšega dobavitelja in krajšimi roki', 'Sezonska nihanja prodaje čez leto; zmanjšamo jo z diferenciacijo cen in izravnavanjem povpraševanja'], 0,
-    'Skrajšanje dobavnega roka in zanesljivost dobavitelja zmanjšata VARNOSTNO zalogo; serijsko zalogo določa EOQ (stroški naročanja proti stroškom zalog).'),
-  Q('(Stari izpiti) Kaj velja za MRP in podrobno planiranje zmogljivosti?', [
-    'MRP ne upošteva omejitev zmogljivosti, ker računa s fiksnimi proizvodnimi pretočnimi časi', 'MRP optimizira zasedenost ozkih grl in razporeja naloge glede na razpoložljivo zmogljivost', 'MRP se uporablja za artikle z neodvisnim povpraševanjem, kjer uporabimo točko ponovnega naročila', 'MRP določa operativni plan na ravni končnih proizvodov za približno enoletni planski horizont'], 0,
-    'MRP predpostavlja neomejene zmogljivosti; izvedljivost preverimo s podrobnim planiranjem zmogljivosti (CRP). Operativni plan je VLOŽEK, plan lansiranja nalogov IZLOŽEK MRP.'),
-  Q('(Stari izpiti) Kaj zagotovimo z odpravo določljivih (posebnih) vzrokov variabilnosti v procesu?', [
-    'Statistično obvladovan (stabilen) proces, ne pa nujno doseganja specifikacij', 'Da proces zagotovo dosega specifikacije in je sposoben (Cp > 1)', 'Odpravo vseh slučajnih (naključnih) vplivov na variabilnost procesa', 'Odpravo potrebe po nadaljnji kontroli kakovosti in kontrolnih kartah'], 0,
-    'Obvladovanost (kontrolne meje) in sposobnost procesa (specifikacije) sta različna pojma; slučajnih vzrokov ne odpravimo.'),
-  Q('(Stari izpiti) Ali skrajšanje kritične aktivnosti vedno skrajša teoretični pretočni čas projekta?', [
-    'Ne, ker ima projekt lahko več kritičnih poti', 'Da, vedno za toliko, kolikor skrajšamo aktivnost', 'Ne, ker kritične aktivnosti nimajo vpliva na trajanje', 'Da, če ima aktivnost časovno rezervo'], 0,
-    'Trajanje projekta določa najdaljša pot; če je kritičnih poti več, je treba skrajšati aktivnosti na vseh. Kritične aktivnosti imajo rezervo 0.'),
-  Q('(Stari izpiti) Katera oblika operativnega planiranja omogoča najkrajše dobavne roke?', [
-    'Proizvodnja na zalogo po predvidenem povpraševanju', 'Kombinacija proizvodnje na zalogo in po naročilu', 'Proizvodnja po naročilu', 'Konstruiranje po naročilu'], 0,
-    'Pri proizvodnji na zalogo kupec dobi izdelek takoj; z vsakim premikom k naročilu se dobavni rok podaljša.'),
-  Q('(Stari izpiti) Pri eksponentnem glajenju želimo hitro sledenje spremembam povpraševanja. Kakšen α izberemo?', [
-    'Velik α (blizu 1)', 'Majhen α (blizu 0)', 'α = 0', 'α ni pomemben, pomembno je število obdobij N'], 0,
-    'Velik α daje večjo utež zadnjemu dejanskemu povpraševanju (odzivnost), majhen α gladi (stabilnost).'),
-  Q('(Stari izpiti) Katera je prednost linijske razmestitve v primerjavi s skupinsko?', [
-    'Manjša poraba prostora, večja učinkovitost in manjše zaloge nedokončane proizvodnje', 'Večja fleksibilnost pri spremembah obsega proizvodnje in menjavi proizvodnega programa', 'Manjša občutljivost na okvare strojev, ker lahko proizvodi potujejo po različnih poteh', 'Univerzalna delovna mesta in različne poti proizvodov skozi proces (prekinjen tok)'], 0,
-    'Slabosti linije: nefleksibilnost in občutljivost na okvare. Skupinska razmestitev: podobne operacije skupaj, univerzalni stroji, prekinjen tok, širok program v majhnih količinah.'),
-  Q('(Stari izpiti) Katere so kvalitativne metode predvidevanja povpraševanja?', [
-    'Anketiranje kupcev, ocene prodajnega osebja in metoda Delfi', 'Drseče sredine, eksponentno glajenje in regresija', 'Analiza časovnih vrst in trend', 'KNN in PANN'], 0,
-    'Kvalitativne metode temeljijo na mnenjih (Delfi je primerna za dolgoročno predvidevanje); kvantitativne na preteklih podatkih.'),
-  Q('(Stari izpiti) Katera trditev o dolgoročnem planiranju fiksnih zmogljivosti NE drži?', [
-    'Določamo število zaposlenih v sezoni in izven nje', 'Določamo lokacijo novega proizvodnega obrata',
-    'Težava usklajevanja s povpraševanjem nastane zaradi skokovitega povečevanja zmogljivosti', 'Odločamo o stopnji avtomatizacije procesa'], 0,
-    'Število zaposlenih po sezonah je srednjeročna (mesečna) odločitev.'),
-  Q('(Stari izpiti) Katera trditev o planiranju projektov NE drži?', [
-    'Kritične aktivnosti so tiste, katerih časovna rezerva je večja od nič', 'Kritična pot je najdaljša pot v mrežnem diagramu',
-    'Časovna rezerva pove, ali smo pri terminu aktivnosti fleksibilni brez podaljšanja projekta', 'Projekt skrajšamo s skrajšanjem aktivnosti brez časovne rezerve'], 0,
-    'Kritične aktivnosti imajo rezervo 0; čas projekta je vsota trajanj aktivnosti na kritični poti.'),
-  Q('(Stari izpiti) Kaj NE sodi med vzvode povečanja zmogljivosti procesa?', [
-    'Povečanje predvidenih prekinitev', 'Povečanje produktivnosti dela', 'Podaljšanje časa delovanja ozkega grla', 'Dodajanje resursov na ozko grlo ali prenos dela z ozkega grla'], 0,
-    'Zmogljivost določa ozko grlo; ukrepi pri resursih, ki niso ozko grlo, zmogljivosti ne povečajo.'),
-  Q('(Stari izpiti) Katera trditev o pretočnem času drži?', [
-    'Dejanski pretočni čas je daljši od teoretičnega, če je v procesu čakanje', 'Izkoriščenost resursa, ki ni ozko grlo, je večja od 1',
-    'Če je prisotno čakanje, je učinkovitost pretočnega časa večja od 1', 'Podaljšanje pretočnega časa pri enakem pretoku zmanjša zaloge'], 0,
-    'Učinkovitost = TPČ/DPČ ≤ 1; izkoriščenost ozkega grla je 100 %, drugih manj; po Littlu zaloga = pretok · pretočni čas.'),
-  Q('(Stari izpiti) O čem se odločamo v IZDELAVNI strategiji?', [
-    'O materialnih tokovih v procesih in drugih vzvodih izdelavne funkcije', 'O dejavnikih zmagovanja in kvalificiranja podjetja na trgu', 'O področjih dejavnosti, na katerih bo podjetje delovalo', 'O zbiranju in razporejanju finančnih sredstev po področjih'], 0,
-    'Dejavniki zmagovanja → poslovna strategija; področja delovanja in finančni viri → strategija sestavljenega podjetja.'),
-  Q('(Stari izpiti) Katera trditev o MRP drži?', [
-    'Časovno komponento vključimo, da od terminov dospetja nalogov pridemo do terminov lansiranja', 'Baze stanja zalog potrebujemo za določanje velikosti serije, ne za izračun neto potreb', 'Plan lansiranja nalogov je eden od vložkov v MRP, operativni plan pa njegov rezultat', 'Operativni plan je rezultat MRP, kosovnica pa rezultat podrobnega planiranja zmogljivosti'], 0,
-    'Stanje zalog rabimo za NETO potrebe; vložki so operativni plan, kosovnica in stanje zalog; izložek je plan lansiranja nalogov.'),
-  Q('(Stari izpiti) Kaj pomeni bruto in kaj neto potreba po komponenti v MRP?', [
-    'Neto potreba = bruto potreba, ki je ne pokrijemo iz zaloge in pričakovanih dospetij; šele ta zahteva nov nalog', 'Bruto potreba vedno pomeni, da je treba lansirati nov nalog, ne glede na zalogo in pričakovana dospetja', 'Neto potreba je potreba po dokončanih proizvodih iz operativnega plana pred eksplozijo po kosovnici', 'Bruto potreba je seštevek pričakovanih dospetij in trenutne zaloge komponente v planskem obdobju'], 0,
-    'Eksplozija po kosovnici da bruto potrebe; serija v velikosti neto potrebe (lot-for-lot) minimizira zalogo.'),
-  Q('(Stari izpiti) Česa z uvedbo kroga kakovosti NE zagotovimo?', [
-    'Zmanjšanja stroškov preprečevanja neustrezne kakovosti', 'Vzpostavitve sistema kontrole kakovosti', 'Odkrivanja in odpravljanja vzrokov slabe kakovosti', 'Določitve dimenzij kakovosti na podlagi potreb uporabnikov'], 0,
-    'Stroški preprečevanja se povečajo, zmanjšajo pa se stroški notranjih in zunanjih napak (izmet, popravila, reklamacije).'),
-  Q('(Stari izpiti) V čem se razlikujeta metodi CPM in PERT?', [
-    'CPM predpostavlja deterministične čase aktivnosti, PERT jih obravnava kot slučajne (tri ocene)', 'PERT predpostavlja deterministične čase aktivnosti, CPM pa jih obravnava kot slučajne s tremi ocenami', 'CPM se uporablja za storitvene projekte, PERT pa za proizvodne projekte z znanimi časi aktivnosti', 'Razlike ni, gre za isto metodo mrežnega planiranja pod dvema različnima imenoma'], 0,
-    'PERT: optimistična, najverjetnejša in pesimistična ocena → pričakovani čas (a + 4m + b)/6.'),
-  Q('(Stari izpiti) Kaj sodi med delovno dokumentacijo pri izvedbi proizvodnje?', [
-    'Proizvodni nalog, predajnica in spremnica', 'Kosovnica, operativni plan in MRP', 'Bilanca, izkaz uspeha in plan prodaje', 'Pogodba s kupcem in ponudba'], 0,
-    'Delovna dokumentacija spremlja nalog skozi izvedbo (dispečing); kosovnica in operativni plan sta vložka planiranja.'),
-  Q('(Stari izpiti) Katera trditev o stroških procesov drži?', [
-    'Mehanizirani procesi imajo višje fiksne stroške kot ročni in višje povprečne variabilne kot avtomatizirani', 'Avtomatizirani procesi imajo najnižje fiksne stroške in najvišje povprečne variabilne stroške na enoto', 'Ročni procesi imajo najvišje fiksne stroške in najnižje povprečne variabilne stroške na enoto proizvoda', 'Ekonomije obsega pomenijo progresivno naraščanje stroškov proizvodnje s povečanjem velikosti obrata'], 0,
-    'Z avtomatizacijo rastejo fiksni in padajo variabilni stroški; ekonomije obsega = degresivno naraščanje stroškov z velikostjo obrata.'),
-  Q('(Stari izpiti) Kako skrajšamo čakanje strank v storitvenem procesu v razmerah stohastičnosti?', [
-    'Z večjo produktivnostjo strežnikov (usposabljanje) in manjšo variabilnostjo prihodov strank', 'Z večjo variabilnostjo strežnih časov in prihodov strank, ki izravnava obremenitev strežnikov', 'S povečanjem izkoriščenosti strežnikov na 100 %, da nobeden od njih nikoli ne čaka na stranko', 'Z daljšimi strežnimi časi in manjšim številom strežnikov, da se stroški strežbe znižajo'], 0,
-    'Čakanje raste z izkoriščenostjo in z variabilnostjo prihodov in strežbe; blizu 100 % izkoriščenosti čakalne vrste eksplodirajo.'),
-  Q('(Stari izpiti) Katera trditev o optimalni količini naročila (EOQ) NE drži?', [
-    'Če želimo zmanjšati serijsko zalogo, moramo predhodno zmanjšati stroške zalog', 'Pri povečanju povpraševanja se pogostost naročanja poveča',
-    'Majhno odstopanje od optimalne količine stroške le malo poveča', 'Z EOQ minimiziramo skupne stroške naročanja in zalog'], 0,
-    'Serijsko zalogo zmanjšamo z znižanjem stroškov NAROČANJA/preureditve (manjše serije); nižji stroški zalog Q celo povečajo.'),
-  Q('(Stari izpiti) Kaj je vzrok za večjo varnostno zalogo?', [
-    'Nezanesljiv dobavitelj in dolgi dobavni roki', 'Ekonomije obsega pri nabavi in količinski popusti', 'Visoki stroški naročanja in preureditve strojev', 'Sezonska nihanja prodaje in diferenciacija cen'], 0,
-    'Varnostna zaloga pokriva negotovost povpraševanja in dobavnega roka; zmanjšamo jo z zmanjšanjem variabilnosti.'),
+  Q('Kateri ukrep NE izravnava povpraševanja, ampak prilagaja zmogljivost?', ['Najem začasnih delavcev', 'Cenejše storitve izven sezone', 'Rezervacije in odlogi dobave', 'Uvedba izdelka z nasprotno sezono'], 0,
+    'Izravnavanje povpraševanja vpliva na kupce (cene, promocija, rezervacije, protisezonski izdelki); zaposlovanje prilagaja zmogljivost.'),
+  Q('Česa ne najdemo v tabeli operativnega plana (MPS)?', ['Kosovnice', 'Predvidenega povpraševanja', 'Količine, razpoložljive za dobavo (ATP)', 'Sprejetih naročil'], 0,
+    'Kosovnica je vhodni podatek za MRP, ne del operativnega plana.'),
+  Q('Kaj NI korak postopka MRP?', ['Izračun točke ponovnega naročila', 'Izračun neto potreb', 'Določanje velikosti serije', 'Upoštevanje časovnega zamika'], 0,
+    'Točka ponovnega naročila sodi k uravnavanju zalog z neodvisnim povpraševanjem.'),
+  Q('Pred stiskalnico se kopičijo nalogi in pretočni časi se daljšajo. Kaj je naloga vhodno-izhodne kontrole?', ['Uskladiti hitrost lansiranja nalogov z zmogljivostjo in tako obvladati čakalne vrste', 'Določiti vrstni red nalogov na stiskalnici', 'Preveriti kakovost vhodnega materiala', 'Oskrbeti delovno mesto z orodji in dokumentacijo'], 0,
+    'Vrstni red določajo prednostna pravila; vhodno-izhodna kontrola primerja vhod in izhod delovnega mesta.'),
+  Q('Katera trditev o napovedovanju povpraševanja drži?', ['Pri drsečih sredinah majhen N pomeni hitro odzivnost napovedi', 'V turbulentnem okolju so kvantitativne metode vedno boljše', 'PANN pove smer napake napovedi', 'Eksponentno glajenje z α = 0 hitro sledi spremembam'], 0,
+    'PANN meri velikost napak, smer pove KNN. Pri α = 0 se napoved sploh ne odzove na novo povpraševanje.'),
+  Q('Kaj NE drži o ravneh strateškega planiranja?', ['Poslovna strategija odloča o posameznih vzvodih izdelavnega procesa', 'Strategija sestavljenega podjetja določa, v katerih dejavnostih bo podjetje delovalo', 'Poslovna strategija določa, kako bo poslovna enota konkurirala', 'Izdelavna strategija odloča o vzvodih izdelavne funkcije'], 0,
+    'Vzvode izdelavnega procesa določa izdelavna strategija.'),
+  Q('Napake napovedi v petih mesecih so +3, −2, +1, −4 in +2. Kaj velja?', ['KNN = 0, PANN = 2,4 - napovedi niso bile točne, a niso sistematično pristranske', 'KNN = 0, zato so bile napovedi točne', 'KNN = 12, PANN = 2,4', 'KNN = 0, PANN = 0'], 0,
+    'KNN = 3 − 2 + 1 − 4 + 2 = 0; PANN = (3 + 2 + 1 + 4 + 2)/5 = 2,4.'),
+  Q('Napake napovedi so v treh mesecih −2, −3 in −1. Kolikšna je PANN in kaj pove?', ['PANN = 2; povprečna velikost napake ne glede na smer', 'PANN = −2; napovedi so bile previsoke', 'PANN = 6', 'PANN = 0,67'], 0,
+    'PANN = (2 + 3 + 1)/3 = 2. Smer (vse napake negativne) pove KNN = −6.'),
+  Q('Podjetje uvede robotsko linijo: stroški na enoto padejo, prilagajanje posebnim naročilom pa postane težje. Kako imenujemo ta pojav?', ['Alternativna korist (trade-off)', 'Dejavnik kvalificiranja', 'Ekonomija obsega', 'Disekonomija obsega'], 0,
+    'Odločitev o vzvodu (tehnologija) eno konkurenčno nalogo (stroški) izboljša, drugo (fleksibilnost) poslabša.'),
+  Q('Linija mora namesto 400 izdelati 500 kosov na izmeno. Kaj se zgodi s ciklom?', ['Cikel se skrajša', 'Cikel se podaljša', 'Cikel ostane enak, poveča se le število delavcev', 'Cikel ni povezan z zmogljivostjo linije'], 0,
+    'Cikel = razpoložljivi čas / planirana zmogljivost: pri 500 kosih je krajši kot pri 400.'),
+  Q('Kateri stroški rastejo z večjo povprečno zalogo?', ['Stroški skladiščenja, zastarevanja in vezanega kapitala', 'Stroški naročanja in prevoza', 'Stroški izčrpanja zaloge', 'Nabavna cena enote'], 0,
+    'Stroški naročanja na leto z večjo serijo (in večjo zalogo) padajo; stroški držanja zalog rastejo.'),
+  Q('Po katerih prednostnih pravilih najpogosteje razvrščamo naloge na delovnem mestu?', ['Najzgodnejši rok dobave in najkrajši čas izdelave', 'Največja serija in najvišja cena', 'Naključni izbor in najdaljši čas izdelave', 'Najnovejši nalog in najdražji kupec'], 0,
+    'Najzgodnejši rok zmanjšuje zamude, najkrajši čas izdelave povprečni pretočni čas.'),
+  Q('Kateri ukrep je značilen za strategijo NIVELIRANJA (stalne proizvodnje)?', ['Gradnja zalog v obdobju nizkega povpraševanja', 'Zaposlovanje začasnih delavcev v sezoni', 'Nadurno delo v konici', 'Najem podizvajalcev v sezoni'], 0,
+    'Pri niveliranju proizvajamo enakomerno, presežke shranimo v zalogo za sezono. Ostali ukrepi so značilni za lovljenje povpraševanja.'),
+  Q('Kdaj podjetje fiksne zmogljivosti doda šele, ko povpraševanje že zraste (strategija sledenja)?', ['Ko je presežna zmogljivost zelo draga', 'Ko je nepokrito povpraševanje zelo drago', 'Ko želi povečati tržni delež', 'Ko pričakuje hiter vstop konkurence'], 0,
+    'Sledenje zmanjša tveganje neizkoriščenih zmogljivosti, a lahko pomeni izgubljeno prodajo.'),
+  Q('Kateri pogled na kakovost je subjektiven?', ['Zunanji vidik - presoja kupca', 'Notranji vidik - skladnost s specifikacijami', 'Statistična kontrola procesa', 'Merjenje deleža izmeta'], 0,
+    'Notranji vidik je merljiv (specifikacije, izmet), zunanji je presoja kupca glede na njegova pričakovanja.'),
+  Q('Katere so štiri konkurenčne prednostne naloge izdelavne funkcije?', ['Kakovost, stroški, fleksibilnost in dobava', 'Zmogljivost, lokacija, tehnologija in organizacija', 'Dobiček, tržni delež, rast in likvidnost', 'Cena, promocija, distribucija in izdelek'], 0,
+    'Zmogljivost, lokacija, tehnologija in organizacija so vzvodi; zadnji odgovor je trženjski splet.'),
+  Q('Kupec letalskih sedežev od vseh dobaviteljev zahteva varnostni certifikat, odloči pa se po ceni. Kaj je certifikat?', ['Dejavnik kvalificiranja', 'Dejavnik zmagovanja', 'Vzvod izdelavnega procesa', 'Alternativna korist'], 0,
+    'Brez certifikata dobavitelj ne pride v poštev (kvalificiranje); cena odloči, kdo dobi posel (zmagovanje).'),
+  Q('Kaj NI primer disekonomije obsega?', ['Učinki učenja zaradi ponavljanja', 'Birokratizacija', 'Višji stroški distribucije na večje razdalje', 'Večja občutljivost na tveganja'], 0,
+    'Učinki učenja znižujejo stroške - so vir ekonomij obsega.'),
+  Q('Zakaj nastane serijska zaloga in kako jo zmanjšamo?', ['Zaradi ekonomij obsega pri naročanju ali preureditvi; zmanjšamo jo z nižjimi stroški naročanja oziroma preureditve', 'Zaradi negotovosti povpraševanja; zmanjšamo jo z boljšimi napovedmi', 'Zaradi dolgih dobavnih rokov; zmanjšamo jo z bližnjimi dobavitelji', 'Zaradi sezonskih nihanj; zmanjšamo jo z diferenciacijo cen'], 0,
+    'Negotovost in dobavni roki vplivajo na varnostno zalogo, sezona na sezonsko (anticipativno) zalogo.'),
+  Q('Zakaj po MRP potrebujemo podrobno planiranje zmogljivosti (CRP)?', ['Ker MRP računa s fiksnimi pretočnimi časi in ne upošteva omejitev zmogljivosti', 'Ker MRP optimizira zasedenost ozkih grl', 'Ker MRP velja le za neodvisno povpraševanje', 'Ker MRP sam določi operativni plan'], 0,
+    'MRP velja za odvisno povpraševanje in izhaja iz operativnega plana; CRP preveri, ali so delovna mesta zmožna izvesti plan lansiranja.'),
+  Q('Kaj dosežemo z odpravo določljivih (posebnih) vzrokov variabilnosti?', ['Statistično obvladovan proces, ki pa ni nujno sposoben dosegati specifikacij', 'Proces, ki zagotovo dosega specifikacije', 'Odpravo vseh naključnih vzrokov variabilnosti', 'Da kontrola kakovosti ni več potrebna'], 0,
+    'Naključna variabilnost ostane; ali proces dosega specifikacije, pove sposobnost procesa.'),
+  Q('Projekt ima dve enako dolgi kritični poti. Skrajšamo aktivnost samo na eni od njiju. Kaj se zgodi s trajanjem projekta?', ['Ne skrajša se, ker druga kritična pot ostane enako dolga', 'Skrajša se za čas skrajšanja aktivnosti', 'Skrajša se za polovico tega časa', 'Podaljša se'], 0,
+    'Trajanje projekta določa najdaljša pot; skrajšati moramo aktivnosti na vseh kritičnih poteh.'),
+  Q('Katera oblika operativnega planiranja omogoča kupcu najkrajši dobavni rok?', ['Proizvodnja na zalogo', 'Montaža po naročilu', 'Proizvodnja po naročilu', 'Konstruiranje po naročilu'], 0,
+    'Izdelek je že na zalogi; pri ostalih oblikah del procesa steče šele po naročilu.'),
+  Q('Povpraševanje se je pravkar trajno povečalo. Kakšen α pri eksponentnem glajenju izberemo, da napoved hitro sledi spremembi?', ['Velik α (blizu 1)', 'Majhen α (blizu 0)', 'α = 0', 'α ni pomemben'], 0,
+    'Velik α da večjo težo zadnjemu dejanskemu povpraševanju.'),
+  Q('Kaj je prednost linijske razmestitve pred skupinsko (funkcijsko)?', ['Manj prostora, večja učinkovitost in manj nedokončane proizvodnje', 'Večja fleksibilnost pri spremembah izdelkov', 'Manjša občutljivost na okvaro posameznega stroja', 'Univerzalna delovna mesta'], 0,
+    'Skupinska razmestitev je fleksibilnejša in manj občutljiva na okvare, linijska pa učinkovitejša pri velikih količinah.'),
+  Q('Katere metode napovedovanja povpraševanja so kvalitativne?', ['Metoda Delfi, ocene prodajalcev in anketiranje kupcev', 'Drseče sredine in eksponentno glajenje', 'Analiza časovnih vrst in trend', 'KNN in PANN'], 0,
+    'KNN in PANN sta kazalca natančnosti, ne metodi napovedovanja.'),
+  Q('Česa NE odločamo pri dolgoročnem planiranju fiksnih zmogljivosti?', ['Števila sezonskih delavcev', 'Lokacije novega obrata', 'Časa dodajanja zmogljivosti', 'Stopnje avtomatizacije'], 0,
+    'Število sezonskih delavcev je odločitev agregatnega (srednjeročnega) planiranja.'),
+  Q('Katera trditev o planiranju projektov NE drži?', ['Kritične aktivnosti imajo časovno rezervo večjo od nič', 'Kritična pot je najdaljša pot v mrežnem diagramu', 'Časovna rezerva pove, za koliko lahko aktivnost zamudi brez zamude projekta', 'Projekt skrajšamo s skrajšanjem kritičnih aktivnosti'], 0,
+    'Kritične aktivnosti imajo časovno rezervo enako nič.'),
+  Q('Kaj NE poveča zmogljivosti procesa?', ['Več načrtovanih prekinitev na ozkem grlu', 'Višja produktivnost na ozkem grlu', 'Daljši čas delovanja ozkega grla', 'Dodaten resurs na ozkem grlu'], 0,
+    'Zmogljivost procesa določa ozko grlo; prekinitve na njem zmogljivost zmanjšajo.'),
+  Q('Kaj velja za pretočni čas?', ['Dejanski pretočni čas je daljši od teoretičnega, kadar enote čakajo', 'Resurs, ki ni ozko grlo, je vedno 100 % izkoriščen', 'Čakanje skrajša pretočni čas', 'Teoretični pretočni čas vključuje čakanje'], 0,
+    'Teoretični pretočni čas je vsota časov aktivnosti brez čakanja.'),
+  Q('O čem odloča izdelavna strategija?', ['O vzvodih izdelavne funkcije (procesi, zmogljivosti, tehnologija, organizacija)', 'O dejavnikih zmagovanja in kvalificiranja', 'O dejavnostih, v katerih bo podjetje delovalo', 'O financiranju podjetja'], 0,
+    'Dejavnike zmagovanja in kvalificiranja določa poslovna strategija, dejavnosti strategija sestavljenega podjetja.'),
+  Q('Zakaj v MRP upoštevamo časovni zamik (dobavni oz. izdelavni čas)?', ['Da iz terminov, ko komponente potrebujemo, določimo termine lansiranja nalogov', 'Da izračunamo varnostno zalogo', 'Da določimo prodajno ceno izdelka', 'Da zmanjšamo število komponent v kosovnici'], 0,
+    'Plan lansiranja = potrebe, zamaknjene za čas dobave ali izdelave.'),
+  Q('Bruto potreba po komponenti je 500 kosov, na zalogi je 120 kosov, pričakovano dospetje je 80 kosov. Kolikšna je neto potreba?', ['300 kosov', '500 kosov', '380 kosov', '700 kosov'], 0,
+    'Neto potreba = bruto potreba − zaloga − pričakovana dospetja = 500 − 120 − 80 = 300.'),
+  Q('Česa krog kakovosti sam po sebi NE zagotovi?', ['Nižjih stroškov preprečevanja neustrezne kakovosti', 'Sistematičnega iskanja vzrokov napak', 'Postopnih izboljšav procesa', 'Preverjanja učinkov uvedenih ukrepov'], 0,
+    'Krog kakovosti je metoda stalnih izboljšav; stroški preprečevanja zaradi njega praviloma ne padejo (vlaganje v kakovost).'),
+  Q('V čem se razlikujeta metodi CPM in PERT?', ['CPM računa z enim (določenim) časom aktivnosti, PERT s tremi ocenami in verjetnostjo', 'PERT računa z enim časom, CPM s tremi ocenami', 'CPM je za storitve, PERT za proizvodnjo', 'Metodi sta enaki'], 0,
+    'PERT: optimistična, najverjetnejša in pesimistična ocena; pričakovani čas (a + 4m + b)/6.'),
+  Q('Kateri dokumenti spremljajo izvedbo proizvodnje v delavnici?', ['Proizvodni nalog, predajnica in spremnica', 'Kosovnica, operativni plan in MRP', 'Bilanca stanja in izkaz poslovnega izida', 'Pogodba s kupcem in ponudba'], 0,
+    'Delovna dokumentacija spremlja material in delo skozi proizvodnjo.'),
+  Q('Primerjamo ročni, mehanizirani in avtomatizirani proces. Kaj velja?', ['Avtomatizirani ima najvišje fiksne in najnižje variabilne stroške na enoto', 'Ročni ima najvišje fiksne stroške', 'Mehanizirani ima najnižje variabilne stroške', 'Vsi imajo enake fiksne stroške'], 0,
+    'Z višjo stopnjo avtomatizacije rastejo fiksni in padajo variabilni stroški na enoto; mehanizirani je vmes.'),
+  Q('Kako skrajšamo čakanje strank v banki, kjer prihodi in strežni časi nihajo?', ['Z večjo produktivnostjo okenc in manjšim nihanjem prihodov (npr. naročanje na termin)', 'Z večjo izkoriščenostjo okenc', 'Z daljšimi strežnimi časi', 'Z večjim nihanjem strežnih časov'], 0,
+    'Čakanje narašča z izkoriščenostjo in variabilnostjo; zmanjšamo ga z večjo zmogljivostjo in manjšo variabilnostjo.'),
+  Q('Katera trditev o optimalni količini naročila (EOQ) NE drži?', ['Serijsko zalogo zmanjšamo tako, da znižamo stroške skladiščenja', 'Pri večjem povpraševanju se EOQ poveča', 'Majhno odstopanje od EOQ le malo poveča skupne stroške', 'EOQ minimizira vsoto stroškov naročanja in skladiščenja'], 0,
+    'Nižji stroški skladiščenja EOQ in serijsko zalogo POVEČAJO; zmanjšamo jo z nižjimi stroški naročanja.'),
+  Q('Kaj poveča potrebno varnostno zalogo?', ['Nezanesljiv dobavitelj in dolg dobavni rok', 'Količinski popusti pri nabavi', 'Visoki stroški naročanja', 'Sezonska nihanja prodaje'], 0,
+    'Varnostna zaloga pokriva negotovost v času dobavnega roka. Popusti in stroški naročanja vplivajo na serijsko, sezona na sezonsko zalogo.'),
 ];

@@ -11,19 +11,4 @@ module.exports = [
     'Učinkovit sistem je hkrati vedno tudi uspešen sistem kontrole.',
     'Zanimanje managerjev za sisteme kontrole uspešnosti danes upada.'], 1,
     'Managerji se danes vse bolj zavedajo pomena sistemov kontrole uspešnosti.'],
-  ['Za okolje procesa managementa je značilno:', [
-    'Zunanje okolje ima dve ravni: specializirano in delovno okolje.',
-    'Splošno okolje predstavlja notranjo raven okolja organizacije.',
-    'Delovno okolje je najbolj oddaljena, splošna raven okolja.'], 2,
-    'Delovno okolje je bližje organizaciji in z njo vsakodnevno posluje.'],
-  ['Za funkcijsko organizacijsko strukturo velja:', [
-    'Olajšuje doseganje ciljev posameznih divizij.',
-    'Komunikacija med funkcijami je zelo dobra.',
-    'Spodbuja veliko inovacij in hiter odziv.'], 0,
-    'Najustreznejša je za enega ali malo proizvodov.'],
-  ['Katera trditev o učeči se organizaciji, Paretovem načelu in Googlu drži?||Peter Senge', [
-    'Leta 1990 je Peter Senge populariziral pojem tehnične organizacije.',
-    'Google sta leta 1998 na Stanfordu ustanovila Larry Page in Elon Musk.',
-    'Paretovo načelo pravi, da 80 % časa prinese 80 % rezultata.'], 3,
-    'Pareto: 20 % časa za najpomembnejša opravila prinese 80 % rezultata.'],
 ];

@@ -1,13 +1,13 @@
 /* Informatika - 2. kolokvij (poslovni IS, poslovna inteligenca), 3. kolokvij (dodatek: elektronsko poslovanje) in izpit.
-   Viri: EF Zapiski "Informatika zapiski" (pogl. 2, 5, 6), "Vprašanja in odgovori na izpitna vprašanja",
-   "Primeri izpitov informatike in pogosta vprašanja" (izpiti 2015-2019, kolokviji 2019). */
+   Viri: EF Zapiski "Informatika zapiski" (pogl. 2, 5, 6),
+   seznami pogostih izpitnih tem; vprašanja so napisana na novo. */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 const cards = (arr) => arr.map(([front, back]) => ({ front, back }));
 
 const NOTES_K2 = `
 ## Kako poteka 2. kolokvij
 - 25 točk (vsaj 10), snov druge štirih predavanj: **poslovni informacijski sistemi** in **programske rešitve za poslovno inteligenco**.
-- Vprašanja s kolokvija 2019: pomen omejitev in želenega stanja (nakup računalnika), matični vs. transakcijski podatki, skica BI z integracijo, upravljalna zanka, podatkovno rudarjenje, razlika med rudarjenjem in OLAP.
+- Pogoste teme na kolokviju: pomen omejitev in želenega stanja (nakup računalnika), matični vs. transakcijski podatki, skica BI z integracijo, upravljalna zanka, podatkovno rudarjenje, razlika med rudarjenjem in OLAP.
 
 ## Poslovni informacijski sistemi
 - **TPS (transakcijski IS)**: podpirajo osnovno dejavnost, zbirajo in hranijo podatke o ponavljajočih se transakcijah (naročila, računi, plače); preproste, vnaprej znane operacije → skoraj povsem avtomatizirani. Delujejo na **operativni ravni**, podatki morajo biti natančni.
@@ -60,18 +60,18 @@ const pis = [
     'Avtomatizirano iščejo prej neznane vzorce v velikih količinah podatkov',
     'Uporabljajo agregirane, ne nujno zelo natančne podatke za managerje'], 0,
     'TPS podpirajo osnovno dejavnost (naročila, računi, plače) na operativni ravni. Drugi in četrti odgovor opisujeta BI, tretji podatkovno rudarjenje.'),
-  Q('Katera vrsta IS deluje na operativni ravni in zahteva zelo natančne informacije?', [
+  Q('Kateri informacijski sistem deluje na operativni ravni in potrebuje zelo natančne podatke?', [
     'Transakcijski IS (TPS)',
     'Poslovnointeligenčni IS (BI)',
     'Direktorski IS',
     'Ekspertni sistem'], 0,
-    'Vprašanje z izpita 2019. TPS mora biti natančen (računi, davki), BI dela z agregiranimi podatki.'),
-  Q('Kaj je značilno za poslovnointeligenčne sisteme (BI)?', [
+    'TPS mora biti natančen (računi, davki), BI dela z agregiranimi podatki.'),
+  Q('Katera lastnost velja za poslovnointeligenčne sisteme (BI)?', [
     'Vhod so podatki iz TPS, primerjajo dejansko z načrtovanim, podatki so agregirani',
     'Izvajajo vsakodnevne transakcije, kot je izstavitev računa kupcu',
     'Podatke vnašajo ročno operativni uporabniki ob vsakem poslovnem dogodku',
     'Rezultate uporabljajo predvsem zunanji uporabniki, npr. davčna uprava'], 0,
-    'BI podpira načrtovanje in nadzor; rezultati (poročila) se uporabljajo znotraj organizacije. Izpitno vprašanje na primeru nakupovalnega središča.'),
+    'BI podpira načrtovanje in nadzor; rezultati (poročila) se uporabljajo znotraj organizacije.'),
   Q('Kaj je glavni cilj ERP?', [
     'Povezati vse oddelke in procese podjetja v en IS s centralno bazo podatkov',
     'Avtomatizirati samo računovodstvo in obračun plač v podjetju',
@@ -84,12 +84,12 @@ const pis = [
     'Vedno, ker je nakup vedno cenejši od lastnega razvoja',
     'Ko so stroški licenc večji od stroškov uvajanja rešitve'], 0,
     'Stroški licenc so običajno manjši del v primerjavi s stroški uvajanja, prilagajanja in lastništva.'),
-  Q('Kaj so matični podatki v ERP?', [
+  Q('Kaj v ERP sistemu imenujemo matični podatki?', [
     'Podatki o entitetah, ki sodelujejo v procesih, npr. kupci, dobavitelji, material',
     'Podatki, ki beležijo poslovne dogodke, npr. količina in datum naročila',
     'Podatki o organizacijski strukturi, npr. oddelki in stroškovna mesta',
     'Zgodovinski podatki, preneseni v podatkovno skladišče'], 0,
-    'Transakcijski podatki so posledica izvajanja procesa (naročilo: količina, datum, znesek). Kolokvijsko in izpitno vprašanje.'),
+    'Transakcijski podatki so posledica izvajanja procesa (naročilo: količina, datum, znesek). Pogosta tema.'),
   Q('Pri nakupu: ime in naslov kupca ter količina in datum nakupa. Kateri so transakcijski podatki?', [
     'Količina in datum nakupa',
     'Ime in naslov kupca',
@@ -102,18 +102,18 @@ const pis = [
     'Področna podatkovna skladišča za posamezne oddelke',
     'Podatki, ki jih podjetje hrani pri ponudniku v oblaku'], 0,
     'Nastanejo zaradi funkcijskega pristopa k informatizaciji; posledica je podvajanje podatkov. Pri velikih podjetjih skoraj neizogibni.'),
-  Q('Kaj se zgodi, če različne funkcije v podjetju nimajo istega IS?', [
+  Q('Kakšna je posledica, če posamezne poslovne funkcije uporabljajo vsaka svoj informacijski sistem?', [
     'Podatke vnašamo večkrat, več je napak in zamud, nihče nima pregleda nad procesom',
     'Vsaka funkcija dela hitreje, ker ni odvisna od drugih oddelkov',
     'Podjetje ima nižje stroške, ker ne potrebuje centralne baze',
     'Ni posledic, če ima vsak oddelek dovolj zmogljive računalnike'], 0,
-    'Funkcijski silosi: zaradi kontrol ob prehodu med funkcijami nastajajo zamude in napake. Izpitno vprašanje.'),
-  Q('Kaj je upravljalna zanka?', [
+    'Funkcijski silosi: zaradi kontrol ob prehodu med funkcijami nastajajo zamude in napake.'),
+  Q('Kaj opisuje pojem upravljalna zanka?', [
     'Povezava podsistema operativnih in upravljalnih procesov, kjer so izhodi enega vhodi drugega',
     'Zaporedje faz razvoja IS od načrtovanja do vzdrževanja',
     'Ponavljajoči se postopek varnostnega kopiranja podatkovne baze',
     'Povezava med podatkovnim skladiščem in orodji OLAP'], 0,
-    'Imenuje se tudi povratna zveza. Kolokvijsko vprašanje 2019.'),
+    'Imenuje se tudi povratna zveza.'),
   Q('Kaj je problem v splošnem modelu upravljanja?', [
     'Razlika med želenim in dejanskim stanjem sistema',
     'Pomanjkanje podatkov v podatkovni bazi',
@@ -159,12 +159,12 @@ const bi2 = [
     'Zunanji nestrukturirani viri',
     'Varnostna kopija baze'], 0,
     'Področno skladišče vsebuje integrirane podatke v preprostem, večdimenzionalnem modelu, prilagojenem analitiku.'),
-  Q('Katera operacija OLAP podatke prikaže manj podrobno?', [
+  Q('S katero operacijo OLAP dobimo manj podroben, bolj zbirni prikaz podatkov?', [
     'Zvijanje (roll-up)',
     'Vrtanje v globino (drill-down)',
     'Rezanje (slice and dice)',
     'Vrtenje (pivot)'], 0,
-    'Vrtanje v globino = podrobneje (npr. ko nas zanima, kako je nastal zanimiv sumarni podatek). Zvijanje je nasprotna operacija. Izpitno vprašanje.'),
+    'Vrtanje v globino = podrobneje (npr. ko nas zanima, kako je nastal zanimiv sumarni podatek). Zvijanje je nasprotna operacija.'),
   Q('Kaj je rezanje (slice and dice) pri OLAP?', [
     'Izbor podatkov - prikažemo podkocko',
     'Obračanje pogleda na podatke',
@@ -177,12 +177,12 @@ const bi2 = [
     'Prenos zgodovinskih podatkov iz operativne baze v skladišče',
     'Ročno pregledovanje poročil, ki jih pripravi služba za informatiko'], 0,
     'Rudarjenje omogoča odkrivanje znanja in napovedovanje. Poglede v vrtilnih tabelah omogoča OLAP.'),
-  Q('Kakšna je razlika med OLAP in podatkovnim rudarjenjem?', [
+  Q('Po čem se OLAP razlikuje od podatkovnega rudarjenja?', [
     'OLAP je uporabniško vodeno (uporabnik ve, kaj išče), rudarjenje je podatkovno vodeno',
     'OLAP samodejno odkriva vzorce, rudarjenje pa le prikazuje vrtilne tabele',
     'OLAP deluje na operativni bazi, rudarjenje pa izključno na spletnih straneh',
     'Med njima ni razlike, rudarjenje je le novejše ime za OLAP'], 0,
-    'Kolokvijsko vprašanje 2019. OLAP ne omogoča avtomatičnega odkrivanja znanja - to je namen rudarjenja.'),
+    'OLAP ne omogoča avtomatičnega odkrivanja znanja - to je namen rudarjenja.'),
   Q('Kaj je analiza nakupne košarice?', [
     'Iskanje povezav med prodajo izdelkov, npr. za razporeditev po policah',
     'Določanje skupin kupcev z enakimi vzorci obnašanja',
@@ -240,12 +240,12 @@ const ep = [
     'C2C',
     'G2C'], 0,
     'B2B (med podjetji) je merjeno v količini transakcij najpomembnejši del e-poslovanja.'),
-  Q('Kaj je zasebna e-tržnica?', [
+  Q('Kaj označuje izraz zasebna e-tržnica?', [
     'E-tržnica za oskrbo podjetja, ki je njen lastnik; dobavitelji se potegujejo za njegova naročila',
     'E-tržnica, na kateri lahko kupuje in prodaja kdor koli brez omejitev',
     'Spletna trgovina, v kateri podjetje prodaja izključno svoje izdelke',
     'Spletno mesto, ki združuje več neodvisnih e-trgovin na enem mestu'], 0,
-    'Npr. Dell; več konkurentov (proizvajalci avtomobilov) lahko ustanovi skupno zasebno tržnico, da zmanjšajo moč dobaviteljev. Pogosto izpitno vprašanje.'),
+    'Npr. Dell; več konkurentov (proizvajalci avtomobilov) lahko ustanovi skupno zasebno tržnico, da zmanjšajo moč dobaviteljev. Pogosta izpitna tema.'),
   Q('V čem se e-trgovina razlikuje od e-tržnice?', [
     'V e-trgovini prodaja en prodajalec, na e-tržnici se srečujejo različni prodajalci in kupci',
     'V e-trgovini se kupec s prodajalcem vedno pogaja za ceno, na e-tržnici nikoli',
@@ -264,18 +264,18 @@ const ep = [
     'Provizija glede na število in obseg sklenjenih transakcij',
     'Plačilo, ki ga kupec plača za hitrejšo dostavo blaga'], 0,
     'Npr. sponzorirana povezava iskalnika do turistične agencije. Pri oglaševanju se plača prostor, pri preusmerjanju provizija glede na preusmerjene obiskovalce ali nakupe.'),
-  Q('Kaj je VMI (vendor managed inventory)?', [
+  Q('Kaj pomeni VMI (zalogo upravlja dobavitelj)?', [
     'Zaloge pri trgovcu vodi dobavitelj; IS ob padcu pod mejo samodejno sproži naročilo',
     'Trgovec sam vodi zaloge in ročno naroča blago pri več dobaviteljih',
     'Dobavitelj prodaja blago neposredno kupcem brez trgovca',
     'Trgovec hrani zaloge v skladišču dobavitelja do prodaje'], 0,
-    'Izpitno vprašanje: namesto kupca za zaloge skrbi dobavitelj, s souporabo podatkov.'),
-  Q('Kaj je skrajšana oskrbovalna veriga?', [
+    'namesto kupca za zaloge skrbi dobavitelj, s souporabo podatkov.'),
+  Q('Kaj pomeni skrajšana oskrbovalna veriga?', [
     'E-poslovanje med obstoječimi členi verige, ki pospeši pretok',
     'Veriga, iz katere so izločeni vsi posredniki',
     'Veriga, v kateri podjetje samo proizvaja vse sestavne dele',
     'Veriga z manj kot tremi dobavitelji'], 0,
-    'Preprosta oskrbovalna veriga pomeni izločanje posrednikov; skrajšana pa e-poslovanje med obstoječimi členi. Kolokvijsko vprašanje.'),
+    'Preprosta oskrbovalna veriga pomeni izločanje posrednikov; skrajšana pa e-poslovanje med obstoječimi členi.'),
   Q('Katera je slabost e-poslovanja za podjetja?', [
     'Konflikti med prodajnimi kanali',
     'Večja operativna učinkovitost',
@@ -291,7 +291,7 @@ const ep = [
 ];
 
 const izpit = [
-  Q('Kaj je glavna razlika med virusom in črvom?', [
+  Q('V čem se računalniški virus najbolj razlikuje od črva?', [
     'Virus potrebuje gostiteljski program, črv se širi samostojno po omrežju',
     'Črv potrebuje gostiteljski program, virus se širi samostojno po omrežju',
     'Virus je programska napaka, črv pa namerno napisan škodljiv program',
@@ -303,42 +303,42 @@ const izpit = [
     'Program, ki se razmnožuje po omrežju in zaseda pomnilnik',
     'Program, ki prikazuje neželene oglase med brskanjem'], 0,
     'Hrošč = programska napaka; črv se širi po omrežju; oglaševalski program prikazuje oglase.'),
-  Q('Pri elektronskem podpisu - s katerim ključem pošiljatelj šifrira podpis?', [
+  Q('Ana elektronsko podpiše sporočilo Borisu. S katerim ključem šifrira PODPIS?', [
     'S svojim zasebnim ključem',
     'S prejemnikovim javnim ključem',
     'S svojim javnim ključem',
     'S skupnim simetričnim ključem'], 0,
     'Prejemnik podpis preveri s pošiljateljevim javnim ključem. Besedilo pošiljatelj šifrira s prejemnikovim javnim ključem, prejemnik ga dešifrira s svojim zasebnim.'),
-  Q('Kateri način uvajanja IS je najmanj tvegan?', [
+  Q('Pri katerem načinu prehoda na nov informacijski sistem je tveganje najmanjše?', [
     'Vzporedno delovanje starega in novega sistema',
     'Neposreden prehod s starega na nov sistem',
     'Uvedba brez urjenja uporabnikov',
     'Uvedba brez testiranja sistema'], 0,
-    'Vzporedno je najvarnejše (ob težavah delamo po starem), a naporno in zahteva dvojno delo. Neposredni prehod je najhitrejši in najbolj tvegan. Izpitno vprašanje 2019.'),
+    'Vzporedno je najvarnejše (ob težavah delamo po starem), a naporno in zahteva dvojno delo. Neposredni prehod je najhitrejši in najbolj tvegan.'),
   Q('Kdaj je primeren neposreden prehod na nov IS?', [
     'Ko vzporedno delo ni mogoče ali starega sistema sploh ni',
     'Vedno, kadar gre za kritičen sistem, kot je obračun plač',
     'Kadar želimo najmanjše možno tveganje pri uvajanju',
     'Kadar imajo uporabniki dovolj časa za dvojno delo'], 0,
     'Neposreden prehod je najlažji in najhitrejši, a najbolj tvegan.'),
-  Q('Katera tri področja znanj potrebujejo zaposleni v službi za informatiko?', [
+  Q('Katera tri področja znanja potrebujejo zaposleni v informatiki?', [
     'Znanja IT, managerska znanja ter znanja o poslovanju in organiziranosti',
     'Programiranje, omrežja in podatkovne baze',
     'Računovodstvo, trženje in kadrovanje',
     'Matematika, statistika in ekonomija'], 0,
-    'Vsi potrebujejo vse tri, le deleži so različni: član uprave več managerskih, serviser več tehničnih. Pogosto izpitno vprašanje.'),
+    'Vsi potrebujejo vse tri, le deleži so različni: član uprave več managerskih, serviser več tehničnih. Pogosta izpitna tema.'),
   Q('Katera znanja v največji meri potrebuje član uprave, zadolžen za informatiko?', [
     'Managerska ter poslovna znanja',
     'Predvsem tehnična znanja IT',
     'Samo znanja s področja omrežij',
     'Samo znanja programiranja'], 0,
     'Višje v hierarhiji je več managerskih znanj, nižje (skrbnik strežnikov, serviser) več tehničnih.'),
-  Q('Kaj so viri etičnih problemov pri uporabi informacij?', [
+  Q('Od kod izvirajo etični problemi pri uporabi informacij?', [
     'Zasebnost, točnost, lastnina in dostop',
     'Hitrost, cena, zmogljivost in razpoložljivost',
     'Virusi, črvi, trojanski konji in hrošči',
     'Strojna, programska oprema, podatki in ljudje'], 0,
-    'Primer: pravica do elektronske pozabe (zasebnost). Na izpitu: primer etične dileme v podjetju.'),
+    'Primer: pravica do elektronske pozabe (zasebnost). Pogosta naloga je opis etične dileme v podjetju.'),
   Q('Kaj pomeni standard ISO/IEC 27001 za podjetje?', [
     'Upravljanje informacijske varnosti: neoporečnost, zaupnost, razpoložljivost',
     'Kakovost izdelkov in storitev v proizvodnji',
@@ -356,13 +356,13 @@ const izpit = [
     'Prilagajanje rešitve je vedno cenejše, ker procesov ni treba spreminjati',
     'Prilagoditev procesov ni mogoča, ker so procesi določeni z zakonom',
     'Med pristopoma ni razlike v stroških ali tveganju'], 0,
-    'Spreminjanje programov ustvarja nevarnost novih napak in otežuje nadgradnje; prilagoditev procesov referenčnemu modelu prinese "najboljšo prakso". Izpitno vprašanje.'),
+    'Spreminjanje programov ustvarja nevarnost novih napak in otežuje nadgradnje; prilagoditev procesov referenčnemu modelu prinese "najboljšo prakso".'),
   Q('Ali informatika podjetju sama po sebi zagotavlja konkurenčno prednost?', [
     'Ne, prednost ima le, če je IS bolj razvit in bolje izkoriščen kot pri tekmecih',
     'Da, vsaka naložba v IT samodejno poveča dobiček podjetja',
     'Ne, IT nima vpliva na konkurenčnost, ker jo imajo vsa podjetja',
     'Da, a le pri podjetjih, ki prodajajo prek spleta'], 0,
-    'Z informatiko, ki je bolj razvita kot pri tekmecih, lahko podjetje ustvari prednost; hkrati IT v splošnem povečuje konkurenco (paradoks). Izpitno vprašanje 2019.'),
+    'Z informatiko, ki je bolj razvita kot pri tekmecih, lahko podjetje ustvari prednost; hkrati IT v splošnem povečuje konkurenco (paradoks).'),
 ];
 
 module.exports = {
@@ -398,7 +398,7 @@ module.exports = {
       id: 'izpit', name: 'Izpit', type: 'izpit',
       notesMd: NOTES_IZPIT,
       prependNotesOf: ['k1', 'k2', 'k3'],
-      decks: [{ id: 'inf-iz-pogosta', name: 'Pogosta izpitna vprašanja', questions: izpit }],
+      decks: [{ id: 'inf-iz-pogosta', name: 'Pogoste izpitne teme', questions: izpit }],
     },
   ],
 };

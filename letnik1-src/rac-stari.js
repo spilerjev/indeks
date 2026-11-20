@@ -1,63 +1,62 @@
-/* Računovodstvo (1. letnik) - kratke računske naloge in deli celostnih primerov s starih izpitov
-   (8. 7. 2016 "Funchal", 2. kolokvij "Biševo", Vaje za ponovitev 2022 "Moto"). Vse preračunano;
-   študentska rešitev za Mangart (vzvod 1,25) je napačna. Naloge z nejasno osnovo marže so izpuščene. */
+/* Računovodstvo (1. letnik) - kratke računske naloge v slogu izpita (poslovni izid, bilanca, zaloge, amortizacija,
+   časovne razmejitve, finančne naložbe). Naloge so napisane na novo z lastnimi podjetji in številkami; vse preračunano. */
 const C = (q, options, correct, explanation) => ({ q, options, correct, explanation, calc: true });
 
 const naloge = [
-  C('(Izpit 2016) Začetna zaloga 50 proizvodov po 550 €. Proizvedli so 100 proizvodov; celotni stroški 100.000 €, od tega 60.000 € proizvajalnih (metoda proizvajalnih stroškov, FIFO). Končna zaloga 20 proizvodov, cena 1.200 € + DDV. Poslovni izid?', [
-    '40.500 €', '80.500 €', '28.500 €', '62.000 €'], 0,
-    'Stroškovna cena = 60.000 / 100 = 600. Prodanih 130: FIFO 50 · 550 + 80 · 600 = 75.500. Prihodki 130 · 1.200 = 156.000 (DDV ni prihodek). Neproizvajalni stroški 40.000 gredo v odhodke obdobja. 156.000 − 75.500 − 40.000 = 40.500.'),
-  C('(Kolokvij) December: proizvajalni stroški 2.000 €, neproizvajalni 1.600 €, proizvedli 100 proizvodov. Začetna zaloga 250 po 21 €. Prodali 300 po 40 € + DDV (FIFO). Poslovni izid?', [
-    '4.150 €', '5.750 €', '2.400 €', '4.250 €'], 0,
-    'Stroškovna cena = 2.000 / 100 = 20. FIFO: 250 · 21 + 50 · 20 = 6.250. Prihodki 12.000. 12.000 − 6.250 − 1.600 = 4.150. (5.750 = brez neproizvajalnih stroškov.)'),
-  C('(Izpit 2016) Kratkoročna sredstva 20.000 €, dolgoročna 40.000 €, dolgoročni dolgovi 15.000 €, kratkoročni 25.000 €. Kazalnik finančnega vzvoda (dolgovi / kapital)?', [
-    '2,0', '0,67', '0,5', '1,6'], 0,
-    'Sredstva 60.000 = obveznosti do virov. Dolgovi 40.000 → kapital 20.000. Vzvod = 40.000 / 20.000 = 2. (0,67 = dolgovi / sredstva.)'),
-  C('(Kolokvij) Mangart: delež dolgoročnih sredstev 70 %, kratkoročna sredstva 60.000 €, delež dolgov v financiranju 25 %. Kapital in dolgovi?', [
-    'Kapital 150.000 €, dolgovi 50.000 €', 'Kapital 140.000 €, dolgovi 60.000 €', 'Kapital 50.000 €, dolgovi 150.000 €', 'Kapital 105.000 €, dolgovi 35.000 €'], 0,
-    'Kratkoročna = 30 % → sredstva = 200.000. Dolgovi 25 % = 50.000, kapital 150.000. Vzvod = 0,33 (ne 1,25, kot je v študentski rešitvi).'),
-  C('(Izpit 2016) Jezikovna šola: 20 tečajnikov, račun 480 € + 20 % DDV, plačano pred tečajem (januar-junij), prihodke obračunava mesečno. Prihodki za januar in stanje PČR konec januarja?', [
-    'Prihodki 1.600 €, PČR 8.000 €', 'Prihodki 9.600 €, PČR 0 €', 'Prihodki 1.920 €, PČR 9.600 €', 'Prihodki 1.600 €, PČR 9.600 €'], 0,
-    'Prejeto 11.520 € (9.600 + DDV 1.920). Ob prejemu: kratkoročno odloženi prihodki (PČR) 9.600. Mesečno 9.600 / 6 = 1.600 v prihodke, PČR pade na 8.000.'),
-  C('(Kolokvij) Šola plezanja: 60 računov po 400 € + 20 % DDV, plačano vnaprej, tečaj junij-september. Koliko prihodkov prizna vsak mesec?', [
-    '6.000 €', '7.200 €', '24.000 €', '4.800 €'], 0,
-    '60 · 400 = 24.000 € prihodkov brez DDV, razporejenih na 4 mesece. DDV (4.800) je obveznost do države, ne prihodek.'),
-  C('(Izpit 2016) Funchal 1. 1. 2015: proizv. oprema NV 1.400.000 (odpis. 40 %), neproizv. oprema NV 800.000 (25 %), KFN 60.000, material 18.000, nedokončana proizvodnja 75.000, proizvodi 280.000, TRR 230.000, AČR 26.000, dolgoročno posojilo 400.000. Osnovni kapital?', [
-    '1.729.000 €', '2.129.000 €', '2.669.000 €', '1.703.000 €'], 0,
-    'Sredstva: 840.000 + 600.000 + 60.000 + 18.000 + 75.000 + 280.000 + 230.000 + 26.000 = 2.129.000 (oprema po neodpisani vrednosti). Kapital = sredstva − dolgovi = 1.729.000.'),
-  C('(Izpit 2016) Funchal: zaloga 2.000 kg materiala po 9 €, dokup 4.000 kg po 11 € + DDV. V proizvodnjo 3.000 kg po FIFO. Strošek materiala?', [
-    '29.000 €', '31.000 €', '33.000 €', '30.000 €'], 0,
-    'FIFO: 2.000 · 9 + 1.000 · 11 = 29.000. (31.000 = povprečna cena 10,33; 33.000 = vse po 11.)'),
-  C('(Izpit 2016) Funchal proda 1.000 delnic Krke (knjigovodska vrednost 60.000 €) po 65 €/delnico. Kaj nastane?', [
-    'Finančni prihodek 5.000 €', 'Poslovni prihodek 65.000 €', 'Finančni prihodek 65.000 €', 'Finančni odhodek 5.000 €'], 0,
-    'Prejeto 65.000, iz knjig izločimo 60.000 → razlika 5.000 je finančni prihodek (dobiček pri prodaji finančne naložbe).'),
-  C('(Izpit 2016) Nova proizvajalna oprema 30.000 € + montaža 2.000 € (oboje + DDV), preostala vrednost 5.000 €, doba 4 leta, usposobljena 17. 6. 2015. Amortizacija v letu 2015?', [
-    '3.375 €', '6.750 €', '4.000 €', '3.938 €'], 0,
-    'Amortizacijska osnova = 32.000 − 5.000 = 27.000 / 4 = 6.750 na leto. Amortizira se od 1. 7. (prvi dan naslednjega meseca) → 6/12 = 3.375. (3.938 = 7 mesecev.)'),
-  C('(Izpit 2016) Funchal plača anuiteto dolgoročnega posojila 60.000 €, od tega 35.000 € obresti. Kaj velja?', [
-    'Finančni odhodek 35.000, posojilo se zmanjša za 25.000', 'Finančni odhodek 60.000, posojilo se zmanjša za 60.000', 'Finančni odhodek 25.000, posojilo se zmanjša za 35.000', 'Izdatek 35.000, posojilo se zmanjša za 60.000'], 0,
-    'Celotna anuiteta je izdatek (−60.000 na TRR). Le obresti so odhodek; glavnica (25.000) zmanjša obveznost.'),
-  C('(Kolokvij) Biševo: zaloga 500 kg materiala za 100.000 €, dokup 1.500 kg po 240 € + DDV. V proizvodnjo 1.200 kg po metodi povprečnih cen. Strošek materiala?', [
-    '276.000 €', '288.000 €', '240.000 €', '268.000 €'], 0,
-    'Povprečna cena = (100.000 + 360.000) / 2.000 kg = 230 €/kg. 1.200 · 230 = 276.000. (288.000 = vse po 240, 268.000 = FIFO.)'),
-  C('(Kolokvij) Biševo: 400 delnic X za 80.000 €; proda 300 delnic po 170 €. Kaj nastane?', [
-    'Finančni odhodek 9.000 €', 'Finančni prihodek 51.000 €', 'Finančni prihodek 9.000 €', 'Finančni odhodek 29.000 €'], 0,
-    'Knjigovodska vrednost 300 delnic = 300 · 200 = 60.000. Prejeto 51.000 → izguba 9.000 je finančni odhodek.'),
-  C('(Kolokvij) Biševo: proizvajalna oprema NV 1.200.000 €, preostala vrednost 40.000 €; neproizvajalna NV 1.600.000 €, preostala 0. Doba 5 let. Letna amortizacija?', [
-    'Proizvajalna 232.000, neproizvajalna 320.000', 'Proizvajalna 240.000, neproizvajalna 320.000', 'Proizvajalna 96.000, neproizvajalna 192.000', 'Proizvajalna 232.000, neproizvajalna 192.000'], 0,
-    'Amortizacijska osnova = NV − preostala vrednost: (1.200.000 − 40.000) / 5 = 232.000; 1.600.000 / 5 = 320.000. Stroj, usposobljen 20. 12., se začne amortizirati šele 1. 1.'),
-  C('(Vaje 2022) Moto 1. 1. 2017: zemljišče 300.000, proizv. oprema NV 200.000 (odpis. 20 %), neproizv. oprema NV 150.000 (40 %), material 16.000, nedokončana 6.000, proizvodi 10.000, DFN 40.000, TRR 24.000; dolgoročno posojilo 250.000, PČR 4.000. Osnovni kapital?', [
-    '392.000 €', '396.000 €', '646.000 €', '502.000 €'], 0,
-    'Sredstva: 300.000 + 160.000 + 90.000 + 16.000 + 6.000 + 10.000 + 40.000 + 24.000 = 646.000. Kapital = 646.000 − 250.000 − 4.000 = 392.000. Zemljišče se ne amortizira.'),
-  C('(Vaje 2022) Moto: zaloga 8.000 enot materiala za 16.000 €, dokup 9.000 enot po 2,5 € + DDV. V proizvodnjo 14.000 enot po FIFO. Strošek materiala?', [
-    '31.000 €', '35.000 €', '31.706 €', '28.000 €'], 0,
-    'FIFO: 8.000 · 2 + 6.000 · 2,5 = 16.000 + 15.000 = 31.000. (31.706 = povprečna cena 2,26 €.)'),
-  C('(Vaje 2022) Moto plača anuiteto 20.000 € (obresti so četrtina) in proda 300 od 400 delnic A (vrednost 40.000 €) po 160 €. Finančni prihodki in odhodki?', [
-    'Prihodek 18.000 €, odhodek 5.000 €', 'Prihodek 48.000 €, odhodek 20.000 €', 'Prihodek 8.000 €, odhodek 15.000 €', 'Prihodek 18.000 €, odhodek 20.000 €'], 0,
-    'Delnice: 300 · 160 = 48.000 − 300 · 100 = 18.000 prihodka. Anuiteta: obresti 5.000 = finančni odhodek, glavnica 15.000 zmanjša posojilo.'),
+  C('Začetna zaloga 40 proizvodov po 480 €. V obdobju so proizvedli 120 proizvodov; celotni stroški 90.000 €, od tega 60.000 € proizvajalnih (metoda proizvajalnih stroškov, FIFO). Končna zaloga je 30 proizvodov, prodajna cena 1.000 € + DDV. Kolikšen je poslovni izid?', [
+    '35.800 €', '65.800 €', '43.300 €', '64.400 €'], 0,
+    'Stroškovna cena = 60.000 / 120 = 500. Prodanih 40 + 120 − 30 = 130: FIFO 40 · 480 + 90 · 500 = 64.200. Prihodki 130 · 1.000 = 130.000 (DDV ni prihodek). Neproizvajalni stroški 30.000 so odhodki obdobja. 130.000 − 64.200 − 30.000 = 35.800. (65.800 = brez neproizvajalnih stroškov.)'),
+  C('Proizvajalni stroški meseca so 3.000 €, neproizvajalni 1.200 €, proizvedli so 150 proizvodov. Začetna zaloga 200 po 22 €. Prodali so 280 po 35 € + DDV (FIFO). Kolikšen je poslovni izid?', [
+    '2.600 €', '3.800 €', '2.680 €', '1.400 €'], 0,
+    'Stroškovna cena = 3.000 / 150 = 20. FIFO: 200 · 22 + 80 · 20 = 6.000. Prihodki 280 · 35 = 9.800. 9.800 − 6.000 − 1.200 = 2.600. (3.800 = brez neproizvajalnih stroškov, 2.680 = po povprečnih cenah.)'),
+  C('Kratkoročna sredstva 30.000 €, dolgoročna 50.000 €, dolgoročni dolgovi 20.000 €, kratkoročni 28.000 €. Kolikšen je kazalnik finančnega vzvoda (dolgovi / kapital)?', [
+    '1,5', '0,6', '0,67', '2,5'], 0,
+    'Sredstva 80.000 = obveznosti do virov. Dolgovi 48.000 → kapital 32.000. Vzvod = 48.000 / 32.000 = 1,5. (0,6 = dolgovi / sredstva, 2,5 = sredstva / kapital.)'),
+  C('Podjetje Triglav: delež dolgoročnih sredstev 60 %, kratkoročna sredstva 80.000 €, delež dolgov v financiranju 35 %. Koliko sta kapital in dolgovi?', [
+    'Kapital 130.000 €, dolgovi 70.000 €', 'Kapital 120.000 €, dolgovi 80.000 €', 'Kapital 70.000 €, dolgovi 130.000 €', 'Kapital 78.000 €, dolgovi 42.000 €'], 0,
+    'Kratkoročna sredstva so 40 % → sredstva = 80.000 / 0,4 = 200.000. Dolgovi 35 % = 70.000, kapital 130.000. Vzvod = 70.000 / 130.000 = 0,54.'),
+  C('Plesna šola: 15 tečajnikov, račun 360 € + 22 % DDV, plačano pred tečajem (oktober-marec); prihodke obračunava mesečno. Koliko so prihodki za oktober in stanje PČR konec oktobra?', [
+    'Prihodki 900 €, PČR 4.500 €', 'Prihodki 5.400 €, PČR 0 €', 'Prihodki 1.098 €, PČR 5.490 €', 'Prihodki 900 €, PČR 5.400 €'], 0,
+    'Prejeto 6.588 € (5.400 + DDV 1.188). Ob prejemu: kratkoročno odloženi prihodki (PČR) 5.400. Mesečno 5.400 / 6 = 900 v prihodke, PČR pade na 4.500.'),
+  C('Šola jadranja izda 40 računov po 500 € + 22 % DDV, plačanih vnaprej, tečaj traja maj-avgust. Koliko prihodkov prizna vsak mesec?', [
+    '5.000 €', '6.100 €', '20.000 €', '4.400 €'], 0,
+    '40 · 500 = 20.000 € prihodkov brez DDV, razporejenih na 4 mesece. DDV (4.400) je obveznost do države, ne prihodek.'),
+  C('Podjetje Lipica 1. 1.: proizvajalna oprema NV 900.000 (odpisanost 30 %), neproizvajalna oprema NV 500.000 (20 %), KFN 40.000, material 25.000, nedokončana proizvodnja 50.000, proizvodi 150.000, TRR 120.000, AČR 15.000, dolgoročno posojilo 300.000. Kolikšen je osnovni kapital?', [
+    '1.130.000 €', '1.430.000 €', '1.500.000 €', '1.115.000 €'], 0,
+    'Sredstva: 630.000 + 400.000 + 40.000 + 25.000 + 50.000 + 150.000 + 120.000 + 15.000 = 1.430.000 (oprema po neodpisani vrednosti). Kapital = sredstva − dolgovi = 1.130.000. AČR so sredstvo, ne obveznost.'),
+  C('Zaloga 3.000 kg materiala po 8 €, dokup 5.000 kg po 10 € + DDV. V proizvodnjo gre 4.500 kg po FIFO. Kolikšen je strošek materiala?', [
+    '39.000 €', '41.625 €', '45.000 €', '36.000 €'], 0,
+    'FIFO: 3.000 · 8 + 1.500 · 10 = 39.000. (41.625 = povprečna cena 9,25; 45.000 = vse po 10.)'),
+  C('Podjetje proda 800 delnic (knjigovodska vrednost 40.000 €) po 58 € za delnico. Kaj nastane?', [
+    'Finančni prihodek 6.400 €', 'Poslovni prihodek 46.400 €', 'Finančni prihodek 46.400 €', 'Finančni odhodek 6.400 €'], 0,
+    'Prejeto 46.400, iz knjig izločimo 40.000 → razlika 6.400 je finančni prihodek (dobiček pri prodaji finančne naložbe).'),
+  C('Nova proizvajalna oprema 24.000 € + montaža 1.500 € (oboje + DDV), preostala vrednost 3.000 €, doba 5 let, usposobljena 10. 9. Kolikšna je amortizacija v tem letu?', [
+    '1.125 €', '4.500 €', '1.500 €', '1.275 €'], 0,
+    'Amortizacijska osnova = 25.500 − 3.000 = 22.500 / 5 = 4.500 na leto. Amortizira se od 1. 10. (prvi dan naslednjega meseca) → 3/12 = 1.125. (1.500 = 4 meseci, 1.275 = brez preostale vrednosti.)'),
+  C('Podjetje plača anuiteto dolgoročnega posojila 45.000 €, od tega 12.000 € obresti. Kaj velja?', [
+    'Finančni odhodek 12.000, posojilo se zmanjša za 33.000', 'Finančni odhodek 45.000, posojilo se zmanjša za 45.000', 'Finančni odhodek 33.000, posojilo se zmanjša za 12.000', 'Izdatek 12.000, posojilo se zmanjša za 45.000'], 0,
+    'Celotna anuiteta je izdatek (−45.000 na TRR). Le obresti so odhodek; glavnica (33.000) zmanjša obveznost.'),
+  C('Zaloga 400 kg materiala za 60.000 €, dokup 1.600 kg po 175 € + DDV. V proizvodnjo gre 1.500 kg po metodi povprečnih cen. Kolikšen je strošek materiala?', [
+    '255.000 €', '262.500 €', '252.500 €', '225.000 €'], 0,
+    'Povprečna cena = (60.000 + 280.000) / 2.000 kg = 170 €/kg. 1.500 · 170 = 255.000. (262.500 = vse po 175, 252.500 = FIFO.)'),
+  C('Podjetje ima 500 delnic X, kupljenih za 90.000 €; proda 200 delnic po 165 €. Kaj nastane?', [
+    'Finančni odhodek 3.000 €', 'Finančni prihodek 33.000 €', 'Finančni prihodek 3.000 €', 'Finančni odhodek 57.000 €'], 0,
+    'Knjigovodska vrednost 200 delnic = 200 · 180 = 36.000. Prejeto 33.000 → izguba 3.000 je finančni odhodek.'),
+  C('Proizvajalna oprema NV 800.000 €, preostala vrednost 50.000 €; neproizvajalna NV 900.000 €, preostala 0. Doba koristnosti 6 let. Kolikšna je letna amortizacija?', [
+    'Proizvajalna 125.000, neproizvajalna 150.000', 'Proizvajalna 133.333, neproizvajalna 150.000', 'Proizvajalna 125.000, neproizvajalna 141.667', 'Proizvajalna 150.000, neproizvajalna 125.000'], 0,
+    'Amortizacijska osnova = NV − preostala vrednost: (800.000 − 50.000) / 6 = 125.000; 900.000 / 6 = 150.000. Opremo, usposobljeno konec decembra, začnemo amortizirati 1. 1.'),
+  C('Podjetje Kolpa 1. 1.: zemljišče 200.000, proizvajalna oprema NV 300.000 (odpisanost 25 %), neproizvajalna oprema NV 100.000 (50 %), material 20.000, nedokončana proizvodnja 8.000, proizvodi 12.000, DFN 30.000, TRR 15.000; dolgoročno posojilo 180.000, PČR 5.000. Kolikšen je osnovni kapital?', [
+    '375.000 €', '380.000 €', '560.000 €', '500.000 €'], 0,
+    'Sredstva: 200.000 + 225.000 + 50.000 + 20.000 + 8.000 + 12.000 + 30.000 + 15.000 = 560.000. Kapital = 560.000 − 180.000 − 5.000 = 375.000. Zemljišče se ne amortizira; PČR so obveznost.'),
+  C('Zaloga 6.000 enot materiala za 18.000 €, dokup 10.000 enot po 3,5 € + DDV. V proizvodnjo gre 11.000 enot po FIFO. Kolikšen je strošek materiala?', [
+    '35.500 €', '38.500 €', '36.438 €', '33.000 €'], 0,
+    'FIFO: 6.000 · 3 + 5.000 · 3,5 = 18.000 + 17.500 = 35.500. (36.438 = povprečna cena 3,3125 €, 38.500 = vse po 3,5.)'),
+  C('Podjetje plača anuiteto 24.000 € (obresti so tretjina) in proda 150 od 250 delnic B (vrednost 30.000 €) po 140 €. Koliko so finančni prihodki in odhodki?', [
+    'Prihodek 3.000 €, odhodek 8.000 €', 'Prihodek 21.000 €, odhodek 24.000 €', 'Prihodek 3.000 €, odhodek 24.000 €', 'Prihodek 5.000 €, odhodek 16.000 €'], 0,
+    'Delnice: 150 · 140 = 21.000 − 150 · 120 = 18.000 → prihodek 3.000. Anuiteta: obresti 8.000 = finančni odhodek, glavnica 16.000 zmanjša posojilo.'),
 ];
 
 module.exports = {
   id: 'rac',
-  parts: [{ id: 'izpit', decks: [{ id: 'rac-stari', name: 'Računske s starih izpitov', calc: true, questions: naloge }] }],
+  parts: [{ id: 'izpit', decks: [{ id: 'rac-stari', name: 'Računske v slogu izpita', calc: true, questions: naloge }] }],
 };

@@ -165,12 +165,4 @@ module.exports = [
     'Splošno oceno lastne vrednosti in sprejemanja samega sebe',
     'Prepričanje o nadzoru nad zunanjimi dogodki in izidi',
     'Stopnjo čustvene stabilnosti posameznika pod pritiskom'], 2],
-  ['Ustanavljaš dobrodelno društvo in želiš pri kandidatih oceniti dobrohotnost.', [
-    'Schwartzovo teorijo individualnih vrednot, predvsem vrednote samopoudarjanja',
-    'Muskovo teorijo vrednot, predvsem potenčne in hedonske vrednote kandidatov',
-    'Rokeachevo teorijo vrednot, predvsem terminalne vrednote kandidatov'], 3],
-  ['Podjetnik Darjan odhaja; naslednika izbirajo znotraj podjetja.', [
-    'Administrator — vodi s pravili in postopki ter natančnim nadzorom',
-    'Podjetnik — vizionar, ki išče nove priložnosti in prevzema tveganja',
-    'Proizvajalec — usmerjen v rezultate, pozna delo in stranke'], 0],
 ];

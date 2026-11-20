@@ -41,12 +41,12 @@ module.exports = [
     'Področna podatkovna skladišča za posamezne oddelke',
     'Podatki podjetja, shranjeni pri ponudniku v oblaku'], 1,
     'Nepovezani IS v isti organizaciji brez pretoka informacij'],
-  ['Kaj se zgodi, če različne funkcije v podjetju nimajo istega IS?', [
+  ['Kakšna je posledica, če posamezne poslovne funkcije uporabljajo vsaka svoj informacijski sistem?', [
     'Vsaka funkcija dela hitreje, ker ni odvisna od drugih oddelkov',
     'Podjetje ima nižje stroške, ker ne potrebuje centralne baze',
     'Nič, če ima vsak oddelek dovolj zmogljivo strojno opremo'], 3,
     'Podatke vnašamo večkrat, nastajajo napake in zamude'],
-  ['Kaj je upravljalna zanka?', [
+  ['Kaj opisuje pojem upravljalna zanka?', [
     'Zaporedje faz razvoja IS od načrtovanja do vzdrževanja',
     'Ponavljajoč se postopek varnostnega kopiranja baze podatkov',
     'Povezava med podatkovnim skladiščem in orodji za OLAP'], 1,
@@ -91,7 +91,7 @@ module.exports = [
     'E-commerce velja samo za B2B, e-business pa samo za B2C poslovanje',
     'Med njima ni razlike, oba sta sinonima za prodajo prek spleta'], 1,
     'E-business je širši: vključuje tudi sodelovanje s partnerji in zaposlenimi'],
-  ['Kaj je zasebna e-tržnica?', [
+  ['Kaj označuje izraz zasebna e-tržnica?', [
     'E-tržnica, na kateri lahko kupuje in prodaja kdor koli brez omejitev',
     'Spletna trgovina, v kateri podjetje prodaja izključno svoje izdelke',
     'Spletno mesto, ki na enem mestu združuje več neodvisnih e-trgovin'], 3,
@@ -101,12 +101,12 @@ module.exports = [
     'E-trgovina je za podjetja, e-tržnica je izključno za potrošnike',
     'E-trgovina deluje le v okviru zasebnega intraneta podjetja'], 0,
     'V e-trgovini prodaja en prodajalec, na tržnici jih je več'],
-  ['Kaj je VMI (vendor managed inventory)?', [
+  ['Kaj pomeni VMI (zalogo upravlja dobavitelj)?', [
     'Trgovec sam vodi zaloge in ročno naroča blago pri dobaviteljih',
     'Dobavitelj prodaja blago neposredno kupcem, brez trgovca',
     'Trgovec hrani svoje zaloge v skladišču dobavitelja do prodaje'], 1,
     'Zaloge pri trgovcu vodi dobavitelj, naročila sproži IS sam'],
-  ['Kaj je skrajšana oskrbovalna veriga?', [
+  ['Kaj pomeni skrajšana oskrbovalna veriga?', [
     'Veriga, iz katere so izločeni vsi posredniki',
     'Veriga, v kateri podjetje samo izdela vse dele',
     'Veriga z največ tremi dobavitelji materiala'], 2,
@@ -116,11 +116,11 @@ module.exports = [
     'Program, ki se brez gostitelja razmnožuje po računalniškem omrežju',
     'Program, ki med brskanjem prikazuje neželene oglase uporabniku'], 0,
     'Uporaben program s skritimi ukazi, ki ob pogoju povzročijo škodo'],
-  ['Kateri način uvajanja IS je najmanj tvegan?', [
+  ['Pri katerem načinu prehoda na nov informacijski sistem je tveganje najmanjše?', [
     'Neposreden prehod na nov sistem',
     'Postopen prehod brez testiranja',
     'Prehod brez urjenja uporabnikov'], 3, 'Vzporedno delovanje obeh sistemov'],
-  ['Katera tri področja znanj potrebujejo zaposleni v službi za informatiko?', [
+  ['Katera tri področja znanja potrebujejo zaposleni v informatiki?', [
     'Programiranje, računalniška omrežja in podatkovne baze',
     'Računovodstvo, trženje in upravljanje človeških virov',
     'Matematika, statistika in ekonomska teorija'], 1,

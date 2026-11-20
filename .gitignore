@@ -1,3 +1,5 @@
 node_modules/
 *.bak
 .DS_Store
+data.json.bak*
+.preizpit-bak/

@@ -1,8 +1,7 @@
 /* Pravo družb in poslovno pravo (Pravo 1) - Izpit.
-   Viri: Uvodne informacije o predmetu 2025/26 in 2026/27 (format izpita), "Pravo družb in poslovno pravo - Stari izpiti"
-   (EF Zapiski; novejši izpiti z 1-2 pravilnima odgovoroma in starejši z 1 pravilnim), Pravo 1 - zapiski po učbeniku.
-   Ker app podpira en pravilen odgovor, so vprašanja z dvema pravilnima trditvama predelana tako, da je pravilna ena
-   (druga je spremenjena v napačno in to je razloženo). Zastarela vprašanja (SIT, ZOR, SDK) so izpuščena. */
+   Viri: Uvodne informacije o predmetu 2025/26 in 2026/27 (format izpita), Pravo 1 - zapiski po učbeniku.
+   Vaje v slogu izpita so napisane na novo (lastna formulacija in primeri); pravna pravila so iz zakonov in učbenika.
+   Na izpitu je lahko pravilen en ali dva odgovora; app podpira en pravilen odgovor. */
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
 const NOTES_IZPIT = `
@@ -49,240 +48,240 @@ const NOTES_IZPIT = `
 `;
 
 const izpitNovejsi = [
-  Q('Za splošne pogoje poslovanja je značilno: (izpit)', [
-    'Nejasno določilo splošnih pogojev se razlaga v korist druge (šibkejše) stranke',
-    'Splošni pogoji poslovanja so samodejno sestavni del vsake sklenjene pogodbe',
-    'Veljavni so tudi, če nasprotujejo namenu pogodbe ali dobrim poslovnim običajem',
-    'Namenjeni so vnaprej določenemu številu pogodbenih razmerij oziroma subjektov'], 0,
-    'Nejasna določila se razlagajo v korist stranke, ki jih ni pripravila. Splošni pogoji so del pogodbe le, če sta jih stranki sprejeli; določila v nasprotju z namenom pogodbe ali dobrimi običaji so nična; namenjeni so NEdoločenemu številu razmerij.'),
-  Q('Delniška družba: (izpit)', [
-    'Premoženje družbe je ločeno od premoženja delničarjev, lastnik je izključno družba',
-    'Delniška družba je osebna družba, ki ima osnovni kapital razdeljen na delnice',
-    'Delniška družba ne sme nikoli pridobiti lastnih delnic, niti izjemoma',
-    'V dvotirnem sistemu vodita posle delniške družbe uprava in nadzorni svet'], 0,
-    'D.d. je kapitalska družba z ločenim premoženjem. Lastne delnice lahko pridobi izjemoma (do 10 %). V dvotirnem sistemu posle vodi uprava, nadzorni svet jo le nadzira.'),
-  Q('Alternativno reševanje sporov: (izpit)', [
-    'Poravnava je lahko sklenjena neoblično ali pred sodiščem oziroma notarjem',
-    'Arbitraža je oblika, kjer arbiter kot posrednik pomaga strankama do dogovora',
-    'Pri koncilaciji o sporu z avtoritativno odločbo odloči koncilator',
-    'Institucionalne arbitraže se ustanovijo za posamezen spor in nato prenehajo'], 0,
-    'Arbiter spor odloči (ne posreduje). Pri mediaciji in koncilaciji odločita stranki sami. Institucionalne arbitraže so stalne, ad hoc arbitraže nastanejo za posamezen spor.'),
-  Q('Institucije EU so: (izpit)', [
-    'Evropski svet, ki daje EU spodbude in splošne politične usmeritve ter določa prednostne cilje',
-    'Evropski parlament, ki izvaja usklajevalno, izvršilno in upravno funkcijo oblasti v EU',
-    'Evropsko sodišče za človekove pravice, ki izvaja sodno vejo oblasti v pravnem redu EU',
-    'Evropska centralna banka, ki izvaja revizijo vseh prihodkov in odhodkov Unije'], 0,
-    'Izvršilno funkcijo ima Komisija. ESČP je organ Sveta Evrope, ne EU (sodna veja EU je Sodišče EU). Revizijo opravlja Evropsko računsko sodišče.'),
-  Q('Institucije EU so (druga različica): (izpit)', [
-    'Komisija EU, ki izvaja usklajevalno, izvršilno in upravno funkcijo oblasti v EU',
-    'Evropski svet, ki z Evropskim parlamentom opravlja zakonodajno in proračunsko funkcijo',
-    'Evropsko sodišče za človekove pravice, ki izvaja sodno vejo oblasti v pravnem redu EU',
-    'Evropska centralna banka, ki sama, brez nacionalnih centralnih bank, vodi monetarno politiko'], 0,
-    'Zakonodajno in proračunsko funkcijo z EP opravlja Svet EU, ne Evropski svet. ECB vodi monetarno politiko SKUPAJ z nacionalnimi centralnimi bankami (to je bila na izpitu druga pravilna trditev).'),
-  Q('Za prodajno pogodbo je značilno: (izpit)', [
-    'Gospodarska prodajna pogodba je veljavna tudi, če kupnina ni določena',
-    'Nevarnost naključnega uničenja stvari preide na kupca šele s plačilom kupnine',
-    'Skrito stvarno napako mora kupec sporočiti v 6 mesecih od dneva, ko jo je opazil',
-    'Obličnost je predpostavka za veljavno sklenitev vsake prodajne pogodbe'], 0,
-    'Pri gospodarski pogodbi brez določene cene velja cena, ki jo prodajalec običajno zaračunava. Nevarnost preide z izročitvijo. Napako je treba sporočiti nemudoma (gosp.) oz. v 8 dneh; 6 mesecev teče od izročitve. Prodajna pogodba je praviloma neoblična.'),
-  Q('Prodajna pogodba (druga različica): (izpit)', [
-    'Kupec iz gospodarske pogodbe mora skrito napako sporočiti nemudoma, če od prevzema ni minilo 6 mesecev',
-    'Če predmet ni mogoč, dopusten ter določen oziroma določljiv, je prodajna pogodba izpodbojna',
-    'Stranka lahko vedno zahteva razveljavitev prodajne pogodbe zaradi kakršne koli zmote, tudi nebistvene',
-    'Pisna oblika je predpostavka za veljavno sklenitev vsake prodajne pogodbe, ne glede na predmet'], 0,
-    'Nemogoč ali nedopusten predmet povzroči ničnost, ne izpodbojnosti. Razveljavitev je mogoča le zaradi bistvene zmote. Oblika je potrebna le, kjer jo predpiše zakon (npr. nepremičnine).'),
-  Q('Neveljavne pogodbe: (izpit)', [
-    'Pravica do uveljavljanja ničnosti ne zastara',
-    'Pogodba je izpodbojna, če nasprotuje ustavi ali prisilnim predpisom',
-    'Na izpodbojnost pazi sodišče po uradni dolžnosti',
-    'Nična pogodba postane veljavna, če vzrok ničnosti preneha'], 0,
-    'Nasprotje z ustavo in prisilnimi predpisi povzroči ničnost. Po uradni dolžnosti sodišče pazi na ničnost, ne na izpodbojnost. Nična pogodba ne postane veljavna, če vzrok pozneje preneha.'),
-  Q('Pravice industrijske lastnine: (izpit)', [
-    'Geografsko ime proizvoda se zavaruje z označbo porekla blaga',
-    'S patentom pridobljeno varstvo izuma časovno ni omejeno',
-    'Pravice industrijske lastnine so tako kot obligacijske relativne',
-    'Znamka velja 20 let in je po tem ni več mogoče podaljšati'], 0,
-    'Patent traja 20 let. Pravice industrijske lastnine so absolutne (kot stvarne pravice) - to je bila na izpitu druga pravilna trditev. Znamka velja 10 let in se lahko poljubnokrat podaljša.'),
-  Q('Za lastninsko pravico velja: (izpit)', [
-    'O skupni lastnini govorimo, kadar deleži lastnikov niso vnaprej določeni',
-    'Lastninska tožba za vrnitev stvari zastara v petih letih od odvzema stvari',
-    'Lastninska pravica je obligacijska pravica na premičnih in nepremičnih stvareh',
-    'Lastninska pravica se v javnem interesu lahko odvzame tudi brez nadomestila'], 0,
-    'Lastninska tožba ne zastara. Lastninska pravica je stvarna. V javno korist se lahko omeji ali odvzame le proti nadomestilu v naravi ali odškodnini.'),
-  Q('Za lastninsko pravico velja (druga različica): (izpit)', [
-    'Solastniki lahko s svojim idealnim deležem razpolagajo brez soglasja drugih solastnikov',
-    'Če je izkazan javni interes, se lastninska pravica lahko omeji, ne more pa se odvzeti',
-    'Lastninska pravica je obligacijska pravica na premičnih in nepremičnih stvareh',
-    'Pridobi se lahko s pravnim poslom ali sodbo, ne more pa se na podlagi zakona'], 0,
-    'Lastnina se v javno korist lahko tudi odvzame (razlastitev). Pridobi se lahko tudi na podlagi zakona, npr. s priposestvovanjem.'),
-  Q('Osebne družbe: (izpit)', [
-    'Družbenik d.n.o. ne sme razpolagati s svojim deležem brez soglasja drugih družbenikov',
-    'Družbenik, ki vstopi v obstoječo d.n.o., ne odgovarja za obveznosti, nastale pred vstopom',
-    'Komanditist odgovarja z vsem svojim premoženjem, komplementar pa le s svojim vložkom',
-    'V dvojni družbi je komplementar fizična oseba, komanditist pa družba z omejeno odgovornostjo'], 0,
-    'Novi družbenik d.n.o. odgovarja tudi za prej nastale obveznosti. V k.d. je neomejeno odgovoren komplementar. Dvojna družba je k.d., v kateri je komplementar kapitalska družba (npr. d.o.o.).'),
-  Q('Firma gospodarske družbe: (izpit)', [
-    'Načelo obveznosti firme pomeni, da mora vsaka družba imeti ime in z njim nastopati v prometu',
-    'Sedež družbe je obvezni sestavni del firme vsake gospodarske družbe',
-    'Firme ni treba vpisati v sodni register, je pa to priporočljivo zaradi varnosti',
-    'Firma kapitalske družbe mora vsebovati ime in priimek vsaj enega družbenika'], 0,
-    'Sedež ni del firme (vpiše se posebej). Firma se obvezno vpiše v sodni register. Ime in priimek družbenikov vsebuje firma osebne družbe; kapitalska ima fantazijski dodatek.'),
-  Q('Pravilnik: (izpit)', [
-    'Ne more nikoli učinkovati za nazaj',
-    'Začne veljati 20 dni po objavi v Uradnem listu RS',
-    'Preneha veljati z odločbo Vrhovnega sodišča RS',
-    'Mora biti v skladu z ustavo, ne pa nujno z zakoni'], 0,
-    'Učinek za nazaj lahko za posamezne določbe določi le zakon. Predpis začne veljati 15. dan po objavi. Razveljavi ga Ustavno sodišče. Podzakonski akt mora biti v skladu z ustavo IN zakoni (na izpitu je bila to druga pravilna trditev).'),
-  Q('Delnice: (izpit)', [
-    'Delnicam s prednostno pravico pri dobičku se lahko izključi glasovalna pravica',
-    'Delnica je korporacijski vrednostni papir, ki ga ureja poseben Zakon o delnicah',
-    'Prednostnih delnic družba ne sme izdati za več kot 10 % osnovnega kapitala',
-    'Delnica je dolžniški vrednostni papir, ki imetniku daje pravico do obresti'], 0,
-    'Delnice ureja ZGD-1 (ni Zakona o delnicah). Prednostne delnice brez glasovalne pravice so omejene na polovico OK. Delnica je lastniški (korporacijski) VP, dolžniški je obveznica.'),
-  Q('Za avtorsko pravico je značilno: (izpit)', [
-    'Avtorsko delo pridobi popolno pravno varstvo že s samo stvaritvijo',
-    'Avtor je lahko fizična ali pravna oseba, ki je delo ustvarila',
-    'Moralne avtorske pravice se lahko prenašajo s pogodbami',
-    'Za kršitev lahko avtor zahteva le odškodnino za premoženjsko škodo'], 0,
-    'Avtor je lahko le fizična oseba. Moralne avtorske pravice so neprenosljive. Avtor lahko zahteva tudi odškodnino za nepremoženjsko škodo.'),
-  Q('Za avtorsko pravico je značilno (druga različica): (izpit)', [
-    'Pravna oseba ne more biti avtor, lahko pa je nosilec avtorskih pravic',
-    'Pravica do prve objave se šteje med materialne avtorske pravice',
-    'Avtorska pravica traja neomejeno, dokler je delo v javni rabi',
-    'Pri delih iz delovnega razmerja vse pravice preidejo na delodajalca'], 0,
-    'Prva objava je moralna pravica. Avtorska pravica traja življenje avtorja + 70 let. Moralne pravice pri delih iz delovnega razmerja ostanejo delavcu (to je bila na izpitu druga pravilna trditev).'),
-  Q('Kdo vodi posle gospodarskih družb? (izpit)', [
-    'V enotirnem sistemu vodi posle delniške družbe upravni odbor',
-    'V dvotirnem sistemu vodita posle uprava in nadzorni svet skupaj',
-    'V komanditni družbi vodijo posle komanditisti',
-    'V družbi z neomejeno odgovornostjo vodi posle direktor'], 0,
-    'Dvotirni: posle vodi uprava, NS nadzira. K.d.: komplementarji. D.n.o.: vsi družbeniki (direktor je organ d.o.o.).'),
-  Q('Temeljne predpostavke za sklenitev pravnega posla so: (izpit)', [
-    'Pravna in poslovna sposobnost strank, soglasje volj, možnost in dopustnost predmeta ter oblika, kadar jo predpiše zakon ali dogovor strank',
-    'Pravna sposobnost strank, soglasje volj o bistvenih sestavinah, pravna možnost in dejanska dopustnost predmeta ter oblika, kadar jo predpiše zakon',
-    'Pooblastilo predstavniku, poslovna sposobnost strank, soglasje o vseh elementih, možnost in dopustnost predmeta ter dogovorjena oblika',
-    'Pravna in poslovna sposobnost pooblaščencev strank, soglasje volj, fizična in pravna možnost predmeta ter oblika po zakonu ali dogovoru'], 0,
-    'Potrebni sta pravna IN poslovna sposobnost strank, soglasje volj, mogoč in dopusten (določen/določljiv) predmet ter oblika, kadar jo zahteva zakon ali dogovor.'),
-  Q('Gospodarska družba: (izpit)', [
-    'Osebne in kapitalske družbe odgovarjajo za obveznosti družbe z vsem svojim premoženjem',
-    'V slovenskem pravnem redu velja koncesijski sistem ustanavljanja gospodarskih družb',
-    'Ustanovitveni akt vseh gospodarskih družb, osebnih in kapitalskih, je statut',
-    'V slovenskem pravnem redu nimamo omejenega kroga pravnoorganizacijskih oblik družb'], 0,
-    'Družba sama vedno odgovarja z vsem svojim premoženjem (razlika je le v odgovornosti družbenikov). Velja normativni sistem, statut ima le d.d., oblike so zaprte (numerus clausus).'),
-  Q('Za družbo z neomejeno odgovornostjo velja: (izpit)', [
-    'Družbenik, ki vstopi v obstoječo d.n.o., odgovarja tudi za obveznosti, nastale pred vstopom',
-    'Obvezni organi d.n.o. so poslovodstvo, nadzorni svet in skupščina družbenikov',
-    'D.n.o. je družba dveh ali več oseb, ki za obveznosti družbe ne odgovarjajo',
-    'D.n.o. ne more prenehati s stečajem, ker družbeniki odgovarjajo neomejeno'], 0,
-    'D.n.o. nima obveznih organov, družbeniki odgovarjajo neomejeno, solidarno in subsidiarno. D.n.o. lahko preneha s stečajem (na izpitu je bila to druga pravilna trditev).'),
-  Q('Vrednostni papirji: (izpit)', [
-    'Obveznica je dolžniški vrednostni papir, ki ga izdajo država, občine in pod pogoji podjetja',
-    'Konosament je stvarnopravni vrednostni papir, sestavljen iz pobotnice in zastavnice',
-    'Menica je kavzalen papir, odvisen od pravnega posla, ki je dejanski razlog za njeno izdajo',
-    'Ček je stvarnopravni vrednostni papir, ki imetniku daje pravico do izročitve blaga'], 0,
-    'Iz pobotnice in zastavnice je sestavljena skladiščnica. Menica je abstrakten VP. Ček je obligacijski (denarni) VP, plačljiv na vpogled.'),
-  Q('Delniška družba (druga različica): (izpit)', [
-    'Prednostnih delnic brez glasovalne pravice je lahko največ za polovico osnovnega kapitala',
-    'Člane uprave, ki zastopajo interese delničarjev, voli skupščina delničarjev',
-    'Glavni delničar z najmanj 75 % osnovnega kapitala lahko izključi ostale delničarje',
-    'O spremembah statuta odloča nadzorni svet s tričetrtinsko večino'], 0,
-    'Upravo imenuje nadzorni svet. Izključitev manjšinskih delničarjev je mogoča pri 90 %. O statutu odloča skupščina.'),
-  Q('Sodni register: (izpit)', [
-    'Vpis sklepa o imenovanju direktorja v sodni register je deklaratorne narave',
-    'Gospodarske družbe z vpisom v sodni register pridobijo poslovno sposobnost',
-    'Podjetnik lahko začne opravljati dejavnost, ko se vpiše v sodni register',
-    'Sodni register vodi AJPES, okrožna sodišča pa skrbijo za objavo podatkov'], 0,
-    'Z vpisom ustanovitve družba pridobi pravno sposobnost (pravno osebnost). S.p. se vpiše v Poslovni register Slovenije. Sodni register vodijo okrožna sodišča, objavo zagotavlja AJPES.'),
-  Q('Sprememba in prenehanje obligacij: (izpit)', [
-    'Po volji obeh pogodbenih strank obveznost preneha s prenovo (novacijo)',
-    'Če dolžnik izpolni zastarano obveznost, lahko terja vrnitev izpolnjenega',
-    'Z zastaranjem preneha obveznost in tudi pravica zahtevati izpolnitev',
-    'Pobot nastopi le, če se o njem izrecno sporazumeta obe pogodbeni stranki'], 0,
-    'Zastaranje odvzame le pravico zahtevati izpolnitev, obveznost ostane (naravna), zato vrnitve ni. Pobot učinkuje z enostransko izjavo, ko se terjatvi srečata.'),
-  Q('Viri prava EU: (izpit)', [
-    'Uredba EU je zavezujoč pravni akt in sekundarni vir prava EU',
-    'Predloge za sprejem uredb EU praviloma daje Evropski svet',
-    'Nacionalno sodišče sme uporabiti pravo EU le z dovoljenjem Sodišča EU',
-    'Primarni viri prava EU so uredbe, direktive in sklepi institucij'], 0,
-    'Zakonodajno pobudo ima Komisija. Nacionalna sodišča pravo EU uporabljajo neposredno (prek predhodnega vprašanja lahko le vprašajo za razlago). Uredbe, direktive in sklepi so sekundarni viri.'),
-  Q('Za stvarne pravice je značilno: (izpit)', [
-    'Stvarno breme zavezuje lastnika obremenjene nepremičnine k bodočim dajatvam ali storitvam',
-    'Predmet zastave ne morejo biti vrednostni papirji, temveč le premičnine in nepremičnine',
-    'Stvarne pravice na premičninah se pridobijo z vpisom v zemljiško knjigo, ki je konstitutiven',
-    'Služnosti ni mogoče priposestovati, ampak se ustanovi le s pogodbo ali odločbo'], 0,
-    'Zastavijo se lahko tudi VP in terjatve. V zemljiško knjigo se vpisujejo pravice na nepremičninah. Služnost se lahko pridobi tudi s priposestvovanjem.'),
-  Q('Za insolvenčne postopke je značilno: (izpit)', [
-    'Terjatve upnikov, nastale pred začetkom stečaja, se poplačajo sočasno in sorazmerno',
-    'Insolvenčne postopke ureja Zakon o gospodarskih družbah (ZGD-1)',
-    'Stečaj je posledica sporazuma družbenikov, da družba preneha',
-    'Nad osebno družbo se lahko uvede stečaj, ne more pa prisilna poravnava'], 0,
+  Q('Trgovec v splošnih pogojih poslovanja zapiše nejasno določilo o reklamacijah. Katera trditev o splošnih pogojih drži?', [
+    'Nejasno določilo se razlaga v korist stranke, ki pogojev ni pripravila',
+    'Kupca zavezujejo tudi, če zanje ni vedel in jih ni mogel poznati',
+    'Določilo, ki izniči namen pogodbe, velja, ker je del splošnih pogojev',
+    'Trgovec jih pripravi posebej za vsakega posameznega kupca'], 0,
+    'Nejasna določila gredo v breme tistega, ki jih je pripravil. Splošni pogoji so del pogodbe le, če jih je druga stranka poznala ali morala poznati; določila v nasprotju z namenom pogodbe ali dobrimi poslovnimi običaji so nična; namenjeni so nedoločenemu številu razmerij.'),
+  Q('Katera trditev o delniški družbi drži?', [
+    'Družba je lastnica svojega premoženja, ki je ločeno od premoženja delničarjev',
+    'Delniška družba sodi med osebne družbe, ker jo sestavljajo delničarji',
+    'Pridobivanje lastnih delnic je delniški družbi brez izjeme prepovedano',
+    'V dvotirnem sistemu nadzorni svet skupaj z upravo vodi tekoče posle'], 0,
+    'D.d. je kapitalska družba s premoženjem, ločenim od delničarjev. Lastne delnice sme pridobiti izjemoma (do 10 % osnovnega kapitala). V dvotirnem sistemu posle vodi uprava, nadzorni svet jo nadzira.'),
+  Q('Podjetji želita spor rešiti brez pravde pred sodiščem. Katera trditev o alternativnem reševanju sporov drži?', [
+    'Poravnavo lahko skleneta brez posebne oblike, pred notarjem ali pred sodiščem',
+    'Arbiter strankama le pomaga, da se sami dogovorita o rešitvi spora',
+    'Koncilator izda odločbo, ki je za obe stranki zavezujoča',
+    'Institucionalna arbitraža se ustanovi za en spor in po njem preneha'], 0,
+    'Arbiter spor odloči z zavezujočo odločbo. Pri mediaciji in koncilaciji tretji le pomaga, odločita stranki sami. Institucionalne arbitraže so stalne, ad hoc nastanejo za posamezen spor.'),
+  Q('Katera trditev o institucijah EU drži?', [
+    'Evropski svet določa splošne politične usmeritve in prednostne cilje Unije',
+    'Evropski parlament je izvršilna in upravna institucija Unije',
+    'Evropsko sodišče za človekove pravice je sodna institucija EU',
+    'Evropska centralna banka revidira prihodke in odhodke Unije'], 0,
+    'Izvršilno in upravno funkcijo ima Komisija. ESČP je organ Sveta Evrope, sodna institucija EU je Sodišče EU. Revizijo opravlja Evropsko računsko sodišče.'),
+  Q('Katera institucija EU je pravilno povezana s svojo vlogo?', [
+    'Evropska komisija - izvršilna in upravna funkcija ter zakonodajna pobuda',
+    'Evropski svet - skupaj z Evropskim parlamentom sprejema zakonodajo in proračun',
+    'Evropsko sodišče za človekove pravice - sodna veja oblasti v EU',
+    'Evropska centralna banka - monetarna politika brez nacionalnih centralnih bank'], 0,
+    'Zakonodajno in proračunsko funkcijo z EP opravlja Svet EU (ne Evropski svet). ESČP ni institucija EU. ECB vodi monetarno politiko skupaj z nacionalnimi centralnimi bankami držav evrskega območja.'),
+  Q('Katera trditev o prodajni pogodbi drži?', [
+    'Gospodarska prodajna pogodba velja tudi, če stranki kupnine nista dogovorili',
+    'Tveganje za naključno uničenje stvari nosi prodajalec, dokler kupec ne plača',
+    'Kupec mora skrito napako sporočiti v šestih mesecih, odkar jo je odkril',
+    'Za veljavnost vsake prodajne pogodbe je potrebna pisna oblika'], 0,
+    'Pri gospodarski pogodbi brez dogovorjene cene velja cena, ki jo prodajalec običajno zaračunava. Nevarnost preide z izročitvijo, ne s plačilom. Napako je treba sporočiti nemudoma (gospodarska) oz. v 8 dneh; 6 mesecev teče od izročitve. Prodajna pogodba je praviloma neoblična.'),
+  Q('Podjetje kot kupec po štirih mesecih od prevzema odkrije skrito napako kupljenega stroja. Kaj velja?', [
+    'Napako mora prodajalcu sporočiti nemudoma, sicer izgubi pravice',
+    'Napako lahko sporoči kadar koli v enem letu od odkritja',
+    'Prodajalec ne odgovarja, ker so od prevzema minili več kot trije meseci',
+    'Pogodbo lahko razveljavi že zaradi katere koli, tudi nebistvene zmote'], 0,
+    'Pri gospodarski pogodbi je treba skrito napako sporočiti nemudoma; prodajalec odgovarja za napake, ki se pokažejo v 6 mesecih od izročitve. Razveljavitev zaradi zmote je mogoča le pri bistveni zmoti; nemogoč ali nedopusten predmet pa pogodbo naredi nično.'),
+  Q('Kaj velja za nično pogodbo?', [
+    'Na ničnost se je mogoče sklicevati kadar koli, ta pravica ne zastara',
+    'Postane veljavna, ko vzrok ničnosti pozneje odpade',
+    'Sodišče ničnost upošteva le, če jo uveljavlja ena od strank',
+    'Pogodba v nasprotju s prisilnimi predpisi je le izpodbojna'], 0,
+    'Nasprotje z ustavo, prisilnimi predpisi ali moralo povzroči ničnost. Na ničnost sodišče pazi po uradni dolžnosti, na izpodbojnost pa le na zahtevo stranke. Nična pogodba ne postane veljavna, če vzrok pozneje preneha.'),
+  Q('Proizvajalec želi zavarovati ime, ki označuje geografski izvor njegovega izdelka, in nov izum. Katera trditev drži?', [
+    'Ime z geografskim izvorom zavaruje z označbo porekla ali geografsko označbo',
+    'Izum je s patentom zavarovan časovno neomejeno',
+    'Pravice industrijske lastnine učinkujejo le med strankama, kot obligacijske',
+    'Znamka velja 20 let in je po tem ni mogoče podaljšati'], 0,
+    'Patent traja 20 let. Pravice industrijske lastnine so absolutne (učinkujejo proti vsem). Znamka velja 10 let in se lahko podaljšuje neomejeno.'),
+  Q('Katera trditev o lastnini drži?', [
+    'Pri skupni lastnini deleži lastnikov niso vnaprej določeni',
+    'Zahtevek za vrnitev stvari (lastninska tožba) zastara v petih letih',
+    'Lastninska pravica je obligacijska pravica na stvareh',
+    'Država sme lastnino v javnem interesu odvzeti brez nadomestila'], 0,
+    'Lastninska tožba ne zastara. Lastninska pravica je stvarna (absolutna). V javno korist se lahko omeji ali odvzame le proti nadomestilu v naravi ali odškodnini.'),
+  Q('Trije bratje so solastniki hiše, vsak do ene tretjine. Kaj velja?', [
+    'Vsak lahko s svojim deležem razpolaga brez soglasja drugih dveh',
+    'Za prodajo svojega deleža potrebuje soglasje obeh bratov',
+    'Ker so deleži določeni, gre za skupno lastnino',
+    'Država jim hiše v javno korist ne more odvzeti, lahko jo le omeji'], 0,
+    'Pri solastnini so deleži določeni (idealni) in z njimi solastnik prosto razpolaga. Pri skupni lastnini deleži niso določeni. Lastnina se v javno korist lahko tudi odvzame (razlastitev); pridobi pa se lahko s pravnim poslom, z odločbo ali na podlagi zakona (npr. priposestvovanje).'),
+  Q('Katera trditev o osebnih družbah drži?', [
+    'Družbenik d.n.o. ne more prenesti svojega deleža brez soglasja ostalih družbenikov',
+    'Nov družbenik d.n.o. odgovarja le za obveznosti, nastale po njegovem vstopu',
+    'V k.d. komanditist odgovarja neomejeno, komplementar pa do višine vložka',
+    'V dvojni družbi je komplementar fizična oseba, komanditist pa d.o.o.'], 0,
+    'Novi družbenik d.n.o. odgovarja tudi za prej nastale obveznosti. V k.d. neomejeno odgovarja komplementar. Dvojna družba je k.d., v kateri je komplementar kapitalska družba (npr. d.o.o.).'),
+  Q('Katera trditev o firmi gospodarske družbe drži?', [
+    'Vsaka družba mora imeti firmo in z njo nastopati v pravnem prometu',
+    'Sedež je obvezni sestavni del firme',
+    'Vpis firme v sodni register ni obvezen',
+    'Firma d.o.o. mora vsebovati osebno ime vsaj enega družbenika'], 0,
+    'Načelo obveznosti firme. Sedež ni del firme (vpiše se posebej). Firma se obvezno vpiše v sodni register. Osebno ime družbenika mora vsebovati firma osebne družbe.'),
+  Q('Minister izda pravilnik. Kaj zanj velja?', [
+    'Ne sme učinkovati za nazaj',
+    'Začne veljati 20. dan po objavi, če ni drugače določeno',
+    'Če je nezakonit, ga razveljavi Vrhovno sodišče',
+    'Usklajen mora biti z ustavo, z zakoni pa ne nujno'], 0,
+    'Učinek za nazaj lahko za posamezne določbe določi le zakon. Predpis začne veljati 15. dan po objavi. Neustavne in nezakonite predpise razveljavi Ustavno sodišče. Podzakonski akt mora biti v skladu z ustavo in z zakoni.'),
+  Q('Katera trditev o delnicah drži?', [
+    'Delnicam s prednostjo pri dividendi je mogoče izključiti glasovalno pravico',
+    'Delnice ureja poseben Zakon o delnicah',
+    'Prednostne delnice lahko obsegajo največ 10 % osnovnega kapitala',
+    'Delnica je dolžniški vrednostni papir, ki prinaša obresti'], 0,
+    'Delnice ureja ZGD-1. Prednostne delnice brez glasovalne pravice so omejene na polovico osnovnega kapitala. Delnica je lastniški (korporacijski) VP; dolžniški VP z obrestmi je obveznica.'),
+  Q('Katera trditev o avtorski pravici drži?', [
+    'Delo je varovano že s tem, ko je ustvarjeno',
+    'Avtor dela je lahko tudi pravna oseba, ki je delo naročila',
+    'Moralne avtorske pravice lahko avtor s pogodbo prenese na založnika',
+    'Ob kršitvi lahko avtor zahteva le povrnitev premoženjske škode'], 0,
+    'Varstvo nastane s samo stvaritvijo, brez registracije. Avtor je lahko le fizična oseba. Moralne pravice so neprenosljive. Avtor lahko zahteva tudi odškodnino za nepremoženjsko škodo.'),
+  Q('Katera trditev o avtorju in avtorskih pravicah drži?', [
+    'Pravna oseba ne more biti avtor, lahko pa je imetnica materialnih avtorskih pravic',
+    'Pravica do prve objave je materialna avtorska pravica',
+    'Avtorska pravica traja, dokler se delo uporablja',
+    'Pri delu iz delovnega razmerja preidejo na delodajalca tudi moralne pravice'], 0,
+    'Pravica do prve objave je moralna. Avtorska pravica traja življenje avtorja in 70 let po njegovi smrti. Moralne pravice ostanejo avtorju tudi pri delih iz delovnega razmerja.'),
+  Q('Kdo vodi posle v posamezni obliki družbe?', [
+    'Delniška družba z enotirnim sistemom - upravni odbor',
+    'Delniška družba z dvotirnim sistemom - uprava skupaj z nadzornim svetom',
+    'Komanditna družba - komanditisti',
+    'Družba z neomejeno odgovornostjo - direktor'], 0,
+    'Dvotirni sistem: posle vodi uprava, nadzorni svet nadzira. K.d.: posle vodijo komplementarji. D.n.o.: vsi družbeniki (direktor je organ d.o.o.).'),
+  Q('Kaj vse mora biti izpolnjeno za veljavno sklenitev pravnega posla?', [
+    'Pravna in poslovna sposobnost strank, soglasje volj, mogoč in dopusten predmet ter oblika, kadar jo zahtevata zakon ali dogovor',
+    'Le pravna sposobnost strank, soglasje o bistvenih sestavinah in pravno mogoč predmet',
+    'Poslovna sposobnost strank, soglasje o vseh, tudi nebistvenih sestavinah, in vedno pisna oblika',
+    'Pooblastilo za sklenitev, soglasje volj in oblika, ki jo določi zakon, ne pa dogovor strank'], 0,
+    'Potrebni so: pravna IN poslovna sposobnost, soglasje volj (o bistvenih sestavinah), mogoč, dopusten in določen oz. določljiv predmet ter oblika, kadar jo zahteva zakon ali dogovor strank.'),
+  Q('Katera trditev o gospodarskih družbah drži?', [
+    'Za obveznosti družbe vedno odgovarja družba sama z vsem svojim premoženjem',
+    'Družbe se v Sloveniji ustanavljajo po koncesijskem sistemu',
+    'Ustanovitveni akt vseh družb je statut',
+    'Ustanovitelji lahko izberejo poljubno obliko družbe, ki je zakon ne pozna'], 0,
+    'Družba sama vedno odgovarja z vsem premoženjem; oblike se razlikujejo le po odgovornosti družbenikov. Velja normativni sistem, statut ima le d.d., krog oblik je zaprt (numerus clausus).'),
+  Q('Marko vstopi kot družbenik v obstoječo d.n.o. Kaj velja?', [
+    'Odgovarja tudi za obveznosti družbe, ki so nastale pred njegovim vstopom',
+    'Odgovarja le za obveznosti, nastale po vpisu njegovega vstopa',
+    'Za obveznosti ne odgovarja, ker zanje odgovarja d.n.o. sama',
+    'Postane član obveznega nadzornega sveta d.n.o.'], 0,
+    'Družbeniki d.n.o. odgovarjajo neomejeno, solidarno in subsidiarno, novi družbenik tudi za prej nastale obveznosti. D.n.o. nima obveznih organov; preneha lahko tudi s stečajem.'),
+  Q('Katera trditev o vrednostnih papirjih drži?', [
+    'Obveznica je dolžniški VP, ki ga lahko izdajo država, občine in podjetja',
+    'Konosament je sestavljen iz pobotnice in zastavnice',
+    'Menica je kavzalni papir, njena veljavnost je odvisna od temeljnega posla',
+    'Ček imetniku daje pravico do izročitve blaga'], 0,
+    'Iz pobotnice in zastavnice je sestavljena skladiščnica. Menica je abstrakten VP. Ček je denarni VP, plačljiv na vpogled.'),
+  Q('Katera trditev o organih in kapitalu delniške družbe drži?', [
+    'Prednostne delnice brez glasovalne pravice smejo obsegati največ polovico osnovnega kapitala',
+    'Člane uprave voli skupščina delničarjev',
+    'Delničar s 75 % osnovnega kapitala lahko izključi manjšinske delničarje',
+    'Statut spreminja nadzorni svet s tričetrtinsko večino'], 0,
+    'Upravo imenuje nadzorni svet. Izključitev manjšinskih delničarjev (squeeze-out) je mogoča pri 90 %. Statut spreminja skupščina s 3/4 večino.'),
+  Q('Katera trditev o sodnem registru drži?', [
+    'Vpis imenovanja novega direktorja je deklaratorne narave',
+    'Z vpisom v sodni register družba pridobi poslovno sposobnost',
+    'Samostojni podjetnik se vpiše v sodni register',
+    'Sodni register vodi AJPES, sodišča pa objavljajo podatke'], 0,
+    'Vpis ustanovitve je konstitutiven: družba pridobi pravno sposobnost. S.p. se vpiše v Poslovni register Slovenije. Sodni register vodijo okrožna sodišča, objavo zagotavlja AJPES.'),
+  Q('Katera trditev o spremembi in prenehanju obveznosti drži?', [
+    'Stranki se lahko dogovorita, da obstoječo obveznost nadomestita z novo (prenova)',
+    'Dolžnik, ki plača zastarani dolg, lahko plačilo zahteva nazaj',
+    'Z zastaranjem obveznost v celoti ugasne',
+    'Pobot je mogoč le s pogodbo med obema strankama'], 0,
+    'Zastaranje odvzame le pravico zahtevati izpolnitev; obveznost ostane (naravna), zato vrnitve plačanega ni. Pobot učinkuje z enostransko izjavo, ko se nasprotni terjatvi srečata.'),
+  Q('Katera trditev o virih prava EU drži?', [
+    'Uredba je zavezujoč sekundarni vir prava EU',
+    'Predloge uredb praviloma pripravi Evropski svet',
+    'Nacionalno sodišče sme pravo EU uporabiti le z dovoljenjem Sodišča EU',
+    'Uredbe, direktive in sklepi so primarni viri prava EU'], 0,
+    'Zakonodajno pobudo ima Komisija. Nacionalna sodišča pravo EU uporabljajo sama (s predhodnim vprašanjem lahko le zaprosijo za razlago). Primarni viri so pogodbe; uredbe, direktive in sklepi so sekundarni.'),
+  Q('Katera trditev o stvarnih pravicah drži?', [
+    'Stvarno breme zavezuje lastnika nepremičnine k dajatvam ali storitvam',
+    'Vrednostnih papirjev ni mogoče zastaviti',
+    'Stvarne pravice na premičninah se vpisujejo v zemljiško knjigo',
+    'Služnosti ni mogoče pridobiti s priposestvovanjem'], 0,
+    'Zastavijo se lahko tudi VP in terjatve. Zemljiška knjiga je za nepremičnine. Služnost se lahko pridobi tudi s priposestvovanjem.'),
+  Q('Nad družbo se začne stečajni postopek. Kaj velja?', [
+    'Upniki s terjatvami pred začetkom stečaja se poplačajo sočasno in sorazmerno',
+    'Postopek ureja Zakon o gospodarskih družbah (ZGD-1)',
+    'Stečaj se začne na podlagi sporazuma družbenikov',
+    'Nad osebno družbo prisilna poravnava ni mogoča'], 0,
     'Velja načelo enakega obravnavanja upnikov. Insolvenčne postopke ureja ZFPPIPP. Stečaj je posledica insolventnosti (sporazum družbenikov vodi v likvidacijo). Prisilna poravnava je mogoča tudi nad osebno družbo.'),
 ];
 
 const izpitStarejsi = [
-  Q('Molk osebe, na katero je ponudba naslovljena: (izpit)', [
-    'Ne pomeni sprejema ponudbe', 'Pomeni sprejem ponudbe v vsakem primeru', 'Pomeni, da je pogodba sklenjena', 'Pomeni zavrnitev ponudbe v vsakem primeru'], 0,
-    'Molk praviloma ni sprejem. Izjema: stalna poslovna zveza, kjer naslovnik ponudbo v okviru te zveze mora zavrniti.'),
-  Q('Pri cesiji terjatve se: (izpit)', [
-    'Spremeni dosedanji upnik', 'Spremeni oseba dolžnika', 'Ob upniku vstopi še nov upnik', 'Spremenita obe stranki'], 0,
-    'Cesija (odstop terjatve) zamenja upnika: cedent prenese terjatev na cesionarja, dolžnik ostane isti. Menjava dolžnika je prevzem dolga.'),
-  Q('Za kaj odgovarja cedent pri neodplačni cesiji? (izpit)', [
-    'Ne za obstoj ne za izterljivost', 'Le za obstoj terjatve', 'Le za izterljivost terjatve', 'Za obstoj in za izterljivost'], 0,
-    'Pri odplačnem odstopu cedent odgovarja za obstoj terjatve (za izterljivost le, če je dogovorjeno). Pri neodplačnem ne odgovarja niti za obstoj.'),
-  Q('Pristop k dolgu se opravi: (izpit)', [
-    'S pogodbo', 'S prevzemom cesije', 'Z akceptom', 'Z regresom'], 0,
-    'Pristop k dolgu je pogodba med prevzemnikom in upnikom (ali dolžnikom), s katero prevzemnik vstopi v obveznost poleg dolžnika.'),
-  Q('Na čem temelji subjektivna odškodninska odgovornost? (izpit)', [
-    'Na krivdi povzročitelja', 'Na vzročni zvezi', 'Na statusu povzročitelja', 'Na nevarnosti stvari'], 0,
-    'Subjektivna (krivdna) odgovornost temelji na krivdi. Objektivna odgovornost (nevarna stvar, nevarna dejavnost) ne glede na krivdo.'),
-  Q('S čim se predvsem ublaži nepremoženjska škoda? (izpit)', [
-    'Z denarno odškodnino', 'Z odškodnino v naravi', 'Z vzpostavitvijo prejšnjega stanja', 'Z odločbo notarja'], 0,
-    'Za nepremoženjsko škodo (telesne, duševne bolečine, strah) se prisodi pravična denarna odškodnina.'),
-  Q('Kdaj je pogodba nična? (izpit)', [
-    'Če nima podlage', 'Če je sklenjena v zmoti', 'Če je bila stranka prevarana', 'Če je stranka mladoletna'], 0,
-    'Pogodba brez (dopustne) podlage je nična. Zmota, prevara in omejena poslovna sposobnost povzročijo izpodbojnost.'),
-  Q('Kdaj je pogodba razdrta že po samem zakonu? (izpit)', [
-    'Če je rok bistvena sestavina in dolžnik ne izpolni v roku', 'Če ena stranka hudo krši zakon ali pogodbo', 'Če dolžnik zamudi z izpolnitvijo navadnega roka', 'Če upnik terjatev iz pogodbe odstopi drugemu'], 0,
-    'Pri fiksnem roku je pogodba razdrta po samem zakonu, če dolžnik ne izpolni v roku (razen če upnik takoj zahteva izpolnitev).'),
-  Q('Ara se v pogodbi dogovori: (izpit)', [
-    'Kot znamenje, da je pogodba sklenjena, in kot varščina', 'Izključno kot predujem (avans) na račun kupnine', 'Kot zakoniti pogoj, brez katerega pogodba ne nastane', 'Kot cena, ki jo stranka plača za odstop od pogodbe'], 0,
-    'Ara je znamenje sklenitve in zagotovilo izpolnitve. Cena za odstop od pogodbe je odstopnina (skesnina).'),
-  Q('Obveznost poroka pri gospodarskih pogodbah je: (izpit)', [
-    'Akcesorna in solidarna z glavnim dolžnikom', 'Vedno akcesorna in subsidiarna do dolžnika', 'Samostojna in abstraktna kot garancija', 'Odvisna le od dogovora upnika in poroka'], 0,
-    'Pri gospodarskih pogodbah porok odgovarja kot solidarni porok (upnik lahko terja kogar koli). Akcesorna je, ker je odvisna od glavne obveznosti. Abstraktna je bančna garancija.'),
-  Q('Upnik uveljavlja pridržno (retencijsko) pravico tako: (izpit)', [
-    'Da zadrži stvar, dokler mu dolžnik ne plača', 'Da na stvari pridobi lastninsko pravico', 'Da stvar da v najem tretji osebi', 'Da stvar uporablja in z njo razpolaga'], 0,
-    'Pridržna pravica: upnik, ki ima dolžnikovo stvar, jo sme zadržati do poplačila zapadle terjatve. Stvari ne sme uporabljati ali z njo razpolagati.'),
-  Q('Koliko znaša splošni zastaralni rok? (izpit)', [
-    '5 let', '3 leta', '1 leto', '10 let'], 0,
-    'Splošni zastaralni rok po OZ je 5 let. Krajši roki veljajo npr. za gospodarske pogodbe (3 leta) in občasne terjatve.'),
-  Q('Lastninska pravica na nepremičnini se pridobi: (izpit)', [
-    'Z vpisom v zemljiško knjigo', 'S prevzemom nepremičnine v posest', 'Z overovitvijo kupoprodajne pogodbe', 'S plačilom kupnine'], 0,
-    'Pri pridobitvi s pravnim poslom je vpis v zemljiško knjigo konstitutiven. Pogodba je le zavezovalni posel (titulus), vpis je modus.'),
-  Q('Člane uprave delniške družbe imenuje: (izpit)', [
-    'Nadzorni svet', 'Skupščina družbe', 'Direktor družbe', 'Imetniki prednostnih delnic'], 0,
-    'V dvotirnem sistemu nadzorni svet imenuje in odpokliče upravo; skupščina voli nadzorni svet.'),
-  Q('Pravna oseba pridobi pravno sposobnost: (izpit)', [
-    'Z vpisom v register', 'S sklenitvijo pogodbe o ustanovitvi', 'Z overovitvijo podpisov ustanoviteljev', 'Z odločbo upravnega organa'], 0,
-    'Vpis ustanovitve v sodni register je konstitutiven - družba nastane kot pravna oseba.'),
-  Q('Stečaj družbe je posledica: (izpit)', [
-    'Insolventnosti družbe', 'Sporazuma družbenikov', 'Uvedbe likvidacije', 'Ničnosti vpisa v register'], 0,
-    'Stečaj je insolvenčni postopek. Sporazum družbenikov vodi v (redno) likvidacijo, ničnost vpisa pa v prisilno likvidacijo.'),
-  Q('Pri bančni garanciji banka garant: (izpit)', [
-    'Nima pooblastila presojati izpolnitve temeljne pogodbe', 'Lahko uveljavlja ugovore iz temeljnega posla', 'Plača šele, ko presodi, da dolžnik ni izpolnil', 'Odgovarja subsidiarno kot navaden porok'], 0,
-    'Bančna garancija je abstraktna: banka plača na prvi poziv, če je zahteva v skladu z garancijskimi pogoji, in ne presoja temeljnega razmerja.'),
-  Q('Kaj je določujoča prvina nelojalne konkurence? Dejanje, ki: (izpit)', [
-    'Nasprotuje dobrim poslovnim običajem', 'Ni skladno z osebno moralo trgovca', 'Krši ustavno svobodo gospodarske pobude', 'Omejuje uvoz tujega blaga v državo'], 0,
+  Q('Podjetje A pošlje ponudbo podjetju B, s katerim ni v stalni poslovni zvezi. B ne odgovori. Kaj velja?', [
+    'Pogodba ni sklenjena, ker molk ne pomeni sprejema', 'Pogodba je sklenjena, ker B ni ugovarjal v 8 dneh', 'Pogodba je sklenjena pod odložnim pogojem', 'A lahko od B zahteva odškodnino zaradi molka'], 0,
+    'Molk praviloma ni sprejem ponudbe. Izjema je stalna poslovna zveza, v kateri mora naslovnik ponudbo, ki se nanaša na to zvezo, izrecno zavrniti.'),
+  Q('Banka svojo terjatev do kreditojemalca odstopi agenciji za izterjavo. Kdo se v obligacijskem razmerju zamenja?', [
+    'Upnik', 'Dolžnik', 'Upnik in dolžnik', 'Nihče, agencija postane le pooblaščenka banke'], 0,
+    'Cesija (odstop terjatve) zamenja upnika: cedent (banka) prenese terjatev na cesionarja (agencijo), dolžnik ostane isti. Zamenjava dolžnika je prevzem dolga.'),
+  Q('Oče sinu brezplačno odstopi svojo terjatev do soseda. Za kaj oče sinu odgovarja?', [
+    'Ne odgovarja ne za obstoj ne za izterljivost terjatve', 'Le za obstoj terjatve', 'Le za izterljivost terjatve', 'Za obstoj in izterljivost terjatve'], 0,
+    'Pri odplačnem odstopu cedent odgovarja za obstoj terjatve (za izterljivost le, če je tako dogovorjeno). Pri neodplačnem ne odgovarja niti za obstoj.'),
+  Q('Kako tretja oseba vstopi v obveznost poleg dosedanjega dolžnika (pristop k dolgu)?', [
+    'S pogodbo', 'Z indosamentom', 'S sodno odločbo', 'Z regresnim zahtevkom'], 0,
+    'Pristop k dolgu je pogodba (prevzemnika z upnikom ali z dolžnikom), s katero prevzemnik vstopi v obveznost poleg dolžnika; dolžnik iz razmerja ne izstopi.'),
+  Q('Po čem se subjektivna odškodninska odgovornost loči od objektivne?', [
+    'Odvisna je od krivde povzročitelja', 'Nastane ne glede na krivdo, zaradi nevarne stvari', 'Odvisna je od statusa povzročitelja', 'Zanjo zadostuje sama vzročna zveza'], 0,
+    'Subjektivna (krivdna) odgovornost temelji na krivdi. Objektivna (za nevarne stvari in dejavnosti) nastane ne glede na krivdo. Vzročna zveza je pogoj pri obeh.'),
+  Q('Oškodovanec v prometni nesreči utrpi hude telesne bolečine in strah. Kako se mu ta nepremoženjska škoda praviloma povrne?', [
+    'S pravično denarno odškodnino', 'Z vzpostavitvijo prejšnjega stanja', 'Z odškodnino v naravi', 'Le z javnim opravičilom povzročitelja'], 0,
+    'Za nepremoženjsko škodo (telesne in duševne bolečine, strah) se prisodi pravična denarna odškodnina; vzpostavitev prejšnjega stanja je pravilo pri premoženjski škodi.'),
+  Q('V katerem primeru je pogodba nična in ne le izpodbojna?', [
+    'Pogodba nima dopustne podlage', 'Stranka je pogodbo sklenila v bistveni zmoti', 'Druga stranka je stranko prevarala', 'Pogodbo je sklenil 16-letnik brez soglasja staršev'], 0,
+    'Pogodba brez (dopustne) podlage je nična. Zmota, prevara, grožnja in omejena poslovna sposobnost povzročijo izpodbojnost.'),
+  Q('Torta mora biti dostavljena na dan praznovanja ob 12. uri, rok je bistvena sestavina pogodbe. Slaščičar je ne dostavi. Kaj velja?', [
+    'Pogodba je razdrta po samem zakonu, razen če upnik takoj zahteva izpolnitev', 'Pogodba ostane v veljavi, torto je treba dostaviti naslednji dan', 'Pogodba je nična od začetka', 'Upnik mora slaščičarju najprej dati dodatni rok'], 0,
+    'Pri fiksnem (bistvenem) roku je pogodba razdrta po samem zakonu, če dolžnik ne izpolni v roku. Upnik jo lahko ohrani, če nemudoma sporoči, da zahteva izpolnitev. Dodatni rok je potreben pri navadnem roku.'),
+  Q('Kupec ob sklenitvi pogodbe prodajalcu izroči aro. Kakšno vlogo ima ara?', [
+    'Je znamenje, da je pogodba sklenjena, in zagotovilo njene izpolnitve', 'Je cena za pravico odstopiti od pogodbe', 'Je le predujem na račun kupnine, brez drugih učinkov', 'Je pogoj, brez katerega pogodba ne nastane'], 0,
+    'Ara je znamenje sklenitve in varščina za izpolnitev. Cena za odstop od pogodbe je odstopnina (skesnina).'),
+  Q('Porok jamči za dolg iz gospodarske pogodbe. Kako odgovarja?', [
+    'Solidarno z glavnim dolžnikom, njegova obveznost je akcesorna', 'Subsidiarno - upnik mora najprej neuspešno terjati dolžnika', 'Samostojno in abstraktno, neodvisno od glavne obveznosti', 'Le, če to izrecno dovoli glavni dolžnik'], 0,
+    'Pri gospodarskih pogodbah je porok solidarni porok (upnik lahko terja dolžnika ali poroka). Obveznost je akcesorna, ker je odvisna od glavne. Abstraktna je bančna garancija.'),
+  Q('Avtomehanik ima pri sebi avto stranke, ki popravila ni plačala. Kaj sme storiti na podlagi pridržne pravice?', [
+    'Avto zadrži, dokler mu stranka ne plača zapadle terjatve', 'Avto uporablja, dokler stranka ne plača', 'Avto proda brez sodnega postopka in se poplača', 'Na avtu pridobi lastninsko pravico'], 0,
+    'Pridržna (retencijska) pravica: upnik sme dolžnikovo stvar, ki jo ima, zadržati do plačila zapadle terjatve. Stvari ne sme uporabljati in z njo ne razpolaga; lastnik ne postane.'),
+  Q('Koliko časa traja splošni zastaralni rok po Obligacijskem zakoniku?', [
+    '5 let', '3 leta', '10 let', '1 leto'], 0,
+    'Splošni zastaralni rok je 5 let. Krajši so npr. pri terjatvah iz gospodarskih pogodb (3 leta) in pri občasnih terjatvah.'),
+  Q('Kupec podpiše kupoprodajno pogodbo za stanovanje in plača kupnino. Kdaj postane lastnik?', [
+    'Ko je njegova lastninska pravica vpisana v zemljiško knjigo', 'Ko prevzame ključe in posest stanovanja', 'Ko notar overi podpise na pogodbi', 'Ko plača celotno kupnino'], 0,
+    'Pri pridobitvi s pravnim poslom je vpis v zemljiško knjigo konstitutiven. Pogodba je zavezovalni posel (titulus), vpis je razpolagalni (modus).'),
+  Q('Kdo imenuje člane uprave delniške družbe v dvotirnem sistemu?', [
+    'Nadzorni svet', 'Skupščina delničarjev', 'Predsednik uprave', 'Upravni odbor'], 0,
+    'Nadzorni svet imenuje in odpokliče upravo; skupščina voli nadzorni svet. Upravni odbor obstaja le v enotirnem sistemu.'),
+  Q('Kdaj nova d.o.o. postane pravna oseba?', [
+    'Z vpisom v sodni register', 'S podpisom družbene pogodbe pri notarju', 'Z vplačilom osnovnega kapitala', 'Z izdajo odločbe pristojnega ministrstva'], 0,
+    'Vpis ustanovitve v sodni register je konstitutiven - z njim družba pridobi pravno sposobnost.'),
+  Q('Kaj je razlog za začetek stečaja družbe?', [
+    'Insolventnost družbe', 'Sklep družbenikov, da družba preneha', 'Ničnost vpisa v sodni register', 'Iztek časa, za katerega je bila ustanovljena'], 0,
+    'Stečaj je insolvenčni postopek. Sklep družbenikov ali iztek časa vodita v (redno) likvidacijo, ničnost vpisa v prisilno likvidacijo.'),
+  Q('Upravičenec banki predloži zahtevo za plačilo iz bančne garancije, ki ustreza pogojem garancije. Kaj stori banka?', [
+    'Plača, ne da bi presojala, ali je dolžnik temeljno pogodbo res kršil', 'Najprej preveri, ali je dolžnik temeljno pogodbo res kršil', 'Uveljavlja ugovore, ki jih ima dolžnik iz temeljnega posla', 'Plača šele, ko upravičenec dolžnika neuspešno izterja'], 0,
+    'Bančna garancija je abstraktna: banka plača na prvi poziv, če je zahteva v skladu z garancijo, temeljnega razmerja pa ne presoja.'),
+  Q('Podjetje o konkurentu širi neresnične trditve, da prodaja ponaredke. Kaj je bistvo nelojalne konkurence?', [
+    'Dejanje nasprotuje dobrim poslovnim običajem in lahko škodi drugim na trgu', 'Dejanje nasprotuje osebni morali direktorja', 'Dejanje omejuje ustavno svobodo gospodarske pobude', 'Dejanje zmanjšuje uvoz blaga v državo'], 0,
     'Nelojalna konkurenca je dejanje v nasprotju z dobrimi poslovnimi običaji, ki povzroči ali lahko povzroči škodo drugim udeležencem na trgu.'),
-  Q('Menica z rekta klavzulo ("ne po odredbi") se prenese na tretjo osebo: (izpit)', [
-    'S cesijo', 'Z indosamentom', 'Z izročitvijo', 'Z avalom'], 0,
-    'Rekta klavzula prepove prenos z indosamentom; menica se lahko prenese le z navadnim odstopom terjatve (cesijo).'),
-  Q('Kakšna dospelost velja za ček? (izpit)', [
-    'Na vpogled', 'Ustno dogovorjena', 'Pogodbena', 'Po bančnih običajih'], 0,
-    'Ček je vedno plačljiv na vpogled; drugačna dospelost se šteje za nenapisano.'),
-  Q('Kup na pokušnjo je: (izpit)', [
-    'Pogodba z odložnim pogojem', 'Pogodba z razveznim pogojem', 'Posebna prodaja na obroke', 'Pogodba s fiksnim rokom'], 0,
-    'Pogodba je sklenjena pod odložnim pogojem, da kupec stvar po pokušnji odobri.'),
+  Q('Na menici je zapisano "ne po odredbi" (rekta klavzula). Kako jo upnik prenese na drugo osebo?', [
+    'Le z navadnim odstopom terjatve (cesijo)', 'Z indosamentom', 'Z golo izročitvijo', 'Z avalom'], 0,
+    'Rekta klavzula izključi prenos z indosamentom, zato je mogoča le cesija. Aval je menično poroštvo, ne prenos.'),
+  Q('Na čeku je zapisan datum plačila čez 30 dni. Kdaj je ček plačljiv?', [
+    'Na vpogled - drugačna dospelost se šteje za nenapisano', 'Čez 30 dni, kot je zapisano', 'Nikoli, ker je ček zaradi tega ničen', 'Ko se o tem dogovorita imetnik in banka'], 0,
+    'Ček je vedno plačljiv na vpogled; vsaka drugačna dospelost se šteje za nenapisano.'),
+  Q('Kupec vzame kavni aparat domov na pokušnjo in se mora odločiti v 7 dneh. Kakšna pogodba je to?', [
+    'Pogodba pod odložnim pogojem, da kupec stvar po pokušnji odobri', 'Pogodba pod razveznim pogojem', 'Prodaja na obroke', 'Pogodba s fiksnim rokom'], 0,
+    'Prodaja na pokušnjo je sklenjena pod odložnim pogojem: učinkuje, ko kupec stvar po pokušnji odobri.'),
 ];
 
 module.exports = {
@@ -293,8 +292,8 @@ module.exports = {
       notesMd: NOTES_IZPIT,
       prependNotesOf: ['k1', 'k2'],
       decks: [
-        { id: 'pi-novejsi', name: 'Izpitna vprašanja (novejši izpiti)', questions: izpitNovejsi },
-        { id: 'pi-starejsi', name: 'Kratka izpitna vprašanja (starejši izpiti)', questions: izpitStarejsi },
+        { id: 'pi-novejsi', name: 'Vaje v slogu izpita: trditve', questions: izpitNovejsi },
+        { id: 'pi-starejsi', name: 'Vaje v slogu izpita: kratka vprašanja', questions: izpitStarejsi },
       ],
     },
   ],
