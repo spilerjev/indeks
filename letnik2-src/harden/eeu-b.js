@@ -411,14 +411,14 @@ module.exports = [
   "Robert Schuman; skupni nadzor premoga in jekla"
  ],
  [
-  "Katera osebnost je povezana z Delorsovim poročilom",
+  "Kaj je predlagalo Delorsovo poročilo",
   [
-   "Spaakovo poročilo o skupnem trgu",
-   "Draghijevo poročilo o konkurenčnosti",
-   "Maudlingov načrt za območje proste trgovine"
+   "Uvedbo Evropskega monetarnega sistema (EMS) in obračunske enote ECU",
+   "Dokončanje notranjega trga do 31. 12. 1992 s približno 300 ukrepi",
+   "Skupni trg in carinsko unijo, iz česar sta nastali Rimski pogodbi"
   ],
   3,
-  "EMS v treh fazah, ki je vodil k Maastrichtu"
+  "Ekonomsko in monetarno unijo (EMU) v treh fazah, ki je vodila k Maastrichtu"
  ],
  [
   "Zakaj je bila trgovina med državami po vojni bilateralna?",
