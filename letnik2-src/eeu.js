@@ -195,6 +195,7 @@ module.exports = {
         file: '2. letnik (2026-27)/1. semester/Ekonomika EU in Slovenija/ZAPISKI.md',
         skip: ['naša seminarska'],
       },
+      notesHtml: require('./eeu-pogodbe'),
       decks: [
         { id: 'eeu-povojna', name: 'Povojna Evropa, OEEC in EPU', questions: povojna },
         { id: 'eeu-pristopi', name: 'Pristopi, ESPJ, Rimska pogodba, stopnje integracije', questions: pristopi },

@@ -779,6 +779,23 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-notes em{font-style:italic;}
 .ix-notes b{color:var(--ink);}
 .ix-notes i{color:var(--teal);font-style:normal;font-weight:600;}
+.ix-notes .tl-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:12.5px;color:var(--ink2);margin:4px 0 10px;}
+.ix-notes .tl-ust{--tlc:var(--terra);}
+.ix-notes .tl-spr{--tlc:var(--teal);}
+.ix-notes .tl-nev{--tlc:var(--ink2);}
+.ix-notes .tl-dot{width:11px;height:11px;border-radius:3px;display:inline-block;margin-left:4px;background:var(--tlc);}
+.ix-notes details.tl{background:var(--paper2);border:1px solid var(--line);border-left:4px solid var(--tlc);border-radius:12px;margin:8px 0;overflow:hidden;}
+.ix-notes details.tl-nev{border-style:dashed;border-left-style:solid;}
+.ix-notes details.tl>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:11px 14px;user-select:none;}
+.ix-notes details.tl>summary::-webkit-details-marker{display:none;}
+.ix-notes details.tl>summary::after{content:"›";margin-left:auto;font-size:22px;line-height:1;color:var(--ink2);transition:transform .2s;}
+.ix-notes details.tl[open]>summary::after{transform:rotate(90deg);}
+.ix-notes details.tl>summary:hover{background:var(--paper);}
+.ix-notes .tl-y{font-family:'Fraunces',serif;font-weight:900;font-size:18px;color:var(--tlc);width:92px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.15;}
+.ix-notes .tl-y small,.ix-notes .tl-t small{font-family:inherit;font-weight:500;font-size:11.5px;color:var(--ink2);}
+.ix-notes .tl-t{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.ix-notes .tl-t b{font-size:15px;}
+.ix-notes .tl-body{padding:2px 16px 14px;border-top:1px dashed var(--line);font-size:14.5px;}
 .ix-flip{perspective:1400px;height:280px;width:100%;}
 .ix-flip-inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d;cursor:pointer;}
 .ix-flip-inner.flipped{transform:rotateY(180deg);}
@@ -4572,7 +4589,9 @@ const countHits = (text, q) => (q ? (text.match(new RegExp(escRe(q), "gi")) || [
 function highlightHtml(html, q) {
   if (!q) return html;
   const re = new RegExp(escRe(q), "gi");
-  return html.split(/(<[^>]+>)/).map((p) => (p.startsWith("<") ? p : p.replace(re, (m) => '<mark class="ix-mark">' + m + "</mark>"))).join("");
+  const out = html.split(/(<[^>]+>)/).map((p) => (p.startsWith("<") ? p : p.replace(re, (m) => '<mark class="ix-mark">' + m + "</mark>"))).join("");
+  /* zaprte razširljive kartice (časovnica) z zadetkom iskanja se odprejo, da je oznaka vidna */
+  return out.replace(/<details([^>]*)>([\s\S]*?)<\/details>/g, (m, a, inner) => (inner.includes("ix-mark") && !/\sopen/.test(a) ? "<details" + a + " open>" + inner + "</details>" : m));
 }
 function splitNotes(html) {
   const secs = [];

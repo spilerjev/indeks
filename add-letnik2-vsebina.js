@@ -37,7 +37,7 @@ for (const mod of MODULES) {
       else console.warn('  ! ni datoteke z zapiski:', file);
     }
     // informacije o predmetu na VRH zapiskov (npr. "kako zapisati rešitev"), idempotentno prek oznake
-    if (mp.appendNotesMd) part.notes = render(mp.appendNotesMd) + '<!--/dodatek-->' + (part.notes || '').split('<!--/dodatek-->').pop().split('<!--dodatek-->')[0];
+    if (mp.appendNotesMd || mp.notesHtml) part.notes = (mp.appendNotesMd ? render(mp.appendNotesMd) : '') + (mp.notesHtml || '') + '<!--/dodatek-->' + (part.notes || '').split('<!--/dodatek-->').pop().split('<!--dodatek-->')[0];
     return part;
   });
   const q = subj.parts.reduce((n, p) => n + p.decks.reduce((m, d) => m + d.questions.length, 0), 0);
