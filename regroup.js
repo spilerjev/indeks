@@ -2,7 +2,7 @@
    Konfiguracija: za vsak del seznam postavk v želenem vrstnem redu; postavka = 'deck-id' (ostane) ali
    { id, name, from: [ids], calc?, split? }. Sklopi, ki v seznamu niso omenjeni, se dodajo na konec (opozorilo).
    split: n razdeli sklop na n enako velikih delov "(1/n)". SPLIT_OVER: sklopi z več vprašanji se samodejno razpolovijo. */
-const SPLIT_OVER = 28;
+const SPLIT_OVER = 36;
 
 const CFG = {
   's1/mikro/k1': [
@@ -79,7 +79,8 @@ const CFG = {
   'y2s1/pf1/k1': [
     { id: 'pf1-cilj2', name: 'Cilj podjetja in vrednost (+ povezovanje)', from: ['cilj', 'pf1-k1-povezi'] },
     'agent', 'pf1-upravljanje', 'izkazi', 'pf1-izkazi2', 'kazalniki', 'pf1-tvm',
-    'pf1-rac-vrednost', 'pf1-rac-kazalniki', 'pf1-rac-tvm', 'pf1-maja-rac',
+    'pf1-rac-vrednost', 'pf1-rac-kazalniki',
+    { id: 'pf1-rac-tvm2', name: 'Računske: časovna vrednost denarja (vaje 2, z rešitvami)', from: ['pf1-rac-tvm', 'pf1-maja-rac'], calc: true },
   ],
   'y2s1/pf1/k2': [
     'pf1-obveznice', 'pf1-delnice',
@@ -91,7 +92,9 @@ const CFG = {
   'y2s1/stana/k1': [
     'stana-pojmi',
     { id: 'stana-opisna2', name: 'Opisna statistika in frekvenčne porazdelitve (+ povezovanje)', from: ['stana-opisna', 'stana-k1-povezi'] },
-    'stana-porazd', 'stana-vzorcenje', 'stana-intervalna', 'stana-vzorcenja', 'stana-maja', 'stana-stari', 'stana-stari2',
+    'stana-porazd', 'stana-vzorcenje', 'stana-intervalna',
+    { id: 'stana-vzorcenja2', name: 'Velikost vzorca in vzorčenja z omejitvami (P05, V05)', from: ['stana-vzorcenja', 'stana-maja'] },
+    'stana-stari', 'stana-stari2',
     'stana-rac-opisna', 'stana-rac-normalna', 'stana-rac-vzorcenje',
     { id: 'stana-rac-int-vel', name: 'Računske: intervalna ocena, velikost vzorca, stratificirano (P04–P05)', from: ['stana-rac-intervalna', 'stana-rac-velikost', 'stana-maja-rac'], calc: true },
   ],
@@ -108,18 +111,18 @@ const CFG = {
   'y2s1/eeu/k1': [
     'eeu-povojna', 'eeu-pristopi', 'eeu-krogi', 'eeu-vzhod', 'eeu-vaje1',
     { id: 'eeu-mm2', name: 'Mednarodna menjava: primerjalne prednosti in mikroekonomska orodja', from: ['eeu-mm', 'eeu-mikro'] },
-    { id: 'eeu-carine-pref', name: 'Carine in preferencialna liberalizacija (Viner)', from: ['eeu-carine-teorija', 'eeu-pref'] },
-    'eeu-pref2',
+    { id: 'eeu-carine', name: 'Carine: majhna in velika država, MFN (P04)', from: ['eeu-carine-teorija', 'eeu-maja'] },
+    { id: 'eeu-pref-all', name: 'Preferencialna liberalizacija (Viner), partnerica, tretje države in empirija (P05)', from: ['eeu-pref', 'eeu-pref2'] },
     { id: 'eeu-integr', name: 'Stopnje integracije in sporazumi (tudi stari kolokviji)', from: ['eeu-integr2', 'eeu-integracije'] },
-    'eeu-wto', 'eeu-maja', 'eeu-stari', 'eeu-povezi',
+    'eeu-wto', 'eeu-stari', 'eeu-povezi',
     { id: 'eeu-rac-mm-presezki', name: 'Računske: primerjalne prednosti in presežki (vaje 2–3)', from: ['eeu-rac-mm', 'eeu-rac-v3'], calc: true },
     { id: 'eeu-rac-carine-cu', name: 'Računske: carine in carinska unija (vaje 4)', from: ['eeu-rac-carine', 'eeu-rac-v4'], calc: true },
-    { id: 'eeu-rac-viner', name: 'Računske: ustvarjanje in preusmerjanje trgovine (vaje 3 in 5)', from: ['eeu-rac-v5', 'eeu-maja-rac'], calc: true },
+    { id: 'eeu-rac-viner', name: 'Računske: ustvarjanje in preusmerjanje trgovine (vaje 3 in 5, z rešitvami)', from: ['eeu-rac-v5', 'eeu-maja-rac'], calc: true },
   ],
   'y2s1/mpsp/k1': [
     { id: 'mpsp-yg2', name: 'Vaje 1: YG - strategija in procesi (+ povezovanje)', from: ['mpsp-yg', 'mpsp-k1-povezi'] },
     'mpsp-v2-teorija',
-    { id: 'mpsp-v34', name: 'Vaje 3-4: razmestitev in napovedovanje (+ Majini zapiski)', from: ['mpsp-v3-teorija', 'mpsp-maja'] },
+    { id: 'mpsp-v34', name: 'Vaje 3-4: razmestitev in napovedovanje povpraševanja', from: ['mpsp-v3-teorija', 'mpsp-maja'] },
     { id: 'mpsp-rac-v12', name: 'Računske: Littlov zakon, prispevek za kritje, zmogljivost (vaje 1–2)', from: ['mpsp-rac', 'mpsp-v2-rac'], calc: true },
     { id: 'mpsp-rac-v34', name: 'Računske: razmestitev, napovedovanje, regresija (vaje 3–4)', from: ['mpsp-v3-rac', 'mpsp-maja-rac'], calc: true },
   ],

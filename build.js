@@ -2,7 +2,19 @@
    Pipeline je bil rekonstruiran iz zgrajenega artefakta (vsebina 100% ohranjena).
    DATA je zaenkrat en JSON (data.json). Za urejanje: spreminjaj data.json (ali ga razbij na module in tu sestavi). */
 const fs = require('fs');
-const DATA = require('./regroup')(JSON.parse(JSON.stringify(require(require('path').join(__dirname,'data.json')))));   // sklopi po temah (regroup.js)
+// PRIVACY_CHECK: osebna imena ne smejo v objavljeno vsebino (imena sklopov, kartic, zapiski)
+const PRIVATE_RE = /Majin|\bMaja\b|Špiler|\bTinkar|\bAljaž|\bMatjaž/;
+function privacyCheck(data) {
+  const bad = [];
+  data.forEach((s) => s.subjects.forEach((su) => su.parts.forEach((p) => {
+    if (PRIVATE_RE.test((p.notes || '').replace(/<[^>]+>/g, ' '))) bad.push(su.id + '/' + p.id + ' zapiski');
+    (p.decks || []).forEach((d) => { if (PRIVATE_RE.test(d.name)) bad.push(su.id + '/' + p.id + '/' + d.id + ' ime sklopa'); });
+    (p.flashcards || []).forEach((f) => { if (PRIVATE_RE.test(f.name)) bad.push(su.id + '/' + p.id + '/' + f.id + ' ime kartic'); });
+  })));
+  if (bad.length) throw new Error('Osebni podatki v vsebini: ' + bad.join(', '));
+  return data;
+}
+const DATA = privacyCheck(require('./regroup')(JSON.parse(JSON.stringify(require(require('path').join(__dirname,'data.json'))))));   // sklopi po temah (regroup.js)
 
 // (po želji) pomožnik za iskanje dela predmeta:
 function findPart(sid, pid) {
