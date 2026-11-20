@@ -793,6 +793,27 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-sub-chip.bm{border-color:var(--teal);color:var(--teal);}
 .ix-root .ix-tocbtn{position:fixed;left:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:7px;padding:10px 15px;border-radius:999px;border:1px solid var(--line);background:var(--ink);color:var(--paper);font-weight:700;font-size:13.5px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.22);}
 .ix-root .ix-tocpanel{left:14px;right:auto;}
+.ix-root .ix-playbtn{width:42px;height:42px;border-radius:50%;border:0;color:var(--paper);display:grid;place-items:center;cursor:pointer;flex-shrink:0;transition:background .2s,transform .12s;}
+.ix-root .ix-playbtn:active{transform:scale(.92);}
+.ix-root .ix-player{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:65;width:min(640px,calc(100vw - 20px));box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:16px;border:1px solid var(--line);background:var(--paper2);box-shadow:0 12px 32px rgba(25,23,18,.2);overflow:hidden;animation:ixPlayerIn .32s cubic-bezier(.2,.8,.2,1);}
+@keyframes ixPlayerIn{from{opacity:0;transform:translate(-50%,18px);}to{opacity:1;transform:translate(-50%,0);}}
+.ix-root .ix-pbar{position:absolute;left:0;top:0;height:3px;background:var(--terra);transition:width .3s linear;}
+.ix-root .ix-ptitle{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px;background:none;border:0;padding:0 2px;cursor:pointer;color:var(--ink);font:inherit;text-align:left;}
+.ix-root .ix-ptitle .t{font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.ix-root .ix-ptitle .s{font-size:11.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.ix-root .ix-pclose{background:none;border:0;color:var(--ink2);cursor:pointer;padding:6px;display:grid;place-items:center;flex-shrink:0;}
+.ix-root.has-player{padding-bottom:84px;}
+.ix-root.has-player .ix-formbtn,.ix-root.has-player .ix-tocbtn,.ix-root.has-player .ix-totop{bottom:calc(84px + env(safe-area-inset-bottom));}
+@media (max-width:560px){.ix-root .ix-pskip{display:none;}}
+.ix-root .ix-foldhead{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid var(--line);padding:11px 2px 10px;cursor:pointer;color:inherit;font:inherit;text-align:left;}
+.ix-root .ix-foldhead .ix-sec{flex:1;min-width:0;}
+.ix-root .ix-foldmeta{flex-shrink:0;}
+.ix-root .ix-foldchev{color:var(--ink2);flex-shrink:0;transition:transform .3s cubic-bezier(.2,.8,.2,1);}
+.ix-root .ix-foldchev.on{transform:rotate(180deg);}
+.ix-root .ix-fold{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .34s cubic-bezier(.2,.8,.2,1),opacity .24s ease;}
+.ix-root .ix-fold.on{grid-template-rows:1fr;opacity:1;}
+.ix-root .ix-foldin{overflow:hidden;min-height:0;visibility:hidden;transition:visibility 0s .34s;}
+.ix-root .ix-fold.on .ix-foldin{visibility:visible;transition:none;}
 .ix-root .ix-totop{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:50;width:42px;height:42px;border-radius:999px;border:1px solid var(--line);background:var(--paper2);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.18);opacity:.92;}
 .ix-root .ix-totop:hover{opacity:1;border-color:var(--ink);}
 @media (max-width:760px){.ix-root .ix-totop{bottom:14px;width:40px;height:40px;}}
@@ -1584,6 +1605,7 @@ export default function App() {
         <Footer />
       </div>
       <ScrollTop />
+      <MiniPlayer go={setRoute} />
       <DialogHost />
     </div>
   );
@@ -1909,8 +1931,11 @@ function SubjectView({ route, stats, go }) {
   );
 }
 
-/* ---- POSLUŠAJ: predvajalnik zvočnih razlag; položaj po epizodi lokalno (AUDIO_KEY) in na računu (user_metadata.audiopos) ---- */
+/* ---- POSLUŠAJ: globalni predvajalnik (en element Audio za celo app) ----
+   Predvajanje teče naprej ob menjavi strani in ob ugasnjenem zaslonu; kontrole so tudi na zaklenjenem zaslonu (Media Session).
+   Položaj po epizodi: lokalno (AUDIO_KEY) in na računu (user_metadata.audiopos), zato vsak uporabnik nadaljuje, kjer je končal. */
 const fmtClock = (s) => { s = Math.max(0, Math.floor(s || 0)); const m = Math.floor(s / 60), r = s % 60; return m + ":" + (r < 10 ? "0" : "") + r; };
+const slPl = (n, f) => { const m = n % 100; return n + " " + (m === 1 ? f[0] : m === 2 ? f[1] : (m === 3 || m === 4) ? f[2] : f[3]); };
 let audioPushTimer = null;
 function pushAudioPos(user) {
   if (!user) return;
@@ -1922,71 +1947,166 @@ function pushAudioPos(user) {
 }
 function saveAudioPos(id, patch, user) { const all = store.get(AUDIO_KEY, {}); all[id] = { ...(all[id] || {}), ...patch, t: Date.now() }; store.set(AUDIO_KEY, all); pushAudioPos(user); }
 const SPEEDS = [1, 1.25, 1.5, 2];
-function AudioList({ eps, user }) {
-  const [pos, setPos] = useState(() => store.get(AUDIO_KEY, {}));
-  const [active, setActive] = useState(null);          // id epizode, ki se predvaja (le ena naenkrat)
+const PLAYER = { a: null, ep: null, list: [], ctx: null, user: null, seekTo: 0, lastSave: 0, subs: new Set() };
+const playerNotify = () => PLAYER.subs.forEach((f) => f());
+function usePlayer() { const [, set] = useState(0); useEffect(() => { const f = () => set((x) => x + 1); PLAYER.subs.add(f); return () => { PLAYER.subs.delete(f); }; }, []); return PLAYER; }
+const playerSpeed = () => store.get("indeks.audio.speed", 1);
+const playerDur = () => { const a = PLAYER.a; return a && a.duration && isFinite(a.duration) ? a.duration : (PLAYER.ep && PLAYER.ep.sec) || 0; };
+const playerCur = () => { const a = PLAYER.a; return a ? (a.currentTime || PLAYER.seekTo || 0) : 0; };
+const playerPlaying = () => !!(PLAYER.a && PLAYER.ep && !PLAYER.a.paused);
+function playerSave(done) { const ep = PLAYER.ep; if (!PLAYER.a || !ep) return; saveAudioPos(ep.id, done ? { pos: 0, dur: playerDur(), done: true } : { pos: playerCur(), dur: playerDur(), done: false }, PLAYER.user); }
+function mediaPos() {
+  const ms = typeof navigator !== "undefined" && navigator.mediaSession; const a = PLAYER.a;
+  if (!ms || !ms.setPositionState || !a || !a.duration || !isFinite(a.duration)) return;
+  try { ms.setPositionState({ duration: a.duration, playbackRate: a.playbackRate || 1, position: Math.min(a.currentTime, a.duration) }); } catch (e) {}
+}
+function mediaMeta() {
+  const ms = typeof navigator !== "undefined" && navigator.mediaSession; const ep = PLAYER.ep; if (!ms || !ep) return;
+  try { ms.metadata = new MediaMetadata({ title: ep.n + ". " + ep.title, artist: "indeks." + (PLAYER.ctx && PLAYER.ctx.subjName ? " · " + PLAYER.ctx.subjName : ""), album: (PLAYER.ctx && PLAYER.ctx.partName) || "Poslušaj", artwork: [{ src: "og.png", sizes: "1200x630", type: "image/png" }] }); } catch (e) {}
+  const h = (k, fn) => { try { ms.setActionHandler(k, fn); } catch (e) {} };
+  const i = PLAYER.list.findIndex((e) => e.id === ep.id);
+  h("play", () => { if (PLAYER.a) PLAYER.a.play().catch(() => {}); });
+  h("pause", () => { if (PLAYER.a) PLAYER.a.pause(); });
+  h("seekbackward", (d) => playerSkip(-((d && d.seekOffset) || 15)));
+  h("seekforward", (d) => playerSkip((d && d.seekOffset) || 30));
+  h("seekto", (d) => { if (d && d.seekTime != null) playerSeek(d.seekTime); });
+  h("previoustrack", i > 0 ? () => playerPlay(PLAYER.list[i - 1], PLAYER.list, PLAYER.ctx, true) : null);
+  h("nexttrack", i >= 0 && i < PLAYER.list.length - 1 ? () => playerPlay(PLAYER.list[i + 1], PLAYER.list, PLAYER.ctx, true) : null);
+}
+function playerEl() {
+  if (PLAYER.a) return PLAYER.a;
+  const a = new Audio(); a.preload = "metadata";
+  a.addEventListener("timeupdate", () => { if (Date.now() - PLAYER.lastSave > 5000) { PLAYER.lastSave = Date.now(); playerSave(false); mediaPos(); } playerNotify(); });
+  a.addEventListener("loadedmetadata", () => { if (PLAYER.seekTo) { try { a.currentTime = PLAYER.seekTo; } catch (e) {} } PLAYER.seekTo = 0; mediaPos(); playerNotify(); });
+  a.addEventListener("play", () => { if (navigator.mediaSession) navigator.mediaSession.playbackState = "playing"; playerNotify(); });
+  a.addEventListener("pause", () => { if (navigator.mediaSession) navigator.mediaSession.playbackState = "paused"; if (!a.ended) playerSave(false); playerNotify(); });
+  a.addEventListener("ended", () => {
+    playerSave(true);
+    const i = PLAYER.list.findIndex((e) => PLAYER.ep && e.id === PLAYER.ep.id); const nx = i >= 0 ? PLAYER.list[i + 1] : null;
+    if (nx) playerPlay(nx, PLAYER.list, PLAYER.ctx, true); else playerNotify();     // samodejno naprej na naslednjo epizodo
+  });
+  window.addEventListener("pagehide", () => playerSave(false));
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && PLAYER.ep) playerSave(false); });
+  PLAYER.a = a; return a;
+}
+function playerPlay(ep, list, ctx, fromStart) {
+  const a = playerEl();
+  if (!PLAYER.ep || PLAYER.ep.id !== ep.id) {
+    if (PLAYER.ep && !a.paused) playerSave(false);
+    const sv = store.get(AUDIO_KEY, {})[ep.id];
+    PLAYER.seekTo = !fromStart && sv && !sv.done && sv.pos > 3 ? sv.pos : 0;
+    PLAYER.ep = ep; PLAYER.list = list || [ep]; if (ctx) PLAYER.ctx = ctx;
+    a.src = ep.file; a.load(); mediaMeta();
+  }
+  a.defaultPlaybackRate = playerSpeed(); a.playbackRate = playerSpeed();
+  const p = a.play(); playerNotify();
+  return p && p.catch ? p.catch(() => playerNotify()) : p;
+}
+function playerToggle() { const a = PLAYER.a; if (!a || !PLAYER.ep) return; if (a.paused) a.play().catch(() => {}); else a.pause(); }
+function playerSeek(t) { const a = PLAYER.a; if (!a || !PLAYER.ep) return; const d = playerDur(); const v = Math.max(0, d ? Math.min(d - 1, t) : t); if (a.readyState >= 1) a.currentTime = v; else PLAYER.seekTo = v; playerSave(false); mediaPos(); playerNotify(); }
+function playerSkip(d) { playerSeek(playerCur() + d); }
+function playerCycleSpeed() { const sp = playerSpeed(); const n = SPEEDS[(SPEEDS.indexOf(sp) + 1) % SPEEDS.length]; store.set("indeks.audio.speed", n); if (PLAYER.a) { PLAYER.a.defaultPlaybackRate = n; PLAYER.a.playbackRate = n; } mediaPos(); playerNotify(); }
+function playerClose() { const a = PLAYER.a; if (a) { if (!a.paused) a.pause(); playerSave(false); a.removeAttribute("src"); a.load(); } PLAYER.ep = null; if (navigator.mediaSession) { navigator.mediaSession.metadata = null; navigator.mediaSession.playbackState = "none"; } playerNotify(); }
+
+function AudioList({ eps, user, ctx }) {
+  usePlayer();
+  const [, bump] = useState(0);
+  useEffect(() => { PLAYER.user = user || null; }, [user && user.id]); // eslint-disable-line
   useEffect(() => {
     if (!user) return;
     let c = false;
     supabase.auth.getUser().then(({ data }) => {
       if (c) return;
       const cloud = data && data.user && data.user.user_metadata && data.user.user_metadata.audiopos; if (!cloud) return;
-      const merged = mergeReadPos(store.get(AUDIO_KEY, {}), cloud); store.set(AUDIO_KEY, merged); setPos(merged);
+      store.set(AUDIO_KEY, mergeReadPos(store.get(AUDIO_KEY, {}), cloud)); bump((x) => x + 1);
     }).catch(() => {});
     return () => { c = true; };
   }, [user && user.id]); // eslint-disable-line
-  const update = (id, patch) => { saveAudioPos(id, patch, user); setPos(store.get(AUDIO_KEY, {})); };
-  return <div style={{ display: "grid", gap: 9 }}>{eps.map((ep) => <AudioEp key={ep.id} ep={ep} saved={pos[ep.id]} playing={active === ep.id} onPlay={() => setActive(ep.id)} onStop={() => setActive((a) => (a === ep.id ? null : a))} onSave={(patch) => update(ep.id, patch)} />)}</div>;
+  const saved = store.get(AUDIO_KEY, {});
+  const here = PLAYER.ep && eps.some((e) => e.id === PLAYER.ep.id);
+  const resume = eps.map((e) => ({ e, s: saved[e.id] })).filter((x) => x.s && !x.s.done && x.s.pos > 3).sort((a, b) => (b.s.t || 0) - (a.s.t || 0))[0];
+  return (
+    <div style={{ display: "grid", gap: 9 }}>
+      {resume && !here && (
+        <button className="ix-card ix-fade" onClick={() => playerPlay(resume.e, eps, ctx)} style={{ textAlign: "left", padding: "12px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 12, background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)" }}>
+          <Play size={18} />
+          <span style={{ flex: 1, minWidth: 0 }}><b>Nadaljuj, kjer si ostal</b><span style={{ display: "block", fontSize: 12.5, opacity: .9 }}>{resume.e.n}. {resume.e.title} · od {fmtClock(resume.s.pos)}</span></span>
+        </button>
+      )}
+      {eps.map((ep) => <AudioEp key={ep.id} ep={ep} saved={saved[ep.id]} eps={eps} ctx={ctx} />)}
+    </div>
+  );
 }
-function AudioEp({ ep, saved, playing, onPlay, onStop, onSave }) {
-  const ref = useRef(null);
-  const [cur, setCur] = useState((saved && !saved.done && saved.pos) || 0);
-  const [dur, setDur] = useState(ep.sec || 0);
-  const [speed, setSpeed] = useState(() => store.get("indeks.audio.speed", 1));
-  const [loading, setLoading] = useState(false);
-  const lastSave = useRef(0);
-  const el = () => ref.current;
-  useEffect(() => { const a = el(); if (a) a.playbackRate = speed; }, [speed]);
-  useEffect(() => { if (!playing) { const a = el(); if (a && !a.paused) a.pause(); } }, [playing]);
-  function toggle() {
-    const a = el(); if (!a) return;
-    if (a.paused) {
-      if (!a.src) { a.src = ep.file; a.load(); }
-      if (cur > 0 && Math.abs(a.currentTime - cur) > 1) a.currentTime = cur;
-      a.playbackRate = speed; setLoading(true);
-      a.play().then(() => { setLoading(false); onPlay(); }).catch(() => setLoading(false));
-    } else { a.pause(); }
-  }
-  function onTime() { const a = el(); if (!a) return; setCur(a.currentTime); if (Date.now() - lastSave.current > 5000) { lastSave.current = Date.now(); onSave({ pos: a.currentTime, dur: a.duration || dur, done: false }); } }
-  function onPause() { const a = el(); if (!a) return; onStop(); if (a.currentTime > 0 && !a.ended) onSave({ pos: a.currentTime, dur: a.duration || dur, done: false }); }
-  function onEnded() { onStop(); setCur(0); onSave({ pos: 0, dur: dur, done: true }); }
-  function seek(v) { const a = el(); setCur(v); if (a && a.src) a.currentTime = v; else onSave({ pos: v, dur, done: false }); }
-  function skip(d) { const a = el(); const v = Math.max(0, Math.min((a && a.duration) || dur || 0, cur + d)); seek(v); }
-  function cycleSpeed() { const i = SPEEDS.indexOf(speed); const n = SPEEDS[(i + 1) % SPEEDS.length]; setSpeed(n); store.set("indeks.audio.speed", n); }
-  const done = saved && saved.done; const pct = dur ? Math.min(100, (cur / dur) * 100) : 0;
+function AudioEp({ ep, saved, eps, ctx }) {
+  const isCur = !!(PLAYER.ep && PLAYER.ep.id === ep.id);
+  const playing = isCur && playerPlaying();
+  const dur = isCur ? playerDur() : (saved && saved.dur) || ep.sec || 0;
+  const cur = isCur ? playerCur() : (saved && !saved.done ? saved.pos || 0 : 0);
+  const done = !isCur && saved && saved.done;
+  const pct = dur ? Math.min(100, (cur / dur) * 100) : 0;
+  const speed = playerSpeed();
   return (
     <div className="ix-card" style={{ padding: "13px 16px", borderLeft: "3px solid " + (done ? "var(--teal)" : "var(--terra)") }}>
-      <audio ref={ref} preload="none" onTimeUpdate={onTime} onPause={onPause} onEnded={onEnded} onLoadedMetadata={() => { const a = el(); if (a && a.duration) setDur(a.duration); }} onPlay={onPlay} />
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <button onClick={toggle} aria-label={playing ? "Premor" : "Predvajaj"} style={{ width: 42, height: 42, borderRadius: "50%", border: 0, background: playing ? "var(--ink)" : "var(--terra)", color: "var(--paper)", display: "grid", placeItems: "center", cursor: "pointer", flexShrink: 0, opacity: loading ? .6 : 1 }}>
+        <button onClick={() => (isCur ? playerToggle() : playerPlay(ep, eps, ctx))} aria-label={playing ? "Premor" : "Predvajaj"} className="ix-playbtn" style={{ background: playing ? "var(--ink)" : "var(--terra)" }}>
           {playing ? <Pause size={18} /> : <Play size={18} style={{ marginLeft: 2 }} />}
         </button>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontWeight: 600, fontSize: 14.5, lineHeight: 1.3 }}>{ep.n}. {ep.title}</div>
-          <div className="ix-chip" style={{ marginTop: 2, whiteSpace: "normal" }}>{ep.sub} · {fmtClock(dur)}{done ? " · poslušano" : cur > 0 ? " · nadaljuj od " + fmtClock(cur) : ""}</div>
+          <div className="ix-chip" style={{ marginTop: 2, whiteSpace: "normal" }}>{ep.sub} · {fmtClock(dur)}{done ? " · poslušano" : !isCur && cur > 0 ? " · nadaljuj od " + fmtClock(cur) : ""}</div>
         </div>
-        <button onClick={cycleSpeed} className="ix-pill" title="Hitrost predvajanja" style={{ flexShrink: 0, minWidth: 48, justifyContent: "center" }}>{String(speed).replace(".", ",")}×</button>
+        {isCur && <button onClick={playerCycleSpeed} className="ix-pill" title="Hitrost predvajanja" style={{ flexShrink: 0, minWidth: 48, justifyContent: "center" }}>{String(speed).replace(".", ",")}×</button>}
       </div>
-      {(playing || cur > 0) && (
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 10 }}>
-          <button onClick={() => skip(-15)} className="ix-pill" style={{ flexShrink: 0 }}>−15 s</button>
+      {isCur ? (
+        <div className="ix-fade" style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 10 }}>
+          <button onClick={() => playerSkip(-15)} className="ix-pill" style={{ flexShrink: 0 }}>−15 s</button>
           <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36, textAlign: "right" }}>{fmtClock(cur)}</span>
-          <input type="range" min={0} max={Math.max(1, Math.floor(dur))} value={Math.floor(cur)} onChange={(e) => seek(+e.target.value)} aria-label="Položaj" style={{ flex: 1, accentColor: "var(--terra)" }} />
+          <input type="range" min={0} max={Math.max(1, Math.floor(dur))} value={Math.floor(cur)} onChange={(e) => playerSeek(+e.target.value)} aria-label="Položaj" style={{ flex: 1, accentColor: "var(--terra)" }} />
           <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36 }}>{fmtClock(dur)}</span>
-          <button onClick={() => skip(30)} className="ix-pill" style={{ flexShrink: 0 }}>+30 s</button>
+          <button onClick={() => playerSkip(30)} className="ix-pill" style={{ flexShrink: 0 }}>+30 s</button>
         </div>
-      )}
-      {!playing && cur === 0 && !done && <div style={{ height: 3, background: "var(--line)", borderRadius: 2, marginTop: 10, overflow: "hidden" }}><div style={{ width: pct + "%", height: "100%", background: "var(--terra)" }} /></div>}
+      ) : cur > 0 && !done && <div style={{ height: 3, background: "var(--line)", borderRadius: 2, marginTop: 10, overflow: "hidden" }}><div style={{ width: pct + "%", height: "100%", background: "var(--terra)" }} /></div>}
+    </div>
+  );
+}
+/* Mini predvajalnik na dnu zaslona: viden na vseh straneh, dokler poslušaš. */
+function MiniPlayer({ go }) {
+  usePlayer();
+  const ep = PLAYER.ep;
+  useEffect(() => { const r = document.querySelector(".ix-root"); if (r) r.classList.toggle("has-player", !!ep); }, [ep && ep.id]); // eslint-disable-line
+  if (!ep) return null;
+  const playing = playerPlaying(), dur = playerDur(), cur = playerCur(), c = PLAYER.ctx;
+  return (
+    <div className="ix-player" role="region" aria-label="Predvajalnik">
+      <div className="ix-pbar" style={{ width: (dur ? Math.min(100, (cur / dur) * 100) : 0) + "%" }} />
+      <button onClick={playerToggle} aria-label={playing ? "Premor" : "Predvajaj"} className="ix-playbtn" style={{ width: 38, height: 38, background: playing ? "var(--ink)" : "var(--terra)" }}>
+        {playing ? <Pause size={16} /> : <Play size={16} style={{ marginLeft: 2 }} />}
+      </button>
+      <button className="ix-ptitle" onClick={() => c && go({ view: "part", sem: c.sem, subj: c.subj, part: c.part })} title="Odpri epizode">
+        <span className="t">{ep.n}. {ep.title}</span>
+        <span className="s">{fmtClock(cur)} / {fmtClock(dur)}{c && c.subjName ? " · " + c.subjName : ""}</span>
+      </button>
+      <button onClick={() => playerSkip(-15)} className="ix-pill ix-pskip" aria-label="Nazaj 15 sekund">−15</button>
+      <button onClick={() => playerSkip(30)} className="ix-pill ix-pskip" aria-label="Naprej 30 sekund">+30</button>
+      <button onClick={playerCycleSpeed} className="ix-pill" title="Hitrost predvajanja" style={{ minWidth: 44, justifyContent: "center" }}>{String(playerSpeed()).replace(".", ",")}×</button>
+      <button onClick={playerClose} aria-label="Zapri predvajalnik" className="ix-pclose"><X size={16} /></button>
+    </div>
+  );
+}
+
+/* Zložljiv razdelek na strani kolokvija (Poslušaj, Kvizi, Računske, Flashcardi); stanje se zapomni po vrsti razdelka. */
+const FOLD_KEY = "indeks.fold.v1";
+function Fold({ id, icon, title, color, meta, last, children }) {
+  const [open, setOpen] = useState(() => !!store.get(FOLD_KEY, {})[id]);
+  const toggle = () => setOpen((o) => { const n = !o; const all = store.get(FOLD_KEY, {}); all[id] = n; store.set(FOLD_KEY, all); return n; });
+  return (
+    <div style={{ marginBottom: last ? 8 : 12 }}>
+      <button className="ix-foldhead" onClick={toggle} aria-expanded={open}>
+        <span className="ix-sec" style={{ color, marginBottom: 0 }}>{icon} {title}</span>
+        {meta && <span className="ix-chip ix-foldmeta">{meta}</span>}
+        <ChevronDown size={17} className={"ix-foldchev" + (open ? " on" : "")} />
+      </button>
+      <div className={"ix-fold" + (open ? " on" : "")}><div className="ix-foldin"><div style={{ padding: "12px 0 6px" }}>{children}</div></div></div>
     </div>
   );
 }
@@ -2059,16 +2179,14 @@ function PartView({ route, stats, go, soc, user }) {
 
       {/* POSLUŠAJ: zvočne razlage po predavanjih */}
       {part.audio && part.audio.length > 0 && (
-        <div style={{ marginBottom: 22 }}>
-          <div className="ix-sec" style={{ color: "var(--terra)" }}><Headphones size={14} /> Poslušaj</div>
+        <Fold id="audio" icon={<Headphones size={14} />} title="Poslušaj" color="var(--terra)" meta={slPl(part.audio.length, ["epizoda", "epizodi", "epizode", "epizod"])}>
           <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55, marginBottom: 10 }}>Pogovorna razlaga snovi po predavanjih, narejena iz zapiskov. Za avtobus, hojo ali ponavljanje z zaprtimi očmi. Kje si ostal, si app zapomni.</div>
-          <AudioList eps={part.audio} user={user} />
-        </div>
+          <AudioList eps={part.audio} user={user} ctx={{ sem: sem.id, subj: subj.id, part: part.id, subjName: subj.name, partName: part.name }} />
+        </Fold>
       )}
 
       {/* KVIZI (teorija) */}
-      <div style={{ marginBottom: 22 }}>
-        <div className="ix-sec" style={{ color: "var(--ink)" }}><FileText size={14} /> Kvizi (teorija)</div>
+      <Fold id="quiz" icon={<FileText size={14} />} title="Kvizi (teorija)" color="var(--ink)" meta={slPl(theoryDecks.length, ["sklop", "sklopa", "sklopi", "sklopov"])}>
         {theoryDecks.length > 0 ? (
           <div style={{ display: "grid", gap: 9 }}>
             {theoryDecks.length >= 2 && (() => {
@@ -2107,12 +2225,11 @@ function PartView({ route, stats, go, soc, user }) {
             })}
           </div>
         ) : <Empty text="Ni kvizov za ta del" />}
-      </div>
+      </Fold>
 
       {/* RAČUNSKE NALOGE */}
       {calcDecks.length > 0 && (
-        <div style={{ marginBottom: 22 }}>
-          <div className="ix-sec" style={{ color: "var(--terra)" }}><Calculator size={14} /> Računske naloge</div>
+        <Fold id="calc" icon={<Calculator size={14} />} title="Računske naloge" color="var(--terra)" meta={slPl(calcDecks.length, ["sklop", "sklopa", "sklopi", "sklopov"])}>
           <div style={{ display: "grid", gap: 9 }}>
             {calcDecks.length >= 2 && (() => {
               const pool = calcDecks.reduce((n, d) => n + d.questions.length, 0);
@@ -2149,12 +2266,11 @@ function PartView({ route, stats, go, soc, user }) {
               );
             })}
           </div>
-        </div>
+        </Fold>
       )}
 
       {/* FLASHCARDI */}
-      <div style={{ marginBottom: 8 }}>
-        <div className="ix-sec" style={{ color: "var(--teal)" }}><Brain size={14} /> Flashcardi</div>
+      <Fold id="cards" icon={<Brain size={14} />} title="Flashcardi" color="var(--teal)" meta={slPl(cards.length, ["komplet", "kompleta", "kompleti", "kompletov"])} last>
         {cards.length > 0 ? (
           <div style={{ display: "grid", gap: 9 }}>
             {cards.map((d) => {
@@ -2175,7 +2291,7 @@ function PartView({ route, stats, go, soc, user }) {
             })}
           </div>
         ) : <Empty text="Ni kartic za ta del" />}
-      </div>
+      </Fold>
     </div>
   );
 }
