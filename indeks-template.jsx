@@ -3,7 +3,7 @@ import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
   BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search,
-  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List, ListChecks, Plus
+  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List, ListChecks, Plus, Headphones, Play, Pause
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { createPortal } from "react-dom";
@@ -16,6 +16,12 @@ import { createPortal } from "react-dom";
    ========================================================================= */
 const DATA = __DATA_JSON__;
 const FORMULAS = __FORMULAS_JSON__;
+const FIGS = __FIGS_JSON__;   // grafi v razlagah: id -> SVG (figures/*.js); vprašanje ima fig (v razlagi) ali givenFig (nad odgovori)
+function FigView({ id }) {
+  const svg = FIGS[id];
+  if (!svg) return null;
+  return <div className="ix-fig ix-fade" dangerouslySetInnerHTML={{ __html: svg }} />;
+}
 const CHARS = __CHARACTERS_JSON__;        // liki in loadouti za bitko (characters.js)
 
 const YEARS = [...new Set(DATA.map((s) => s.year))].sort();
@@ -40,7 +46,8 @@ const store = (() => {
 const STATS_KEY = "indeks.stats.v1";
 const MIX_KEY = "indeks.mixuse.v1";
 const READ_KEY = "indeks.readpos.v1";
-const CHECK_KEY = "indeks.checklist.v1";  // osebni seznam opravil na profilu (prijave na kolokvije ipd.)    // zaznamek v zapiskih (zadnje prebrano mesto) po delu
+const CHECK_KEY = "indeks.checklist.v1";
+const AUDIO_KEY = "indeks.audio.v1";      // položaj poslušanja zvočnih razlag po epizodi (lokalno + user_metadata.audiopos)  // osebni seznam opravil na profilu (prijave na kolokvije ipd.)    // zaznamek v zapiskih (zadnje prebrano mesto) po delu
 const RESUME_KEY = "indeks.resume.v1";   // nedokončani kvizi (vrstni red vprašanj, odgovori) po kompletu
 const RANKED_N = 10;                     // ranked: število vprašanj
 const RANKED_SECONDS = 600;              // ranked: časovna omejitev (10 min)
@@ -696,6 +703,40 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 @media (max-width:760px){.ix-root .ix-formpanel{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:58vh;}.ix-root .ix-formbtn{right:12px;bottom:12px;}}
 .ix-serif{font-family:'Fraunces',Georgia,serif;}
 .ix-fade{opacity:0;transform:translateY(10px);animation:ixIn .5s cubic-bezier(.2,.7,.2,1) forwards;}
+.ix-fig{--fgold:#a8780f;--fblue:#2f62a0;margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+.ix-dark .ix-fig{--fgold:#e3b54a;--fblue:#7fb0e6;}
+.ix-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto;overflow:visible;font-family:'Spline Sans',system-ui,sans-serif;}
+.ix-fig *{transition:none;}
+.ix-fig text{fill:var(--ink2);font-size:11px;}
+.ix-fig .t{fill:var(--ink2);}
+.ix-fig .tl{fill:var(--ink);font-weight:700;font-size:12.5px;}
+.ix-fig .tv{fill:var(--ink);font-weight:700;font-size:12px;}
+.ix-fig .tc{fill:var(--ink);font-weight:600;}
+.ix-fig .tD{fill:var(--teal);font-weight:700;}
+.ix-fig .tS{fill:var(--terra);font-weight:700;}
+.ix-fig .lg{fill:var(--ink2);font-size:11.5px;}
+.ix-fig .ax{stroke:var(--ink2);stroke-width:1.2;fill:none;}
+.ix-fig .arh{fill:var(--ink2);}
+.ix-fig .gd{stroke:var(--ink2);stroke-width:.9;stroke-dasharray:3 3;opacity:.65;}
+.ix-fig .ar{stroke:var(--ink);stroke-width:1.4;}
+.ix-fig .cD{stroke:var(--teal);stroke-width:2.2;fill:none;stroke-linecap:round;}
+.ix-fig .cS{stroke:var(--terra);stroke-width:2.2;fill:none;stroke-linecap:round;}
+.ix-fig .c3{stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;}
+.ix-fig .c4{stroke:var(--fblue);stroke-width:2;fill:none;stroke-linecap:round;}
+.ix-fig .c5{stroke:var(--fgold);stroke-width:2;fill:none;stroke-linecap:round;}
+.ix-fig .cD2,.ix-fig .cS2,.ix-fig .c32{stroke-dasharray:5 4;}
+.ix-fig .cD2{stroke:var(--teal);stroke-width:2;fill:none;} .ix-fig .cS2{stroke:var(--terra);stroke-width:2;fill:none;} .ix-fig .c32{stroke:var(--ink2);stroke-width:1.8;fill:none;}
+.ix-fig .pl{stroke:var(--ink);stroke-width:1.3;fill:none;}
+.ix-fig .dsh{stroke-dasharray:6 4;}
+.ix-fig .dt{fill:var(--ink);}
+.ix-fig .a0{fill:var(--ink);fill-opacity:.07;stroke:var(--ink2);stroke-width:.6;stroke-opacity:.5;}
+.ix-fig .a1{fill:var(--teal);fill-opacity:.34;}
+.ix-fig .a2{fill:var(--terra);fill-opacity:.24;}
+.ix-fig .a3{fill:var(--fgold);fill-opacity:.32;}
+.ix-fig .a4{fill:var(--fblue);fill-opacity:.3;}
+.ix-fig .a5{fill:var(--red);fill-opacity:.38;}
+.ix-fig .hz{stroke:var(--terra);stroke-width:.8;stroke-opacity:.7;}
+.ix-fig .sw12{fill:var(--teal);fill-opacity:.3;stroke:var(--terra);stroke-width:2;}
 @keyframes ixIn{to{opacity:1;transform:none;}}
 .ix-card{background:var(--paper2);border:1px solid var(--line);border-radius:16px;
   transition:transform .18s ease, box-shadow .18s ease, border-color .5s ease, background-color .5s ease, color .5s ease;}
@@ -779,6 +820,10 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-notes em{font-style:italic;}
 .ix-notes b{color:var(--ink);}
 .ix-notes i{color:var(--teal);font-style:normal;font-weight:600;}
+.ix-notes figure.nimg{margin:12px 0;text-align:center;}
+.ix-notes figure.nimg img{max-width:100%;max-height:520px;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff;display:inline-block;cursor:zoom-in;}
+.ix-notes figure.nimg figcaption{font-size:12.5px;color:var(--ink2);margin-top:5px;line-height:1.4;}
+.ix-notes li figure.nimg{text-align:left;}
 .ix-notes .tl-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:12.5px;color:var(--ink2);margin:4px 0 10px;}
 .ix-notes .tl-ust{--tlc:var(--terra);}
 .ix-notes .tl-spr{--tlc:var(--teal);}
@@ -1522,7 +1567,7 @@ export default function App() {
             {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} userId={userId || null} />}
             {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} comm={comm} userId={userId || null} />}
             {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
-            {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} soc={soc} />}
+            {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} soc={soc} user={session && session.user} />}
             {route.view === "profile" && <ProfileView user={session.user} soc={soc} socErr={socErr} reload={reloadSocial} go={setRoute} />}
             {route.view === "duel" && <GlossCtx.Provider value={false}><DuelView route={route} go={setRoute} userId={userId} formulas={formulas} soc={soc} setNavGuard={setNavGuard} /></GlossCtx.Provider>}
             {route.view === "notes" && <NotesView route={route} go={setRoute} user={session && session.user} />}
@@ -1860,8 +1905,90 @@ function SubjectView({ route, stats, go }) {
   );
 }
 
+/* ---- POSLUŠAJ: predvajalnik zvočnih razlag; položaj po epizodi lokalno (AUDIO_KEY) in na računu (user_metadata.audiopos) ---- */
+const fmtClock = (s) => { s = Math.max(0, Math.floor(s || 0)); const m = Math.floor(s / 60), r = s % 60; return m + ":" + (r < 10 ? "0" : "") + r; };
+let audioPushTimer = null;
+function pushAudioPos(user) {
+  if (!user) return;
+  if (audioPushTimer) clearTimeout(audioPushTimer);
+  audioPushTimer = setTimeout(() => {
+    const all = store.get(AUDIO_KEY, {});
+    supabase.auth.updateUser({ data: { audiopos: all } }).then(({ error }) => { if (error) console.warn("indeks poslušanje: " + error.message); });
+  }, 2000);
+}
+function saveAudioPos(id, patch, user) { const all = store.get(AUDIO_KEY, {}); all[id] = { ...(all[id] || {}), ...patch, t: Date.now() }; store.set(AUDIO_KEY, all); pushAudioPos(user); }
+const SPEEDS = [1, 1.25, 1.5, 2];
+function AudioList({ eps, user }) {
+  const [pos, setPos] = useState(() => store.get(AUDIO_KEY, {}));
+  const [active, setActive] = useState(null);          // id epizode, ki se predvaja (le ena naenkrat)
+  useEffect(() => {
+    if (!user) return;
+    let c = false;
+    supabase.auth.getUser().then(({ data }) => {
+      if (c) return;
+      const cloud = data && data.user && data.user.user_metadata && data.user.user_metadata.audiopos; if (!cloud) return;
+      const merged = mergeReadPos(store.get(AUDIO_KEY, {}), cloud); store.set(AUDIO_KEY, merged); setPos(merged);
+    }).catch(() => {});
+    return () => { c = true; };
+  }, [user && user.id]); // eslint-disable-line
+  const update = (id, patch) => { saveAudioPos(id, patch, user); setPos(store.get(AUDIO_KEY, {})); };
+  return <div style={{ display: "grid", gap: 9 }}>{eps.map((ep) => <AudioEp key={ep.id} ep={ep} saved={pos[ep.id]} playing={active === ep.id} onPlay={() => setActive(ep.id)} onStop={() => setActive((a) => (a === ep.id ? null : a))} onSave={(patch) => update(ep.id, patch)} />)}</div>;
+}
+function AudioEp({ ep, saved, playing, onPlay, onStop, onSave }) {
+  const ref = useRef(null);
+  const [cur, setCur] = useState((saved && !saved.done && saved.pos) || 0);
+  const [dur, setDur] = useState(ep.sec || 0);
+  const [speed, setSpeed] = useState(() => store.get("indeks.audio.speed", 1));
+  const [loading, setLoading] = useState(false);
+  const lastSave = useRef(0);
+  const el = () => ref.current;
+  useEffect(() => { const a = el(); if (a) a.playbackRate = speed; }, [speed]);
+  useEffect(() => { if (!playing) { const a = el(); if (a && !a.paused) a.pause(); } }, [playing]);
+  function toggle() {
+    const a = el(); if (!a) return;
+    if (a.paused) {
+      if (!a.src) { a.src = ep.file; a.load(); }
+      if (cur > 0 && Math.abs(a.currentTime - cur) > 1) a.currentTime = cur;
+      a.playbackRate = speed; setLoading(true);
+      a.play().then(() => { setLoading(false); onPlay(); }).catch(() => setLoading(false));
+    } else { a.pause(); }
+  }
+  function onTime() { const a = el(); if (!a) return; setCur(a.currentTime); if (Date.now() - lastSave.current > 5000) { lastSave.current = Date.now(); onSave({ pos: a.currentTime, dur: a.duration || dur, done: false }); } }
+  function onPause() { const a = el(); if (!a) return; onStop(); if (a.currentTime > 0 && !a.ended) onSave({ pos: a.currentTime, dur: a.duration || dur, done: false }); }
+  function onEnded() { onStop(); setCur(0); onSave({ pos: 0, dur: dur, done: true }); }
+  function seek(v) { const a = el(); setCur(v); if (a && a.src) a.currentTime = v; else onSave({ pos: v, dur, done: false }); }
+  function skip(d) { const a = el(); const v = Math.max(0, Math.min((a && a.duration) || dur || 0, cur + d)); seek(v); }
+  function cycleSpeed() { const i = SPEEDS.indexOf(speed); const n = SPEEDS[(i + 1) % SPEEDS.length]; setSpeed(n); store.set("indeks.audio.speed", n); }
+  const done = saved && saved.done; const pct = dur ? Math.min(100, (cur / dur) * 100) : 0;
+  return (
+    <div className="ix-card" style={{ padding: "13px 16px", borderLeft: "3px solid " + (done ? "var(--teal)" : "var(--terra)") }}>
+      <audio ref={ref} preload="none" onTimeUpdate={onTime} onPause={onPause} onEnded={onEnded} onLoadedMetadata={() => { const a = el(); if (a && a.duration) setDur(a.duration); }} onPlay={onPlay} />
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <button onClick={toggle} aria-label={playing ? "Premor" : "Predvajaj"} style={{ width: 42, height: 42, borderRadius: "50%", border: 0, background: playing ? "var(--ink)" : "var(--terra)", color: "var(--paper)", display: "grid", placeItems: "center", cursor: "pointer", flexShrink: 0, opacity: loading ? .6 : 1 }}>
+          {playing ? <Pause size={18} /> : <Play size={18} style={{ marginLeft: 2 }} />}
+        </button>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: 600, fontSize: 14.5, lineHeight: 1.3 }}>{ep.n}. {ep.title}</div>
+          <div className="ix-chip" style={{ marginTop: 2, whiteSpace: "normal" }}>{ep.sub} · {fmtClock(dur)}{done ? " · poslušano" : cur > 0 ? " · nadaljuj od " + fmtClock(cur) : ""}</div>
+        </div>
+        <button onClick={cycleSpeed} className="ix-pill" title="Hitrost predvajanja" style={{ flexShrink: 0, minWidth: 48, justifyContent: "center" }}>{String(speed).replace(".", ",")}×</button>
+      </div>
+      {(playing || cur > 0) && (
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 10 }}>
+          <button onClick={() => skip(-15)} className="ix-pill" style={{ flexShrink: 0 }}>−15 s</button>
+          <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36, textAlign: "right" }}>{fmtClock(cur)}</span>
+          <input type="range" min={0} max={Math.max(1, Math.floor(dur))} value={Math.floor(cur)} onChange={(e) => seek(+e.target.value)} aria-label="Položaj" style={{ flex: 1, accentColor: "var(--terra)" }} />
+          <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36 }}>{fmtClock(dur)}</span>
+          <button onClick={() => skip(30)} className="ix-pill" style={{ flexShrink: 0 }}>+30 s</button>
+        </div>
+      )}
+      {!playing && cur === 0 && !done && <div style={{ height: 3, background: "var(--line)", borderRadius: 2, marginTop: 10, overflow: "hidden" }}><div style={{ width: pct + "%", height: "100%", background: "var(--terra)" }} /></div>}
+    </div>
+  );
+}
+
 /* ---- KOLOKVIJ: ločene sekcije Zapiski / Kvizi / Flashcardi ---- */
-function PartView({ route, stats, go, soc }) {
+function PartView({ route, stats, go, soc, user }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const part = subj.parts.find((p) => p.id === route.part);
@@ -1925,6 +2052,15 @@ function PartView({ route, stats, go, soc }) {
           </button>
         ) : <Empty text="Ni zapiskov za ta del" />}
       </div>
+
+      {/* POSLUŠAJ: zvočne razlage po predavanjih */}
+      {part.audio && part.audio.length > 0 && (
+        <div style={{ marginBottom: 22 }}>
+          <div className="ix-sec" style={{ color: "var(--terra)" }}><Headphones size={14} /> Poslušaj</div>
+          <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55, marginBottom: 10 }}>Pogovorna razlaga snovi po predavanjih, narejena iz zapiskov. Za avtobus, hojo ali ponavljanje z zaprtimi očmi. Kje si ostal, si app zapomni.</div>
+          <AudioList eps={part.audio} user={user} />
+        </div>
+      )}
 
       {/* KVIZI (teorija) */}
       <div style={{ marginBottom: 22 }}>
@@ -2161,6 +2297,7 @@ function WrongReview({ wrong }) {
           <div key={k} className="ix-card" style={{ padding: 15 }}>
             <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 15 }}>{w.q}</div>
             {w.given && <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 8, lineHeight: 1.5, overflowX: "auto" }} dangerouslySetInnerHTML={{ __html: w.given }} />}
+            {w.givenFig && !w.fig && <FigView id={w.givenFig} />}
             {w.type === "match" ? (
               <div style={{ display: "grid", gap: 4 }}>
                 {w.pairs.map((p, t) => (
@@ -2189,6 +2326,7 @@ function WrongReview({ wrong }) {
               </>
             )}
             {w.type !== "match" && w.wrong && w.wrong[w.options[w.picked]] && <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 6 }}><b style={{ color: "var(--ink)" }}>Zakaj ne ta:</b> {w.wrong[w.options[w.picked]]}</div>}
+            {w.fig && <div style={{ marginTop: 8 }}><FigView id={w.fig} /></div>}
             {w.explanation && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{w.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: w.explanation }} /> : w.explanation}</div>}
             {w.more && <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 6, paddingTop: 6, borderTop: "1px solid var(--line)", lineHeight: 1.5 }}>{w.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: w.more }} /> : w.more}</div>}
           </div>
@@ -2678,6 +2816,9 @@ function QuizView({ route, go, record, userId, duel }) {
       {q.given && (
         <div className="ix-card" style={{ padding: "13px 15px", marginBottom: 18, fontSize: 14, lineHeight: 1.5, overflowX: "auto" }} dangerouslySetInnerHTML={{ __html: q.given }} />
       )}
+      {q.givenFig && FIGS[q.givenFig] && (
+        <div className="ix-card" style={{ padding: "12px 12px 6px", marginBottom: 18 }}><FigView id={q.givenFig} /></div>
+      )}
 
       {q.type === "match" ? (
         <div>
@@ -2812,8 +2953,9 @@ function QuizView({ route, go, record, userId, duel }) {
               <b style={{ color: "var(--ink)" }}>Zakaj ne ta odgovor:</b> {wrongExpl}
             </div>
           )}
-          {!exam && q.explanation && (
+          {!exam && (q.explanation || (q.fig && FIGS[q.fig])) && (
             <div className="ix-card" style={{ padding: 14, fontSize: 14, color: "var(--ink2)", marginBottom: 14, lineHeight: 1.55 }}>
+              {q.fig && <FigView id={q.fig} />}
               {q.htmlExpl ? <span dangerouslySetInnerHTML={{ __html: q.explanation }} /> : q.explanation}
               {q.more && (
                 <>

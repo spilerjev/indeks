@@ -28,12 +28,13 @@ for (const mod of MODULES) {
   if (!subj) throw new Error('Ni predmeta ' + mod.id);
   subj.parts = mod.parts.map((mp) => {
     const ex = subj.parts.find((p) => p.id === mp.id) || {};
-    const part = { ...ex, id: mp.id, name: mp.name, type: mp.type, ...(mp.date ? { date: mp.date } : {}), ...(mp.signup ? { signup: mp.signup } : {}), decks: ex.decks ? [...ex.decks] : [] };
+    const part = { ...ex, id: mp.id, name: mp.name, type: mp.type, ...(mp.date ? { date: mp.date } : {}), ...(mp.signup ? { signup: mp.signup } : {}), ...(mp.audio ? { audio: mp.audio } : {}), decks: ex.decks ? [...ex.decks] : [] };
     upsert(part.decks, mp.decks);
     if (mp.flashcards) { part.flashcards = part.flashcards ? [...part.flashcards] : []; upsert(part.flashcards, mp.flashcards); }
     if (mp.notes) {
       const file = path.join(SCHOOL, mp.notes.file);
-      if (fs.existsSync(file)) part.notes = render(fs.readFileSync(file, 'utf8'), mp.notes);
+      const img = { base: path.dirname(file), outDir: path.join(__dirname, 'docs/img', mod.id), url: 'img/' + mod.id + '/' };
+      if (fs.existsSync(file)) part.notes = render(fs.readFileSync(file, 'utf8'), { ...mp.notes, img });
       else console.warn('  ! ni datoteke z zapiski:', file);
     }
     // informacije o predmetu na VRH zapiskov (npr. "kako zapisati rešitev"), idempotentno prek oznake

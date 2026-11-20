@@ -191,6 +191,14 @@ module.exports = {
   parts: [
     {
       id: 'k1', name: 'Kolokvij (24. 11.)', type: 'kolokvij', date: '2026-11-24T17:00', signup: '2026-11-22T23:59',
+      // Zvočne razlage (NotebookLM iz očiščenih zapiskov; datoteke v docs/podcast/eeu-k1). sec = dolžina v sekundah.
+      audio: [
+        { id: 'eeu-ep1', n: 1, title: 'Zgodovina evropskega povezovanja (P01)', sub: 'Od povojnih ruševin do evropske integracije', file: 'podcast/eeu-k1/01-zgodovina-EU.m4a', sec: 971 },
+        { id: 'eeu-ep2', n: 2, title: '1. vaje: nastanek EU, pogodbe, širitve (V01)', sub: 'Kako je steklenica likerja spremenila Evropsko unijo', file: 'podcast/eeu-k1/02-vaje1-nastanek-EU.m4a', sec: 1799 },
+        { id: 'eeu-ep3', n: 3, title: 'Teorija primerjalnih prednosti (P02 + V02)', sub: 'Logika primerjalnih prednosti in oportunitetnih stroškov', file: 'podcast/eeu-k1/03-primerjalne-prednosti.m4a', sec: 1032 },
+        { id: 'eeu-ep4', n: 4, title: 'Učinki proste mednarodne trgovine (P03 + V03)', sub: 'Zmagovalci in poraženci proste trgovine', file: 'podcast/eeu-k1/04-prosta-trgovina.m4a', sec: 1589 },
+        { id: 'eeu-ep5', n: 5, title: 'Učinki uvedbe carin in carinska reforma EU (P04 + V04)', sub: 'Anatomija carin in trgovinskih vojn', file: 'podcast/eeu-k1/05-carine.m4a', sec: 1324 },
+      ],
       notes: {
         file: '2. letnik (2026-27)/1. semester/Ekonomika EU in Slovenija/ZAPISKI.md',
         skip: ['naša seminarska'],
