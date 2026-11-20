@@ -805,6 +805,11 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-root.has-player{padding-bottom:84px;}
 .ix-root.has-player .ix-formbtn,.ix-root.has-player .ix-tocbtn,.ix-root.has-player .ix-totop{bottom:calc(84px + env(safe-area-inset-bottom));}
 @media (max-width:560px){.ix-root .ix-pskip{display:none;}}
+.ix-root .ix-actl{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;min-width:0;}
+.ix-root .ix-actl-bar{flex:1 1 220px;display:flex;align-items:center;gap:8px;min-width:0;}
+.ix-root .ix-actl-btns{display:flex;gap:8px;flex-shrink:0;}
+.ix-root .ix-aep .ix-chip{overflow-wrap:anywhere;}
+@media (max-width:560px){.ix-root .ix-actl-btns{width:100%;justify-content:flex-end;}}
 .ix-root .ix-foldhead{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid var(--line);padding:11px 2px 10px;cursor:pointer;color:inherit;font:inherit;text-align:left;}
 .ix-root .ix-foldhead .ix-sec{flex:1;min-width:0;}
 .ix-root .ix-foldmeta{flex-shrink:0;}
@@ -2027,7 +2032,7 @@ function AudioList({ eps, user, ctx }) {
   const here = PLAYER.ep && eps.some((e) => e.id === PLAYER.ep.id);
   const resume = eps.map((e) => ({ e, s: saved[e.id] })).filter((x) => x.s && !x.s.done && x.s.pos > 3).sort((a, b) => (b.s.t || 0) - (a.s.t || 0))[0];
   return (
-    <div style={{ display: "grid", gap: 9 }}>
+    <div style={{ display: "grid", gap: 9, gridTemplateColumns: "minmax(0, 1fr)" }}>
       {resume && !here && (
         <button className="ix-card ix-fade" onClick={() => playerPlay(resume.e, eps, ctx)} style={{ textAlign: "left", padding: "12px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 12, background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)" }}>
           <Play size={18} />
@@ -2047,8 +2052,8 @@ function AudioEp({ ep, saved, eps, ctx }) {
   const pct = dur ? Math.min(100, (cur / dur) * 100) : 0;
   const speed = playerSpeed();
   return (
-    <div className="ix-card" style={{ padding: "13px 16px", borderLeft: "3px solid " + (done ? "var(--teal)" : "var(--terra)") }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+    <div className="ix-card ix-aep" style={{ padding: "13px 16px", minWidth: 0, borderLeft: "3px solid " + (done ? "var(--teal)" : "var(--terra)") }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
         <button onClick={() => (isCur ? playerToggle() : playerPlay(ep, eps, ctx))} aria-label={playing ? "Premor" : "Predvajaj"} className="ix-playbtn" style={{ background: playing ? "var(--ink)" : "var(--terra)" }}>
           {playing ? <Pause size={18} /> : <Play size={18} style={{ marginLeft: 2 }} />}
         </button>
@@ -2059,12 +2064,16 @@ function AudioEp({ ep, saved, eps, ctx }) {
         {isCur && <button onClick={playerCycleSpeed} className="ix-pill" title="Hitrost predvajanja" style={{ flexShrink: 0, minWidth: 48, justifyContent: "center" }}>{String(speed).replace(".", ",")}×</button>}
       </div>
       {isCur ? (
-        <div className="ix-fade" style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 10 }}>
-          <button onClick={() => playerSkip(-15)} className="ix-pill" style={{ flexShrink: 0 }}>−15 s</button>
-          <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36, textAlign: "right" }}>{fmtClock(cur)}</span>
-          <input type="range" min={0} max={Math.max(1, Math.floor(dur))} value={Math.floor(cur)} onChange={(e) => playerSeek(+e.target.value)} aria-label="Položaj" style={{ flex: 1, accentColor: "var(--terra)" }} />
-          <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36 }}>{fmtClock(dur)}</span>
-          <button onClick={() => playerSkip(30)} className="ix-pill" style={{ flexShrink: 0 }}>+30 s</button>
+        <div className="ix-fade ix-actl">
+          <div className="ix-actl-bar">
+            <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36, textAlign: "right", flexShrink: 0 }}>{fmtClock(cur)}</span>
+            <input type="range" min={0} max={Math.max(1, Math.floor(dur))} value={Math.floor(cur)} onChange={(e) => playerSeek(+e.target.value)} aria-label="Položaj" style={{ flex: "1 1 80px", minWidth: 0, width: "100%", accentColor: "var(--terra)" }} />
+            <span style={{ fontSize: 12, color: "var(--ink2)", minWidth: 36, flexShrink: 0 }}>{fmtClock(dur)}</span>
+          </div>
+          <div className="ix-actl-btns">
+            <button onClick={() => playerSkip(-15)} className="ix-pill">−15 s</button>
+            <button onClick={() => playerSkip(30)} className="ix-pill">+30 s</button>
+          </div>
         </div>
       ) : cur > 0 && !done && <div style={{ height: 3, background: "var(--line)", borderRadius: 2, marginTop: 10, overflow: "hidden" }}><div style={{ width: pct + "%", height: "100%", background: "var(--terra)" }} /></div>}
     </div>
