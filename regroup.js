@@ -114,7 +114,7 @@ const CFG = {
     { id: 'eeu-carine', name: 'Carine: majhna in velika država, MFN (P04)', from: ['eeu-carine-teorija', 'eeu-maja'] },
     { id: 'eeu-pref-all', name: 'Preferencialna liberalizacija (Viner), partnerica, tretje države in empirija (P05)', from: ['eeu-pref', 'eeu-pref2'] },
     { id: 'eeu-integr', name: 'Stopnje integracije in sporazumi (tudi stari kolokviji)', from: ['eeu-integr2', 'eeu-integracije'] },
-    'eeu-wto', 'eeu-stari', 'eeu-povezi',
+    'eeu-wto', 'eeu-p6b', 'eeu-stari', 'eeu-povezi',
     { id: 'eeu-rac-mm-presezki', name: 'Računske: primerjalne prednosti in presežki (vaje 2–3)', from: ['eeu-rac-mm', 'eeu-rac-v3'], calc: true },
     { id: 'eeu-rac-carine-cu', name: 'Računske: carine in carinska unija (vaje 4)', from: ['eeu-rac-carine', 'eeu-rac-v4'], calc: true },
     { id: 'eeu-rac-viner', name: 'Računske: ustvarjanje in preusmerjanje trgovine (vaje 3 in 5, z rešitvami)', from: ['eeu-rac-v5', 'eeu-maja-rac'], calc: true },

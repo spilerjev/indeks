@@ -184,6 +184,7 @@ const kartice = [
 const v1 = require('./eeu-v1');
 const v2 = require('./eeu-v2');
 const v3 = require('./eeu-v3');
+const p6b = require('./eeu-p6b');
 const maja = require('./eeu-maja');
 
 module.exports = {
@@ -226,6 +227,7 @@ module.exports = {
         { id: 'eeu-maja-rac', name: 'Računske: Vaje 3 z rešitvami (dopolnilni zapiski)', calc: true, questions: maja.rac },
         { id: 'eeu-pref2', name: 'Partnerica, tretje države in empirija (P05)', questions: v3.teorija },
         { id: 'eeu-wto', name: 'Ekonomske integracije in WTO (P06)', questions: v3.wto },
+        { id: 'eeu-p6b', name: 'Sporazumi pri WTO, GSP, EGP, EFTA, CEFTA (P06, 2. del)', questions: p6b },
       ],
       flashcards: [{ id: 'eeu-c-zgodovina', name: 'Letnice in pojmi', cards: kartice.map(([front, back]) => ({ front, back })) },
         { id: 'eeu-c-vaje1', name: '1. vaje: EGS, EFTA, pogodbe', cards: v1.kartice.map(([front, back]) => ({ front, back })) },
