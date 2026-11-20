@@ -15,6 +15,7 @@ function privacyCheck(data) {
   return data;
 }
 const DATA = privacyCheck(require('./regroup')(JSON.parse(JSON.stringify(require(require('path').join(__dirname,'data.json'))))));   // sklopi po temah (regroup.js)
+const FIGS = require('./figures').applyFigures(DATA);   // grafi v razlagah (figures/*.js)
 
 // (po želji) pomožnik za iskanje dela predmeta:
 function findPart(sid, pid) {
@@ -26,9 +27,9 @@ function findPart(sid, pid) {
 const tpl = fs.readFileSync(require('path').join(__dirname,'indeks-template.jsx'), 'utf8');
 const FORMULAS = require(require('path').join(__dirname,'formulas.js'));
 const CHARACTERS = require(require('path').join(__dirname,'characters.js'));
-const out = tpl.replace('__DATA_JSON__', JSON.stringify(DATA)).replace('__FORMULAS_JSON__', JSON.stringify(FORMULAS)).replace('__CHARACTERS_JSON__', JSON.stringify(CHARACTERS));
+const out = tpl.replace('__DATA_JSON__', JSON.stringify(DATA)).replace('__FORMULAS_JSON__', JSON.stringify(FORMULAS)).replace('__CHARACTERS_JSON__', JSON.stringify(CHARACTERS)).replace('__FIGS_JSON__', () => JSON.stringify(FIGS));
 fs.writeFileSync('/Users/cocosmacbook/Documents/Claude/Indeks app/indeks-pipeline/dist/indeks-app.jsx', out);
 
 let q = 0; DATA.forEach(s => s.subjects.forEach(su => su.parts.forEach(p => (p.decks||[]).forEach(d => q += (d.questions||[]).length))));
 console.log('Written indeks-app.jsx  |  size: ' + (out.length/1024).toFixed(1) + 'KB  |  total questions: ' + q);
-console.log('token replaced: ' + !out.includes('__DATA_JSON__'));
+console.log('token replaced: ' + !out.includes('__DATA_JSON__') + '  |  grafi: ' + Object.keys(FIGS).length);
