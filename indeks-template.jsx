@@ -17,10 +17,10 @@ import { createPortal } from "react-dom";
 const DATA = __DATA_JSON__;
 const FORMULAS = __FORMULAS_JSON__;
 const FIGS = __FIGS_JSON__;   // grafi v razlagah: id -> SVG (figures/*.js); vprašanje ima fig (v razlagi) ali givenFig (nad odgovori)
-function FigView({ id }) {
+function FigView({ id, bare }) {
   const svg = FIGS[id];
   if (!svg) return null;
-  return <div className="ix-fig ix-fade" dangerouslySetInnerHTML={{ __html: svg }} />;
+  return <div className={"ix-fig ix-fade" + (bare ? " bare" : "")} dangerouslySetInnerHTML={{ __html: svg }} />;
 }
 const CHARS = __CHARACTERS_JSON__;        // liki in loadouti za bitko (characters.js)
 
@@ -705,6 +705,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-fade{opacity:0;transform:translateY(10px);animation:ixIn .5s cubic-bezier(.2,.7,.2,1) forwards;}
 .ix-fig{--fgold:#a8780f;--fblue:#2f62a0;margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--line);}
 .ix-dark .ix-fig{--fgold:#e3b54a;--fblue:#7fb0e6;}
+.ix-fig.bare{margin:0;padding:0;border:0;}
 .ix-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto;overflow:visible;font-family:'Spline Sans',system-ui,sans-serif;}
 .ix-fig *{transition:none;}
 .ix-fig text{fill:var(--ink2);font-size:11px;}
@@ -737,6 +738,8 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-fig .a5{fill:var(--red);fill-opacity:.38;}
 .ix-fig .hz{stroke:var(--terra);stroke-width:.8;stroke-opacity:.7;}
 .ix-fig .sw12{fill:var(--teal);fill-opacity:.3;stroke:var(--terra);stroke-width:2;}
+.ix-fig .thick{stroke-width:4.5;stroke-opacity:.5;}
+.ix-dark .ix-fig .a1{fill-opacity:.42;} .ix-dark .ix-fig .a2{fill-opacity:.36;} .ix-dark .ix-fig .a3{fill-opacity:.38;} .ix-dark .ix-fig .a4{fill-opacity:.4;} .ix-dark .ix-fig .a5{fill-opacity:.45;} .ix-dark .ix-fig .a0{fill-opacity:.1;}
 @keyframes ixIn{to{opacity:1;transform:none;}}
 .ix-card{background:var(--paper2);border:1px solid var(--line);border-radius:16px;
   transition:transform .18s ease, box-shadow .18s ease, border-color .5s ease, background-color .5s ease, color .5s ease;}
@@ -841,6 +844,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-notes .tl-t{display:flex;flex-direction:column;gap:2px;min-width:0;}
 .ix-notes .tl-t b{font-size:15px;}
 .ix-notes .tl-body{padding:2px 16px 14px;border-top:1px dashed var(--line);font-size:14.5px;}
+@media (max-width:560px){.ix-notes .tl-y{width:58px;font-size:16px;}.ix-notes details.tl>summary{gap:10px;padding:10px 11px;}.ix-notes .tl-body{padding:2px 12px 12px;}.ix-notes .tl-t b{font-size:14.5px;}}
 .ix-flip{perspective:1400px;height:280px;width:100%;}
 .ix-flip-inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d;cursor:pointer;}
 .ix-flip-inner.flipped{transform:rotateY(180deg);}
@@ -2817,7 +2821,7 @@ function QuizView({ route, go, record, userId, duel }) {
         <div className="ix-card" style={{ padding: "13px 15px", marginBottom: 18, fontSize: 14, lineHeight: 1.5, overflowX: "auto" }} dangerouslySetInnerHTML={{ __html: q.given }} />
       )}
       {q.givenFig && FIGS[q.givenFig] && (
-        <div className="ix-card" style={{ padding: "12px 12px 6px", marginBottom: 18 }}><FigView id={q.givenFig} /></div>
+        <div className="ix-card" style={{ padding: "12px 12px 6px", marginBottom: 18 }}><FigView id={q.givenFig} bare /></div>
       )}
 
       {q.type === "match" ? (

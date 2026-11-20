@@ -23,6 +23,8 @@ const upsert = (list, items) => {
   }
 };
 
+// slike v zapiskih se ob vsakem zagonu na novo prekopirajo (odstranjene/izključene ne ostanejo objavljene)
+fs.rmSync(path.join(__dirname, 'docs/img'), { recursive: true, force: true });
 for (const mod of MODULES) {
   const subj = sem.subjects.find((s) => s.id === mod.id);
   if (!subj) throw new Error('Ni predmeta ' + mod.id);

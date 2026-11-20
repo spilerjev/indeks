@@ -101,9 +101,12 @@ function scrubPrivate(md) {
    (npr. "Fotografija: `Predavanja/...webp`"). opts.img = {base: mapa ZAPISKI.md, outDir: docs/img/<predmet>, url: 'img/<predmet>/'}.
    Datoteka se kopira v docs (objavljeno), v zapiskih pa se prikaže kot slika (klik = odpre v polni velikosti). */
 const IMG_EXT = /\.(webp|png|jpe?g|svg|gif)$/i;
+/* Ne objavljamo avtorskega gradiva profesorjev: izrezi in fotografije prosojnic ostanejo le v lokalnih zapiskih. */
+const IMG_NOPUBLISH = /slike s prosojnic|fotografije s predavanja|prosojnic[ae]?\//i;
 function imgFigure(rel, cap, img) {
   const path = require('path');
   rel = rel.replace(/^<|>$/g, '');
+  if (IMG_NOPUBLISH.test(rel)) return null;
   const src = path.join(img.base, rel);
   if (!fs.existsSync(src)) { console.warn('  ! ni slike:', rel); return null; }
   const name = rel.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9.]+/g, '_').replace(/^_+/, '');
@@ -120,6 +123,9 @@ function render(md, opts = {}) {
     // omemba slike v besedilu -> dodatna vrstica s sliko (z enakim zamikom, da ostane v isti alineji)
     md = md.split('\n').flatMap((l) => {
       if (/^\s*!\[/.test(l)) return [l];
+      const ind0 = (l.match(/^(\s*)([-*]|\d+\.)?\s*/) || [''])[0].replace(/[-*\d.]/g, ' ');
+      const inl = [...l.matchAll(/!\[([^\]]*)\]\((<[^>]+>|[^)]+)\)/g)];
+      if (inl.length) return [l.replace(/!\[([^\]]*)\]\((<[^>]+>|[^)]+)\)/g, '').replace(/[\s:]+$/, ''), ...inl.map((m) => ind0 + '![' + m[1] + '](' + m[2] + ')')];
       const refs = [...l.matchAll(/`([^`]+)`/g)].map((m) => m[1]).filter((p) => IMG_EXT.test(p));
       const ind = (l.match(/^(\s*)([-*]|\d+\.)?\s*/) || [''])[0].replace(/[-*\d.]/g, ' ');
       return [l, ...refs.map((p) => ind + '![](' + p + ')')];
@@ -170,7 +176,7 @@ function render(md, opts = {}) {
     }
     if (skipLevel) continue;
     if (/^\s*(Vir|Viri|Gradivo)\s*:/.test(raw) || /^---+\s*$/.test(raw)) { flushAll(); continue; }
-    const im = raw.match(/^(\s*)!\[([^\]]*)\]\(([^)]+)\)\s*$/);
+    const im = raw.match(/^(\s*)!\[([^\]]*)\]\((<[^>]+>|[^)]+)\)\s*$/);
     if (im) {
       const fig = opts.img ? imgFigure(im[3].trim(), im[2].trim(), opts.img) : null;
       flushPara(); flushTable(); flushQuote();
