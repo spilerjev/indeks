@@ -1963,7 +1963,7 @@ function mediaPos() {
 }
 function mediaMeta() {
   const ms = typeof navigator !== "undefined" && navigator.mediaSession; const ep = PLAYER.ep; if (!ms || !ep) return;
-  try { ms.metadata = new MediaMetadata({ title: ep.n + ". " + ep.title, artist: "indeks." + (PLAYER.ctx && PLAYER.ctx.subjName ? " · " + PLAYER.ctx.subjName : ""), album: (PLAYER.ctx && PLAYER.ctx.partName) || "Poslušaj", artwork: [{ src: "og.png", sizes: "1200x630", type: "image/png" }] }); } catch (e) {}
+  try { ms.metadata = new MediaMetadata({ title: ep.n + ". " + ep.title, artist: "indeks." + (PLAYER.ctx && PLAYER.ctx.subjName ? " · " + PLAYER.ctx.subjName : ""), album: (PLAYER.ctx && PLAYER.ctx.partName) || "Poslušaj", artwork: [256, 512, 1024].map((n) => ({ src: new URL("icon/player-" + n + ".png", location.href).href, sizes: n + "x" + n, type: "image/png" })) }); } catch (e) {}
   const h = (k, fn) => { try { ms.setActionHandler(k, fn); } catch (e) {} };
   const i = PLAYER.list.findIndex((e) => e.id === ep.id);
   h("play", () => { if (PLAYER.a) PLAYER.a.play().catch(() => {}); });
