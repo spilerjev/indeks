@@ -110,9 +110,12 @@ function imgFigure(rel, cap, img) {
   if (IMG_NOPUBLISH.test(rel)) return null;
   const src = path.join(img.base, rel);
   if (!fs.existsSync(src)) { console.warn('  ! ni slike:', rel); return null; }
-  const name = rel.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9.]+/g, '_').replace(/^_+/, '');
+  // nevtralno ime (brez »Predavanja_slike_…«, »Vaje_V02_…«) in v SVG besedilo brez oznak predavanj, vaj in slik (notes-sources.js)
+  const { neutralName, scrubSvg } = require('./notes-sources');
+  const name = neutralName(rel.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9.]+/g, '_').replace(/^_+/, ''));
   fs.mkdirSync(img.outDir, { recursive: true });
-  fs.copyFileSync(src, path.join(img.outDir, name));
+  if (/\.svg$/i.test(name)) fs.writeFileSync(path.join(img.outDir, name), scrubSvg(fs.readFileSync(src, 'utf8')));
+  else fs.copyFileSync(src, path.join(img.outDir, name));
   const url = img.url + name, alt = esc(cap || '');
   return `<figure class="nimg"><a href="${url}" target="_blank" rel="noopener"><img src="${url}" alt="${alt}" loading="lazy"></a>${cap ? '<figcaption>' + inline(cap) + '</figcaption>' : ''}</figure>`;
 }

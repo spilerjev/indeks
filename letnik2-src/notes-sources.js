@@ -83,6 +83,39 @@ function mechanical(html) {
   h = scrubParens(h);
   return h.replace(/<ul><li>\s*<\/li><\/ul>/g, '');
 }
+
+/* ---- Oznake predavanj, vaj, nalog, primerov in slik (»P04, slika 2.3 (…)«, »Vaje 3, naloga 1: …«) ----
+   Uporablja se za besedilo v slikah SVG (ob kopiranju v docs/img, md-notes.js), za podnapise in alt slik v zapiskih. */
+function scrubLabel(t) {
+  let x = t;
+  x = x.replace(/^\s*(?:(?:[PV]\d{1,2}|[Vv]aje\s*\d+)(?:\s*[+,]\s*(?:[PV]\d{1,2}|[Vv]aje\s*\d+))*)(?:\s*[,:]\s*|\s+(?=\S)|\s*$)/, '');
+  x = x.replace(/,?\s*\b(?:izpitn\w*\s+)?(?:slik[ae]|prosojnic\w*|primer\w*|nalog[ae])\s+\d+(?:\.\d+)?(?:\s*[–-]\s*\d+)?\b/gi, '');
+  x = x.replace(/\(\s*\)/g, '').replace(/\s+([:,;)])/g, '$1').replace(/^\s*[:,;]\s*/, '').trim();
+  const m = /^\(([^()]*)\)$/.exec(x); if (m) x = m[1].trim();
+  return x;
+}
+/* besedilo v <text>/<title> elementih SVG (vključno s <tspan>) */
+function scrubSvg(svg) {
+  return svg.replace(/(<(text|title)\b[^>]*>)([\s\S]*?)(<\/\2>)/g, (m, a, tag, inner, b) => a + inner.split(/(<[^>]+>)/).map((p) => (p.startsWith('<') ? p : scrubLabel(p))).join('') + b)
+    .replace(/(aria-label=")([^"]*)(")/g, (m, a, v, b) => a + scrubLabel(v) + b);
+}
+/* Nevtralno ime slikovne datoteke: brez »Predavanja_slike_lastni_grafi_«, »Vaje_V02_«, »naloga1«, »tabla«, »Primer_5.2« … */
+const NAME_OVERRIDE = { 'Vaje_vaje3_naloga1_graf.svg': 'prosta-trgovina-graf-1.svg', 'Vaje_vaje3_naloga3_graf.svg': 'prosta-trgovina-graf-2.svg' };
+function neutralName(name) {
+  if (NAME_OVERRIDE[name]) return NAME_OVERRIDE[name];
+  if (!/_/.test(name) && name === name.toLowerCase()) return name;   // že nevtralno
+  const dot = name.lastIndexOf('.'), base = dot > 0 ? name.slice(0, dot) : name, ext = dot > 0 ? name.slice(dot).toLowerCase() : '';
+  const DROP = /^(predavanja|predavanje|vaje|vaja|slike|lastni|grafi|tabla|primer|primeri|naloga|[pv]\d{1,2}|vaje\d+|naloga\d+|\d+(\.\d+)*)$/i;
+  const toks = base.split(/[_\s]+/).filter((t) => t && !DROP.test(t));
+  return (toks.join('-').toLowerCase() || 'slika') + ext;
+}
+/* Slike v HTML zapiskov: nevtralni URL, očiščena alt in podnapis */
+function scrubFigures(html) {
+  return html.replace(/(img\/[a-z0-9]+\/)([^"'\s)]+)/g, (m, dir, f) => dir + neutralName(f))
+    .replace(/(<img\b[^>]*\balt=")([^"]*)(")/g, (m, a, v, b) => a + scrubLabel(v) + b)
+    .replace(/(<figcaption>)([\s\S]*?)(<\/figcaption>)/g, (m, a, v, b) => a + v.split(/(<[^>]+>)/).map((p) => (p.startsWith('<') ? p : scrubLabel(p))).join('') + b);
+}
+
 /* Splošne fraze (vsi deli). Vrstni red je pomemben. */
 const PHRASES = [
   [/Navodila profesorjev in asistentov o obliki preverjanja\./g, 'Navodila za obliko preverjanja.'],
@@ -96,9 +129,21 @@ const PHRASES = [
   [/<b>Prof:<\/b>\s*/g, ''],
   [/⭐ <b>PROF: /g, '⭐ <b>'],
   [/\(prof\.? - dobesedno\)/g, '(s predavanja)'],
+  // oštevilčenja nalog in primerov z vaj in iz učbenika (»Naloga 1 - kriza« -> »Naloga: kriza«, »Primer 2.3 - jabolka« -> »Primer: jabolka«)
+  [/\s*\((?:nal\.|naloga|[Pp]rimer\w*|str\.|skripta,\s*str\.)\s*\d+(?:\.\d+)?[a-z]?\)/g, ''],
+  [/,\s*naloga\s+\d+[a-z]?(?=\))/g, ''],
+  [/\b(?:Izpitna\s+)?([Nn])aloga\s+\d+[a-z]?\s*[-–]\s*/g, '$1aloga: '],
+  [/\b(?:Izpitna\s+)?([Nn])aloga\s+\d+[a-z]?\b/g, '$1aloga'],
+  [/\b([Pp])rimer\s+\d+\.\d+[a-z]?\s*[-–]\s*/g, '$1rimer: '],
+  [/\b([Pp])rimer\s+\d+\.\d+[a-z]?\b/g, '$1rimer'],
+  [/\bSlika\s+\d+\.\d+:\s*/g, 'Na grafu: '],
+  [/\+\s*\d+\.\s*vaja\b/g, '+ vaja'],
+  [/\b([Nn])al\.\s*\d+[a-z]?\b/g, '$1aloga'],
+  [/\b\d+\.\s*vaje:\s*/g, 'Vaje: '],
   [/\s*\(str\.\s*\d+\s+v\s+učbeniku\)/g, ''],
   [/\s*\((?:po\s+)?profesor\w*(?:\s+(?:na\s+vajah|na\s+predavanju|poudaril\w*))?\)/g, ''],
   [/(<li>\s*(?:<b>)?)Pr\.\s*\d+(?:[–-]\d+)?(?:\s+(?:podrobneje|dopolnitev|z modeli \(izračun\)))?\s*[:–-]\s*(\p{Ll}?)/gu, (m, a, c) => a + c.toUpperCase()],
+  [/\b([Pp])rimer\s+[-–]\s+/g, '$1rimer: '],   // poenotenje, ko je oklepaj med številko in pomišljajem izginil kasneje
 ];
 /* find je besedilo, kjer je vsak presledek lahko tudi nova vrstica v HTML (in obratno) */
 const loose = (s) => new RegExp((/^\s/.test(s) ? '\\s*' : '') + s.trim().split(/\s+/).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+') + (/\s$/.test(s) ? '\\s*' : ''), 'g');
@@ -183,7 +228,8 @@ function scrubSources(html, part, opts = {}) {
   h = autoLinks(h);
   h = mechanical(h);
   for (const [re, to] of PHRASES) h = h.replace(re, to);
+  h = scrubFigures(h);
   h = applyFixes(h, part, fixes, 'post', warn);
   return renderLinks(h, part, warn);
 }
-module.exports = { scrubSources, mechanical, autoLinks, renderLinks, SRC };
+module.exports = { scrubSources, mechanical, autoLinks, renderLinks, scrubLabel, scrubSvg, neutralName, scrubFigures, SRC };

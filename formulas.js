@@ -100,7 +100,7 @@ module.exports = {
       F('WACC', 'WACC = w_E · r_E + w_D · r_D · (1 − t)', 'Uteži po tržnih vrednostih: w_E = E/(E + D)'),
       F('Kapitalski proračun brez novih delnic', 'zadržani dobiček / delež lastniškega kapitala v strukturi'),
     ]},
-    { g: 'Naložbene odločitve (vaje 7-8)', items: [
+    { g: 'Naložbene odločitve', items: [
       F('Neto sedanja vrednost', 'NPV = Σ CFₜ / (1 + r)ᵗ − I₀;   sprejmi, če NPV > 0'),
       F('IRR', 'IRR: diskontna stopnja, pri kateri je NPV = 0;   sprejmi, če IRR > WACC'),
       F('Doba povračila', 'čas, ko kumulativni CF preseže naložbo'),

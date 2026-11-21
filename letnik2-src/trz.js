@@ -278,7 +278,7 @@ module.exports = {
         { id: 'trz-ciljno', name: 'Ciljno trženje: STP (5. predavanje)', questions: p5.ciljno },
         { id: 'trz-vaje-argeta-duo', name: 'Primera: Argeta in Duolingo (internacionalizacija, STP)', questions: p5.vaje },
       ],
-      flashcards: [{ id: 'trz-c-1', name: 'Ključni pojmi (predavanja 1-3)', cards: kartice.map(([front, back]) => ({ front, back })) },
+      flashcards: [{ id: 'trz-c-1', name: 'Ključni pojmi', cards: kartice.map(([front, back]) => ({ front, back })) },
         { id: 'trz-c-2', name: 'Google Glass in nakupno vedenje', cards: p4.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'trz-c-3', name: 'Ciljno trženje (STP)', cards: p5.kartice.map(([front, back]) => ({ front, back })) }],
     },

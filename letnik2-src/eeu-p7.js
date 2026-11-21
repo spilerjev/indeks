@@ -30,7 +30,7 @@ module.exports = [
     'Na majhnem nacionalnem trgu velika učinkovita podjetja pomenijo malo konkurence in visoke cene. Velik integriran trg omogoča oboje: velikost in konkurenco.')),
   withId('q1ul1onm', Q('Za koliko se je po ugotovitvah Bellone idr. (2008) znižalo razmerje cena/stroški v francoski industriji po enotnem trgu in EMU?', ['Za 4–5 odstotnih točk', 'Za 15–20 odstotnih točk', 'Za 0,5 odstotne točke', 'Ni se spremenilo'], 0,
     'Študija potrjuje prokonkurenčni učinek. Globalna kriza je pribitke še znižala; pozneje so si opomogli, a ostali pod ravnjo pred krizo.')),
-  withId('qnu4wmi', Q('Kako so koncentrirani letalski prevozniki v Evropi v primerjavi z ZDA (po prosojnicah P07)?', ['Evropa: 6 skupin ima okoli 70 %; ZDA: 4 družbe okoli 80 %', 'Evropa: 2 skupini imata 90 %; ZDA: 10 družb po okoli 10 %', 'Koncentracija je v Evropi in v ZDA približno enaka', 'V Evropi ni nobene skupine z več kot 5 % zmogljivosti'], 0,
+  withId('qnu4wmi', Q('Kako so koncentrirani letalski prevozniki v Evropi v primerjavi z ZDA?', ['Evropa: 6 skupin ima okoli 70 %; ZDA: 4 družbe okoli 80 %', 'Evropa: 2 skupini imata 90 %; ZDA: 10 družb po okoli 10 %', 'Koncentracija je v Evropi in v ZDA približno enaka', 'V Evropi ni nobene skupine z več kot 5 % zmogljivosti'], 0,
     'Evropski letalski trg je bolj razdrobljen, zato direktorji zagovarjajo nadaljnjo konsolidacijo (npr. v 4 skupine: IAG, Lufthansa, Air France-KLM, Ryanair).')),
   withId('q1njozi', Q('Kateri par letalskih družb se je združil leta 2005?', ['Air France in KLM', 'British Airways in Iberia', 'Lufthansa in Austrian Airlines', 'IAG in Aer Lingus'], 0,
     'British Airways in Iberia sta leta 2010/11 ustanovila IAG, Lufthansa je Austrian prevzela 2008, IAG pa Aer Lingus 2015.')),

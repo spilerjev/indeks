@@ -47,7 +47,7 @@ module.exports = [
   {"part":"eeu/k1","find":"okvir »NICNIR« 🔎 (prof. ga ni razložila v prosojnicah).","replace":"okvir »NICNIR« 🔎 (ni razložen, preveri)."},
   {"part":"eeu/k1","find":" Fotografija: <i>Predavanja/P5_fotografije s predavanja/manj_ucinkovita_partnerica_blaginja.webp</i>.","replace":""},
   {"part":"eeu/k1","find":"<h3>📒 Dopolnilni zapiski - P05 (izpolnjene črte)</h3>","replace":"<h3>📒 Dopolnilni zapiski - preferencialna liberalizacija</h3>"},
-  {"part":"eeu/k1","find":"<b>Nal. 1a, prosojnica na vajah (16. 11.):</b>","replace":"<b>Nal. 1a, dopolnitev:</b>"},
+  {"part":"eeu/k1","find":"<b>Naloga, prosojnica na vajah (16. 11.):</b>","replace":"<b>Naloga, dopolnitev:</b>"},
   {"part":"eeu/k1","find":"<p><b>Profova rešitev na tabli (učinek na blaginjo partnerske države):</b></p>","replace":"<p><b>Rešitev: učinek na blaginjo partnerske države</b></p>"},
   {"part":"eeu/k1","find":"Na tabli je pripisano <b>Meade</b>: James Meade (1955)","replace":"Avtor analize: <b>James Meade</b> (1955)"},
   {"part":"eeu/k1","find":"<p><b>Učinek oblikovanja CU v EGS (1968), P5 PDF str. 11 spodaj (odčitano z grafov):</b></p>","replace":"<p><b>Učinek oblikovanja CU v EGS (1968), odčitano z grafov:</b></p>"},
@@ -180,7 +180,7 @@ module.exports = [
   {"part":"stana/k1","find":" Na pr. 17 je izpeljava: E(Z) = 0, var(Z) = 1 - ni za na pamet, bistvo je rezultat.","replace":" Iz izpeljave sledi E(Z) = 0, var(Z) = 1 - ni za na pamet, bistvo je rezultat."},
   {"part":"stana/k1","find":"= odgovor B pri zgledu na pr. 25 (detergent nad 5,1 l = μ + 2σ).","replace":"= odgovor B pri zgledu z detergentom (nad 5,1 l = μ + 2σ)."},
   {"part":"stana/k1","find":" (glej k = 0,67 na pr. 15!)","replace":" (glej k = 0,67 zgoraj!)"},
-  {"part":"stana/k1","find":"<h3>Naloga 1 v R (razlaga profesorja)</h3>","replace":"<h3>Naloga 1 v R (razlaga)</h3>"},
+  {"part":"stana/k1","find":"<h3>Naloga v R (razlaga profesorja)</h3>","replace":"<h3>Naloga v R (razlaga)</h3>"},
   {"part":"stana/k1","find":"<b>Izpis <i>freq</i> (summarytools)</b> za V02:","replace":"<b>Izpis <i>freq</i> (summarytools)</b>:"},
   {"part":"stana/k1","find":"<li> Graf: <i>Vaje/V02 - Razvrsceni podatki in normalna porazdelitev/normalna_porazdelitev.png</i>. ","replace":"<li> Graf: "},
   {"part":"stana/k1","find":"<b>Standardizacija</b> (profesor: uvedel jo je Gauss):","replace":"<b>Standardizacija</b> (uvedel jo je Gauss):"},
@@ -189,7 +189,7 @@ module.exports = [
   {"part":"stana/k1","find":" Glej tudi P02, pr. 8 in 12. </li>","replace":" Glej tudi gostoto verjetnosti in normalno porazdelitev zgoraj. </li>"},
   {"part":"stana/k1","find":"glej <i>Vaje/V02 - Razvrsceni podatki in normalna porazdelitev/naloga3_sprememba.png</i>.","replace":"glej sliko."},
   {"part":"stana/k1","find":"(RV1 = naloge iz V01: prejemki 46 zaposlenih v finančni industriji)","replace":"(naloge s prejemki 46 zaposlenih v finančni industriji)"},
-  {"part":"stana/k1","find":"<li> Podatki: <i>V01_N1_podatki.csv</i> (= naloga 1 iz V01; ista datoteka kot <i>V01-2_podatki.csv</i> iz avditornih). Pišemo R Markdown dokument <b><i>analiza prejemkov.Rmd</i></b> v mapi RV1.","replace":"<li> Podatki so iz 1. naloge avditornih vaj. Pišemo R Markdown dokument v mapi RV1."},
+  {"part":"stana/k1","find":"<li> Podatki: <i>V01_N1_podatki.csv</i> (= naloga iz V01; ista datoteka kot <i>V01-2_podatki.csv</i> iz avditornih). Pišemo R Markdown dokument <b><i>analiza prejemkov.Rmd</i></b> v mapi RV1.","replace":"<li> Podatki so iz 1. naloge avditornih vaj. Pišemo R Markdown dokument v mapi RV1."},
   { local: "L182" },   // zasebno besedilo: letnik2-src/notes-fixes.local.js (ni v gitu)
   {"part":"stana/k1","find":"(to so tiste štiri iz P02, pr. 7)","replace":"(to so tiste štiri iz poglavja o porazdelitvah)"},
   {"part":"stana/k1","find":"Zveza z P02: ± 2SE","replace":"Zveza s pravilom 68–95–99,7: ± 2SE"},
@@ -222,7 +222,7 @@ module.exports = [
   {"part":"stana/k1","find":" 🔎 (prosojnica ne da rešitve).","replace":" 🔎 (preveri)."},
   {"part":"stana/k1","find":"<b>Beseda 8:</b> profesor je v besedilu »in je zato ne bi zavrnili« zamenjal z »<b>in jo zato sprejmemo</b>«.","replace":"<b>Beseda 8:</b> pravilno je »<b>in jo zato sprejmemo</b>« (ne »in je zato ne bi zavrnili«)."},
   {"part":"stana/k1","find":"(priročnik str. 29, pogl. 12; risali na tablo)","replace":"(Statistični priročnik, pogl. 12)"},
-  {"part":"stana/k1","find":"<p><b>Naloga 2, 2. korak (risba na tabli):</b></p>","replace":"<p><b>Naloga 2, 2. korak (risba):</b></p>"},
+  {"part":"stana/k1","find":"<p><b>Naloga, 2. korak (risba na tabli):</b></p>","replace":"<p><b>Naloga, 2. korak (risba):</b></p>"},
   {"part":"stana/k1","find":"<li> Graf: <i>Vaje/V06 - Preizkusanje domnev/naloga2_SE_in_z.png</i>. ","replace":"<li> Graf: "},
   {"part":"stana/k1","find":"<h3>⭐⭐ Kako zapisati rešitev na izpitu (profesorica: sam rezultat NI dovolj)</h3>","replace":"<h3>⭐⭐ Kako zapisati rešitev na izpitu (sam rezultat NI dovolj)</h3>"},
   {"part":"stana/k1","find":"<div class=\"tip\">✅ Popravek 12. 11. 2026 (po zapiskih s predavanja): na prosojnici NI napake - prejšnji zapis je napačno navajal Π = 8 % in 28 443.","replace":"<div class=\"tip\">✅ Popravek 12. 11. 2026: prejšnji zapis je napačno navajal Π = 8 % in 28 443."},
@@ -272,10 +272,10 @@ module.exports = [
   {"part": "eeu/k1", "find": "evropesimizem 1975–1986 (podrobnosti glej zgoraj)", "replace": "evropesimizem 1975–1986 (glej [[Evropesimizem 1975–1986|zgoraj]])"},
   {"part": "eeu/k1", "find": "tehnične ovire in Cassis de Dijon (podrobnosti sodbe glej zgoraj)", "replace": "tehnične ovire in Cassis de Dijon (glej [[Svetle točke v obdobju evropesimizma|zgoraj]])"},
   {"part": "eeu/k1", "find": "Delors, Single Market Programme, EC92 (podrobnosti glej zgoraj)", "replace": "Delors, Single Market Programme, EC92 (glej [[Poglabljanje krogov: program enotnega evropskega trga|zgoraj]])"},
-  {"part": "mpsp/k1", "find": "5.3 rešen po 5.8 – glej spodaj.", "replace": "5.3 rešen po 5.8 - glej [[Primer 5.3 – drevo odločanja, podjetje TLC|spodaj]]."},
+  {"part": "mpsp/k1", "find": "5.3 rešen po 5.8 – glej spodaj.", "replace": "5.3 rešen po 5.8 - glej [[Primer: drevo odločanja, podjetje TLC|spodaj]]."},
   // 21. 11. 2026: preostanek PDF in številk prosojnic
   {"part": "pf1/k1", "find": "⚠️ V PDF-ju piše (1 + r_m)⁴⁸⁰ = 1,0540 – napačno, pravilno <b>7,0400</b>.", "replace": "⚠️ Pazi: (1 + r_m)⁴⁸⁰ = <b>7,0400</b> (ne 1,0540)."},
-  {"part": "eeu/k1", "find": "<b>Nal. 5 (pršut) - POPRAVLJENO 9. 11. 2026:</b> v PDF-ju je <b>P = 90 − (1/10) Q_D</b> in <b>P = 10 + (1/10) Q_S</b> (ulomek 1/10 se je pri pretvorbi v besedilo prebral kot »110«).", "replace": "<b>Nal. 5 (pršut):</b> <b>P = 90 − (1/10) Q_D</b> in <b>P = 10 + (1/10) Q_S</b>."},
+  {"part": "eeu/k1", "find": "<b>Naloga (pršut) - POPRAVLJENO 9. 11. 2026:</b> v PDF-ju je <b>P = 90 − (1/10) Q_D</b> in <b>P = 10 + (1/10) Q_S</b> (ulomek 1/10 se je pri pretvorbi v besedilo prebral kot »110«).", "replace": "<b>Naloga (pršut):</b> <b>P = 90 − (1/10) Q_D</b> in <b>P = 10 + (1/10) Q_S</b>."},
   // PF1: številke prosojnic v krepkih oznakah, »Realna obrestna mera (37)«, »(19–20) IZRAČUNAJ«; naštevanja »(1) srečanje« ostanejo
   {"part": "pf1/k1", "find": /(<b>[^<]*?\S)\s*\(\d{1,2}(?:[–-]\d{1,2})?\)(\s*(?:⭐\s*)?(?::)?\s*<\/b>)/g, "replace": "$1$2"},
   {"part": "pf1/k1", "find": /<b>\(\d{1,2}(?:[–-]\d{1,2})?\)\s+(?=\p{Lu}|r_)/gu, "replace": "<b>"},
@@ -285,4 +285,22 @@ module.exports = [
   { local: "L269" },   // zasebno besedilo: letnik2-src/notes-fixes.local.js (ni v gitu)
   { local: "L270" },   // zasebno besedilo: letnik2-src/notes-fixes.local.js (ni v gitu)
   { local: "L271" },   // zasebno besedilo: letnik2-src/notes-fixes.local.js (ni v gitu)
+  // 21. 11. 2026: brez številk predavanj, vaj, nalog in primerov (ostanek po pravilih v notes-sources.js)
+  {"part": "pf1/k1", "find": "<h2>📒 Dopolnilni zapiski - vaje 1–4 z rešitvami</h2>", "replace": "<h2>📒 Dopolnilni zapiski - naloge z rešitvami</h2>"},
+  {"part": "pf1/k1", "find": "<div class=\"tip\">Ročne rešitve vaj 1–4 se <b>ujemajo z rešitvami zgoraj</b> (vsi kazalniki 2024/2025, DuPont 17,5 % → 15,8 %, naloga 15,4/17,6/21,12 %, vse TVM naloge, obveznice, delnice). Vaje 5 in 6 nimajo rešitev. Dve številki sta prepisni napaki: naloga vaje 2 ima 129 831 / 141 831 (pravilno 129 931,24 / 141 931,24), naloga ima 23 471,53 (pravilno 23 471,59); naloga vaje 4 ima 39,26 € (tu 39,24 - zaokroževanje).</div>", "replace": "<div class=\"tip\">Ročne rešitve se <b>ujemajo z rešitvami zgoraj</b> (vsi kazalniki 2024/2025, DuPont 17,5 % → 15,8 %, vse naloge s časovno vrednostjo denarja, obveznice, delnice). Pravilne vrednosti pri dveh nalogah: 129 931,24 / 141 931,24 in 23 471,59; pri delnicah 39,24 €.</div>"},
+  {"part": "pf1/k1", "find": "Vaje 1, naloga: <b>c) oboje</b>", "replace": "Cilj podjetja: <b>c) oboje</b>"},
+  {"part": "pf1/k1", "find": "Vaje 2, kar je bilo rečeno: naloga nominalna mesečna mera", "replace": "Časovna vrednost denarja, poudarki: nominalna mesečna mera"},
+  {"part": "pf1/k1", "find": "Vaje 3: pravilo <b>r_c", "replace": "Obveznice, pravilo: <b>r_c"},
+  {"part": "stana/k1", "find": "<h2>RV1 – Računalniške vaje 1 (pet 16. 10. 2026, R-214) - Posit Cloud</h2>", "replace": "<h2>Računalniške vaje: Posit Cloud</h2>"},
+  {"part": "stana/k1", "find": "(nesestavljeni domnevi, kot pri primeru 6.1 a)", "replace": "(nesestavljeni domnevi, kot pri primeru s pakiranjem čajnih vrečk)"},
+  {"part": "trz/kvizi", "find": "Primer: Ryanair (vaja 3. 11.) -", "replace": "Primer: Ryanair -"},
+  {"part": "eeu/k1", "find": "<b>Kolokvij vsebuje tudi 5. vaje</b> (preferencialna liberalizacija, 2. del:", "replace": "<b>Kolokvij vsebuje tudi vaje o preferencialni liberalizaciji</b> (2. del:"},
+  {"part": "eeu/k1", "find": "<h2>Zgodovina EU (3/3): 1. vaje</h2>", "replace": "<h2>Zgodovina EU (3/3): povojni koraki, pogodbe in širitve</h2>"},
+  {"part": "eeu/k1", "find": "Vaje 1–6 (14. 10. – 29. 11.) niso navedene kot obvezne.", "replace": "Vaje (14. 10. – 29. 11.) niso navedene kot obvezne."},
+  {"part": "mpsp/k1", "find": "(Vaje 1–4). Od Vaj 5 naprej (dolgoročno planiranje zmogljivosti) ni za kolokvij", "replace": ". Snov od dolgoročnega planiranja zmogljivosti naprej ni za kolokvij"},
+  {"part": "mpsp/k1", "find": "<h3>Primer izpitne naloge (Vaje 2, Canvas <i>MPSP Vaje 2.docx</i>) – 6 operacij, 3 delavci</h3>", "replace": "<h3>Naloga: 6 operacij, 3 delavci</h3>"},
+  {"part": "mpsp/k1", "find": "<div class=\"tip\">ℹ️ Datoteka: <i>MPSP Vaje 3.docx</i> (Canvas, 26. 10.). Rešitve", "replace": "<div class=\"tip\">ℹ️ Rešitve"},
+  {"part": "mpsp/k1", "find": "vsebuje vse do vključno Vaj 4 (Predvidevanje povpraševanja, 5. 11. 2026). Od Vaj 5 naprej je nova snov", "replace": "vsebuje vse do vključno predvidevanja povpraševanja. Od dolgoročnega planiranja zmogljivosti naprej je nova snov"},
+  {"part": "mpsp/k1", "find": "<h2>📒 Dopolnilni zapiski - Vaje 4</h2>", "replace": "<h2>📒 Dopolnilni zapiski - predvidevanje povpraševanja</h2>"},
+  {"part": "mpsp/k1", "find": "<p><em>(Primeri 5.4–5.7 na vajah preskočeni; 5.3 rešen po 5.8 - glej", "replace": "<p><em>(Drevo odločanja je rešeno po zamenjavi stroja - glej"},
 ];

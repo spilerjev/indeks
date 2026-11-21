@@ -239,9 +239,9 @@ module.exports = {
     {
       id: 'k2', name: '2. kolokvij', type: 'kolokvij',
       decks: [
-        { id: 'pf1-obveznice', name: 'Vrednotenje obveznic (P04)', questions: p3.obveznice },
+        { id: 'pf1-obveznice', name: 'Vrednotenje obveznic', questions: p3.obveznice },
         { id: 'pf1-rac-obveznice', name: 'Računske: obveznice', calc: true, questions: p3.obvRac },
-        { id: 'pf1-delnice', name: 'Vrednotenje delnic (P05)', questions: p3.delnice },
+        { id: 'pf1-delnice', name: 'Vrednotenje delnic', questions: p3.delnice },
         { id: 'pf1-rac-delnice', name: 'Računske: delnice', calc: true, questions: p3.delRac },
         { id: 'pf1-v3', name: 'Računske: vrednotenje obveznic', calc: true, questions: v36.v3 },
         { id: 'pf1-v4', name: 'Računske: vrednotenje delnic', calc: true, questions: v36.v4 },

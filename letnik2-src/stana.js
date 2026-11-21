@@ -264,11 +264,11 @@ const kartP04 = [
 
 // Zvočne razlage (NotebookLM iz lastnih zapiskov; docs/podcast/stana). sec = dolžina v sekundah.
 const AUDIO = [
-  { id: 'stana-ep1', n: 1, title: 'Osnovni pojmi in opisna statistika (P01 + V01)', sub: 'Zakaj povprečna plača v novicah zavaja', file: 'podcast/stana/01-opisna-statistika.m4a', sec: 1732 },
-  { id: 'stana-ep2', n: 2, title: 'Verjetnostne porazdelitve in normalna porazdelitev (P02 + V02)', sub: 'Pasti in skrivnosti normalne porazdelitve', file: 'podcast/stana/02-porazdelitve.m4a', sec: 1204 },
-  { id: 'stana-ep3', n: 3, title: 'Teoretične osnove vzorčenja (P03 + V03)', sub: 'Kako iz vzorca oceniti celotno populacijo', file: 'podcast/stana/03-vzorcenje.m4a', sec: 1179 },
-  { id: 'stana-ep4', n: 4, title: 'Točkovna in intervalna ocena (P04 + V04)', sub: 'Iluzija natančnosti in statistični intervali zaupanja', file: 'podcast/stana/04-intervalna-ocena.m4a', sec: 1418 },
-  { id: 'stana-ep6', n: 6, title: 'Osnove preizkušanja domnev (P06 + V06)', sub: 'Logika statističnega preizkušanja domnev', file: 'podcast/stana/06-preizkusanje-domnev.m4a', sec: 927 },
+  { id: 'stana-ep1', n: 1, title: 'Osnovni pojmi in opisna statistika', sub: 'Zakaj povprečna plača v novicah zavaja', file: 'podcast/stana/01-opisna-statistika.m4a', sec: 1732 },
+  { id: 'stana-ep2', n: 2, title: 'Verjetnostne porazdelitve in normalna porazdelitev', sub: 'Pasti in skrivnosti normalne porazdelitve', file: 'podcast/stana/02-porazdelitve.m4a', sec: 1204 },
+  { id: 'stana-ep3', n: 3, title: 'Teoretične osnove vzorčenja', sub: 'Kako iz vzorca oceniti celotno populacijo', file: 'podcast/stana/03-vzorcenje.m4a', sec: 1179 },
+  { id: 'stana-ep4', n: 4, title: 'Točkovna in intervalna ocena', sub: 'Iluzija natančnosti in statistični intervali zaupanja', file: 'podcast/stana/04-intervalna-ocena.m4a', sec: 1418 },
+  { id: 'stana-ep6', n: 6, title: 'Osnove preizkušanja domnev', sub: 'Logika statističnega preizkušanja domnev', file: 'podcast/stana/06-preizkusanje-domnev.m4a', sec: 927 },
 ];
 
 module.exports = {
@@ -292,7 +292,7 @@ module.exports = {
         { id: 'stana-stari2', name: 'Vaje v slogu 1. preizkušnje (z rešitvami)', questions: require('./stana-stari2') },
         { id: 'stana-rac-normalna', name: 'Računske naloge: normalna porazdelitev', calc: true, questions: racNormalna },
         { id: 'stana-rac-opisna', name: 'Računske naloge: opisna statistika', calc: true, questions: racOpisna },
-        { id: 'stana-vzorcenje', name: 'Vzorčenje: načini izbire, cenilke, SE (P03)', questions: [...p03.vzorcenje, ...p03.pravilnoNe] },
+        { id: 'stana-vzorcenje', name: 'Vzorčenje: načini izbire, cenilke, SE', questions: [...p03.vzorcenje, ...p03.pravilnoNe] },
         { id: 'stana-rac-vzorcenje', name: 'Računske naloge: vzorčenje in vzorčna porazdelitev', calc: true, questions: p03.racVzorcenje },
         { id: 'stana-intervalna', name: 'Intervalna ocena', questions: p04.intervalna },
         { id: 'stana-rac-intervalna', name: 'Računske naloge: intervalna ocena', calc: true, questions: p04.racIntervalna },
@@ -302,7 +302,7 @@ module.exports = {
         { id: 'stana-maja-rac', name: 'Računske: velikost vzorca in stratificirano (dopolnilni zapiski)', calc: true, questions: maja.rac },
       ],
       flashcards: [{ id: 'stana-c-k1', name: 'Pojmi in formule (1. kolokvij)', cards: kartice.map(([front, back]) => ({ front, back })) },
-        { id: 'stana-c-p03', name: 'Vzorčenje (P03)', cards: p03.kartice.map(([front, back]) => ({ front, back })) },
+        { id: 'stana-c-p03', name: 'Vzorčenje', cards: p03.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'stana-c-p04', name: 'Intervali, velikost vzorca, domneve', cards: kartP04.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij', date: '2026-12-18', audio: AUDIO.filter((e) => e.n >= 6), decks: [
