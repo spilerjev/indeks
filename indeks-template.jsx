@@ -804,6 +804,9 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-root.has-player{padding-bottom:84px;}
 .ix-root.has-player .ix-formbtn,.ix-root.has-player .ix-tocbtn,.ix-root.has-player .ix-totop{bottom:calc(84px + env(safe-area-inset-bottom));}
 @media (max-width:560px){.ix-root .ix-pskip{display:none;}}
+/* Glava na telefonu: brez napisa "indeks.", krajši vzdevek, manjše ikone, da so vsi gumbi vidni */
+@media (max-width:560px){.ix-root .ix-header{gap:7px;}.ix-root .ix-brandtext{display:none;}.ix-root .ix-userpill{max-width:118px!important;padding:6px 9px!important;}.ix-root .ix-hbtn{width:34px!important;height:34px!important;flex-shrink:0;}}
+@media (max-width:360px){.ix-root .ix-userpill{max-width:92px!important;}}
 .ix-root .ix-actl{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;min-width:0;}
 .ix-root .ix-actl-bar{flex:1 1 220px;display:flex;align-items:center;gap:8px;min-width:0;}
 .ix-root .ix-actl-btns{display:flex;gap:8px;flex-shrink:0;}
@@ -1759,41 +1762,41 @@ function Footer() {
 
 function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formulas, onToggleFormulas, user, onSignOut, onProfile, badge, profileName, charId, photo }) {
   return (
-    <header style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: home ? 26 : 18 }}>
+    <header className="ix-header" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: home ? 26 : 18 }}>
       <button onClick={onHome} className="ix-serif"
         style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 9, padding: 0 }}>
         <span style={{ width: 38, height: 38, borderRadius: 11, background: "var(--ink)", color: "var(--paper)", display: "grid", placeItems: "center" }}>
           <GraduationCap size={21} />
         </span>
-        <span style={{ fontWeight: 900, fontSize: 23, letterSpacing: "-.02em" }}>
+        <span className="ix-brandtext" style={{ fontWeight: 900, fontSize: 23, letterSpacing: "-.02em" }}>
           indeks<span style={{ color: "var(--terra)" }}>.</span>
         </span>
       </button>
       {user
-        ? <button onClick={onProfile} className="ix-chip" title="Profil, prijatelji in izzivi 1v1"
+        ? <button onClick={onProfile} className="ix-chip ix-userpill" title="Profil, prijatelji in izzivi 1v1"
             style={{ marginLeft: "auto", position: "relative", maxWidth: 200, overflow: "visible", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
             {PHOTOS_ON && photo ? <Pic photo={photo} name={profileName} size={20} /> : BATTLE_ON && charId ? <CharArt id={charId} size={20} /> : <UserRound size={14} />}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{profileName || displayName(user)}</span>
             {badge > 0 && <span className="ix-badge">{badge}</span>}
           </button>
         : <span className="ix-chip" style={{ marginLeft: "auto" }}>EF · UPEŠ</span>}
       {user && (
-        <button onClick={onToggleGloss} aria-label="Slovarček" aria-pressed={gloss} title={gloss ? "Slovarček je vklopljen (klik za izklop)" : "Slovarček je izklopljen (klik za vklop)"}
+        <button onClick={onToggleGloss} className="ix-hbtn" aria-label="Slovarček" aria-pressed={gloss} title={gloss ? "Slovarček je vklopljen (klik za izklop)" : "Slovarček je izklopljen (klik za vklop)"}
           style={{ background: gloss ? "var(--ink)" : "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: gloss ? "var(--paper)" : "var(--ink2)" }}>
           <BookOpen size={17} />
         </button>
       )}
       {user && (
-        <button onClick={onToggleFormulas} aria-label="Formule" aria-pressed={formulas} title={formulas ? "Formule so vklopljene (klik za izklop)" : "Formule so izklopljene (klik za vklop)"}
+        <button onClick={onToggleFormulas} className="ix-hbtn" aria-label="Formule" aria-pressed={formulas} title={formulas ? "Formule so vklopljene (klik za izklop)" : "Formule so izklopljene (klik za vklop)"}
           style={{ background: formulas ? "var(--ink)" : "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: formulas ? "var(--paper)" : "var(--ink2)" }}>
           <Sigma size={17} />
         </button>
       )}
-      <button onClick={onToggleTheme} aria-label="Preklopi temo"
+      <button onClick={onToggleTheme} className="ix-hbtn" aria-label="Preklopi temo"
         style={{ background: "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: "var(--ink)" }}>
         {dark ? <Sun size={17} /> : <Moon size={17} />}
       </button>
       {user && (
-        <button onClick={onSignOut} aria-label="Odjava" title="Odjava"
+        <button onClick={onSignOut} className="ix-hbtn" aria-label="Odjava" title="Odjava"
           style={{ background: "var(--paper2)", border: "1px solid var(--line)", borderRadius: 10, width: 36, height: 36, cursor: "pointer", display: "grid", placeItems: "center", color: "var(--ink)" }}>
           <LogOut size={17} />
         </button>
