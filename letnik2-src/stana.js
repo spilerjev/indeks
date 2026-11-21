@@ -253,11 +253,20 @@ const kartP04 = [
   ['p-vrednost', 'Najmanjša α, pri kateri še zavrnemo H₀; p ≤ α → zavrnemo. Enostranski p = dvostranski p / 2.'],
 ];
 
+// Zvočne razlage (NotebookLM iz lastnih zapiskov; docs/podcast/stana). sec = dolžina v sekundah.
+const AUDIO = [
+  { id: 'stana-ep1', n: 1, title: 'Osnovni pojmi in opisna statistika (P01 + V01)', sub: 'Zakaj povprečna plača v novicah zavaja', file: 'podcast/stana/01-opisna-statistika.m4a', sec: 1732 },
+  { id: 'stana-ep2', n: 2, title: 'Verjetnostne porazdelitve in normalna porazdelitev (P02 + V02)', sub: 'Pasti in skrivnosti normalne porazdelitve', file: 'podcast/stana/02-porazdelitve.m4a', sec: 1204 },
+  { id: 'stana-ep3', n: 3, title: 'Teoretične osnove vzorčenja (P03 + V03)', sub: 'Kako iz vzorca oceniti celotno populacijo', file: 'podcast/stana/03-vzorcenje.m4a', sec: 1179 },
+  { id: 'stana-ep4', n: 4, title: 'Točkovna in intervalna ocena (P04 + V04)', sub: 'Iluzija natančnosti in statistični intervali zaupanja', file: 'podcast/stana/04-intervalna-ocena.m4a', sec: 1418 },
+  { id: 'stana-ep6', n: 6, title: 'Osnove preizkušanja domnev (P06 + V06)', sub: 'Logika statističnega preizkušanja domnev', file: 'podcast/stana/06-preizkusanje-domnev.m4a', sec: 927 },
+];
+
 module.exports = {
   id: 'stana',
   parts: [
     {
-      id: 'k1', name: '1. kolokvij', type: 'kolokvij', date: '2026-11-13T15:00',
+      id: 'k1', name: '1. kolokvij', type: 'kolokvij', date: '2026-11-13T15:00', audio: AUDIO.filter((e) => e.n <= 5),
       notes: { file: '2. letnik (2026-27)/1. semester/Statisticna analiza/ZAPISKI.md' },
       appendNotesMd: `
 ## Informacije o predmetu: kako zapisati rešitev
@@ -287,12 +296,12 @@ module.exports = {
         { id: 'stana-c-p03', name: 'Vzorčenje (P03)', cards: p03.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'stana-c-p04', name: 'Intervali, velikost vzorca, domneve', cards: kartP04.map(([front, back]) => ({ front, back })) }],
     },
-    { id: 'k2', name: '2. kolokvij', type: 'kolokvij', date: '2026-12-18', decks: [
+    { id: 'k2', name: '2. kolokvij', type: 'kolokvij', date: '2026-12-18', audio: AUDIO.filter((e) => e.n >= 6), decks: [
       { id: 'stana-domneve', name: 'Osnove preizkušanja domnev (P06, V06)', questions: p04.domneve },
       { id: 'stana-rac-domneve', name: 'Računske naloge: preizkus domnev (Z)', calc: true, questions: p04.racDomneve },
       { id: 'stana-2pp-stari', name: 'Vaje v slogu 2. preizkušnje (z rešitvami)', questions: require('./stana-2pp') },
     ] },
-    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [
+    { id: 'izpit', name: 'Izpit', type: 'izpit', audio: AUDIO, decks: [
       { id: 'stana-izpit-zgled', name: 'Vaje v slogu izpita (z rešitvami)', questions: require('./stana-izpit') },
     ] },
   ],
