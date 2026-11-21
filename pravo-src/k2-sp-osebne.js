@@ -203,7 +203,7 @@ module.exports = {
       ],
       correct: 1,
       explanation: "Navadni s.p.: davek od dejanskega dobička (prihodki minus stroški), progresivno. Normirani s.p.: normirani stroški 80 % prihodkov - obdavčenih je 20 % prihodkov (efektivno 4 % od prihodkov oz. 20 % od dobička).",
-      more: "Podatek z vaj: trenutna meja za normirance je 60.000 EUR prihodkov, po napovedani spremembi (2026) 120.000 EUR."
+      more: "Trenutna meja za normirance je 60.000 EUR prihodkov, po napovedani spremembi (2026) 120.000 EUR."
     }
   ]
 };

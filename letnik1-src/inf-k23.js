@@ -49,8 +49,8 @@ const NOTES_K3_DODATEK = `
 
 const NOTES_IZPIT = `
 ## Kako poteka izpit
-- Pisni izpit, **75 točk** (+ do 25 točk z vaj), skupaj vsaj **55** za pozitivno oceno. Snov vseh predavanj in učbenik.
-- Vprašanja so opisna, pogosto "na primeru": podatek vs. informacija, relacijska shema (M:N!), OLAP, zasebna e-tržnica, ERP, elektronski podpis, šifriranje, BPMN, virus/črv, uvajanje IS, oblak, tri vrste znanj, etična dilema, vprašanje o gostu na predavanjih.
+- Pisni izpit, **75 točk** (+ do 25 točk z vaj), skupaj vsaj **55** za pozitivno oceno. Snov vseh poglavij.
+- Vprašanja so opisna, pogosto "na primeru": podatek vs. informacija, relacijska shema (M:N!), OLAP, zasebna e-tržnica, ERP, elektronski podpis, šifriranje, BPMN, virus/črv, uvajanje IS, oblak, tri vrste znanj, etična dilema.
 - Skoraj vedno pride: ena naloga iz baz podatkov, razlika virus-hrošč-trojanski konj-črv, ključi in šifriranje, modeliranje procesov (BPMN).
 `;
 

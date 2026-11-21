@@ -9,8 +9,8 @@ const cards = (arr) => arr.map(([front, back]) => ({ front, back }));
 
 const NOTES_K2 = `
 ## Kako poteka 2. kolokvij
-- 2. kolokvij je na vajah v prvem tednu januarja (2025/26: 5.-9. 1.). **30 minut, 10 vprašanj izbirnega tipa, 1 pravilen odgovor, 10 točk.**
-- Snov: nadaljevanje predavanj po 1. kolokviju - nominalna in realna ekonomičnost, rentabilnost, teorija produkcije in stroškov, prag rentabilnosti, optimalni obseg poslovanja.
+- 2. kolokvij je v prvem tednu januarja (2025/26: 5.-9. 1.). **30 minut, 10 vprašanj izbirnega tipa, 1 pravilen odgovor, 10 točk.**
+- Snov: nadaljevanje snovi po 1. kolokviju - nominalna in realna ekonomičnost, rentabilnost, teorija produkcije in stroškov, prag rentabilnosti, optimalni obseg poslovanja.
 > Točen obseg snovi povesta predavateljici na predavanjih in vajah - preveri na Canvasu.
 
 ## 6 · Ekonomičnost (2. del) in rentabilnost

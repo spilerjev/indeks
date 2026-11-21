@@ -114,7 +114,7 @@ module.exports = {
         { id: 'mpsp-maja', name: 'Napovedovanje povpraševanja: dopolnilo', questions: maja.teorija },
         { id: 'mpsp-maja-rac', name: 'Računske: regresija in PANN', calc: true, questions: maja.rac },
       ],
-      flashcards: [{ id: 'mpsp-c-1', name: 'Pojmi z vaj', cards: kartice.map(([front, back]) => ({ front, back })) },
+      flashcards: [{ id: 'mpsp-c-1', name: 'Ključni pojmi', cards: kartice.map(([front, back]) => ({ front, back })) },
         { id: 'mpsp-c-2', name: 'Analiza procesa', cards: v2.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'mpsp-c-3', name: 'Razmestitev in napovedovanje', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },

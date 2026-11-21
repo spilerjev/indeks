@@ -34,7 +34,7 @@ const intervalna = [
   withId('q1ynhafy', Q('Velikost vzorca podvojimo (125 → 250). Kaj se zgodi s širino intervala?', ['Se prepolovi', 'Se zmanjša za faktor √2 (≈ 29 %)', 'Se podvoji', 'Ostane enaka'], 1,
     'Širina ∝ 1/√n. Za prepolovitev bi potrebovali 4-krat večji vzorec.')),
   withId('qsf0eea', Q('Kaj velja za interval, izračunan na konkretnem vzorcu?', ['Z verjetnostjo 1 − α vemo, da zajame parameter', 'Ne vemo, ali zajame pravo vrednost - α je delež vseh možnih vzorcev, pri katerih je ne', 'Vedno zajame vzorčno oceno in parameter', 'Če je α dovolj nizek, vemo, ali zajame parameter'], 1,
-    'Iz zgleda 1. preizkušnje: trditev, da lahko ugotovimo, ali konkretni interval zajame parameter, je NAPAČNA.')),
+    'Trditev, da lahko ugotovimo, ali konkretni interval zajame parameter, je NAPAČNA.')),
   withId('q1tkl7kz', { q: "Interval za total Y_tot = N·μ dobimo tako, da:",
       options: ["Meje za μ pomnožimo z n, α ostane enak","Meje za μ delimo z N, α ostane enak","Meje za μ pomnožimo z N, α podvojimo","Meje za μ pomnožimo z N, α ostane enak"],
       correct: 3,

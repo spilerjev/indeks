@@ -216,7 +216,7 @@ module.exports = {
         { term: "Načelo zaupanja", def: "Vsakdo se lahko zanese na vpisane podatke" },
         { term: "Publicitetno načelo", def: "Od dneva objave vpisa se nihče ne more sklicevati, da podatka ni poznal" }
       ],
-      explanation: "Štiri načela sodnega registra. Handoff z vaj: 'Nauči se načela sodnega registra' - profesor jih rad vpraša."
+      explanation: "Štiri načela sodnega registra."
     },
     {
       q: "Družba sklene pogodbo v okviru dejavnosti, ki je nima registrirane. Kakšna je posledica?",

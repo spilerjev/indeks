@@ -102,7 +102,7 @@ module.exports = {
       ],
       correct: 1,
       explanation: "Ponudba zavezuje ponudnika - ne more je preklicati, umakniti ali od nje odstopiti (razen če preklic prispe pred ponudbo ali hkrati z njo). Pogodba je sklenjena, ko ponudnik prejme izjavo naslovnika o sprejemu. Molk NE pomeni sprejema, razen pri stalni poslovni vezi.",
-      hint: "Praktični nasvet z vaj: v ponudbi vedno napiši, do kdaj velja - sicer lahko velja 'za skos'."
+      hint: "Praktični nasvet: v ponudbi vedno napiši, do kdaj velja - sicer lahko velja 'za skos'."
     },
     {
       q: "Kaj je predpogodba?",
@@ -147,7 +147,7 @@ module.exports = {
       ],
       correct: 0,
       explanation: "Ničnost = absolutna neveljavnost (nasprotovanje ustavi, prisilnim predpisom, morali); pogodba nima učinkov (za nazaj). Izpodbojnost = relativna neveljavnost; pogodba povzroča učinke, dokler je upravičenec ne izpodbije (npr. pogodba, sklenjena pod utemeljeno grožnjo, v zmoti).",
-      more: "Primer z vaj: pogodba o 'zanositvi s sosedom' je nemoralna - sodišče se z njo sploh ne ukvarja, je nična. Pogodba pod grožnjo je izpodbojna, če je grožnja nedopustna in strah utemeljen; legalna grožnja, povezana z obveznostjo (prijava na FURS zaradi neplačevanja davkov), ni nujno nedopustna."
+      more: "Primer: pogodba o 'zanositvi s sosedom' je nemoralna - sodišče se z njo sploh ne ukvarja, je nična. Pogodba pod grožnjo je izpodbojna, če je grožnja nedopustna in strah utemeljen; legalna grožnja, povezana z obveznostjo (prijava na FURS zaradi neplačevanja davkov), ni nujno nedopustna."
     },
     {
       q: "Kateri so pogoji za nastanek odškodninske obveznosti?",
@@ -247,7 +247,7 @@ module.exports = {
       ],
       correct: 1,
       explanation: "Institut spremenjenih okoliščin (rebus sic stantibus) je izjema od načela pacta sunt servanda (pogodbe je treba spoštovati). Pogoji: okoliščine otežijo izpolnitev, nastanejo PO sklenitvi, razvezo zahteva prizadeta stranka. Na okoliščine, nastale pred sklenitvijo, se ni mogoče sklicevati; prav tako ne po že opravljeni izpolnitvi.",
-      more: "Primeri z vaj: covid ali vojna (skok cen materialov) so spremenjene okoliščine; redne spremembe občinskih načrtov niso. Razlika od višje sile: pri višji sili izpolnitev fizično NI mogoča (naravne nesreče), pri spremenjenih okoliščinah je mogoča, a ni več ekonomsko smiselna."
+      more: "Primeri: covid ali vojna (skok cen materialov) so spremenjene okoliščine; redne spremembe občinskih načrtov niso. Razlika od višje sile: pri višji sili izpolnitev fizično NI mogoča (naravne nesreče), pri spremenjenih okoliščinah je mogoča, a ni več ekonomsko smiselna."
     },
     {
       q: "Kateri so pogoji za veljavno pobotanje (kompenzacijo)?",
@@ -284,7 +284,7 @@ module.exports = {
       ],
       correct: 0,
       explanation: "Nemožnost ob sklenitvi = ničnost; naknadna nemožnost zaradi višje sile = prenehanje obveznosti (brez odškodninske odgovornosti - stranka, kriva za ničnost, pa mora drugi povrniti škodo). Višja sila = dogodek izven našega vpliva (naravne nesreče); spremembe na trgu so 'le' spremenjene okoliščine.",
-      more: "Primer z vaj: študentka zaradi operacije fizično ni mogla na izpit - sodišče je priznalo višjo silo in ji ni bilo treba vrniti štipendije."
+      more: "Primer: študentka zaradi operacije fizično ni mogla na izpit - sodišče je priznalo višjo silo in ji ni bilo treba vrniti štipendije."
     },
     {
       q: "Katera je bistvena sestavina prodajne pogodbe?",

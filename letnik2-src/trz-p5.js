@@ -31,7 +31,7 @@ const ciljno = [
   withId('q1ckzyrt', Q('Katero vprašanje NI del zemljevida empatije?', ['Kaj misli in čuti?', 'Kaj vidi?', 'Kaj sliši?', 'Koliko zasluži?'], 3,
     'Štiri vprašanja: misli in čuti, vidi, govori in dela, sliši.')),
   withId('qkxb84s', Q('Kaj je persona?', ['Resničen kupec', 'Izmišljen, a podatkovno podprt opis tipičnega ciljnega porabnika', 'Maskota znamke', 'Vplivnež'], 1,
-    'Primer z vaj: Dana, študentka, uporabnica Duolinga.')),
+    'Primer: Dana, študentka, uporabnica Duolinga.')),
   withId('q1hgqnvh', Q('Kaj je bistvo vsebinskega trženja?', ['Agresivno oglaševanje', 'Zanimiva, relevantna, uporabna vsebina, ki jo ciljna skupina poišče sama in gradi zaupanje', 'Plačani oglasi v iskalnikih', 'Popusti'], 1,
     'Namen: informirati, navdušiti, zadržati pozornost; vsebina posreduje zgodbo znamke.')),
   withId('q8vmdoo', Q('Pozicioniranje je postopek, pri katerem izdelku določimo:', ['Najnižjo ceno', 'Jasno, razločevalno in zaželeno mesto glede na konkurenco v mislih ciljne skupine', 'Mesto na polici', 'Distribucijski kanal'], 1,

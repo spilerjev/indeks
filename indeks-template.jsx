@@ -1982,8 +1982,8 @@ function FormulaDock({ subjId }) {
 
 /* ---- UVODNA STRAN: pozdrav, izbira letnika, viri, avtorske pravice (vidna tudi brez prijave) ---- */
 const YEAR_INFO = {
-  1: { title: "1. letnik", sub: "UPEŠ · 2025/26", sources: "snov predmetov 1. letnika UPEŠ (2025/26): avtorjevi zapiski s predavanj in vaj ter naloge, sestavljene v slogu kolokvijev in izpitov" },
-  2: { title: "2. letnik", sub: "UPEŠ · 2026/27 · sproti dopolnjeno", sources: "snov predmetov 2. letnika UPEŠ (2026/27): avtorjevi zapiski s predavanj in vaj ter naloge, sestavljene v slogu kolokvijev in izpitov" },
+  1: { title: "1. letnik", sub: "UPEŠ · 2025/26", sources: "snov predmetov 1. letnika UPEŠ (2025/26): avtorjevi lastni zapiski in naloge, sestavljene v slogu kolokvijev in izpitov" },
+  2: { title: "2. letnik", sub: "UPEŠ · 2026/27 · sproti dopolnjeno", sources: "snov predmetov 2. letnika UPEŠ (2026/27): avtorjevi lastni zapiski in naloge, sestavljene v slogu kolokvijev in izpitov" },
 };
 const yearTotals = (y) => {
   const subs = DATA.filter((s) => s.year === y).flatMap((s) => s.subjects);
@@ -2534,10 +2534,10 @@ function PartView({ route, stats, go, soc, user }) {
         ) : <Empty text="Ni zapiskov za ta del" />}
       </div>
 
-      {/* POSLUŠAJ: zvočne razlage po predavanjih */}
+      {/* POSLUŠAJ: zvočne razlage snovi */}
       {part.audio && part.audio.length > 0 && (
         <Fold id="audio" icon={<Headphones size={14} />} title="Poslušaj" color="var(--terra)" meta={slPl(part.audio.length, ["epizoda", "epizodi", "epizode", "epizod"])}>
-          <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55, marginBottom: 10 }}>Pogovorna razlaga snovi po predavanjih, narejena iz zapiskov. Za avtobus, hojo ali ponavljanje z zaprtimi očmi. Kje si ostal, si app zapomni.</div>
+          <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55, marginBottom: 10 }}>Pogovorna razlaga snovi, narejena iz zapiskov. Za avtobus, hojo ali ponavljanje z zaprtimi očmi. Kje si ostal, si app zapomni.</div>
           <AudioList eps={part.audio} user={user} ctx={{ sem: sem.id, subj: subj.id, part: part.id, subjName: subj.name, partName: part.name }} />
         </Fold>
       )}
@@ -4957,7 +4957,7 @@ function Checklist({ user, year }) {
         </div>
       ); })}
       <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-        <input value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") add(); }} placeholder="Novo opravilo (npr. preveri Canvas)" maxLength={80} className="ix-input" style={{ flex: 1, minWidth: 0 }} />
+        <input value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") add(); }} placeholder="Novo opravilo (npr. ponovi formule)" maxLength={80} className="ix-input" style={{ flex: 1, minWidth: 0 }} />
         <button onClick={add} disabled={!draft.trim()} className="ix-pill on" style={{ flexShrink: 0 }}><Plus size={13} style={{ verticalAlign: -2 }} /> Dodaj</button>
       </div>
     </div>
@@ -5656,10 +5656,16 @@ function NotesView({ route, go, user }) {
                     {sec.subs.map((sub) => (
                       <button key={sub.id} className={"ix-sub-chip" + (bm && bm.sub === sub.id ? " bm" : "")} onClick={() => scrollToEl(sub.id)} title={sub.title}>{sub.title}</button>
                     ))}
-                    <button onClick={() => pin(sec)} title="Pripni zaznamek na začetek tega razdelka"
-                      style={{ marginLeft: "auto", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "4px 10px", cursor: "pointer", color: isBm && bm.manual && !bm.sub ? "var(--teal)" : "var(--ink2)", fontSize: 12.5, display: "flex", alignItems: "center", gap: 5 }}>
-                      <Bookmark size={13} /> Pripni
-                    </button>
+                    {(() => {
+                      const pinned = isBm && bm.manual && !bm.sub;
+                      return (
+                        <button onClick={() => (pinned ? clearBm() : pin(sec))} aria-pressed={pinned}
+                          title={pinned ? "Zaznamek je pripet tukaj - klikni za odstranitev" : "Pripni zaznamek na začetek tega razdelka"}
+                          style={{ marginLeft: "auto", background: "none", border: "1px solid " + (pinned ? "var(--teal)" : "var(--line)"), borderRadius: 999, padding: "4px 10px", cursor: "pointer", color: pinned ? "var(--teal)" : "var(--ink2)", fontSize: 12.5, display: "flex", alignItems: "center", gap: 5 }}>
+                          <Bookmark size={13} fill={pinned ? "currentColor" : "none"} /> {pinned ? "Pripeto" : "Pripni"}
+                        </button>
+                      );
+                    })()}
                   </div>
                   <div className="ix-notes" dangerouslySetInnerHTML={{ __html: ql ? highlightHtml(sec.body, ql) : hl ? highlightStems(sec.body, hl) : sec.body }} />
                   {i + 1 < secs.length && (

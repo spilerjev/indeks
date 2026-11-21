@@ -232,4 +232,4 @@ function scrubSources(html, part, opts = {}) {
   h = applyFixes(h, part, fixes, 'post', warn);
   return renderLinks(h, part, warn);
 }
-module.exports = { scrubSources, mechanical, autoLinks, renderLinks, scrubLabel, scrubSvg, neutralName, scrubFigures, SRC };
+module.exports = { applyFixes, scrubSources, mechanical, autoLinks, renderLinks, scrubLabel, scrubSvg, neutralName, scrubFigures, SRC };

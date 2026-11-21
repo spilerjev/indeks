@@ -26,7 +26,7 @@ const teorija = [
     'Če je ozkih grl več, moraš delovati na vsa. Dodaten delavec ne skrajša časa aktivnosti.')),
   withId('q1tjj93n', Q('Kaj pomeni oznaka "O" pri vprašanjih P/Z/N/O?', ['Odpade', 'Ne vemo (odvisno od podatkov)', 'Ostane enako', 'Optimalno'], 1,
     'P - poveča se, Z - zmanjša se, N - ne spremeni se, O - ne vemo.')),
-  withId('qhqgmob', Q('Kako v skripti zapišemo Littlov zakon za določitev časa čakanja?', ['PČ = Z / P', 'PČ = Z · P', 'Z = PČ / P', 'P = Z · PČ'], 0,
+  withId('qhqgmob', Q('Kako zapišemo Littlov zakon za določitev časa čakanja?', ['PČ = Z / P', 'PČ = Z · P', 'Z = PČ / P', 'P = Z · PČ'], 0,
     'Z = PČ · P, torej PČ = Z/P. Pri čakanju poznamo zalogo (Z), ne časa.')),
 ];
 

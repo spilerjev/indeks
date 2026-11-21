@@ -5,7 +5,7 @@ const Q = (q, options, correct, explanation) => ({ q, options, correct, explanat
 const PN = (q, drzi, explanation) => ({ q, options: ['Drži', 'Ne drži'], correct: drzi ? 0 : 1, explanation });
 
 const usmeritve = [
-  withId('q171oq34', Q('Katere ključne besede vsebuje opredelitev trženja (Konečnik Ruzzier, 2024)?', ['Oglaševanje, prodaja, dobiček', 'Prostovoljna menjava, obojestransko zadovoljstvo, ciljno trženje, trženjski splet, dolgoročna dobičkonosnost', 'Proizvodnja, distribucija, cena', 'Agresivna prodaja in komuniciranje'], 1,
+  withId('q171oq34', Q('Katere ključne besede vsebuje opredelitev trženja?', ['Oglaševanje, prodaja, dobiček', 'Prostovoljna menjava, obojestransko zadovoljstvo, ciljno trženje, trženjski splet, dolgoročna dobičkonosnost', 'Proizvodnja, distribucija, cena', 'Agresivna prodaja in komuniciranje'], 1,
     'Trženje ni le oglaševanje ali prodaja - je filozofija, ki prežema celo podjetje.')),
   withId('q1up0aae', { q: "Kaj je pravilno? 1) proizvodna usmeritev je smiselna, ko povpraševanje presega ponudbo; 2) izdelčna usmeritev vidi ključ do uspeha v nenehnem izboljševanju izdelka; 3) trženjska usmeritev: podjetje najprej izdela izdelek, nato išče kupce; 4) družbeno odgovorna usmeritev se odpove dobičku v korist družbe",
       options: ["1 in 2","1, 2 in 4","2 in 3","1, 3 in 4"],
@@ -134,7 +134,7 @@ const okolje = [
   withId('qozdde6', { q: "Visoke ovire za vstop v panogo zmanjšujejo grožnjo potencialnih konkurentov.",
       options: ["Drži","Ne drži"],
       correct: 0,
-      explanation: "Pri analizi konkurence upoštevamo obstoječe in potencialne konkurente. Kako resna je grožnja novih, je odvisno od ovir za vstop (potrebna vlaganja, patenti, ekonomija obsega, zvestoba znamkam). Primer s predavanj: B&N vs. Amazon." }),
+      explanation: "Pri analizi konkurence upoštevamo obstoječe in potencialne konkurente. Kako resna je grožnja novih, je odvisno od ovir za vstop (potrebna vlaganja, patenti, ekonomija obsega, zvestoba znamkam). Primer: B&N vs. Amazon." }),
 ];
 
 const raziskave = [
@@ -260,7 +260,7 @@ module.exports = {
   id: 'trz',
   parts: [
     {
-      id: 'kvizi', name: 'Kvizi na vajah in sprotna snov', type: 'kolokvij',
+      id: 'kvizi', name: 'Kvizi in sprotna snov', type: 'kolokvij',
       notes: {
         file: '2. letnik (2026-27)/1. semester/Temelji trzenja/ZAPISKI.md',
         skip: ['seminarska naloga', 'uvodna vaja'],
@@ -274,8 +274,8 @@ module.exports = {
         { id: 'trz-raziskave', name: 'Trženjske raziskave', questions: raziskave },
         { id: 'trz-povprasevanje', name: 'Merjenje povpraševanja in tržni delež', questions: povprasevanje },
         { id: 'trz-glass', name: 'Primer: Google Glass (usmeritve, paradigme)', questions: p4.glass },
-        { id: 'trz-vedenje', name: 'Nakupno vedenje porabnikov (4. predavanje)', questions: p4.vedenje },
-        { id: 'trz-ciljno', name: 'Ciljno trženje: STP (5. predavanje)', questions: p5.ciljno },
+        { id: 'trz-vedenje', name: 'Nakupno vedenje porabnikov', questions: p4.vedenje },
+        { id: 'trz-ciljno', name: 'Ciljno trženje: STP', questions: p5.ciljno },
         { id: 'trz-vaje-argeta-duo', name: 'Primera: Argeta in Duolingo (internacionalizacija, STP)', questions: p5.vaje },
       ],
       flashcards: [{ id: 'trz-c-1', name: 'Ključni pojmi', cards: kartice.map(([front, back]) => ({ front, back })) },

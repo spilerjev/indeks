@@ -203,7 +203,7 @@ const obvRac = [
     '6.000/108.042 = 5,55 %. Polletna YTM 2,1 % → navedena 4,2 % (efektivno 4,24 %).')),
   withId('qacp0mc', Q('Cena 30-letne brezkuponske obveznice 1.000 € pri 3 % je 411,99 €, pri 4 % 308,32 €. Za koliko odstotkov pade?', ['−9,2 %', '−17,3 %', '−25,2 %', '−1,9 %'], 2,
     '308,32/411,99 − 1 = −25,2 %. Dvoletna: 942,60 → 924,56 = −1,9 %.')),
-  withId('q1j9h9ax', Q('Izhodno vprašanje: 3-letna obveznica, nominalna vrednost 1.000 €, letni kupon 5 %, zahtevana donosnost 4 %. Kaj velja?', ['Cena je nad 1.000 € (premija)', 'Cena je pod 1.000 € (diskont)', 'Cena je 1.000 €', 'Odvisno od bonitete'], 0,
+  withId('q1j9h9ax', Q('3-letna obveznica, nominalna vrednost 1.000 €, letni kupon 5 %, zahtevana donosnost 4 %. Kaj velja?', ['Cena je nad 1.000 € (premija)', 'Cena je pod 1.000 € (diskont)', 'Cena je 1.000 €', 'Odvisno od bonitete'], 0,
     'Kupon 5 % > zahtevana donosnost 4 % → premija; 1.027,75 €.')),
 ];
 

@@ -172,7 +172,7 @@ const teorija = [
     'Razlogi: dohodkovni učinek, nižje zunanje carine, enotna pravila (globoka integracija), vrednostne verige.')),
   withId('quvz7dj', Q('Kaj so ugotovile empirične študije o RTA?', ['Ustvarjanje trgovine je praviloma pozitivno; preusmerjanje je v starejših študijah majhno, v novejših potrjeno', 'Ustvarjanja trgovine ni', 'Preusmerjanje vedno prevlada', 'RTA ne vplivajo na trgovino'], 0,
     'Ex ante CGE modeli, ex post gravitacijski modeli; globlji sporazumi ustvarjajo več trgovine in manj preusmerjanja.')),
-  withId('qp04mho', Q('Kaj pokažeta grafa uvoza EGS-6 (1958-1970)?', ['Trgovina med članicami je rasla hitreje (ustvarjanje); delež ROW je padel, absolutno pa je uvoz iz ROW zrasel', 'Uvoz iz ROW je absolutno padel', 'Trgovina med članicami je stagnirala', 'Ni sprememb'], 0,
+  withId('qp04mho', Q('Kaj kažejo podatki o uvozu EGS-6 (1958-1970)?', ['Trgovina med članicami je rasla hitreje (ustvarjanje); delež ROW je padel, absolutno pa je uvoz iz ROW zrasel', 'Uvoz iz ROW je absolutno padel', 'Trgovina med članicami je stagnirala', 'Ni sprememb'], 0,
     'Delež uvoza iz EGS-6 ≈ 30 % → 48 %; uvoz znotraj EGS ≈ 6-krat, celoten ≈ 4-krat.')),
   withId('q25s1fb', Q('Zakaj se države težje odločijo za carinsko unijo kot za FTA?', ['Ker je CU cenejša', 'CU zahteva skupno zunanjo carino in trgovinsko politiko - odpoved suverenosti, usklajevanje, delitev carinskih prihodkov', 'Ker WTO prepoveduje CU', 'Ker CU nima pravil o poreklu'], 1,
     'Zato je FTA v svetu bistveno več.')),

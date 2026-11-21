@@ -22,7 +22,7 @@ const izpit = [
       explanation: "Ne drži. McClellandova teorija (potrebe po dosežkih, moči in povezanosti) je vsebinska teorija, tako kot Maslow, Alderfer in Herzberg; procesne teorije pojasnjujejo, kako motivacija poteka." }),
   withId('q1l6u1lh', D('Po sodobnem (interakcijskem) pogledu je konflikt treba vedno zatreti, ker organizaciji le škoduje.', false,
     'Ne drži. To je tradicionalni pogled. Sodobni pogled konflikt šteje za neizogiben in v zmerni meri koristen.')),
-  withId('q2zmim0', D('Netflix smo pri predavanjih obravnavali kot primer kulture svobode in odgovornosti.', true,
+  withId('q2zmim0', D('Netflix je primer kulture svobode in odgovornosti.', true,
     'Drži. Netflix je primer kulture, ki zaposlenim daje veliko svobode in od njih zahteva odgovornost.')),
   withId('qxasrc6', D('Obleka zaposlenih, arhitektura stavbe in logotip sodijo med temeljne predpostavke organizacijske kulture (najgloblja raven po Scheinu).', false,
     'Ne drži. To so artefakti - vidna, površinska raven kulture. Temeljne predpostavke so nezavedna, samoumevna prepričanja.')),

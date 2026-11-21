@@ -19,7 +19,7 @@ const NOTES = `
 ### Kaj je management
 - **Management** = sodelovanje, interakcija med sodelavci in deležniki; planirati, organizirati, voditi in kontrolirati resurse in procese.
 - **Daft**: ustvarjalno, uspešno in učinkovito doseganje ciljev skozi **4 funkcije**: planiranje, organiziranje, vodenje, kontroliranje.
-- Zanimivosti s predavanj: švedsko *narings liv* = preskrba za življenje; *company* iz lat. *com panis* = delitev kruha; beseda management v modernem pomenu prvič **1670** (Oxford).
+- Zanimivosti: švedsko *narings liv* = preskrba za življenje; *company* iz lat. *com panis* = delitev kruha; beseda management v modernem pomenu prvič **1670** (Oxford).
 - **Uspešnost** (Drucker) = delati prave stvari (doseganje ciljev). **Učinkovitost** = delati stvari pravilno (poraba virov).
 ### 5 dimenzij sodobnega okolja managementa
 Digitalizacija, ekologija, varnost, zdravje, individualnost (npr. GDPR).
@@ -152,7 +152,7 @@ const uvod = [
     'Isti koren kot companion. Stratēgos je izvor besede strategija, movere besede motiv.')),
   withId('q1gw0xm3', Q('Uspešnost (effectiveness) po Druckerju pomeni:', ['Delati prave stvari', 'Delati stvari pravilno', 'Delati s čim manj stroški', 'Delati hitreje od konkurence'], 0,
     'Učinkovitost = delati stvari pravilno (gospodarna raba virov).')),
-  withId('q4v58jk', Q('Katera NI ena od 5 dimenzij sodobnega okolja managementa s predavanj?', ['Digitalizacija', 'Ekologija', 'Individualnost', 'Centralizacija'], 3,
+  withId('q4v58jk', Q('Katera NI ena od 5 dimenzij sodobnega okolja managementa?', ['Digitalizacija', 'Ekologija', 'Individualnost', 'Centralizacija'], 3,
     'Pet dimenzij: digitalizacija, ekologija, varnost, zdravje, individualnost (GDPR).')),
   withId('q1dz1j8y', Q('Koliko managerskih vlog opiše Mintzberg in kam sodi vloga "zveza"?', ['10 vlog; zveza je medosebna vloga', '10 vlog; zveza je informacijska vloga', '4 vloge; zveza je odločitvena vloga', '3 vloge; zveza je samostojna kategorija'], 0,
     'Mintzberg: 10 vlog v treh kategorijah - medosebne (predstavnik, vodja, zveza), informacijske in odločitvene.')),
@@ -236,9 +236,9 @@ const org = [
     'Število ravni = vertikalna diferenciacija; razpršenost = prostorska.')),
   withId('q4i0zya', Q('Vertikalna diferenciacija (kompleksnost) se nanaša na:', ['Število hierarhičnih ravni', 'Stopnjo specializacije', 'Število lokacij', 'Število pravil'], 0,
     'Horizontalna = specializacija; prostorska = lokacije.')),
-  withId('qk5qo81', Q('Kdaj je po predavanjih primerna centralizacija?', ['V kriznih časih in pri strategiji zniževanja stroškov', 'Ko je okolje zelo negotovo', 'Ko se želimo hitro odzvati na stranke', 'V učeči se organizaciji'], 0,
+  withId('qk5qo81', Q('Kdaj je primerna centralizacija?', ['V kriznih časih in pri strategiji zniževanja stroškov', 'Ko je okolje zelo negotovo', 'Ko se želimo hitro odzvati na stranke', 'V učeči se organizaciji'], 0,
     'Večja negotovost okolja in hitro odzivanje strankam → decentralizacija.')),
-  withId('qrfsmxf', Q('Kateri primer ima po predavanjih ŠIROK kontrolni razpon?', ['Odvetniška pisarna ali start-up', 'Banka', 'Ministrstvo', 'Javna uprava'], 0,
+  withId('qrfsmxf', Q('Kateri primer ima ŠIROK kontrolni razpon?', ['Odvetniška pisarna ali start-up', 'Banka', 'Ministrstvo', 'Javna uprava'], 0,
     'Širok razpon = sploščena struktura (≥ 30 podrejenih); ozek (≤ 7) = visoka struktura.')),
   withId('q1y8x392', Q('Katera NI značilnost avtoritete?', ['Odvisna je od značaja posameznika', 'Je del položaja', 'Sprejeta je s strani sodelavcev', 'Širi se z vrha navzdol'], 0,
     'Kdor koli na istem položaju bi imel enako avtoriteto.')),
@@ -248,7 +248,7 @@ const org = [
     'Zaposleni sami odločajo in za odločitve odgovarjajo.')),
   withId('q1sldfzp', Q('Za katero organizacijo je funkcijska struktura najbolj primerna?', ['Za organizacijo z enim ali malo proizvodi oziroma storitvami', 'Za veliko organizacijo z mnogo različnimi proizvodi', 'Za organizacijo, ki želi veliko inovacij in dobro komunikacijo med oddelki', 'Za organizacijo, ki mora hitro dosegati cilje posameznih divizij'], 0,
     'Prednosti funkcijske: ekonomija obsega, poglobljeno strokovno znanje. Slabosti: slaba komunikacija med funkcijami, počasen odziv, malo inovacij.')),
-  withId('q116bmjp', Q('Kateri primer s predavanj ponazarja divizijsko strukturo?', ['McDonald\'s', 'Slovenske železnice', 'Odvetniška pisarna', 'Gradbeno projektno podjetje'], 0,
+  withId('q116bmjp', Q('Kateri primer ponazarja divizijsko strukturo?', ['McDonald\'s', 'Slovenske železnice', 'Odvetniška pisarna', 'Gradbeno projektno podjetje'], 0,
     'Slovenske železnice = funkcijska; projektna (gradbena) podjetja = matrična.')),
   withId('q1rlfsnp', Q('Katera je slabost divizijske strukture?', ['Podvajanje virov in višji stroški', 'Centralizirane, počasne odločitve', 'Dvojno vodenje', 'Slaba odzivnost na trg'], 0,
     'Prednosti: decentralizacija, fleksibilnost, skrb za trg. Najustreznejša za velike organizacije z več proizvodi.')),
@@ -375,7 +375,7 @@ const kont = [
       explanation: "Organizacijska kontrola se premika k zaupanju in samokontroli. Model povratne kontrole: standardi → merjenje → primerjava → popravki. Preliminarna kontrola je pred, sprotna med in povratna po aktivnosti. BSC ima štiri vidike: finančnega, odjemalcev, notranjih procesov ter učenja in rasti." }),
   withId('qickaun', Q('Koliko več časa lahko po raziskavah HBR porabi multitasking?', ['Do 25 %', 'Do 5 %', 'Do 75 %', 'Nič - prihrani čas'], 0,
     'Poleg tega zniža kakovost in produktivnost ter povzroča stres.')),
-  withId('q1qg6yqy', Q('Kateri NI nasvet za premagovanje odlašanja s predavanj?', ['Počakati na navdih', 'Vizualizacija zaključene naloge', 'Javna zaobljuba', 'Prvi, najmanjši korak'], 0,
+  withId('q1qg6yqy', Q('Kateri NI nasvet za premagovanje odlašanja?', ['Počakati na navdih', 'Vizualizacija zaključene naloge', 'Javna zaobljuba', 'Prvi, najmanjši korak'], 0,
     'Še: soočenje z dejstvi in nadzor notranjega dialoga. Možgani odlašajo pri novih, abstraktnih nalogah (present bias).')),
   withId('qddegyz', Q('Kaj po raziskavi HBR pogosto naredijo ljudje po negativni povratni informaciji sodelavcev?', ['Iščejo nove odnose, ki jih potrdijo ("shopping for confirmation")', 'Takoj izboljšajo delo', 'Prosijo za več kritike', 'Nič se ne spremeni'], 0,
     'Negativna povratna informacija je psihološka grožnja.')),
@@ -441,8 +441,8 @@ const TEZJI = {
   'Kaj je organizacijska struktura?': ['Okvir, kako se razdelijo naloge in viri ter koordinirajo oddelki', 'Opis, zakaj organizacija obstaja in kaj želi doseči v prihodnosti', 'Načrt razporeditve virov, urnika in nalog za dosego enega cilja', 'Nabor vrednot, verovanj in norm, ki jih delijo člani organizacije'],
   'Formalizacija v organizaciji pomeni': ['Obstoj pisnih pravil - več pravil, višja formalizacija', 'Število hierarhičnih ravni - več ravni, višja formalizacija', 'Koncentracijo odločanja na vrhu organizacijske strukture', 'Stopnjo razdelitve nalog v manjše specializirane enote'],
   'Vertikalna diferenciacija (kompleksnost)': ['Število hierarhičnih ravni', 'Stopnjo specializacije nalog', 'Geografsko razpršenost enot', 'Število pisnih pravil in postopkov'],
-  'Kdaj je po predavanjih primerna centralizacija': ['V kriznih časih in pri strategiji zniževanja stroškov', 'Ko je okolje zelo spremenljivo in negotovo za podjetje', 'Ko se želimo čim hitreje odzivati na potrebe strank', 'Ko gradimo učečo se organizacijo s timskim delom'],
-  'Kateri primer ima po predavanjih ŠIROK kontrolni razpon': ['Odvetniška pisarna ali start-up', 'Banka ali zavarovalnica', 'Ministrstvo ali javna uprava', 'Vojska ali policija'],
+  'Kdaj je primerna centralizacija': ['V kriznih časih in pri strategiji zniževanja stroškov', 'Ko je okolje zelo spremenljivo in negotovo za podjetje', 'Ko se želimo čim hitreje odzivati na potrebe strank', 'Ko gradimo učečo se organizacijo s timskim delom'],
+  'Kateri primer ima ŠIROK kontrolni razpon': ['Odvetniška pisarna ali start-up', 'Banka ali zavarovalnica', 'Ministrstvo ali javna uprava', 'Vojska ali policija'],
   'Katera NI značilnost avtoritete': ['Odvisna je od značaja posameznika', 'Je sestavni del položaja managerja', 'Sprejeta je, ker jo sodelavci priznavajo', 'Širi se z vrha hierarhije navzdol'],
   'Opolnomočenje zaposlenih je': ['Nudenje znanja, informacij in veščin za avtonomne odločitve', 'Prenos odgovornosti za nalogo, ki ostane pod nadzorom šefa', 'Povečanje števila pisnih pravil za lažjo koordinacijo dela', 'Razširitev delovnega mesta z več podobnimi nalogami'],
   'Katera je slabost divizijske strukture': ['Podvajanje virov in višji stroški', 'Počasno, centralizirano odločanje', 'Dvojno vodenje in zmeda zaposlenih', 'Slaba odzivnost na potrebe trga'],

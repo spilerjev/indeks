@@ -3,7 +3,7 @@
    DATA je zaenkrat en JSON (data.json). Za urejanje: spreminjaj data.json (ali ga razbij na module in tu sestavi). */
 const fs = require('fs');
 // PRIVACY_CHECK: osebna imena ne smejo v objavljeno vsebino (imena sklopov, kartic, zapiski)
-const PRIVATE_RE = /Majin|\bMaja\b|Špiler|\bTinkar|\bAljaž|\bMatjaž/;
+const PRIVATE_RE = /Majin|\bMaja\b|Špiler|\bTinkar|\bAljaž|\bMatjaž|Lotrič|Dolinar|Konečnik|Ruzzier/;   // + pedagogi (21. 11. 2026)
 function privacyCheck(data) {
   const bad = [];
   data.forEach((s) => s.subjects.forEach((su) => su.parts.forEach((p) => {
@@ -23,6 +23,11 @@ const ALIAS = IDS.loadAlias();
   if (errs.length) { console.error('GRADNJA USTAVLJENA - napake id (' + errs.length + '):\n  ' + errs.slice(0, 40).join('\n  ') + (errs.length > 40 ? '\n  ...' : '')); process.exit(1); }
 }
 const DATA = privacyCheck(require('./regroup')(RAW));   // sklopi po temah (regroup.js)
+{ // LINT VIROV: brez pripisov predavanj, vaj, pedagogov, učbenika, Canvasa, prosojnic (sources-lint.js, CLAUDE.md)
+  const { bad, unused } = require('./sources-lint').sourceLint(DATA);
+  if (unused.length) console.warn('  ! sources-lint: neuporabljene izjeme (odstrani jih iz ALLOW):\n    ' + unused.map((a) => a[0] + ': ' + a[1]).join('\n    '));
+  if (bad.length) { console.error('GRADNJA USTAVLJENA - pripis vira v vsebini (' + bad.length + '), popravi vir ali dodaj točno izjemo v sources-lint.js:\n  ' + bad.slice(0, 40).join('\n  ') + (bad.length > 40 ? '\n  ...' : '')); process.exit(1); }
+}
 { // po regroup.js (razpolavljanje velikih sklopov doda -1, -2 ...) ID kompleta v delu še vedno enoličen
   const bad = [];
   DATA.forEach((s) => s.subjects.forEach((su) => su.parts.forEach((p) => { const seen = new Set(); (p.decks || []).forEach((d) => { if (seen.has(d.id)) bad.push(`${s.id}/${su.id}/${p.id}/${d.id}`); seen.add(d.id); }); })));

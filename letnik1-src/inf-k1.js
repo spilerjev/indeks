@@ -8,7 +8,7 @@ const cards = (arr) => arr.map(([front, back]) => ({ front, back }));
 const NOTES_K1 = `
 ## Kako poteka predmet
 - **Izpit 75 točk + vaje 25 točk**, za oceno 6 skupaj vsaj 55 točk.
-- Sprotno: **3 kolokviji po 25 točk** (vsak vsaj 10 točk). 1. kolokvij: prva štiri predavanja; 2. kolokvij: druga štiri; 3. kolokvij: preostala.
+- Sprotno: **3 kolokviji po 25 točk** (vsak vsaj 10 točk). 1. kolokvij: prvi del snovi; 2. kolokvij: drugi del; 3. kolokvij: preostala snov.
 - Vprašanja so opisna ("na primeru razloži", "nariši"). Kvizi v appu preverjajo razumevanje pojmov.
 
 ## 1 · Poslovna informatika in konkurenčnost
