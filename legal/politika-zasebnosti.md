@@ -15,7 +15,7 @@ indeks. ni povezan z Ekonomsko fakulteto ali Univerzo v Ljubljani. Fakulteta tvo
 | Podatki | Namen | Pravna podlaga (GDPR, 6. člen) |
 |---|---|---|
 | E-naslov, uporabniško ime in geslo (hranimo samo zgoščeno vrednost gesla, gesla ne vidimo) | račun in prijava | izvajanje pogodbe (točka b) |
-| Profil: letnik, smer, kratek opis, slika profila, izbrani lik in oprema | prilagojena domača stran, profil v areni | izvajanje pogodbe (b) |
+| Profil: letnik, smer, kratek opis | prilagojena domača stran, profil v areni | izvajanje pogodbe (b) |
 | Učni podatki: rezultati kvizov in kartic, rangirani testi, matchi v areni, XP in nivo, seznam prijateljev in prošenj | statistika, priporočila, sinhronizacija med napravami, lestvice in arena | izvajanje pogodbe (b) |
 | Podatki na računu: zaznamek branja zapiskov, položaj poslušanja zvočnih razlag, osebni seznam opravil | nadaljevanje tam, kjer si ostal, na vseh napravah | izvajanje pogodbe (b) |
 | Zapis o sprejemu pogojev (različica in čas) | dokaz, da si pogoje sprejel | zakoniti interes (f) |
@@ -30,13 +30,11 @@ Podatki o računu so potrebni za sklenitev in izvajanje pogodbe (pogojev uporabe
 
 **Vsem prijavljenim** uporabnikom so vidni:
 
-- **uporabniško ime** in **slika profila** (na lestvicah, v areni, v zgodovini matchev in prenosu matchev v živo);
+- **uporabniško ime** (na lestvicah, v areni, v zgodovini matchev in prenosu matchev v živo);
 - **rezultati rangiranih testov** na lestvicah (rang, povprečje, čas), ko v delu rešiš vsaj 5 testov;
 - **matchi v areni** in njihovi podatki: kdo je igral, del snovi, točke, število pravilnih odgovorov in zmagovalec.
 
 **Samo tvojim prijateljem** so vidni še letnik, smer, opis in statistika (zmage in porazi po načinih, število rešenih kvizov, povprečna uspešnost).
-
-Slika profila je shranjena na javnem naslovu. Kdor pozna točen naslov slike, jo lahko odpre tudi brez prijave.
 
 **E-naslova ne prikazujemo drugim uporabnikom.** Iz statistike vseh uporabnikov prikazujemo le skupna, anonimna povprečja, na primer povprečno uspešnost pri sklopu, ko so ga rešili vsaj 3 uporabniki.
 
@@ -50,7 +48,7 @@ Podatkov ne prodajamo in jih ne posredujemo tretjim osebam za njihove namene. Up
 
 | Obdelovalec | Kaj dela | Kje |
 |---|---|---|
-| Supabase Inc. | baza, prijava, potrditvena e-sporočila, shramba slik profila | strežniki v EU (Irska); podjetje iz ZDA (standardne pogodbene klavzule) |
+| Supabase Inc. | baza, prijava, potrditvena e-sporočila | strežniki v EU (Irska); podjetje iz ZDA (standardne pogodbene klavzule) |
 | GitHub Inc. (GitHub Pages) | gostovanje spletne strani (dnevniki dostopa z IP-naslovom) | ZDA (okvir EU–ZDA za zasebnost podatkov) |
 | Google (Google Fonts) | nalaganje pisav (vidi IP-naslov) | ZDA (okvir EU–ZDA za zasebnost podatkov) |
 
@@ -59,7 +57,7 @@ Podatke lahko razkrijemo državnim organom, kadar to zahteva zakon.
 ## 6. Koliko časa hranimo podatke
 
 - Podatke računa, profila in učne podatke hranimo, **dokler imaš račun**.
-- Ko račun izbrišeš, se takoj izbrišejo račun, profil, slika profila, statistika, rangirani rezultati, prijateljstva in matchi, ki si jih ustvaril. V matchih drugih igralcev ostane le anonimen zapis poteza brez imena.
+- Ko račun izbrišeš, se takoj izbrišejo račun, profil (z morebitno starejšo sliko profila), statistika, rangirani rezultati, prijateljstva in matchi, ki si jih ustvaril. V matchih drugih igralcev ostane le anonimen zapis poteza brez imena.
 - Soglasje za obvestila velja do preklica.
 - Tehnične dnevnike hranijo obdelovalci po svojih pravilih, praviloma nekaj tednov.
 

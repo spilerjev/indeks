@@ -42,22 +42,19 @@ Aplikacijo smeš uporabljati za lastno učenje.
 
 ## 6. Uporabniško ime, profil in arena
 
-Uporabniško ime, slika profila ter rezultati na lestvicah in v areni so **vidni vsem prijavljenim uporabnikom**. Letnik, smer, opis in statistika so vidni tvojim prijateljem. Podrobnosti so v Politiki zasebnosti.
+Uporabniško ime ter rezultati na lestvicah in v areni so **vidni vsem prijavljenim uporabnikom**. Letnik, smer, opis in statistika so vidni tvojim prijateljem. Podrobnosti so v Politiki zasebnosti.
 
 Za vse, kar objaviš v profilu, odgovarjaš sam. **Ni dovoljeno:**
 
-- žaljivo, nespodobno, sovražno ali diskriminatorno ime, opis ali slika;
-- predstavljanje za drugo osebo ali uporaba tuje fotografije brez dovoljenja;
-- slike, za katere nimaš pravic;
+- žaljivo, nespodobno, sovražno ali diskriminatorno ime ali opis;
+- predstavljanje za drugo osebo;
 - oglaševanje in neželena sporočila.
 
 Neprimerno vsebino lahko prijaviš na {{KONTAKT}}.
 
 ## 7. Lestvice, točke in nivoji
 
-Točke, XP, nivoji, liki in oprema so del igre. **Nimajo denarne vrednosti** in jih ni mogoče zamenjati, prodati ali prenesti. Pravila točkovanja lahko spremenimo. Rezultate, ki so nastali z goljufijo ali zaradi napake sistema, lahko popravimo ali izbrišemo.
-
-Liki v areni so šaljive karikature znanih ekonomistov in podjetnikov. Ne izražajo mnenja o teh osebah in z njimi niso povezani.
+Točke, XP in nivoji so del igre. **Nimajo denarne vrednosti** in jih ni mogoče zamenjati, prodati ali prenesti. Pravila točkovanja lahko spremenimo. Rezultate, ki so nastali z goljufijo ali zaradi napake sistema, lahko popravimo ali izbrišemo.
 
 ## 8. Ukrepi ob kršitvah
 

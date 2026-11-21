@@ -423,18 +423,36 @@ const linkBtn = { background: "none", border: "none", padding: 0, cursor: "point
 
 function LegalView({ page, go, user }) {
   const other = page === "pogoji" ? "zasebnost" : "pogoji";
+  const docRef = useRef(null);
+  const [toc, setToc] = useState([]);
   useEffect(() => { document.title = LEGAL[page].title + " · indeks."; return () => { document.title = "indeks."; }; }, [page]);
+  // kazalo (samo na računalniku): klik drsi na naslov razdelka (hash ostane, ker je hash naš usmerjevalnik)
+  useEffect(() => {
+    const hs = docRef.current ? Array.from(docRef.current.querySelectorAll("h2")) : [];
+    setToc(hs.map((h) => h.textContent));
+  }, [page]);
   return (
-    <div className="ix-fade" style={{ maxWidth: 720, margin: "0 auto" }}>
+    <div className="ix-legalwrap">
       <button onClick={() => (window.history.length > 1 ? window.history.back() : go({ view: user ? "home" : "welcome" }))} className="ix-chip"
         style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14 }}>
         <ChevronLeft size={15} /> Nazaj
       </button>
-      <div className="ix-card" style={{ padding: "22px 22px 26px" }}>
-        <h1 className="ix-serif" style={{ fontSize: 28, fontWeight: 900, margin: "0 0 6px", letterSpacing: "-.02em" }}>{LEGAL[page].title}</h1>
-        <div className="ix-notes ix-legal" dangerouslySetInnerHTML={{ __html: legalHtml(page) }} />
-        <div style={{ marginTop: 22, paddingTop: 14, borderTop: "1px solid var(--line)", fontSize: 14 }}>
-          Preberi še: <a href={"#/" + other} style={linkBtn}>{LEGAL[other].title}</a>
+      <div className="ix-fade ix-legalcols">
+        <nav className="ix-legaltoc" aria-label="Kazalo">
+          <div className="ix-chip" style={{ marginBottom: 8 }}>Kazalo</div>
+          {toc.map((t, i) => (
+            <button key={i} type="button" onClick={() => { const el = docRef.current && docRef.current.querySelectorAll("h2")[i]; if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}>{t}</button>
+          ))}
+          <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid var(--line)", fontSize: 13.5 }}>
+            <a href={"#/" + other} style={linkBtn}>{LEGAL[other].title} →</a>
+          </div>
+        </nav>
+        <div className="ix-card ix-legalcard">
+          <h1 className="ix-serif" style={{ fontSize: 28, fontWeight: 900, margin: "0 0 6px", letterSpacing: "-.02em" }}>{LEGAL[page].title}</h1>
+          <div ref={docRef} className="ix-notes ix-legal" dangerouslySetInnerHTML={{ __html: legalHtml(page) }} />
+          <div className="ix-legalmore" style={{ marginTop: 22, paddingTop: 14, borderTop: "1px solid var(--line)", fontSize: 14 }}>
+            Preberi še: <a href={"#/" + other} style={linkBtn}>{LEGAL[other].title}</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1064,6 +1082,21 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-notes .note-card{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--terra);border-radius:12px;padding:14px 16px;margin:12px 0;}
 .ix-notes ul{margin:6px 0;padding-left:20px;}
 .ix-notes li{margin:5px 0;}
+.ix-legalwrap{max-width:720px;margin:0 auto;}
+.ix-legalcard{padding:22px 22px 26px;}
+.ix-legaltoc{display:none;}
+@media (min-width:1000px){
+  .ix-legalwrap{max-width:none;width:min(1180px,calc(100vw - 64px));position:relative;left:50%;transform:translateX(-50%);}
+  .ix-legalcols{display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;align-items:start;}
+  .ix-legaltoc{display:block;position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto;}
+  .ix-legaltoc button{display:block;width:100%;text-align:left;background:none;border:none;padding:6px 10px;margin:1px 0;border-radius:8px;cursor:pointer;font:inherit;font-size:13.5px;line-height:1.35;color:var(--ink2);}
+  .ix-legaltoc button:hover{background:var(--paper2);color:var(--ink);}
+  .ix-legalcard{padding:36px 48px 40px;}
+  .ix-legalcard h1{font-size:34px !important;}
+  .ix-legalcard .ix-legal{font-size:16px;line-height:1.7;}
+  .ix-legalcard .ix-legal h2{font-size:21px;margin:30px 0 10px;scroll-margin-top:20px;}
+  .ix-legalmore{display:none;}
+}
 .ix-legal h2{font-size:19px;margin:24px 0 8px;}
 .ix-legal a{color:var(--terra);text-decoration:underline;text-underline-offset:2px;}
 .ix-legal-tbl{overflow-x:auto;margin:10px 0 14px;}
