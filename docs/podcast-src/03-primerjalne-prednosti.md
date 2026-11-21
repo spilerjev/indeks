@@ -4,7 +4,6 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 ## P02 — Teorija primerjalnih prednosti
 
-*(Povzetek je narejen iz prosojnic.)*
 
 ### Mednarodna menjava (MM)
 - **Mednarodna menjava** = menjava blaga in storitev (ter proizvodnih faktorjev) **med državami**, prek državnih meja.
@@ -71,24 +70,26 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Dampinške cene (damping)** = prodaja v tujini po ceni, **nižji od cene na domačem trgu** (ali pod stroški), da bi izrinili konkurenco. Gre za **nelojalno konkurenco**, ki si je ne želimo. WTO in EU dovolita **protidampinške dajatve** kot izjemo od proste menjave.
 - Sklep: zavzemamo se za **prosto mednarodno menjavo**.
 
-## V02 — 2. vaje: absolutne in primerjalne prednosti — rešitve
-**Nal. 1 (Francija/Švica; št. izdelkov na delavca: ure 3 / 4, smuči 6 / 2):**
-a) **Absolutna prednost:** Švica pri urah (4 > 3), Francija pri smučeh (6 > 2).
-b) Oportunitetni stroški: Francija 1 ura = 2 smuči (1 smuči = 0,5 ure); Švica 1 ura = 0,5 smuči (1 smuči = 2 uri). **Francija — primerjalna prednost pri smučeh** → specializacija v smučeh, **izvaža smuči, uvaža ure**; **Švica — pri urah** → izvaža ure, uvaža smuči.
-c) Menjalno razmerje (smuči za 1 uro): **0,5 < MR < 2** (med oportunitetnima stroškoma).
-d) MR = 1 (1 ura za 1 par smuči): **Francija** dobi uro za 1 smuči, doma bi jo morala »plačati« z 2 smučema → **prihrani 1 par smuči** na uro; **Švica** dobi 1 smuči za 1 uro, doma bi stal 2 uri → **prihrani 1 uro**.
-**Nal. 2 (Grčija/Portugalska; št. na uro: kopalke 1 / 2, brisače 5 / 6):**
-a) **Portugalska ima absolutno prednost pri obeh** (2 > 1 in 6 > 5) → s teorijo absolutnih prednosti menjave **ne moremo razložiti**.
-b) Menjava **vseeno poteka** → razlaga: **teorija primerjalnih prednosti (Ricardo)**.
-c) Oportunitetni stroški 1 kopalk: Grčija 5 brisač, Portugalska 3 brisače → **Portugalska ima primerjalno prednost pri kopalkah**, **Grčija pri brisačah** (1 brisača: Grčija 0,2 kopalk, Portugalska 0,33).
-d) Portugalska se specializira v **kopalkah (izvaža kopalke, uvaža brisače)**, Grčija v **brisačah (izvaža brisače, uvaža kopalke)**.
-e) Cena 1 kopalk v brisačah: **3 < MR < 5**.
-f) MR 1 : 4: **Portugalska** za 1 kopalke dobi 4 brisače (doma 3) → +1 brisača; **Grčija** plača 4 brisače (doma 5) → prihrani 1 brisačo.
-**Nal. 3 (št. ur na kg; Italija / Španija: pomaranče ¼ / ½, limone ⅓ / ⅔):**
-a) **Italija ima absolutno prednost pri obeh** (porabi manj ur).
-b) Oportunitetni stroški: Italija 1 kg pomaranč = (¼)/(⅓) = **0,75 kg limon**; Španija (½)/(⅔) = **0,75 kg limon** → **enaki → nobena država nima primerjalne prednosti.**
-c) **Menjava ne bo potekala** (ni osnove zanjo).
-**Nal. 4:** pokritost uvoza z izvozom = izvoz/uvoz = 72,1/70,6 = **102,1 %** (blagovni presežek ~1,5 mrd €).
-**Nal. 5:** raziskovalna naloga (SURS/Eurostat/UMAR: delež SLO BDP v EU, izvoz in uvoz v % BDP, glavne partnerice, 5 največjih izvoznikov, dejavnosti v izvozu) — 🔎 podatke poišči pri zadnjih razpoložljivih objavah (ne vpišem iz spomina).
+## Primeri za vajo: absolutne in primerjalne prednosti (lastni primeri)
+
+**Primer 1, absolutne prednosti (Avstrija in Madžarska; dnevna proizvodnja enega delavca):** Avstrija 9 zabojev jabolk ali 3 steklenice vina, Madžarska 2 zaboja jabolk ali 4 steklenice vina.
+- **Absolutna prednost:** Avstrija pri jabolkih (9 > 2), Madžarska pri vinu (4 > 3).
+- **Oportunitetni stroški 1 steklenice vina:** v Avstriji 3 zaboji jabolk (9/3), na Madžarskem pol zaboja (2/4). Madžarska ima zato primerjalno prednost pri vinu, Avstrija pri jabolkih.
+- **Specializacija:** Avstrija izvaža jabolka in uvaža vino, Madžarska izvaža vino in uvaža jabolka.
+- **Menjalno razmerje za 1 steklenico vina** mora biti med obema oportunitetnima stroškoma: **0,5 < MR < 3 zaboje**.
+- **Pri MR = 1,5 zaboja za steklenico:** Avstrija dobi steklenico za 1,5 zaboja, doma bi jo stala 3 zaboje, zato prihrani 1,5 zaboja. Madžarska za steklenico dobi 1,5 zaboja, doma bi dobila le pol zaboja, zato pridobi 1 zaboj. Obe sta na boljšem.
+
+**Primer 2, Ricardo (Poljska in Češka; proizvodnja na uro):** Poljska 2 majici ali 6 kap, Češka 4 majice ali 8 kap.
+- Češka ima **absolutno prednost pri obeh** izdelkih. S Smithovo teorijo menjave ne razložimo, z Ricardovo pa.
+- **Oportunitetni stroški 1 majice:** Poljska 3 kape, Češka 2 kapi. Češka ima primerjalno prednost pri majicah, Poljska pri kapah.
+- **Menjalno razmerje za 1 majico:** med 2 in 3 kapami.
+- **Pri MR = 2,5 kape za majico:** Češka dobi za majico 2,5 kape namesto 2 (pridobi pol kape), Poljska plača majico z 2,5 kapami namesto s 3 (prihrani pol kape).
+- Sklep: tudi država, ki je pri vsem manj produktivna, ima primerjalno prednost pri tistem, kjer zaostaja najmanj.
+
+**Primer 3, enake relativne produktivnosti (Grčija in Ciper; ure dela za kilogram):** Grčija olive 2 uri, med 4 ure; Ciper olive 3 ure, med 6 ur.
+- Grčija ima absolutno prednost pri obeh, a oportunitetni strošek 1 kg oliv je v obeh državah enak: pol kilograma medu.
+- **Ni primerjalne prednosti, zato menjava ne prinese koristi** in ne bo potekala.
+
+**Primer 4, pokritost uvoza z izvozom (izmišljeni podatki):** izvoz 48 mrd €, uvoz 50 mrd € → pokritost = izvoz / uvoz = **96 %**, blagovni primanjkljaj 2 mrd €. Nad 100 % pomeni presežek.
 
 ---

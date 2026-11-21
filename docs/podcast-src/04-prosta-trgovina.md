@@ -12,7 +12,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - na stopnjo gospodarske rasti,
 - na koristi in stroške držav **nečlanic**.
 
-**Kako (praznine):**
+**Kako:**
 - v okviru **parcialnega** tržnega ravnotežja: gledamo **en trg** (en proizvod) ločeno in **ne upoštevamo povezanosti med trgi** (ceteris paribus),
 - v okviru **splošnega** tržnega ravnotežja: upoštevamo **povezanost vseh trgov** (sprememba na enem trgu vpliva na druge trge, dohodke, cene faktorjev).
 
@@ -34,7 +34,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - Tržna krivulja S = vodoravna vsota krivulj MC podjetij.
 - Ta orodja (S, D, **potrošnikov in proizvajalčev presežek**) bomo uporabili za analizo blaginje v odprtem gospodarstvu.
 
-**Praznine (krivulja povpraševanja):**
+**Krivulja povpraševanja:**
 - PCC povezuje točke **ravnotežja (optimalne izbire) potrošnika** pri različnih cenah.
 - 1. V vsaki točki krivulje povpraševanja je potrošnik **v ravnotežju**, torej **maksimira koristnost** (MRS = P_H / P_O).
 - 2. Ko se premikamo **navzdol** po krivulji (nižja cena), se **koristnost (zadovoljstvo) povečuje** (U1 → U2 → U3).
@@ -84,7 +84,6 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Monopol:** maksimira dobiček pri **MR = MC**, a ker je MR < P, postavi **ceno višjo od MC (P > MC)** in proizvede **manjšo količino** kot popolna konkurenca (Q1 < Q0). Posledice:
   - del potrošnikovega presežka se **prerazdeli k monopolistu** (pravokotnik med P0 in P1),
   - nastane **mrtva izguba** (trikotnik med D in MC, med Q1 in Q0) → **manjša družbena blaginja**, alokacijska neučinkovitost.
-  - Graf na prosojnici 13 prikazuje prav to situacijo (P1 > P0, Q1 < Q0).
 
 ### Analiza D in S v pogojih odprtega gospodarstva
 - Uporaba mikroekonomskih orodij na primeru odprtega gospodarstva (mednarodna trgovina).
@@ -103,7 +102,6 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - **točka 2:** cena **P''** → uvoz **M'' = Q3 − Q2** (domače povpraševanje − domača ponudba),
   - **točka 3:** cena **P'** → uvoz **M' = Q4 − Q1**,
   - **povezava točk 1–2–3 = padajoča krivulja MD_H.** Nad P_H\* uvoza ni (domača ponudba presega povpraševanje → država bi izvažala).
-  - Fotografija: `Predavanja/P3_fotografije s predavanja/p15_krivulja_uvoznega_povprasevanja.webp`
 - **Pomen oznak:** **H = home** (domača država), **F = foreign** (tuja država). Model ima **samo dve državi**.
 - **Uvoz = presežno povpraševanje domače države:** **MD_H = D_H − S_H**.
 - Ker sta državi samo dve, je uvoz domače države hkrati **izvoz tuje države**. Povpraševanje po uvozu domače države je torej povpraševanje po izvozu tuje države → **MD_H = XD_F**.
@@ -117,7 +115,6 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - **točka 3:** cena **P''** → izvoz **X'' = Q4 − Q1**,
   - **povezava 1–2–3 = naraščajoča krivulja XS_F.** Višja ko je cena, več tujina ponudi in manj sama porabi → večji izvoz. Pod P_F\* izvoza ni.
 - **XS_F = MS_H**: izvozna ponudba tujine je hkrati **ponudba uvoza** za domačo državo (samo dve državi).
-- Fotografija: `Predavanja/P3_fotografije s predavanja/p16_krivulja_izvozne_ponudbe.webp`
 
 ### Prosta mednarodna trgovina, model dveh držav (primer: trg paradižnika)
 
@@ -155,7 +152,6 @@ Primerjava prosta trgovina in avtarkija (cena pade s P_H\* na P_W):
 - **POTROŠNIKI: neto korist.** Potrošnikov presežek = vse nad novo ceno in pod krivuljo povpraševanja → povečanje = trapez **ABDE**.
 - **PROIZVAJALCI: neto škoda.** Proizvajalčev presežek = vse pod novo ceno in nad krivuljo ponudbe → zmanjšanje = trapez **ABCE** (šrafirano). To je **prerazdelitev od proizvajalcev k potrošnikom**.
 - **ČISTA (NETO) KORIST zaradi MT (uvoza) = trikotnik CDE** (rdeče pikčasto). Potrošniki pridobijo več, kot proizvajalci izgubijo: ABDE − ABCE = CDE.
-- *(V povzetku na prosojnici 23 so iste ploskve označene drugače: Δ PP = A + B, Δ ProizP = −A, Δ blaginje = B.)*
 - Primer SLO: ABDE = +700, ABCE = −500, CDE = +200.
 - **Sklep: prosta mednarodna trgovina je zaželena**, ker je neto učinek na blaginjo države pozitiven (CDE > 0). Ima pa **dobitnike in poražence** (domači proizvajalci izgubijo), zato proizvajalci pogosto lobirajo za zaščito (carine).
 
@@ -165,7 +161,7 @@ Primerjava prosta trgovina in avtarkija (cena pade s P_H\* na P_W):
 Primerjava prosta trgovina in avtarkija (cena **zraste** s P_F\* na P_W):
 - **POTROŠNIKI: neto škoda** = **−ABED** (trapez med P_F\* in P_W do krivulje D). To je **prerazdelitev od potrošnikov k proizvajalcem**.
 - **PROIZVAJALCI: neto korist** = **+ACED** (trapez med P_F\* in P_W do krivulje S).
-- **ČISTA (NETO) KORIST zaradi MT (izvoza) = trikotnik BEC.** Proizvajalci pridobijo več, kot potrošniki izgubijo. *(Na prosojnici piše »uvoza«, a gre za izvoz.)*
+- **ČISTA (NETO) KORIST zaradi MT (izvoza) = trikotnik BEC.** Proizvajalci pridobijo več, kot potrošniki izgubijo.
 - **Tudi za izvoznico je prosta trgovina koristna.**
 - Primer IT: potrošniki −600, proizvajalci +1000, neto +400.
 
@@ -178,8 +174,8 @@ Primerjava prosta trgovina in avtarkija (cena **zraste** s P_F\* na P_W):
 | Prerazdelitev | od proizvajalcev k potrošnikom | od potrošnikov k proizvajalcem |
 | Neto | + trikotnik | + trikotnik |
 
-### Prosojnica 23 (na projekciji št. 32): Vpliv na blaginjo v domači in tuji državi, povzetek
-*Tu so A, B, C, D **ploskve** (ne oglišča kot na prosojnicah 20–21).*
+### Vpliv na blaginjo v domači in tuji državi, povzetek
+*Tu so A, B, C, D **ploskve** (ne oglišča kot pri grafih zgoraj).*
 
 | | Domača (uvozna) država H | Tuja (izvozna) država F |
 |---|---|---|
@@ -192,35 +188,31 @@ Primerjava prosta trgovina in avtarkija (cena **zraste** s P_F\* na P_W):
 - **Država izvoznica:** D = **ΔW_F = (q6 − q4) · (P_FT − P_F\*) / 2**. Osnova je izvoz (q6 − q4), višina je dvig cene.
 - P_FT = cena pri prosti trgovini (*free trade*) = P_W.
 - **Preverba na primeru paradižnika:** SLO: (80 − 40) · (50 − 40) / 2 = **200** ✓, IT: (60 − 20) · (40 − 20) / 2 = **400** ✓.
-- Fotografija: `Predavanja/P3_fotografije s predavanja/p23_povzetek_blaginja_formule.webp`
 
-## V03 — 3. vaje: mikroekonomska orodja — rešitve
-**Nal. 1 (grozdje):** Q_D = 500 − 100P, Q_S = −100 + 200P (cene €, količine 1000 kg). a) graf: D pade (izsek P = 5), S raste (izsek P = 0,5). b) 500 − 100P = −100 + 200P → **P = 2 €, Q = 300 (tisoč kg)**; **CS** = ½(5 − 2) · 300 = **450**; **PS** = ½(2 − 0,5) · 300 = **225** (v 1000 €). c) mejni stroški −0,15 € → ponudba Q_S = −70 + 200P: **P = 1,9, Q = 310**; CS = ½(5 − 1,9) · 310 = 480,5 (**ΔCS = +30,5**); PS = ½(1,9 − 0,35) · 310 = 240,25 (**ΔPS = +15,25**); **blaginja +45,75** (oboji pridobijo, družba v celoti).
-**Nal. 1 podrobneje (razlaga):**
-- Prof je ravnovesje izračunal z **enačenjem količin** (Q_D = Q_S), kot zgoraj. Graf: `Vaje/vaje3_naloga1_graf.svg` (prerisano s table).
-- **Inverzni funkciji** (P na levi, ker je na grafu P na navpični osi): D: P = 5 − Q/100; S: P = 0,5 + Q/200.
-- **Izseki:** D seka os P pri **5** (pri tej ceni nihče ne kupi) in os Q pri 500. S seka os P pri **0,5** (pod to ceno nihče ne ponudi).
-- **Ravnovesje:** Q_D = Q_S → 600 = 300P → P = 2, Q = 300.
-- **CS** = trikotnik med D in ceno: ½ · (5 − 2) · 300 = 450. To je razlika med tem, koliko bi bili kupci pripravljeni plačati, in tem, koliko res plačajo.
-- **PS** = trikotnik med ceno in S: ½ · (2 − 0,5) · 300 = 225. To je razlika med ceno in mejnimi stroški.
-- Enote: € · 1000 kg → **tisoč €**.
-- **c)** Krivulja ponudbe = krivulja mejnih stroškov (MC). Če so MC nižji za 0,15 pri vsaki količini, se S premakne **navpično navzdol** za 0,15: P = 0,35 + Q/200 → Q_S = −70 + 200P. Ravnovesje: 570 = 300P → P = 1,9, Q = 310. CS 480,5 (+30,5), PS 240,25 (+15,25), blaginja (CS + PS) 675 → 720,75 (**+45,75**).
-- Pozor: cena pade le za 0,10 (ne za celih 0,15), ker se del prihranka prenese na kupce, del ostane proizvajalcem. PS kljub nižji ceni zraste, ker so stroški padli bolj kot cena in je prodana količina večja.
-**Nal. 2 (plašči, graf):** Nemčija: ravnovesje **P = 200, Q = 75**; Italija **P = 125, Q = 50** (zaprti gospodarstvi). Prosta menjava: svetovna cena **150 €**: Nemčija ima D = 100, S = 50 → **uvoznica 50**; Italija S = 75, D = 25 → **izvoznica 50** (tisoč kosov). Nova cena v obeh **150 €**.
-**Nal. 2 podrobneje:**
-- a) Zaprto gospodarstvo (avtarkija) pomeni, da ravnovesje določa le domači trg: odčitaš presečišče S in D. DE: 200 € in 75; IT: 125 € in 50.
-- b) Ob odprtju blago teče iz države z **nižjo avtarkično ceno** (IT, 125) v državo z **višjo** (DE, 200). Cena v IT raste, v DE pada, dokler se ne izenačita, tj. ko je **uvoz DE = izvoz IT**.
-  - Pri 150: DE D = 100, S = 50 → potrebuje 50; IT S = 75, D = 25 → ima presežek 50 → 50 = 50 ✓ → svetovna cena **150**.
-  - Preverjanje z »napačno« ceno: pri 175 bi DE uvažala 25, IT pa izvažala 100 (preveč ponudbe → cena pade).
-- Skupna proizvodnja: 50 + 75 = 125 = skupna poraba 100 + 25.
-**Nal. 3:** Italija Q_D = 175 − P, Q_S = −75 + P → **P = 125, Q = 50**; Nemčija Q_D = 175 − ½P, Q_S = −25 + ½P → **P = 200, Q = 75**. b) Italija ima nižjo avtarkično ceno → **izvoznica**; izvoz IT = Q_S − Q_D = 2P − 250; uvoz DE = Q_D − Q_S = 200 − P → 2P − 250 = 200 − P → **P = 150 €**, trgovina **50**. Italija: S = 75, D = 25; Nemčija: D = 100, S = 50.
-**Nal. 3 podrobneje:** graf `Vaje/vaje3_naloga3_graf.svg`.
-- a) V vsaki državi Q_D = Q_S. IT: 175 − P = −75 + P → 2P = 250 → P = 125, Q = 50. DE: 175 − ½P = −25 + ½P → P = 200, Q = 75 (·10³).
-- b) Izvoznica je država z nižjo avtarkično ceno (IT 125 < DE 200). **Ponudba izvoza IT** = presežek ponudbe: EX = Q_S − Q_D = (−75 + P) − (175 − P) = 2P − 250. **Povpraševanje po uvozu DE** = presežek povpraševanja: IM = Q_D − Q_S = (175 − ½P) − (−25 + ½P) = 200 − P. Ravnovesje EX = IM: 2P − 250 = 200 − P → **P = 150**, menjava = 200 − 150 = **50 · 10³**.
-  - Kontrola: EX = 0 pri P = 125 (avtarkija IT), IM = 0 pri P = 200 (avtarkija DE) → svetovna cena mora biti vmes.
-- c) Graf: dva diagrama, vodoravna črta P_W = 150. DE: pod staro ravnovesno ceno, med S (50) in D (100) je uvoz. IT: nad staro ceno, med D (25) in S (75) je izvoz. (Ročna rešitev v EF Zapiskih riše še graf EX_IT in IM_DE, ki se sekata pri P = 150, Q = 50.)
-**Nal. 4 (neto korist, v 1000 €):** **Nemčija:** ΔCS = +(200 − 150) · (75 + 100)/2 = **+4.375**; ΔPS = −50 · (50 + 75)/2 = **−3.125**; **neto +1.250**. **Italija:** ΔPS = +25 · (50 + 75)/2 = **+1.562,5**; ΔCS = −25 · (25 + 50)/2 = **−937,5**; **neto +625**. **Skupna korist menjave: 1.875.** Potrošniki v uvoznici in proizvajalci v izvoznici pridobijo; poraženci (proizvajalci v DE, potrošniki v IT) izgubijo manj, kot drugi pridobijo.
-**Nal. 4 podrobneje (metoda):** spremembo presežka računaš kot **trapez** med staro in novo ceno, levo od krivulje (D za CS, S za PS). Ploščina trapeza = Δcena · (Q_staro + Q_novo)/2 = **pravokotnik + trikotnik** (tako v skripti in ročni rešitvi: npr. ΔCS_DE = 50·75 + 50·25/2). Neto korist = ΔCS + ΔPS = trikotnik ½ · ΔP · obseg menjave (zeleni trikotnik na grafu, v ročni rešitvi »BCE«). Kdo pridobi: v uvoznici potrošniki (nižja cena), v izvoznici proizvajalci (višja cena).
-**Nal. 5 (pršut) — POPRAVLJENO 9. 11. 2026:** v PDF-ju je **P = 90 − (1/10) Q_D** in **P = 10 + (1/10) Q_S** (ulomek 1/10 se je pri pretvorbi v besedilo prebral kot »110«). Obrnjeno: Q_D = 900 − 10P, Q_S = 10P − 100. a) avtarkija: 900 − 10P = 10P − 100 → **P = 50 €, Q = 400 kg**. b) P_W = 70 > 50 → Slovenija **izvoznica**. c) Q_S = 600, Q_D = 200; razlika = **izvoz 400** (Q_EX = Q_S − Q_D). d) neto korist = trikotnik ABC = ½ · 400 · 20 = **4.000 €**. *(Potrjeno s skripto »Skripta z rešenimi vajami iz ef gradiv« v EF Zapiski; tam je ta naloga pod IV. vaje, naloga 1.)*
+## Primeri za vajo: mikroekonomska orodja in prosta trgovina (lastni primeri)
+
+**Primer 1, trg hrušk (cene v €, količine v tonah):** Q_D = 800 − 100P, Q_S = −100 + 200P.
+- **Izseka:** povpraševanje seka os cene pri 8 € (pri tej ceni nihče ne kupi), ponudba pri 0,5 € (pod to ceno nihče ne ponudi).
+- **Ravnovesje:** Q_D = Q_S → 800 − 100P = −100 + 200P → 900 = 300P → **P = 3 €, Q = 500**.
+- **Potrošnikov presežek** = trikotnik med povpraševanjem in ceno: ½ · (8 − 3) · 500 = **1.250 €**. To je razlika med tem, koliko bi kupci bili pripravljeni plačati, in tem, koliko res plačajo.
+- **Proizvajalčev presežek** = trikotnik med ceno in ponudbo: ½ · (3 − 0,5) · 500 = **625 €**.
+- **Mejni stroški padejo za 0,30 €** pri vsaki količini, zato se ponudba premakne navpično navzdol: P = 0,2 + Q/200 oziroma Q_S = −40 + 200P. Novo ravnotežje: 840 = 300P → **P = 2,8 €, Q = 520**.
+  - CS = ½ · (8 − 2,8) · 520 = 1.352 (**+102**), PS = ½ · (2,8 − 0,2) · 520 = 676 (**+51**), blaginja 1.875 → 2.028 (**+153**).
+  - Cena pade le za 0,20, ne za celih 0,30: del prihranka dobijo kupci, del ostane proizvajalcem. Proizvajalci so kljub nižji ceni na boljšem, ker so stroški padli bolj kot cena in prodajo več.
+
+**Primer 2, dve državi, trg sira (cene v €, količine v tonah):** Madžarska Q_D = 200 − P, Q_S = −40 + P; Avstrija Q_D = 300 − P, Q_S = −60 + P.
+- **Avtarkija:** Madžarska 2P = 240 → **P = 120, Q = 80**; Avstrija 2P = 360 → **P = 180, Q = 120**.
+- Ob odprtju blago teče iz države z nižjo avtarkično ceno (Madžarska) v državo z višjo (Avstrija).
+- **Ponudba izvoza Madžarske** = Q_S − Q_D = 2P − 240. **Povpraševanje po uvozu Avstrije** = Q_D − Q_S = 360 − 2P.
+- **Svetovna cena:** 2P − 240 = 360 − 2P → **P = 150 €**, menjava **60 ton**. Kontrola: na Madžarskem S = 110, D = 50; v Avstriji D = 150, S = 90.
+- **Blaginja Avstrije (uvoznica):** ΔCS = +30 · (120 + 150)/2 = **+4.050**, ΔPS = −30 · (120 + 90)/2 = **−3.150**, **neto +900**.
+- **Blaginja Madžarske (izvoznica):** ΔPS = +30 · (80 + 110)/2 = **+2.850**, ΔCS = −30 · (80 + 50)/2 = **−1.950**, **neto +900**.
+- **Metoda:** spremembo presežka računaš kot trapez med staro in novo ceno (sprememba cene krat povprečje stare in nove količine). Neto korist je trikotnik ½ · sprememba cene · obseg menjave, tukaj ½ · 30 · 60 = 900 v vsaki državi.
+- Kdo pridobi: v uvoznici potrošniki, v izvoznici proizvajalci. Poraženci izgubijo manj, kot drugi pridobijo.
+
+**Primer 3, majhna država izvoznica (med, Slovenija; cena v € za kg, količina v tonah):** Q_D = 600 − 10P, Q_S = 10P − 200.
+- **Avtarkija:** 20P = 800 → **P = 40 €, Q = 200**.
+- **Svetovna cena 55 € > 40**, zato Slovenija **izvaža**: Q_S = 350, Q_D = 50, **izvoz 300 ton**.
+- **Neto korist** = ½ · 300 · (55 − 40) = **2.250**: proizvajalci pridobijo več, kot potrošniki izgubijo.
 
 ---

@@ -4,7 +4,6 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 ## P04 — Učinki uvedbe carin
 
-*Praznine so izpolnjene vnaprej po učbeniški logiki; preveri z razlago profesorice.*
 
 ### Učinki uvedbe MFN carine, majhna država
 - **MFN carina** (*most favoured nation*, načelo največjih ugodnosti) = **nediskriminacijska carina** (WTO): **enaka za uvoz iz vseh držav**.
@@ -100,10 +99,9 @@ Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)*
 **Dopolnilo s predavanja (P4, blaginja majhne države):**
 - **Javnofinančni učinek:** država dobi prihodke od carine = **carina na enoto × količina uvoženega blaga** = +C.
 - Seštevek: −(A + B + C + D) + A + C → A in C se izničita (sta le **prerazdelitev**: A od potrošnikov k proizvajalcem, C od potrošnikov k državi) → **ΔW = −(B + D) = −B − D**. **Carina zmanjša blaginjo.**
-- Uradna imena s prosojnice:
+- Uradna imena:
   - **B = proizvodni strošek zaščite** (neoptimalna alokacija proizvodnih dejavnikov). Doma proizvajamo **preveč** in neučinkovito (z višjimi stroški od svetovne cene), torej smo na svetovnem trgu **nekonkurenčni** v tem proizvodu.
   - **D = potrošni strošek zaščite** (neoptimalna alokacija v potrošnji). Potrošniki kupijo premalo, ker je cena umetno visoka.
-- Fotografija: `Predavanja/P4_fotografije s predavanja/p3_blaginja_majhna_drzava.webp`
 - **Sklep: uvedba carine v majhni državi ni zaželena.** Vedno povzroči neto izgubo blaginje −(B + D), ker majhna država ne more vplivati na svetovno ceno in vse breme carine nosijo domači potrošniki. (Za razliko od velike države, kjer je lahko ΔW = E − (B + D) > 0.)
 
 ---
@@ -121,39 +119,38 @@ Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)*
 | Varnost | strožji nadzor nevarnih izdelkov, goljufij, neskladnosti s standardi EU |
 
 **Trgovinski sporazum EU–ZDA** (Turnberry, Škotska, **27. 7. 2025**; v veljavi od **1. 7. 2026**, 2 uredbi) — ozadje: Trumpova napoved trgovinske vojne.
-- ameriške carine na večino blaga iz EU: **zgornja meja 15 %** (🔎 prosojnica: »revidirana 10 %«);
+- ameriške carine na večino blaga iz EU: **zgornja meja 15 %** (prosojnica: »revidirana 10 %«);
 - **EU odpravi preostale carine na industrijske izdelke iz ZDA** (1. 7. 2026); določeni kmetijski/prehrambeni izdelki iz ZDA: **preferencialni dostop** do trga EU;
 - jeklo, aluminij in izdelki iz njiju: ameriške **sektorske carine do 50 %**; EU lahko ob kršitvah začasno odpravi carinske ugodnosti (npr. jeklo);
-- zaveze: dodatne **naložbe EU podjetij v ZDA do 2028** (znesek na prosojnici prazen; 🔎 po dogovoru ~600 mrd USD), **nakupi energentov v ZDA do 2028** (LNG, nafta, jedrsko gorivo; 🔎 ~750 mrd USD), nakupi čipov za umetno inteligenco, druge zaveze.
+- zaveze: dodatne **naložbe EU podjetij v ZDA do 2028** (znesek na prosojnici prazen;po dogovoru ~600 mrd USD), **nakupi energentov v ZDA do 2028** (LNG, nafta, jedrsko gorivo;~750 mrd USD), nakupi čipov za umetno inteligenco, druge zaveze.
 - Teoretična povezava: gre za **preferencialno (diskriminacijsko) liberalizacijo** — EU z ZDA dogovori nižje carine kot z ostalimi (poveži z P5: ustvarjanje/preusmerjanje trgovine).
 
 **Dogovor EU–Kitajska, 9. 10. 2026** (konkretni ukrepi in nadaljnja pogajanja): zmanjševanje trgovinskih napetosti, tehnično sodelovanje; **nadaljnje proučevanje znižanja/odprave carin** na nekatere izdelke v skladu s pravili WTO; **omejitev izvoza hibridnih vozil**; hitrejše izdajanje izvoznih dovoljenj za **redke zemlje** za dobave v EU; odpravljanje regulativnih ovir za dostop do trga … (druge določbe: priporočena obravnava na seminarjih).
 
 ---
 
-## V04 — 4. vaje: carine — rešitve
-**Nal. 1 (kolesa):** Q_S = 5P − 100, Q_D = −5P + 1000. a) zaprto: 10P = 1100 → **P = 110, Q = 450**. b) svetovna cena 80 € < 110 → **uvoznica**: Q_S = 300, Q_D = 600, **uvoz 300**. c) ad valorem 25 %: P = 80 · 1,25 = **100 €**; Q_S = **400**, Q_D = **500**, uvoz **100**. d) **prihodek** = (100 − 80) · 100 = **2.000 €**. e) potrošniki **izgubijo** 20 · (500 + 600)/2 = 11.000; proizvajalci **pridobijo** 20 · (300 + 400)/2 = 7.000. f) **mrtva izguba** = ½ · 20 · (400 − 300) + ½ · 20 · (600 − 500) = 1.000 + 1.000 = **2.000** (= 11.000 − 7.000 − 2.000). g) prohibitivna: P_w(1 + t) ≥ avtarkična cena → 80(1 + t) ≥ 110 → **t ≥ 37,5 %**.
-**Nal. 2 (čevlji, V. Britanija):** Q_S = −5 + ¼P, Q_D = 15 − ¼P. a) **P = 40 £, Q = 5 mio.** b) svetovna 24 £: Q_S = 1, Q_D = 9, **uvoz 8 mio.** c) neto korist menjave = ½ · (40 − 24) · (9 − 1) = **64 mio £** (ΔCS +112, ΔPS −48). d) carina 50 %: P = **36 £**, Q_S = **4**, Q_D = **6**, uvoz **2**. e) prihodek = (36 − 24) · 2 = **24**. f) potrošniki −12 · (9 + 6)/2 = **−90**, proizvajalci +12 · (1 + 4)/2 = **+30**. g) mrtva izguba = ½ · 12 · 3 + ½ · 12 · 3 = **36** (= 90 − 30 − 24). h) prohibitivna: 24(1 + t) ≥ 40 → **t ≥ 66,7 %**.
-**Nal. 3 (usnjene torbice: SLO 50 €, DE 40 €, TR 30 €; Slovenija majhna, ponudba iz izvoza popolnoma elastična):** cena z carino = P · (1 + t).
-| | t = 80 % | t = 50 % | t = 20 % |
+## Primeri za vajo: carine (lastni primeri)
+
+**Primer 1, majhna država uvoznica (hladilniki; cena v €, količina v kosih):** Q_S = 4P − 200, Q_D = 1400 − 4P.
+- **Avtarkija:** 8P = 1600 → **P = 200 €, Q = 600**.
+- **Prosta trgovina pri svetovni ceni 150 €** (manj kot 200, zato država uvaža): Q_S = 400, Q_D = 800, **uvoz 400**.
+- **Carina 20 %** (ad valorem): domača cena = 150 · 1,2 = **180 €**. Q_S = **520**, Q_D = **680**, uvoz pade na **160**.
+- **Carinski prihodek** = (180 − 150) · 160 = **4.800 €**.
+- **Potrošniki izgubijo** 30 · (800 + 680)/2 = **22.200 €**, **proizvajalci pridobijo** 30 · (400 + 520)/2 = **13.800 €**.
+- **Mrtva izguba** = proizvodni del ½ · 30 · (520 − 400) = 1.800 + potrošni del ½ · 30 · (800 − 680) = 1.800 = **3.600 €**. Kontrola: 22.200 − 13.800 − 4.800 = 3.600.
+- **Prohibitivna carina** (uvoz se ustavi): 150 · (1 + t) ≥ 200 → **t ≥ 33,3 %**.
+
+**Primer 2, od kod uvažamo (kavni aparati v Sloveniji):** domača proizvodnja stane 100 €, v Avstriji 80 €, na Kitajskem 60 €. Slovenija je majhna, uvozna ponudba je popolnoma elastična. Cena uvoza = strošek · (1 + t).
+
+| Carina | Avstrija | Kitajska | Kaj se zgodi |
 |---|---|---|---|
-| Nemčija | 72 | 60 | 48 |
-| Turčija | 54 | 45 | 36 |
-| Učinek na tokove | oba nad 50 → **ni uvoza**, domača proizvodnja (carina prohibitivna) | **uvoz iz Turčije** (45 < 50; DE 60 > 50) | **uvoz iz Turčije** (36; DE 48 je pod 50, a TR je cenejša) |
-b) **t = 80 %, CU z Nemčijo:** nemške torbice brez carine **40 € < 50** (TR 54) → uvoz iz DE, prej ga ni bilo → **ustvarjanje trgovine** (domača proizvodnja se nadomesti z uvozom, cena 50 → 40).
-c) **t = 50 %, CU z Nemčijo:** DE 40 € < TR 45 € → uvoz se **preusmeri iz Turčije (stroški 30) v Nemčijo (stroški 40)**, cena 45 → 40 → **preusmerjanje trgovine** (dodatno nekaj ustvarjanja zaradi nižje cene; neto blaginja nejasna).
-d) **t = 20 %, CU z Nemčijo:** DE 40 > TR 36 → uvoz ostane iz Turčije; **ni ustvarjanja ne preusmerjanja** (CU brez učinka).
-e) **t = 20 %, CU s Turčijo:** TR brez carine **30 € < 36 €** → uvoz iz iste (najučinkovitejše) države po nižji ceni → **ustvarjanje trgovine, brez preusmerjanja** (višji uvoz).
-**Nal. 4 (sir):** stroški Švica 3, Francija 4, NL 4,8, Belgija 5 €; carine: CH 25 %, FR 30 %, NL 100 %, BE 60 %. Cena v državi uvoznici = strošek · (1 + t uvoznice).
-| Izvor → cena v | Švica (25 %) | Francija (30 %) | Nizozemska (100 %) | Belgija (60 %) |
-|---|---|---|---|---|
-| Švica (3) | 3 (dom.) | 3,90 | 6,00 | 4,80 |
-| Francija (4) | 5,00 | 4 (dom.) | 8,00 | 6,40 |
-| Nizozemska (4,8) | 6,00 | 6,24 | 4,8 (dom.) | 7,68 |
-| Belgija (5) | 6,25 | 6,50 | 10,00 | 5 (dom.) |
-a) **Švica izvaža** (v FR po 3,90 in BE po 4,80); **Francija in Belgija uvažata iz Švice**; **Nizozemska** pokriva potrebe sama (domače 4,8 < CH 6,0); Švica ne uvaža.
-b) **FTA NL–BE** (brez carin med njima, lastne zunanje): v BE NL sir 4,80 = CH sir 4,80 (60 %) → cena se ne zniža, ob nepoznanih preferencah uvoz iz NL = preusmerjanje (NL strošek 4,8 > CH 3) brez koristi; v NL cena domača 4,8 ostane → **ni (bistvenega) ustvarjanja trgovine; možno preusmerjanje** 🔎 (izenačeni ceni — prof naj potrdi).
-c) **CU NL–BE, SZT 50 %:** v NL CH 4,50 < 4,80 → NL zdaj uvaža iz Švice (carina 100 % → 50 %); v BE CH 4,50 < 4,80 → cena pade, uvoz iz CH naraste → **ustvarjanje trgovine, brez preusmerjanja** (zunanja carina se je znižala).
-d) **Francija se pridruži, SZT 50 %:** v FR CH 4,50 > FR 4,0 → Francija neha uvažati iz CH (prej uvoz po 3,90) in kupi doma (nazaj k manj učinkovitemu) → **izguba uvoza**; v NL in BE FR sir 4,0 (brez carine) < CH 4,50 → **uvoz se preusmeri iz Švice (strošek 3) v Francijo (4)** → **preusmerjanje trgovine** (cena sicer pade 4,5 → 4,0). Švica izgubi izvoz.
+| 70 % | 136 | 102 | oba nad 100 → ni uvoza, carina je prohibitivna |
+| 40 % | 112 | 84 | uvoz s Kitajske |
+| 10 % | 88 | 66 | uvoz s Kitajske |
+
+- **Carinska unija z Avstrijo pri carini 70 %:** avstrijski aparat brez carine stane 80 € < 100, kitajski 102 → začnemo uvažati iz Avstrije, ki nadomesti dražjo domačo proizvodnjo → **ustvarjanje trgovine**.
+- **Carinska unija z Avstrijo pri 40 %:** Avstrija 80 € < Kitajska 84 € → uvoz se **preusmeri** s cenejše Kitajske (strošek 60) na dražjo Avstrijo (strošek 80). Cena pade s 84 na 80, zato je nekaj tudi ustvarjanja. Neto učinek na blaginjo je nejasen.
+- **Carinska unija z Avstrijo pri 10 %:** Avstrija 80 € > Kitajska 66 € → uvoz ostane s Kitajske, unija nima učinka.
+- **Prosta trgovina s Kitajsko pri 10 %:** kitajski aparat stane 60 € namesto 66 € → več uvoza iz najcenejše države → **samo ustvarjanje trgovine**.
 
 ---

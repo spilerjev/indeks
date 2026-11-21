@@ -5,7 +5,6 @@ Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj,
 ## P03 — Teoretične osnove vzorčenja
 
 Gradivo: gradivo (Aleša Lotrič Dolinar), R koda: gradivo.
-> ℹ️ Predavanja 20. 10. nisi bil (bolan). Spodaj je razlaga iz prosojnic; vaje V03 (23. 10.) so že rešene naprej.
 
 ### Ponovitev P02
 Gostota in porazdelitvena funkcija; kvantil (vrednost) ↔ kvantilni rang (porazdelitvena funkcija); normalna porazdelitev: 2 parametra (μ, σ), simetrična, unimodalna; Z ~ N(0, 1).

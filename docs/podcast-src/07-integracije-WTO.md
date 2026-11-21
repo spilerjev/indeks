@@ -4,11 +4,9 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 ## P06 — Ekonomske integracije in Svetovna trgovinska organizacija
 
-*19 strani. Učbenik: pogl. 1 in internetni viri; pogl. 8.3.3 in 8.3.4 (sporazumi EU).*
-
 ### Ekonomske integracije: opredelitev
 
-**S prosojnic (P6, str. 1–3):**
+**Osnove:**
 - EU je po obliki pogodbene povezanosti držav **ekonomska integracija**.
 - Pojem je v ekonomiji postal aktualen šele **po 2. svetovni vojni (v 50. letih 20. stoletja)**.
 - Če sodeluje **manjše število držav** = mednarodno ekonomsko integriranje, če **večina držav** = **multilateralna (večstranska) liberalizacija** (npr. WTO).
@@ -27,8 +25,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Plitva in globoka integracija:** plitva = predvsem odprava carin. Globoka = tudi usklajevanje pravil (standardi, storitve, naložbe, konkurenca, javna naročila).
 - **Stopnje (Balassa):** (preferencialni trgovinski sporazum) → območje proste trgovine → carinska unija → skupni trg → ekonomska unija → ekonomska in monetarna (politična) unija (glej tabelo pri P01, prosojnica 16).
 
-- **Prosojnica 4 (tabela stopenj, Balassa):** prof jo je le omenila kot ponovitev.
-- **Prosojnica 5 (ostali kriteriji vrst integracij):** *preskočeno na predavanju.* Kriteriji: geografski (subregionalne, regionalne, medregionalne, globalne), obseg (parcialne, sektorske, celovite), metode (institucionalne, tržne, pozitivne, negativne), vrsta aktivnosti (proizvodne, storitve, faktorji, varnostne in politične, ekonomske in monetarne, delovanje trga).
+- **Ostali kriteriji vrst integracij:** Kriteriji: geografski (subregionalne, regionalne, medregionalne, globalne), obseg (parcialne, sektorske, celovite), metode (institucionalne, tržne, pozitivne, negativne), vrsta aktivnosti (proizvodne, storitve, faktorji, varnostne in politične, ekonomske in monetarne, delovanje trga).
 
 ### Svetovna trgovinska organizacija (STO / WTO)
 - **Ustanovljena: 1. 1. 1995** na podlagi **urugvajskega kroga pogajanj GATT (1986–1994)**. Sporazum iz Marakeša je bil podpisan aprila 1994.
@@ -54,7 +51,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - pomoč državam, ki prosijo za **članstvo (pristop) v WTO**. *(Na predavanju slišano »mednarodni trg«, a smiselno gre za pristop k WTO.)*
 - **Doha runda** (2001, Doha, Katar; 4. ministrska konferenca, MM4): 20 trgovinskih področij, 3 najpomembnejša:
   - reforma **kmetijskih subvencij**,
-  - zagotoviti, da liberalizacija spoštuje **trajnostni razvoj (varstvo okolja)**. *Prof ni povedala, vpisano po Doha agendi, preveri.*
+  - zagotoviti, da liberalizacija spoštuje **trajnostni razvoj (varstvo okolja)**.
   - izboljšati dostop **manj razvitih držav (MRD)** do globalnih trgov za njihov izvoz.
 
 ### Doha runda in ministrske konference (1)

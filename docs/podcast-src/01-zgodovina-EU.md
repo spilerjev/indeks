@@ -118,7 +118,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 Organizacije, ki temeljijo na **medvladnem** pristopu:
 1. **OEEC (1948)**, glej stran 5.
-2. **Svet Evrope** (izpolnjene praznine):
+2. **Svet Evrope**:
    - **pobudnik ustanovitve:** Winston Churchill (govor v Zürichu 1946 o »Združenih državah Evrope«),
    - **ustanovljen:** 5. 5. 1949 (Londonska pogodba), sedež v **Strasbourgu**,
    - **naloge:** varstvo **človekovih pravic, demokracije in pravne države**; ključni dokument je Evropska konvencija o človekovih pravicah (EKČP, 1950),

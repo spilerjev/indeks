@@ -1,52 +1,52 @@
-# Epizoda 2 — 1. vaje: nastanek EU, pogodbe, širitve
+# Epizoda 2 — Od EGS in EFTA do EU-27: evropesimizem, enotni trg, pogodbe in širitve
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
-## V01 — 1. vaje: Zgodovina in nastanek EU
+## Od EGS do EU-27
 
-**1. Prvi povojni koraki, dva pristopa**
+**Prvi povojni koraki, dva pristopa**
 - Prvi koraki: Marshallov načrt → **OEEC (1948)** in **EPU (1950–58)**, Svet Evrope (1949), Beneluks (carinska unija 1948).
 - **Federalni (nadnacionalni) pristop:** države prenesejo del suverenosti na skupne institucije (ESPJ 1951, EGS 1957). Podpirale so ga **Francija, ZRN, Italija in Beneluks** (»šesterica«).
 - **Medvladni pristop:** sodelovanje brez prenosa suverenosti, odločanje s soglasjem (OEEC, Svet Evrope, EFTA). Podpirale so ga **VB**, skandinavske države, Švica, Avstrija in Portugalska.
 
-**2a. Nastanek EGS in EFTA**
+**Nastanek EGS in EFTA**
 - **EGS:** Rimska pogodba podpisana **25. 3. 1957**, velja od **1. 1. 1958**. **6 članic:** Francija, ZRN, Italija, Belgija, Nizozemska, Luksemburg.
   - Predhodnice: **ESPJ** (Pariška pogodba 1951, velja od 1952), pa tudi carinska unija Beneluks ter OEEC/EPU.
 - **EFTA:** Stockholmska konvencija **4. 1. 1960**, velja od maja 1960. **7 članic:** VB, Danska, Norveška, Švedska, Avstrija, Švica, Portugalska.
 
-**2b. Zakaj sta nastali, razlika**
+**Zakaj sta nastali, razlika**
 - **EGS:** mir in vključitev Nemčije, poglobitev integracije po uspehu ESPJ, skupni trg za rast. Je **carinska unija** s skupno zunanjo carino, skupnimi politikami (SKP) in nadnacionalnimi institucijami.
 - **EFTA:** odgovor VB in drugih na **diskriminacijo zaradi EGS**. Niso želele nadnacionalnosti niti skupne zunanje carine (VB je hotela ohraniti preference za Commonwealth).
 - **Razlika:** EGS je carinska unija (skupna zunanja carina, kmetijstvo vključeno, nadnacionalno). EFTA je **območje proste trgovine** (vsaka država ima svoje carine do tretjih držav, samo industrijski izdelki, medvladno).
 
-**2c. Dva prekrivajoča se koncentrična kroga**
+**Dva prekrivajoča se koncentrična kroga**
 - V 1960-ih sta bila EGS in EFTA **ločena** kroga.
 - Leta **1973** so VB, Danska in Irska prestopile v EGS, preostale države EFTA pa so sklenile **bilateralne sporazume o prosti trgovini z EGS** (1972/73).
 - Nastaneta **notranji krog** (EGS-9, carinska unija) in **zunanji krog** (prosta trgovina z industrijskimi izdelki za EGS in EFTA). Kroga se zato **prekrivata**.
 
-**2d. Učinek domin** (Baldwin)
+**Učinek domin** (Baldwin)
 - Preferencialna liberalizacija **diskriminira nečlanice** (preusmeritev trgovine).
 - Izvozniki iz nečlanic zato lobirajo za vstop v blok. Ko se blok poveča, je diskriminacija še večja, pritisk še močnejši in pristopi se vrstijo kot padajoče domine.
 - Primeri: ustanovitev EFTA, prošnja VB 1961 (za njo še DK, IE, NO), širitev 1973, kasneje EEA in države EFTA v EU 1995.
 
-**3. Evropesimizem 1975–1986**
+**Evropesimizem 1975–1986**
 Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo (»evroskleroza«).
 - **Ekonomski dejavniki:** naftna šoka **1973 in 1979**, **stagflacija** in brezposelnost, propad Bretton Woodsa (valutna nestabilnost, »kača«), nacionalni protekcionizem z **necarinskimi ovirami**.
 - **Politični dejavniki:** **luksemburški kompromis (1966)** je pomenil soglasje oziroma veto, zato ni bilo odločitev. Spor glede proračuna z VB (Thatcher, »I want my money back«, rešen v Fontainebleauju 1984). Ukvarjali so se s širitvami (GR, ES, PT).
 - Svetle točke: EMS 1979, prve neposredne volitve v EP 1979, sodba Cassis de Dijon 1979.
 
-**4. Tehnične ovire, Cassis de Dijon**
+**Tehnične ovire, Cassis de Dijon**
 - **Tehnične ovire** so različni nacionalni **standardi, tehnični predpisi, zahteve za testiranje, certificiranje in označevanje** izdelkov. So necarinske ovire: proizvajalec mora izdelek prilagoditi vsakemu trgu posebej.
 - **Cassis de Dijon (Sodišče ES, 1979):** Nemčija je prepovedala prodajo francoskega likerja, ker je imel premalo alkohola (zakon je zahteval najmanj 25 %, Cassis jih ima 15–20 %). Sodišče je razsodilo, da izdelka, ki je zakonito proizveden in v prometu v eni članici, druga članica ne sme prepovedati (razen iz nujnih razlogov, npr. zaradi zdravja).
 - Rešitev je **načelo vzajemnega priznavanja**: ni treba harmonizirati vseh standardov, harmonizirajo se samo **bistvene zahteve** (»novi pristop«).
 
-**5. Delorsova pobuda, Single Market Programme, EC92**
+**Delorsova pobuda, Single Market Programme, EC92**
 - **Zakaj:** evroskleroza, zaostajanje za **ZDA in Japonsko**, skupni trg je bil razdrobljen z necarinskimi ovirami.
 - **Komisija pod vodstvom Delorsa (1985)** je izdala **Belo knjigo** (Cockfield) s približno **300 ukrepi** (279) za dokončanje notranjega trga do **31. 12. 1992**.
 - **Enotni evropski akt** (1986, velja od 1987) je uvedel **kvalificirano večino** za ukrepe notranjega trga.
 - **Vsebina EC92:** odprava **fizičnih** (mejne kontrole), **tehničnih** (standardi, vzajemno priznavanje, javna naročila) in **davčnih** ovir (približevanje DDV in trošarin). Cilj so **štiri svoboščine**: blago, storitve, kapital in ljudje.
 
-**6. Pogodba o ustanovitvi EU: Maastricht**
+**Pogodba o ustanovitvi EU: Maastricht**
 - **Pogodba o Evropski uniji (Maastricht)**: podpisana **7. 2. 1992**, velja od **1. 11. 1993**.
 - Določbe:
   - **tri stebri**: (1) ES, (2) skupna zunanja in varnostna politika, (3) pravosodje in notranje zadeve,
@@ -57,23 +57,23 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - kohezijski sklad,
   - socialno poglavje (VB je imela izjemo, opt-out, tako kot DK in VB pri euru).
 
-**7. Pogodbe po Maastrichtu**
+**Pogodbe po Maastrichtu**
 | Pogodba | Podpis → velja | Ključno |
 |---|---|---|
 | **Amsterdam** | 1997 → 1999 | schengen v pravni red EU, zaposlovanje, več soodločanja, okrepljeno sodelovanje |
 | **Nica** | 2001 → 2003 | institucije za širitev (glasovi v Svetu, velikost Komisije, QMV) |
 | **Pogodba o ustavi za Evropo** | 2004 → **nikoli** | zavrnjena na referendumih v **Franciji in na Nizozemskem 2005** |
 | **Lizbona** | 2007 → **1. 12. 2009** | ukine stebre, EU dobi pravno osebnost, stalni predsednik Evropskega sveta, visoki predstavnik, dvojna večina, Listina o temeljnih pravicah, čl. 50 (izstop) |
-- Ne, vse niso začele veljati: ustavna pogodba ni. **Zdaj velja Lizbonska pogodba** (PEU + PDEU).
+- Niso vse začele veljati: ustavna pogodba ni. **Zdaj velja Lizbonska pogodba** (PEU + PDEU).
 
-**8. Kopenhagenski kriteriji (1993)**
+**Kopenhagenski kriteriji (1993)**
 - **Politični:** demokracija, pravna država, človekove pravice in zaščita manjšin.
 - **Ekonomski:** delujoče tržno gospodarstvo in sposobnost vzdržati konkurenco na trgu EU.
 - **Pravni:** prevzem pravnega reda (*acquis*) in ciljev politične, ekonomske in monetarne unije.
 - **Pred padcem komunizma** ti kriteriji niso bili problematični: prosilke (zahodne tržne demokracije, GR, ES, PT po padcu diktatur) so jih večinoma že izpolnjevale, zato niso bili niti formalizirani. Pomembni so postali šele pri **tranzicijskih** državah.
-- **Da**, izpolnjevati jih morajo tudi sedanje kandidatke.
+- Izpolnjevati jih morajo tudi sedanje kandidatke.
 
-**9. Širitve**
+**Širitve**
 - Bilo jih je **7** (2007 včasih štejejo kot drugi del pete):
   - **1973** VB, DK, IE
   - **1981** GR
@@ -85,14 +85,14 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
 - Leta 2020 je VB izstopila, zato je danes **EU-27**.
 - **Kandidatke (9):** Albanija, BiH, Črna gora, Severna Makedonija, Srbija, Ukrajina, Moldavija, Gruzija, Turčija. **Kosovo** je potencialna kandidatka.
 
-**10. Osebnosti**
+**Osebnosti**
 - **Churchill:** govor v Zürichu 1946 o »Združenih državah Evrope«, pobudnik Sveta Evrope (a VB naj bi ostala zunaj).
 - **Jean Monnet:** »oče Evrope«, avtor Schumanovega načrta, prvi predsednik Visoke oblasti ESPJ, zagovornik integracije po korakih (funkcionalizem, nadnacionalnost).
 - **Robert Schuman:** francoski zunanji minister. **Schumanova deklaracija 9. 5. 1950** je predlagala skupni nadzor nad premogom in jeklom, iz nje je nastala ESPJ (9. maj = dan Evrope).
 - **Charles de Gaulle:** francoski predsednik (1959–69), »Evropa narodov«. **Veto VB 1963 in 1967**, politika praznega stola 1965, ki je pripeljala do **luksemburškega kompromisa 1966** (veto).
 - **Jacques Delors:** predsednik Komisije 1985–95. **Program enotnega trga (EC92)**, Enotni evropski akt, **Delorsovo poročilo 1989** o EMU (v treh fazah), ki je pripeljalo do Maastrichta.
 
-**Dodatno z vaj: članice OEEC, konvertibilnost, federalizem**
+**Članice OEEC, konvertibilnost, federalizem**
 - **Članice OEEC ob ustanovitvi (16. 4. 1948):** 16 držav + zahodne okupacijske cone Nemčije (in Trst).
   - Avstrija, Belgija, Danska, Francija, Grčija, Irska, Islandija, Italija, Luksemburg, Nizozemska, Norveška, Portugalska, Švedska, Švica, Turčija, VB.
   - ZRN je polnopravna članica od 1949, Španija od 1959. ZDA in Kanada sta pridruženi članici, polnopravni postaneta šele v OECD (1961).
@@ -103,9 +103,9 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - Ne zamešaj s **federalnimi državami** po notranji ureditvi (ZRN, Avstrija, Švica, Belgija, ZDA).
   - EU ni federacija, je mešanica: nadnacionalna je npr. pri trgovinski politiki, konkurenci in monetarni politiki (ECB), medvladna pa pri zunanji in varnostni politiki.
 
-**Vprašanje 2 podrobneje (razlaga na vajah)**
+**EGS in EFTA podrobneje**
 
-*2a: kdaj, koliko, katere*
+*Kdaj, koliko, katere*
 - **EGS:** Rimski pogodbi (EGS + Euratom) sta bili podpisani **25. 3. 1957** in veljata od **1. 1. 1958**.
   - **6 članic** (»notranja šesterica«): Francija, ZRN, Italija, Belgija, Nizozemska, Luksemburg.
 - **Predhodnice EGS:**
@@ -117,7 +117,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - **7 članic** (»zunanja sedmerica«): VB, Danska, Norveška, Švedska, Avstrija, Švica, Portugalska.
   - Kasneje so se pridružile: Finska (pridružena 1961), Islandija (1970), Lihtenštajn (1991).
 
-*2b: zakaj in razlika*
+*Zakaj in razlika*
 - **Zakaj EGS:**
   - **Politično:** trajni mir, francosko-nemška sprava, »vezava« Nemčije, močnejša Z. Evropa v hladni vojni.
   - **Ekonomsko:** uspeh ESPJ, večji trg, ekonomije obsega, konkurenca in rast.
@@ -135,7 +135,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
 | Institucije | **nadnacionalne** (Komisija, Sodišče, večinsko odločanje) | **medvladne** (Svet, majhen sekretariat, soglasje) |
 | Cilj | ekonomski in **politični** (»vse tesnejša zveza«) | samo **ekonomski** |
 
-*2c: dva koncentrična kroga*
+*Dva koncentrična kroga*
 - **1960–1972: dva ločena (neprekrivajoča se) kroga**, EGS in EFTA. Med njima so carine, zato diskriminirata ena drugo.
 - **1973** VB in Danska (+ Irska) prestopijo v EGS. Preostale države EFTA (AT, CH, SE, PT, IS, FI, NO) sklenejo **bilateralne sporazume o prosti trgovini z industrijskimi izdelki z EGS** (1972/73), carine so do 1977 odpravljene.
 - Tako nastaneta **koncentrična kroga**:
@@ -144,7 +144,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
 - Imenujemo ju »**prekrivajoča se**«, ker je EGS v obeh. »**Koncentrična**« sta zato, ker je notranji krog bolj integriran od zunanjega.
 - Nadaljevanje: **EEA 1994** (zunanji krog dobi notranji trg, ne pa carinske unije) in prehod AT, FI, SE v EU leta 1995.
 
-*2d: učinek domin (Baldwin 1993)*
+*Učinek domin (Baldwin 1993)*
 - **Preferencialna liberalizacija** pomeni, da se carine znižajo **samo za članice**. Posledica je **preusmeritev trgovine**: uvoz se preusmeri od cenejših zunanjih dobaviteljev k dražjim dobaviteljem iz bloka, ker ti ne plačujejo carine.
 - **Mehanizem:**
   1. Izvozniki iz nečlanic izgubijo konkurenčnost na trgu bloka.
@@ -156,9 +156,9 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - **Domino 1 (1960-ta):** EGS → ustanovitev EFTA (obrambni blok) → prošnja VB 1961 + DK, IE, NO → širitev 1973 + sporazumi EFTA–EGS.
   - **Domino 2 (konec 1980-ih):** EC92 → EFTA se boji preusmeritve trgovine → EEA (1994) in prošnje AT 1989, SE 1991, FI in NO 1992 → širitev 1995. Podobno tudi države SVE (evropski sporazumi → 2004).
 
-**Opombi z vaj:** CH na zemljevidu = **Švica** (lat. *Confoederatio Helvetica*). EGS je bila **gospodarsko močnejša in je imela večji trg** kot EFTA (večji BDP, hitrejša rast). Zato je delovala kot magnet (učinek domin).
+**Opombi:** CH = **Švica** (lat. *Confoederatio Helvetica*). EGS je bila **gospodarsko močnejša in je imela večji trg** kot EFTA (večji BDP, hitrejša rast). Zato je delovala kot magnet (učinek domin).
 
-**Vprašanje 3 podrobneje: evropesimizem 1975–1986** (podrobnosti glej zgoraj)
+**Evropesimizem 1975–1986 podrobneje**
 - **Kaj pomeni:** integracija je **obstala**. Odločitve so bile blokirane, skupni trg je bil razdrobljen z necarinskimi ovirami, rast je bila nizka in brezposelnost visoka. Uporabljal se je tudi izraz »**evroskleroza**«. Po »zlatih letih« 1958–73 (hitra rast, carinska unija prej, kot je bilo načrtovano) je sledil zastoj.
 - **Politični dejavniki:**
   1. **Luksemburški kompromis (1966)** po politiki praznega stola: dejanski **veto** za »zelo pomembne nacionalne interese«. Harmonizacija standardov je zahtevala soglasje, zato je potekala zelo počasi.
@@ -173,8 +173,8 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   5. Zaostajanje v **konkurenčnosti** za ZDA in Japonsko, rastoča brezposelnost.
 - **Konec obdobja:** Delorsova Komisija (1985) → Bela knjiga → **Enotni evropski akt (1986)** s kvalificirano večino za notranji trg → EC92.
 
-**Z vaj: soglasje proti večini**
-- Več kot je držav, manjši je vpliv posamezne. Pri **večinskem** glasovanju se je lažje dogovoriti. Pri **soglasju** pa lahko ena država (»noče salame, hoče sir«) blokira vse.
+**Soglasje proti večini**
+- Več kot je držav, manjši je vpliv posamezne. Pri **večinskem** glasovanju se je lažje dogovoriti. Pri **soglasju** pa lahko ena država blokira vse.
 - **Soglasje + širitev → kriza v odločanju.**
 - Naftni šok je **ločen, ekonomski** dejavnik evropesimizma (ni vzrok krize v odločanju). Oba sta delovala hkrati.
 
@@ -187,7 +187,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - Rešitev je prinesla šele ostra protiinflacijska politika okoli 1980 (Volcker v ZDA, Thatcher) in ekonomika ponudbe.
 - **Povezava z EU:** inflacija je bila v vsaki državi drugačna (DE nizka, IT in UK visoka), zato fiksni tečaji niso bili mogoči → propad kače in Wernerjevega plana.
 
-**Vprašanje 4 podrobneje: tehnične ovire in Cassis de Dijon** (podrobnosti sodbe glej zgoraj)
+**Tehnične ovire in Cassis de Dijon podrobneje**
 - **Tehnične ovire za trgovanje** so **necarinske ovire**, ki izhajajo iz različnih nacionalnih:
   - **standardov in tehničnih predpisov** o lastnostih izdelka: sestava, velikost, varnost, npr. različne vtičnice ali zahtevan delež alkohola,
   - **postopkov testiranja in certificiranja**: izdelek, odobren v FR, mora v DE znova skozi preizkuse,
@@ -204,12 +204,12 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - To je bila podlaga za Belo knjigo in EC92.
 - **Podobne sodbe:** nemški zakon o čistosti piva (*Reinheitsgebot*, 1987) in italijanski zakon o testeninah iz trde pšenice (1988). V obeh primerih uvoza ni bilo mogoče prepovedati.
 
-**Z vaj (4):**
+**Na kratko:**
 - Tehnične ovire = podrobno predpisani nacionalni tehnični standardi in pravila, **brez harmonizacije** med članicami.
-- *»So v bistvu težile k zaščiti potrošnikov?«* → **Delno drži.** Uradno so jih države upravičevale z varstvom potrošnikov in zdravja. V praksi pa so pogosto pomenile **prikrit protekcionizem** domačih proizvajalcev. Pri Cassisu je Nemčija trdila, da ščiti potrošnike (šibkejši liker naj bi spodbujal pitje). Sodišče je odgovorilo, da za varstvo potrošnika zadošča **oznaka** na steklenici, prepoved pa je nesorazmerna.
+- **So tehnične ovire res ščitile potrošnike?** Delno. Uradno so jih države upravičevale z varstvom potrošnikov in zdravja. V praksi pa so pogosto pomenile **prikrit protekcionizem** domačih proizvajalcev. Pri Cassisu je Nemčija trdila, da ščiti potrošnike (šibkejši liker naj bi spodbujal pitje). Sodišče je odgovorilo, da za varstvo potrošnika zadošča **oznaka** na steklenici, prepoved pa je nesorazmerna.
 - **Načelo vzajemnega priznavanja:** dobrine, ki so **zakonito proizvedene in v prometu v eni članici**, se lahko **prosto prodajajo v vseh drugih članicah**, tudi če ne izpolnjujejo njihovih nacionalnih standardov (razen pri nujnih razlogih, kot sta zdravje in varnost).
 
-**Vprašanje 5 podrobneje: Delors, Single Market Programme, EC92** (podrobnosti glej zgoraj)
+**Delors, program enotnega trga in EC92 podrobneje**
 - **Zakaj Delorsova pobuda:**
   1. **Evroskleroza:** nizka rast, visoka brezposelnost, zaostajanje za **ZDA in Japonsko** (predvsem v visoki tehnologiji).
   2. Obstajala je **carinska unija**, ne pa pravi skupni trg. Trg je bil razdrobljen s **fizičnimi, tehničnimi in davčnimi ovirami**, kar pomeni manj ekonomij obsega in šibko konkurenco.
@@ -226,15 +226,15 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - **davčnih ovir:** približevanje DDV (najmanj 15 %) in trošarin,
   - **kapitalskih kontrol:** popolna liberalizacija pretoka kapitala od **1. 7. 1990**.
 
-**Z vaj (5):**
+**Na kratko:**
 - **Osnovna elementa EC92**: (1) **liberalizacija menjave blaga in storitev** in (2) **liberalizacija faktorjev proizvodnje** (kapital, delo).
 - **Harmonizacija:** države se **dogovorijo za enaka (usklajena) pravila** na ravni EU, npr. za standarde izdelkov, stopnje DDV ali predpise. Nacionalna pravila se nadomestijo ali uskladijo s skupnimi, običajno z **direktivo**, ki jo vsaka država prenese v svoje pravo.
   - **Razlika do vzajemnega priznavanja:** pri harmonizaciji vsi sprejmejo **ista pravila**. Pri vzajemnem priznavanju vsak obdrži **svoja pravila**, a priznava pravila drugih.
   - Stara harmonizacija je bila soglasna in podrobna, zato počasna. Novi pristop (1985) harmonizira samo bistvene zahteve.
 
-**Z vaj (6, 7):** samo na hitro, preostanek je **za doma**. Osnovna pogodba EU je **Maastrichtska** (1992/93). Sledijo Amsterdamska (1997), Niška (2001), neuspela ustavna (2004) in **Lizbonska** (2007/09, velja danes). Odgovori so zgoraj pri točkah 6 in 7.
+**Na kratko o pogodbah:** osnovna pogodba EU je **Maastrichtska** (1992/93). Sledijo Amsterdamska (1997), Niška (2001), neuspela ustavna (2004) in **Lizbonska** (2007/09, velja danes).
 
-**Vprašanje 8 podrobneje: kopenhagenski kriteriji**
+**Kopenhagenski kriteriji podrobneje**
 - Sprejeti so bili na **Evropskem svetu v Kopenhagnu, junija 1993**, ko je EU vzhodnim državam ponudila možnost članstva.
 1. **Politični kriterij:** stabilne institucije, ki zagotavljajo **demokracijo, pravno državo, človekove pravice ter spoštovanje in zaščito manjšin**.
    - Mora biti izpolnjen že **pred začetkom pogajanj**.
@@ -244,7 +244,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
    - **Madrid 1995** je dodal še upravno sposobnost za izvajanje prava.
 - **Dodatni pogoj na strani EU:** EU mora biti sposobna sprejeti nove članice (**absorpcijska sposobnost**).
 - **Zakaj pred padcem komunizma niso bili problem:** dotedanje prosilke (VB, DK, IE, AT, SE, FI, pa tudi GR, ES in PT po padcu diktatur) so bile **tržna gospodarstva in demokracije**, zato kriterijev niso niti zapisali. Pri **tranzicijskih** državah (plansko gospodarstvo, enopartijski sistem) pa so postali ključni, zato jih je EU formalizirala.
-- **Sedanje kandidatke:** da, kriteriji veljajo tudi zanje. Danes so še strožji: poudarek je na **pravni državi in boju proti korupciji** (poglavji 23 in 24 se odpreta prva in zapreta zadnja, nova metodologija 2020).
+- **Sedanje kandidatke:** kriteriji veljajo tudi zanje. Danes so še strožji: poudarek je na **pravni državi in boju proti korupciji** (poglavji 23 in 24 se odpreta prva in zapreta zadnja, nova metodologija 2020).
 
 **Pozor, ne zamešaj:** kopenhagenski kriteriji so za **vstop v EU**. **Maastrichtski konvergenčni kriteriji** pa so za **prevzem evra** (vstop v EMU). Javni dolg mora biti **največ 60 % BDP** (ne 40 %).
 1. **Javnofinančni primanjkljaj** ≤ **3 % BDP**.
@@ -257,7 +257,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
 - Vse članice EU (razen DK z izjemo) so se zavezale, da bodo evro prevzele, ko izpolnijo kriterije. Švedska jih namenoma ne izpolnjuje (ni v ERM II).
 - Snov o EMU pride na vrsto kasneje (teden 10: kača v tunelu, EMS, ERM).
 
-**Vprašanje 9 podrobneje: širitve**
+**Širitve podrobneje**
 
 | # | Leto | Države | Skupaj | Ozadje |
 |---|---|---|---|---|
@@ -269,15 +269,13 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
 | 6 | **1. 1. 2007** | Bolgarija, Romunija | 27 | zamik zaradi reform (pogosto štejejo kot 2. del pete) |
 | 7 | **1. 7. 2013** | Hrvaška | 28 | prva po letu 2007, strožja pogajanja (pravosodje) |
 
-- **Koliko širitev:** **7** (ali 6, če 2004 in 2007 štejemo kot eno). Ob nemški združitvi 1990 je nekdanja NDR vstopila kot del ZRN, kar ni štelo kot širitev.
+- **Število širitev:** **7** (ali 6, če 2004 in 2007 štejemo kot eno). Ob nemški združitvi 1990 je nekdanja NDR vstopila kot del ZRN, kar ni štelo kot širitev.
 - **Izstop:** VB, referendum 23. 6. 2016, izstop **31. 1. 2020** → **EU-27**.
 - **Kandidatke (stanje oktober 2026, 9):**
   - **Zahodni Balkan:** Črna gora in Albanija (najdlje v pogajanjih), Srbija, Severna Makedonija, BiH.
   - **Vzhod:** Ukrajina, Moldavija (kandidatki od 2022), Gruzija (od 2023, proces zamrznjen).
   - **Turčija** (od 1999, pogajanja zamrznjena).
   - **Kosovo** je potencialna kandidatka. Islandija je leta 2026 na referendumu zavrnila nadaljevanje pogajanj.
-
-**Z vaj (9):** 7 širitev (kot v tabeli zgoraj). Med kandidatkami sta na vajah manjkali **Ukrajina in Moldavija**. Kosovo je potencialna kandidatka.
 
 **Schengen** (odprava kontrol na notranjih mejah):
 - **Schengenski sporazum 14. 6. 1985** (Schengen, Luksemburg) je podpisalo 5 držav: FR, DE, BE, NL, LU.

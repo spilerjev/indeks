@@ -46,7 +46,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik). Vir: lastni zapiski predavanj, p
   - **2024–2026:** kritika WTO se nadaljuje z manj množičnimi demonstracijami; pomembnejše so specializirane nevladne mreže (OWINFS, Third World Network).
 
 ### Trendi danes in predlogi EU za reformo WTO
-- **Trendi danes:** prazno polje na prosojnici, izpolnjeno na predavanju.
+- **Trendi danes:**
 - **Načela predlogov EU za reformo WTO:**
   - **predvidljivost** (*predictability*): trgovina, ki temelji na pravilih, in obnovitev učinkovitega **reševanja sporov**,
   - **pravičnost** (*fairness*): odprava izkrivljanja konkurence, predvsem zaradi **državnih subvencij in netržnih praks**,
@@ -94,7 +94,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik). Vir: lastni zapiski predavanj, p
   - **pogoji za članstvo:** soglasje vseh obstoječih članic in pristopni sporazum z njimi,
   - CEFTA danes (ocena 2026): 18,9 mio prebivalcev, BDP 246 mrd USD (nominalno).
 
-### Ekonomske integracije – domača naloga
+### Druge ekonomske integracije po svetu
 EU, EFTA, EGP (EEA), CEFTA, **USMCA** (prej NAFTA), **MERCOSUR** (Južni skupni trg), **ASEAN** (Združenje držav jugovzhodne Azije), **COMESA** (Skupni trg vzhodne in južne Afrike), ostale.
 
 ### OECD (ni integracija)
