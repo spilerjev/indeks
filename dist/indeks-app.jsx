@@ -3,7 +3,7 @@ import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
   BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search,
-  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List, ListChecks, Plus, Headphones, Play, Pause, Volume2, VolumeX
+  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List, ListChecks, Plus, Headphones, Play, Pause, Volume2, VolumeX, Mail, Copy
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { createPortal } from "react-dom";
@@ -2007,11 +2007,53 @@ function Welcome({ user, go }) {
         <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: "var(--ink2)" }}>
           indeks. je naredil <b style={{ color: "var(--ink)" }}>Leon Špiler</b>, študent UPEŠ na EF UL (smer Bančni in finančni management),
           najprej za lastno učenje. Napako ali predlog sporoči na{" "}
-          <a href="mailto:leon.spiler@gmail.com" style={{ color: "var(--terra)", fontWeight: 700 }}>leon.spiler@gmail.com</a> ali na Instagramu{" "}
+          <ContactLink style={{ color: "var(--terra)", fontWeight: 700 }}>{TERMS_CONTACT}</ContactLink> ali na Instagramu{" "}
           <a href="https://instagram.com/spilerjev" target="_blank" rel="noopener noreferrer" style={{ color: "var(--terra)", fontWeight: 700 }}>@spilerjev</a>.
         </p>
       </section>
     </div>
+  );
+}
+
+/* Kontakt: namesto mailto: povezave (brskalnik vpraša »Open Mail?«) lep dialog z naslovom, kopiranjem in neobveznim odpiranjem pošte. */
+function ContactLink({ style, children }) {
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    const k = (e) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k);
+  }, [open]);
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(TERMS_CONTACT); }
+    catch (e) { try { const t = document.createElement("textarea"); t.value = TERMS_CONTACT; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); } catch (e2) {} }
+    setCopied(true); setTimeout(() => setCopied(false), 2000);
+  };
+  const host = document.querySelector(".ix-root") || document.body;
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", font: "inherit", letterSpacing: "inherit", textTransform: "inherit", color: "inherit", ...style }}>{children}</button>
+      {open && createPortal(
+        <div className="ix-modalbg" style={{ zIndex: 90 }} onClick={() => setOpen(false)}>
+          <div className="ix-modal ix-dialog" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Kontakt" style={{ textTransform: "none", letterSpacing: "normal", fontWeight: 400 }}>
+            <div style={{ padding: "18px 18px 6px", display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <span className="ix-dialog-ic" style={{ background: "var(--okbg)" }}><Mail size={20} color="var(--teal)" /></span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="ix-serif" style={{ fontWeight: 900, fontSize: 18, marginBottom: 4, lineHeight: 1.2 }}>Kontakt</div>
+                <div style={{ fontSize: 14.5, color: "var(--ink2)", lineHeight: 1.5 }}>Vprašanja, napake v vsebini, predlogi, izbris podatkov ali prijava neprimerne vsebine:</div>
+                <div style={{ marginTop: 10, padding: "10px 12px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontWeight: 700, fontSize: 15, overflowWrap: "anywhere", userSelect: "all" }}>{TERMS_CONTACT}</div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", alignItems: "center", padding: "12px 18px 16px", flexWrap: "wrap" }}>
+              <a href={"mailto:" + TERMS_CONTACT} style={{ marginRight: "auto", fontSize: 13, color: "var(--ink2)", textDecoration: "underline", textUnderlineOffset: 3 }}>Odpri e-pošto</a>
+              <button onClick={() => setOpen(false)} className="ix-btn" style={{ background: "transparent", color: "var(--ink)", border: "1px solid var(--line)", padding: "9px 16px" }}>Zapri</button>
+              <button autoFocus onClick={copy} className="ix-btn" style={{ background: copied ? "var(--teal)" : "var(--ink)", color: copied ? "#fff" : "var(--paper)", border: "none", padding: "9px 16px", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                {copied ? <Check size={15} /> : <Copy size={15} />}{copied ? "Kopirano" : "Kopiraj naslov"}
+              </button>
+            </div>
+          </div>
+        </div>, host)}
+    </>
   );
 }
 
@@ -2023,7 +2065,7 @@ function Footer() {
       <span style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
         <a href="#/pogoji" style={link}>Pogoji uporabe</a>
         <a href="#/zasebnost" style={link}>Zasebnost</a>
-        <a href={"mailto:" + TERMS_CONTACT} style={link}>Kontakt</a>
+        <ContactLink style={link}>Kontakt</ContactLink>
         <span>Neuraden pripomoček, ni povezan z EF UL.</span>
       </span>
     </footer>
