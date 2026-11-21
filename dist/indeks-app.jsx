@@ -153,6 +153,13 @@ const fmtTime = (sec) => { sec = Math.max(0, sec | 0); return Math.floor(sec / 6
 const SUPABASE_URL = "https://fdcnkqjbuatsisznqcos.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkY25rcWpidWF0c2lzem5xY29zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1OTY2NDQsImV4cCI6MjEwMTE3MjY0NH0.WVm1CEcJAq_V4yYJPHYo6nYUJA6xlwokjLoWDhZF5NE";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+/* Ponastavitev gesla: povezava iz e-pošte vodi na koren strani z žetoni v #hash (type=recovery). supabase-js ustvari sejo,
+   počisti hash in sproži PASSWORD_RECOVERY -> odpremo obrazec za novo geslo (#/novo-geslo). Poslušalec je tu (ne v komponenti),
+   da dogodka ne zamudimo, preden se App naloži. redirectTo ne sme imeti svojega #, ker Supabase žetone doda za drugi #. */
+const RESET_REDIRECT = typeof window !== "undefined" ? window.location.origin + window.location.pathname : "https://indeksapp.com/";
+supabase.auth.onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY") setTimeout(() => { window.location.hash = "#/novo-geslo"; }, 0);
+});
 
 function useAuth() {
   const [session, setSession] = useState(undefined); // undefined = nalagam, null = odjavljen
@@ -351,6 +358,12 @@ async function saveUsername(name) {
 
 function mapAuthErr(error) {
   const m = (error.message || "").toLowerCase();
+  if (m.includes("rate limit") || /after \d+ seconds/.test(m) || m.includes("too many"))
+    return "Preveč poskusov v kratkem času. Počakaj nekaj minut in poskusi znova.";
+  if (m.includes("not authorized") || m.includes("smtp") || m.includes("sending") || m.includes("error sending"))
+    return "Pošiljanje e-pošte trenutno ne deluje. Poskusi kasneje ali piši na " + TERMS_CONTACT + ".";
+  if (m.includes("different from the old") || m.includes("same password"))
+    return "Novo geslo mora biti drugačno od starega.";
   if (m.includes("already registered") || m.includes("already exists") || m.includes("user already"))
     return "Ta e-naslov je že registriran. Prijavi se.";
   if (m.includes("invalid") || m.includes("credentials"))
@@ -421,8 +434,8 @@ function TermsBox({ full }) {
   );
 }
 
-function Login({ year, onBack }) {
-  const [mode, setMode] = useState("in"); // "in" = prijava, "up" = registracija
+function Login({ year, onBack, initialMode, notice }) {
+  const [mode, setMode] = useState(initialMode || "in"); // "in" = prijava, "up" = registracija, "reset" = pozabljeno geslo
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -434,12 +447,28 @@ function Login({ year, onBack }) {
   const [terms, setTerms] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [hint, setHint] = useState(false); // namig ob napačni prijavi: e-naslov namesto imena + pozabljeno geslo
+  const switchMode = (m) => { setMode(m); setErr(""); setInfo(""); setFix(""); setHint(false); };
   const inputStyle = { width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" };
   const submit = async (e) => {
     e.preventDefault();
     let addr = email.trim();
+    if (mode === "reset") {
+      if (!addr) return;
+      setErr(""); setInfo(""); setFix(""); setHint(false);
+      if (!addr.includes("@")) { setErr("Vpiši e-naslov svojega računa (ne uporabniškega imena)."); return; }
+      const chk = checkEmail(addr);
+      if (chk && chk.err) { setErr(chk.err); setFix(chk.fix || ""); return; }
+      setBusy(true);
+      const { error } = await supabase.auth.resetPasswordForEmail(addr, { redirectTo: RESET_REDIRECT });
+      setBusy(false);
+      // Supabase za neobstoječ e-naslov ne javi napake (ne razkrijemo, ali račun obstaja)
+      if (error) { setErr(mapAuthErr(error)); return; }
+      setInfo("Če račun s tem e-naslovom obstaja, smo ti poslali povezavo za novo geslo. Preveri tudi mapo Vsiljena pošta. Povezava velja eno uro.");
+      return;
+    }
     if (!addr || !password) return;
-    setErr(""); setInfo(""); setFix("");
+    setErr(""); setInfo(""); setFix(""); setHint(false);
     if (mode === "up") {
       const uerr = checkUsername(username);
       if (uerr) { setErr(uerr); return; }
@@ -471,15 +500,18 @@ function Login({ year, onBack }) {
     }
     if (!addr.includes("@")) {
       // prijava z uporabniškim imenom je izklopljena: login_email je razkrival e-naslove (launch-varnost.sql)
-      setBusy(false); setErr("Za prijavo vpiši e-naslov svojega računa (ne uporabniškega imena).");
+      setBusy(false); setErr("Za prijavo vpiši e-naslov svojega računa (ne uporabniškega imena)."); setHint("link");
       return;
     }
     const { error } = await supabase.auth.signInWithPassword({ email: addr, password });
     setBusy(false);
-    if (error) { setErr(mapAuthErr(error)); return; }
+    if (error) { setErr(mapAuthErr(error)); setHint("full"); return; }
+    // navadna prijava s strani za novo geslo: ne ostani na obrazcu za novo geslo
+    if (window.location.hash === "#/novo-geslo") window.location.hash = "#/";
     // uspeh: onAuthStateChange v useAuth poskrbi za vstop
   };
-  const up = mode === "up";
+  const up = mode === "up", reset = mode === "reset";
+  const linkBtn = { background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--terra)", fontWeight: 700, textDecoration: "underline", fontSize: 13 };
   return (
     <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
       {onBack && (
@@ -491,11 +523,13 @@ function Login({ year, onBack }) {
       <div className="ix-card" style={{ padding: 24 }}>
         {year && <div className="ix-chip" style={{ color: "var(--terra)", marginBottom: 8 }}>{year}. letnik</div>}
         <form onSubmit={submit}>
-          <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>{up ? "Registracija" : "Prijava"}</div>
+          <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>{up ? "Registracija" : reset ? "Pozabljeno geslo" : "Prijava"}</div>
+          {notice && reset && <div style={{ color: "var(--terra)", fontSize: 13.5, marginBottom: 10, lineHeight: 1.5 }}>{notice}</div>}
           <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
             {up
               ? "Ustvari brezplačen račun: uporabniško ime, e-naslov in geslo."
-              : "Vpiši e-naslov in geslo."}
+              : reset ? "Vpiši e-naslov svojega računa. Poslali ti bomo povezavo, s katero nastaviš novo geslo."
+              : "Prijava je z e-naslovom (ne z uporabniškim imenom) in geslom."}
           </div>
           {up && (
             // vzdevek, ne prijavni podatek: "username" bi Applova Gesla zapolnila z e-naslovom (prijava je z e-naslovom)
@@ -508,10 +542,15 @@ function Login({ year, onBack }) {
           {/* e-naslov je prijavni podatek računa -> "username", da ga upravitelj gesel shrani skupaj z geslom */}
           <input type={up ? "email" : "text"} required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
             name="email" id="ix-email"
-            placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off" autoComplete="username"
-            style={{ ...inputStyle, marginBottom: 10 }} />
-          <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
-            placeholder="Geslo" autoComplete={up ? "new-password" : "current-password"} style={inputStyle} />
+            placeholder={up ? "ime@email.com" : "e-naslov (ime@email.com)"} autoCapitalize="none" autoCorrect="off" autoComplete="username"
+            style={{ ...inputStyle, marginBottom: reset ? 0 : 10 }} />
+          {!reset && <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
+            placeholder="Geslo" autoComplete={up ? "new-password" : "current-password"} style={inputStyle} />}
+          {mode === "in" && (
+            <div style={{ textAlign: "right", marginTop: 7 }}>
+              <button type="button" onClick={() => switchMode("reset")} style={{ ...linkBtn, fontWeight: 600, fontSize: 12.5 }}>Pozabljeno geslo?</button>
+            </div>
+          )}
           {up && (
             <div style={{ marginTop: 12, fontSize: 13, color: "var(--ink2)", lineHeight: 1.45 }}>
               <label style={{ display: "flex", gap: 8, alignItems: "flex-start", cursor: "pointer" }}>
@@ -530,6 +569,12 @@ function Login({ year, onBack }) {
             </div>
           )}
           {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
+          {hint && mode === "in" && (
+            <div style={{ fontSize: 13, marginTop: 6, color: "var(--ink2)", lineHeight: 1.5 }}>
+              {hint === "full" && "Prijavi se z e-naslovom, ne z uporabniškim imenom. "}
+              <button type="button" onClick={() => switchMode("reset")} style={linkBtn}>Pozabljeno geslo?</button>
+            </div>
+          )}
           {fix && (
             <button type="button" onClick={() => { setEmail(fix); setFix(""); setErr(""); }}
               style={{ background: "none", border: "none", padding: 0, marginTop: 6, cursor: "pointer", color: "var(--terra)", fontSize: 13, fontWeight: 700, textDecoration: "underline" }}>
@@ -539,16 +584,61 @@ function Login({ year, onBack }) {
           {info && <div style={{ color: "var(--teal)", fontSize: 13, marginTop: 10 }}>{info}</div>}
           <button type="submit" disabled={busy}
             style={{ width: "100%", marginTop: 14, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
-            {busy ? "Trenutek…" : up ? "Ustvari račun" : "Prijava"}
+            {busy ? "Trenutek…" : up ? "Ustvari račun" : reset ? "Pošlji povezavo" : "Prijava"}
           </button>
         </form>
         <div style={{ marginTop: 16, textAlign: "center", fontSize: 13, color: "var(--ink2)" }}>
-          {up ? "Že imaš račun? " : "Nimaš računa? "}
-          <button onClick={() => { setMode(up ? "in" : "up"); setErr(""); setInfo(""); setFix(""); }}
-            style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--terra)", fontWeight: 700, textDecoration: "underline" }}>
-            {up ? "Prijava" : "Registriraj se"}
+          {reset ? "Se spomniš gesla? " : up ? "Že imaš račun? " : "Nimaš računa? "}
+          <button onClick={() => switchMode(up || reset ? "in" : "up")} style={linkBtn}>
+            {up || reset ? "Prijava" : "Registriraj se"}
           </button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* Novo geslo: po povezavi iz e-pošte je uporabnik prijavljen z začasno sejo (PASSWORD_RECOVERY) in tu nastavi novo geslo. */
+function NewPassword({ go }) {
+  const [p1, setP1] = useState("");
+  const [p2, setP2] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const inputStyle = { width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" };
+  const submit = async (e) => {
+    e.preventDefault();
+    setErr("");
+    if (p1.length < 8) { setErr("Geslo naj ima vsaj 8 znakov."); return; }
+    if (p1 !== p2) { setErr("Gesli se ne ujemata. Vpiši isto geslo dvakrat."); return; }
+    setBusy(true);
+    const { error } = await supabase.auth.updateUser({ password: p1 });
+    setBusy(false);
+    if (error) {
+      const m = (error.message || "").toLowerCase();
+      const text = m.includes("session") || m.includes("jwt") || m.includes("expired")
+        ? "Povezava je potekla. Zahtevaj novo povezavo za ponastavitev gesla."
+        : m.includes("weak") || m.includes("at least") ? "Geslo je prešibko. Uporabi vsaj 8 znakov, najbolje mešanico črk in številk."
+        : mapAuthErr(error);
+      await ixAlert({ title: "Gesla ni bilo mogoče spremeniti", text });
+      return;
+    }
+    await ixAlert({ title: "Geslo je spremenjeno", text: "Prijavljen si z novim geslom. Odslej se prijavljaš z e-naslovom in tem geslom." });
+    go({ view: "home" });
+  };
+  return (
+    <div style={{ maxWidth: 380, margin: "6vh auto 0" }}>
+      <div className="ix-card" style={{ padding: 24 }}>
+        <form onSubmit={submit}>
+          <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 4 }}>Novo geslo</div>
+          <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>Vpiši novo geslo (vsaj 8 znakov) in ga ponovi.</div>
+          <input type="password" required autoFocus value={p1} onChange={(e) => setP1(e.target.value)} placeholder="Novo geslo" autoComplete="new-password" style={{ ...inputStyle, marginBottom: 10 }} />
+          <input type="password" required value={p2} onChange={(e) => setP2(e.target.value)} placeholder="Ponovi novo geslo" autoComplete="new-password" style={inputStyle} />
+          {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
+          <button type="submit" disabled={busy}
+            style={{ width: "100%", marginTop: 14, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
+            {busy ? "Trenutek…" : "Shrani novo geslo"}
+          </button>
+        </form>
       </div>
     </div>
   );
@@ -1523,6 +1613,7 @@ function routeToHash(r, fallbackYear) {
   if (r.view === "home") return "#/letnik-" + yr;
   if (r.view === "allstats") return "#/letnik-" + yr + "/statistika";
   if (r.view === "profile") return "#/profil";
+  if (r.view === "newpass") return "#/novo-geslo";
   if (r.view === "duel") return "#/izziv/" + r.id;
   const base = "#/" + r.sem + "/" + r.subj;
   if (r.view === "subject") return base;
@@ -1541,6 +1632,9 @@ function hashToRoute(hash) {
   const ym = /^letnik-(\d+)$/.exec(seg[0]);
   if (ym) { const y = +ym[1]; if (!YEARS.includes(y)) return home; return seg[1] === "statistika" ? { view: "allstats", year: y } : { view: "home", year: y }; }
   if (seg[0] === "profil") return { view: "profile" };
+  if (seg[0] === "novo-geslo") return { view: "newpass" };
+  // povezava iz e-pošte, ki ni veljavna ali je potekla (#error=access_denied&error_code=otp_expired...)
+  if (/^error(_code)?=/.test(seg[0])) return { view: "newpass", linkErr: true };
   if (seg[0] === "izziv" && seg[1]) return { view: "duel", id: seg[1] };
   const sem = DATA.find((x) => x.id === seg[0]);
   const subj = sem && sem.subjects.find((x) => x.id === seg[1]);
@@ -1581,6 +1675,8 @@ export default function App() {
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
+  // neveljavna povezava iz e-pošte: v naslovni vrstici pokažemo #/novo-geslo namesto dolge napake
+  useEffect(() => { if (/^#error(_code)?=/.test(window.location.hash)) window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search + "#/novo-geslo"); }, []);
   // go(...): nova stran → nov vnos v zgodovini brskalnika (Nazaj te vrne na prejšnjo stran)
   const setRoute = useCallback((r) => {
     const cur = routeRef.current;
@@ -1672,6 +1768,10 @@ export default function App() {
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
         ) : route.view === "welcome" ? (
           <Welcome user={session && session.user} go={setRoute} />
+        ) : route.view === "newpass" ? (
+          session ? <NewPassword go={setRoute} />
+            : <Login key="reset" initialMode="reset" onBack={() => setRoute({ view: "welcome" })}
+                notice="Povezava za novo geslo ni veljavna ali je potekla. Velja eno uro in deluje samo enkrat. Zahtevaj novo spodaj." />
         ) : !session ? (
           <Login year={route.view === "home" ? route.year : null} onBack={() => setRoute({ view: "welcome" })} />
         ) : (
