@@ -1772,7 +1772,7 @@ function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formu
       {user
         ? <button onClick={onProfile} className="ix-chip" title="Profil, prijatelji in izzivi 1v1"
             style={{ marginLeft: "auto", position: "relative", maxWidth: 200, overflow: "visible", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
-            {photo ? <Pic photo={photo} name={profileName} size={20} /> : charId ? <CharArt id={charId} size={20} /> : <UserRound size={14} />}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{profileName || displayName(user)}</span>
+            {photo ? <Pic photo={photo} name={profileName} size={20} /> : BATTLE_ON && charId ? <CharArt id={charId} size={20} /> : <UserRound size={14} />}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{profileName || displayName(user)}</span>
             {badge > 0 && <span className="ix-badge">{badge}</span>}
           </button>
         : <span className="ix-chip" style={{ marginLeft: "auto" }}>EF · UPEŠ</span>}
@@ -2164,7 +2164,7 @@ function PartView({ route, stats, go, soc, user }) {
               <span style={{ width: 34, height: 34, borderRadius: 10, background: "var(--terra)", display: "grid", placeItems: "center", flexShrink: 0 }}><Swords size={16} color="#fff" /></span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: 15 }}>Izzovi prijatelje · duel, trio, četverka</div>
-                <div className="ix-chip" style={{ marginTop: 2 }}>ista vprašanja za vse · hkrati · klasika ali bitka z liki</div>
+                <div className="ix-chip" style={{ marginTop: 2 }}>ista vprašanja za vse · hkrati · {BATTLE_ON ? "klasika ali bitka z liki" : "klasika ali bitka"}</div>
               </div>
               <ChevronRight size={18} color="var(--ink2)" />
             </button>
@@ -3138,6 +3138,9 @@ const DUEL_BATTLE_N = 30;                // bitka: nabor vprašanj (match traja,
 const DUEL_BATTLE_SECONDS = 900;         // bitka: časovna omejitev
 const SIZE_LABEL = { 2: "Duel", 3: "Trio", 4: "Četverka" };
 const MODE_LABEL = { classic: "Klasika", basic: "Bitka", battle: "Bitka z liki" };
+/* Bitka z liki (liki, oprema, battle pass, meta) je začasno skrita – vrne se kasneje kot "drop".
+   Koda in strežnik ostaneta; za vklop nastavi na true. Stari matchi z liki se še vedno prikažejo pravilno. */
+const BATTLE_ON = false;
 const isBattle = (mode) => mode === "basic" || mode === "battle";   // oba bojna načina (HP)
 const LETNIK_LABELS = { 1: "1. letnik", 2: "2. letnik", 3: "3. letnik", 4: "1. letnik mag.", 5: "2. letnik mag." };
 const SMERI = ["Poslovna", "Ekonomska"];                 // smeri od 2. letnika naprej (1. letnik je skupen)
@@ -3391,7 +3394,7 @@ function CharPicker({ character, items, onChange, compact, level }) {
 function NewMatch({ soc, presetFriend, presetLoc, onClose, onPick, go }) {
   const friends = (soc && soc.friends) || [];
   const [sel, setSel] = useState(() => (presetFriend ? [presetFriend.user_id] : []));
-  const [mode, setMode] = useState(() => store.get("indeks.arena.mode", "classic"));
+  const [mode, setMode] = useState(() => { const m = store.get("indeks.arena.mode", "classic"); return m === "battle" && !BATTLE_ON ? "classic" : m; });
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
@@ -3426,9 +3429,9 @@ function NewMatch({ soc, presetFriend, presetLoc, onClose, onPick, go }) {
             <button onClick={() => pickMode("basic")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "basic" ? "var(--terra)" : undefined, background: mode === "basic" ? "var(--badbg)" : undefined }}>
               <b style={{ fontSize: 14 }}><Zap size={13} style={{ verticalAlign: -2 }} /> Bitka</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Vsi enaki (100 HP): vprašanja tečejo, dokler nekomu ne zmanjka HP. Brez izbire lika in opreme.</div>
             </button>
-            <button onClick={() => pickMode("battle")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "battle" ? "var(--terra)" : undefined, background: mode === "battle" ? "var(--badbg)" : undefined }}>
+            {BATTLE_ON && (<button onClick={() => pickMode("battle")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "battle" ? "var(--terra)" : undefined, background: mode === "battle" ? "var(--badbg)" : undefined }}>
               <b style={{ fontSize: 14 }}><Swords size={13} style={{ verticalAlign: -2 }} /> Bitka z liki</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Do 0 HP, z liki, sposobnostmi in opremo (do 2). Kdo je meta, vidiš na profilu.</div>
-            </button>
+            </button>)}
           </div>
           {mode === "classic" && (
             <>
@@ -3627,7 +3630,7 @@ function ProfileView({ user, soc, socErr, reload, go }) {
             <span style={{ position: "absolute", right: -4, bottom: -4, width: 22, height: 22, borderRadius: 999, background: "var(--ink)", color: "var(--paper)", display: "grid", placeItems: "center", border: "2px solid var(--paper2)" }}><Pencil size={11} /></span>
           </button>
           <input ref={fileRef} type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} />
-          <button onClick={() => setCharOpen((o) => !o)} title="Moj lik in oprema (klik za spremembo)" style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}><CharArt id={myChar.id} size={44} /></button>
+          {BATTLE_ON && <button onClick={() => setCharOpen((o) => !o)} title="Moj lik in oprema (klik za spremembo)" style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}><CharArt id={myChar.id} size={44} /></button>}
           <div style={{ flex: 1, minWidth: 160 }}>
             {!uEdit ? (
               <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
@@ -3642,17 +3645,17 @@ function ProfileView({ user, soc, socErr, reload, go }) {
                 {uErr && <span style={{ color: "var(--terra)", fontSize: 13, width: "100%" }}>{uErr}</span>}
               </div>
             )}
-            <div className="ix-chip" style={{ marginTop: 4 }}>{[LETNIK_LABELS[p.letnik], p.smer].filter(Boolean).join(" · ") || "letnik in smer še nista nastavljena"} · {myChar.name}{myItems.length ? " + " + myItems.map((x) => itemById(x).name).join(" + ") : ""}</div>
+            <div className="ix-chip" style={{ marginTop: 4 }}>{[LETNIK_LABELS[p.letnik], p.smer].filter(Boolean).join(" · ") || "letnik in smer še nista nastavljena"}{BATTLE_ON && <> · {myChar.name}{myItems.length ? " + " + myItems.map((x) => itemById(x).name).join(" + ") : ""}</>}</div>
           </div>
           <div style={{ textAlign: "right" }}>
             <div className="ix-serif" style={{ fontSize: 22, fontWeight: 900 }}>{rec.wins || 0}<span style={{ fontSize: 14, color: "var(--ink2)" }}> / {rec.matches || 0}</span></div>
             <div className="ix-chip">zmag / matchev</div>
           </div>
         </div>
-        <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}><StatsLine s={rec} full /><button onClick={() => setCharOpen((o) => !o)} className={"ix-pill" + (charOpen ? " on" : "")} style={{ marginLeft: "auto" }}><Zap size={12} style={{ verticalAlign: -1 }} /> Lik in oprema</button><button onClick={() => { const v = !soundOn(); store.set(SOUND_KEY, v); setSnd(v); if (v) sfx("click"); }} className={"ix-pill" + (snd ? " on" : "")} title="Zvoki ob odgovorih, povabilih in udarcih">{snd ? "🔊 Zvoki" : "🔇 Zvoki"}</button></div>
+        <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}><StatsLine s={rec} full />{BATTLE_ON ? <button onClick={() => setCharOpen((o) => !o)} className={"ix-pill" + (charOpen ? " on" : "")} style={{ marginLeft: "auto" }}><Zap size={12} style={{ verticalAlign: -1 }} /> Lik in oprema</button> : <span style={{ marginLeft: "auto" }} />}<button onClick={() => { const v = !soundOn(); store.set(SOUND_KEY, v); setSnd(v); if (v) sfx("click"); }} className={"ix-pill" + (snd ? " on" : "")} title="Zvoki ob odgovorih, povabilih in udarcih">{snd ? "🔊 Zvoki" : "🔇 Zvoki"}</button></div>
         <XpBar s={rec} />
         {photoMsg && <div style={{ fontSize: 13, marginTop: 6, color: photoMsg.err ? "var(--terra)" : "var(--teal)" }}>{photoMsg.err || photoMsg.ok}</div>}
-        {charOpen && (
+        {BATTLE_ON && charOpen && (
           <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
             <div className="ix-sec" style={{ color: "var(--terra)" }}><Zap size={14} /> Moj lik za bitke</div>
             <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 10 }}>Liki se razlikujejo po življenju, moči udarca, kritikih in bonusu za serijo; vsak ima svojo sposobnost, oprema (do 2 stvari) doda posebnosti. Slike: docs/liki/&lt;id&gt;.png.</div>
@@ -3742,10 +3745,10 @@ function ProfileView({ user, soc, socErr, reload, go }) {
           {soc && soc.friends && soc.friends.length ? soc.friends.map((f) => (
             <div key={f.id} className="ix-row" style={{ alignItems: "flex-start" }}>
               <button onClick={() => setOpen((o) => ({ ...o, [f.id]: !o[f.id] }))} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", flex: 1, textAlign: "left", minWidth: 200 }}>
-                <div style={{ fontSize: 14.5, display: "flex", alignItems: "center", gap: 8 }}><Pic photo={f.photo} name={f.username} size={30} />{f.character && <CharArt id={f.character} size={22} />}<b>{f.username}</b><ChevronDown size={14} color="var(--ink2)" style={{ transform: open[f.id] ? "rotate(180deg)" : "none", transition: "transform .18s" }} /></div>
+                <div style={{ fontSize: 14.5, display: "flex", alignItems: "center", gap: 8 }}><Pic photo={f.photo} name={f.username} size={30} />{BATTLE_ON && f.character && <CharArt id={f.character} size={22} />}<b>{f.username}</b><ChevronDown size={14} color="var(--ink2)" style={{ transform: open[f.id] ? "rotate(180deg)" : "none", transition: "transform .18s" }} /></div>
                 <div className="ix-chip" style={{ marginTop: 2 }}>{[LETNIK_LABELS[f.letnik], f.smer].filter(Boolean).join(" · ") || "brez podatkov o letniku"}</div>
                 <div style={{ marginTop: 4 }}><StatsLine s={f.stats} /></div>
-                {open[f.id] && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{f.bio || "Brez opisa."}{f.character ? ` · Lik: ${charById(f.character).name}${splitItems(f.perk).length ? " + " + splitItems(f.perk).map((x) => itemById(x).name).join(" + ") : ""}` : ""}</div>}
+                {open[f.id] && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{f.bio || "Brez opisa."}{BATTLE_ON && f.character ? ` · Lik: ${charById(f.character).name}${splitItems(f.perk).length ? " + " + splitItems(f.perk).map((x) => itemById(x).name).join(" + ") : ""}` : ""}</div>}
               </button>
               <button onClick={() => setPicker({ friend: f })} className="ix-pill on"><Swords size={13} style={{ verticalAlign: -2 }} /> Izzovi</button>
               <button onClick={async () => { if (await ixConfirm({ title: "Odstrani prijatelja", text: `Odstranim ${f.username} s seznama prijateljev? Prošnjo lahko kadarkoli pošlješ znova.`, ok: "Odstrani", danger: true })) rpc("remove_friend", { p_id: f.id }); }} className="ix-pill" title="Odstrani prijatelja"><X size={13} /></button>
@@ -3760,7 +3763,7 @@ function ProfileView({ user, soc, socErr, reload, go }) {
           <div className="ix-sec" style={{ color: "var(--terra)", marginBottom: 0 }}><Swords size={14} /> Arena · matchi</div>
           <button onClick={() => setPicker({})} disabled={!(soc && soc.friends && soc.friends.length)} className="ix-pill on" style={{ marginLeft: "auto" }}><Swords size={13} style={{ verticalAlign: -2 }} /> Nov match</button>
         </div>
-        <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55 }}>Duel, trio ali četverka: vsi rešujejo ista vprašanja hkrati, napredek vidite v živo. <b style={{ color: "var(--ink)" }}>Klasika</b>: {RANKED_N} vprašanj, 100 točk za pravilen odgovor + do 50 za hitrost. <b style={{ color: "var(--ink)" }}>Bitka</b>: vsi enaki s 100 HP, pravilen odgovor udari vse nasprotnike, serija ojača, kritiki podvojijo, 2 zaporedna napačna = −10 HP; vprašanja tečejo, dokler nekomu ne zmanjka HP (največ {DUEL_BATTLE_N}, {fmtTime(DUEL_BATTLE_SECONDS)}). <b style={{ color: "var(--ink)" }}>Bitka z liki</b>: isto, a z liki, sposobnostmi in opremo. Prekinjen match se ne šteje.</div>
+        <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55 }}>Duel, trio ali četverka: vsi rešujejo ista vprašanja hkrati, napredek vidite v živo. <b style={{ color: "var(--ink)" }}>Klasika</b>: {RANKED_N} vprašanj, 100 točk za pravilen odgovor + do 50 za hitrost. <b style={{ color: "var(--ink)" }}>Bitka</b>: vsi enaki s 100 HP, pravilen odgovor udari vse nasprotnike, serija ojača, kritiki podvojijo, 2 zaporedna napačna = −10 HP; vprašanja tečejo, dokler nekomu ne zmanjka HP (največ {DUEL_BATTLE_N}, {fmtTime(DUEL_BATTLE_SECONDS)}).{BATTLE_ON && <> <b style={{ color: "var(--ink)" }}>Bitka z liki</b>: isto, a z liki, sposobnostmi in opremo.</>} Prekinjen match se ne šteje.</div>
         {invited.map((c) => (
           <div key={c.id} className="ix-row">
             <Swords size={16} color="var(--terra)" />
@@ -3881,7 +3884,7 @@ function LiveMatches({ userId, go }) {
 function ArenaMeta({ userId, go }) {
   const [meta, setMeta] = useState(null);
   const [hist, setHist] = useState(null);
-  const [tab, setTab] = useState("meta");
+  const [tab, setTab] = useState(BATTLE_ON ? "meta" : "hist");
   useEffect(() => {
     let dead = false;
     supabase.rpc("arena_meta").then(({ data, error }) => { if (!dead && !error) setMeta(data); });
@@ -3905,11 +3908,11 @@ function ArenaMeta({ userId, go }) {
   return (
     <div className="ix-card" style={{ padding: 22, marginTop: 18 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
-        <div className="ix-sec" style={{ color: "var(--ink)", marginBottom: 0 }}><BarChart3 size={14} /> Arena · meta in zgodovina vseh</div>
-        <span style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
+        <div className="ix-sec" style={{ color: "var(--ink)", marginBottom: 0 }}><BarChart3 size={14} /> {BATTLE_ON ? "Arena · meta in zgodovina vseh" : "Arena · zgodovina vseh matchev"}</div>
+        {BATTLE_ON && <span style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
           <button onClick={() => setTab("meta")} className={"ix-pill" + (tab === "meta" ? " on" : "")}>Meta</button>
           <button onClick={() => setTab("hist")} className={"ix-pill" + (tab === "hist" ? " on" : "")}>Vsi matchi</button>
-        </span>
+        </span>}
       </div>
       {tab === "meta" ? (
         !meta || !meta.matches ? <div style={{ fontSize: 13.5, color: "var(--ink2)" }}>Še ni končanih bitk. Ko jih bo nekaj, se tu pokaže, kateri liki in oprema zmagujejo.</div> : (
