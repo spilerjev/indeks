@@ -1,40 +1,40 @@
-# Epizoda 2 — Verjetnostne porazdelitve in normalna porazdelitev (P02 + V02)
+# Epizoda 2 — Verjetnostne porazdelitve in normalna porazdelitev
 
 Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
-## P02 — Verjetnostne porazdelitve (13. 10. 2026)
+## P02 — Verjetnostne porazdelitve
 
-Gradivo: gradivo (25 prosojnic), R koda: gradivo.
+Gradivo: gradivo, R koda: gradivo.
 
 ### Prosojnice 2–10 (zamujeni del)
 
-**Pr. 2 – ponovitev P01:** populacija, enota, spremenljivka, parameter; srednje vrednosti, kvantili, mere variabilnosti; opisna (prave vrednosti parametrov) vs. sklepna statistika (vzorčne ocene → potrebujemo *porazdelitve vzorčnih ocen*, zato danes porazdelitve).
+**Ponovitev P01:** populacija, enota, spremenljivka, parameter; srednje vrednosti, kvantili, mere variabilnosti; opisna (prave vrednosti parametrov) vs. sklepna statistika (vzorčne ocene → potrebujemo *porazdelitve vzorčnih ocen*, zato danes porazdelitve).
 
-**Pr. 4 – verjetnost in porazdelitev**
+**Verjetnost in porazdelitev**
 - Verjetnost = delež ugodnih izidov med vsemi izidi, vedno na [0, 1].
 - **Frekvenčna porazdelitev** = *empirična*: histogram/poligon iz že zbranih podatkov.
 - **Verjetnostna porazdelitev** = *teoretična*: model vseh možnih vrednosti + njihovih verjetnosti; velja tudi za prihodnje izide. Določena s F(y) ali f(y).
 
-**Pr. 5 – Primer 2.1 (čistilci oken, n = 230):** frekvenčna tabela površine (m²/h) v razredih po 5, fk (frekvenca) in Fk (kumulativna). Histogram je približno zvonast → most do teoretične (normalne) porazdelitve. Fk/n ≈ to, kar je pri teoretični porazdelitvi F(y).
+**Primer 2.1 (čistilci oken, n = 230):** frekvenčna tabela površine (m²/h) v razredih po 5, fk (frekvenca) in Fk (kumulativna). Histogram je približno zvonast → most do teoretične (normalne) porazdelitve. Fk/n ≈ to, kar je pri teoretični porazdelitvi F(y).
 
-**Pr. 6 – slučajna spremenljivka Y:** količina, katere vrednost je odvisna od slučaja. Določena z **zalogo vrednosti** (vse možne vrednosti) in **porazdelitvenim zakonom** (verjetnosti).
+**Slučajna spremenljivka Y:** količina, katere vrednost je odvisna od slučaja. Določena z **zalogo vrednosti** (vse možne vrednosti) in **porazdelitvenim zakonom** (verjetnosti).
 - diskretne (tabela, graf), zvezne (formula, graf), ostale (mešane).
 - Primer 2.2: kocka → zaloga {1,…,6}, vsak izid 1/6 → **enakomerna** porazdelitev.
 
-**Pr. 7 – vrste porazdelitev**
+**Vrste porazdelitev**
 - Diskretne: enakomerna; **Bernoullijeva** (2 izida, p in q = 1 − p, en met kovanca); **binomska** (št. uspehov v n poskusih *z vračanjem*); **hipergeometrična** (isto, *brez vračanja*); **Poissonova** (št. dogodkov na časovno/prostorsko enoto, parameter λ; npr. pacienti na urgenci v soboto).
 - Zvezne: **normalna** (Gaussova, standardizirana Z), **Studentova t**, **χ²**, **F** — te štiri rabimo v sklepni statistiki.
 
-**Pr. 8 – gostota verjetnosti f(y)** (PDF): definirana za vse realne y; f(y) > 0 na nekem intervalu, drugje 0; graf = krivulja (analogija: poligon). **f(y) ni verjetnost**, verjetnost je **ploščina pod krivuljo**, celotna ploščina = 1.
+**Gostota verjetnosti f(y)** (PDF): definirana za vse realne y; f(y) > 0 na nekem intervalu, drugje 0; graf = krivulja (analogija: poligon). **f(y) ni verjetnost**, verjetnost je **ploščina pod krivuljo**, celotna ploščina = 1.
 
-**Pr. 9 – porazdelitvena funkcija F(y) = P(Y ≤ y)** (CDF)
+**Porazdelitvena funkcija F(y) = P(Y ≤ y)** (CDF)
 - monotono nepadajoča (a ≤ b → F(a) ≤ F(b));
 - 0 ≤ F(y) ≤ 1; F(−∞) = 0, F(∞) = 1;
 - F′(y) = f(y) in F(y₀) = ∫₋∞^y₀ f(y)dy (F je integral gostote).
 
-**Pr. 10 – graf F:** (1) kot *ploščina* pod gostoto levo od y₀; (2) kot *krivulja* v obliki črke »S« (analogija: ogiva / kumulativa pri frekvenčnih porazdelitvah).
+**Graf F:** (1) kot *ploščina* pod gostoto levo od y₀; (2) kot *krivulja* v obliki črke »S« (analogija: ogiva / kumulativa pri frekvenčnih porazdelitvah).
 
-### Izračunavanje osnovnih verjetnosti pri zveznih porazdelitvah (prosojnica 11) ⭐
+### Izračunavanje osnovnih verjetnosti pri zveznih porazdelitvah ⭐
 
 Vse se prevede na **F** (ploščino levo od meje):
 
@@ -54,9 +54,9 @@ Vse se prevede na **F** (ploščino levo od meje):
 Primer (normalna, μ = 0, σ = 1): F(1) = 0,8413, F(−1) = 0,1587
 → P(Y > 1) = 1 − 0,8413 = 0,1587; P(−1 < Y ≤ 1) = 0,8413 − 0,1587 = 0,6827.
 
-### Normalna porazdelitev (prosojnice 12–15) ⭐
+### Normalna porazdelitev ⭐
 
-**Pr. 12 – definicija**
+**Definicija**
 - Osnovna porazdelitev sklepne statistike, zvezna, y od −∞ do +∞.
 - Gostota: f(y) = 1/(σ√(2π)) · e^(−(y−μ)²/(2σ²)). Formule se ne učiš na pamet — bistvo: odvisna je **samo od μ in σ**. F(y₀) = integral te gostote do y₀ (ročno se ne da izračunati → tabela ali R `pnorm`).
 - Zapis: **Y ~ N(μ, σ)** = »Y se porazdeljuje normalno s povprečjem μ in standardnim odklonom σ«.
@@ -79,7 +79,7 @@ Primer (normalna, μ = 0, σ = 1): F(1) = 0,8413, F(−1) = 0,1587
 - Zapis pove *celotno* porazdelitev: iz njega izračunaš katerokoli verjetnost (npr. P(Y ≤ 100)).
 - Pozor: tilda ima v R drug pomen (`y ~ x` = formula modela, »y v odvisnosti od x«) — ne mešaj.
 
-**Zakaj populacijske oznake (μ, σ)? (profesor na predavanju)**
+**Zakaj populacijske oznake (μ, σ)?**
 - Lep, gladek zvon dobimo šele pri **zelo velikem številu enot** → normalna porazdelitev je model *populacije* → zato μ, σ (ne x̄, s).
 - Majhen vzorec da »stopničast«, nepravilen histogram, ki je le približek zvona.
 - Zaenkrat: kako se porazdeljuje **osnovna spremenljivka Y** (npr. masa *posameznega* jabolka).
@@ -93,9 +93,9 @@ Primer (normalna, μ = 0, σ = 1): F(1) = 0,8413, F(−1) = 0,1587
 
 **σ ali σ²?** Varianca σ² = σ·σ, σ = √σ². Nekateri učbeniki pišejo N(μ, σ²) → N(150, 900) je ISTA porazdelitev kot N(150, 30). Na izpitu preveri, kateri zapis je uporabljen (pri nas σ). σ je v **istih enotah** kot Y (g), σ² v kvadratnih (g²) → σ je lažje razlagati.
 
-**Pr. 13 – graf:** večji μ → zvon se premakne desno (oblika enaka); večji σ → zvon nižji in širši (ploščina ostane 1).
+**Graf:** večji μ → zvon se premakne desno (oblika enaka); večji σ → zvon nižji in širši (ploščina ostane 1).
 
-**Pr. 14 – lastnosti**
+**Lastnosti**
 - **simetrična** okoli μ → F(μ) = 0,5 → **Me = μ** (polovica levo, polovica desno);
 - **unimodalna** (en vrh) → **μ = Me = Mo**;
 - repi se asimptotično približujejo osi x (nikoli je ne dotaknejo);
@@ -104,7 +104,7 @@ Primer (normalna, μ = 0, σ = 1): F(1) = 0,8413, F(−1) = 0,1587
   - k = 2 → **95,44 %**
   - k = 3 → **99,73 %**
 
-**Profesor na predavanju (pr. 14):**
+**Profesor na predavanju:**
 - Simetrija = če zvon prepogneš po μ, se levi rep pokrije z desnim.
 - **Mediana** razdeli ploščino pod krivuljo točno na pol (50 % : 50 %) → zaradi simetrije leži točno pri μ.
 - En vrh → **unimodalna** (enomodalna) → vrh (Mo) je v isti točki → **μ = Me = Mo** (vse tri srednje vrednosti enake).
@@ -113,36 +113,36 @@ Primer (normalna, μ = 0, σ = 1): F(1) = 0,8413, F(−1) = 0,1587
 - Pravilo **68–95–99,7**: μ ± 1σ ≈ 68 % (≈ 2/3), μ ± 2σ ≈ 95,4 %, μ ± 3σ ≈ 99,7 % — velja za **vsako** normalno porazdelitev.
 - Zgled vpr. 1 (pr. 24, detergent N(5; 0,05)): pravilen je **E** (Me = Q2 = 5 l). D je napačen, ker je pri normalni Me = Mo.
 
-**Pr. 15 – pogosti k:** k = 0,67 → 50 % (med Q1 in Q3), k ≈ 1 → 68 %, **k = 1,96 → 95 %**, **k = 2,58 → 99 %** (to bosta ključni števili pri intervalih zaupanja).
+**Pogosti k:** k = 0,67 → 50 % (med Q1 in Q3), k ≈ 1 → 68 %, **k = 1,96 → 95 %**, **k = 2,58 → 99 %** (to bosta ključni števili pri intervalih zaupanja).
 
 Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
 
-**k = 1,96 (pr. 15):** μ ± 1,96σ vsebuje **točno 95 %** vrednosti (k = 2 da 95,44 %, torej malo preveč). Ostane 5 % → **2,5 % v vsakem repu** (simetrija). F_Z(1,96) = 0,975. Podobno k = 2,58 → točno 99 % (0,5 % v vsakem repu), k = 0,67 → 50 % (med Q1 in Q3). Uporaba: 95 % in 99 % intervali zaupanja ter testi (α = 0,05 / 0,01). Jabolka N(150, 30): 95 % jih tehta med 150 ± 1,96·30 = 91,2 g in 208,8 g.
+**k = 1,96:** μ ± 1,96σ vsebuje **točno 95 %** vrednosti (k = 2 da 95,44 %, torej malo preveč). Ostane 5 % → **2,5 % v vsakem repu** (simetrija). F_Z(1,96) = 0,975. Podobno k = 2,58 → točno 99 % (0,5 % v vsakem repu), k = 0,67 → 50 % (med Q1 in Q3). Uporaba: 95 % in 99 % intervali zaupanja ter testi (α = 0,05 / 0,01). Jabolka N(150, 30): 95 % jih tehta med 150 ± 1,96·30 = 91,2 g in 208,8 g.
 ⭐⭐ **Profesorica: 1,96 si boste zapomnili hočeš nočeš — pojavlja se povsod.** (95 % ↔ 1,96; 99 % ↔ 2,58)
 
-### Primer 2.3 — jabolka, Y ~ N(150, 30) (prosojnica 16)
+### Primer 2.3 — jabolka, Y ~ N(150, 30)
 
 **a) P(Y < 150) = ?** → 150 = μ, porazdelitev je simetrična → polovica ploščine je levo od μ → **P(Y < 150) = F(150) = 0,5 = 50 %**. Brez računanja, brez tabele. (Ker je zvezna, je P(Y < 150) = P(Y ≤ 150).) R: `pnorm(150, 150, 30)` = 0,5.
 
-**b) Kolikšen odstotek jabolk tehta 100 g ali manj? P(Y ≤ 100)** (prosojnici 16, 21)
+**b) Kolikšen odstotek jabolk tehta 100 g ali manj? P(Y ≤ 100)** (21)
 1. Standardiziraj: z = (100 − 150) / 30 = **−1,67** → 100 g je 1,67 standardnega odklona *pod* povprečjem.
 2. F_Y(100) = F_Z(−1,67).
 3. Tabela ima običajno samo pozitivne z → simetrija: F_Z(−1,67) = 1 − F_Z(1,67) = 1 − 0,9525 = **0,0475**.
 4. **≈ 4,75 %** jabolk tehta 100 g ali manj (R: `pnorm(100, 150, 30)` = 0,0478; razlika zaradi zaokrožitve z).
 - Preveri smiselnost: 100 g je med μ − 1σ (120, levi rep ≈ 16 %) in μ − 2σ (90, levi rep ≈ 2,3 %) → odgovor med 2,3 % in 16 % ✔.
 
-### Standardizirana normalna porazdelitev Z (prosojnice 17–19) ⭐
+### Standardizirana normalna porazdelitev Z ⭐
 
 - **Z = (Y − μ) / σ** → **Z ~ N(0, 1)** (μ_Z = 0, σ_Z = 1). Na pr. 17 je izpeljava: E(Z) = 0, var(Z) = 1 — ni za na pamet, bistvo je rezultat.
 - Ideja: vsako normalno Y (jabolka, IQ, plače …) **premaknemo** (−μ → center v 0) in **raztegnemo/stisnemo** (/σ → širina 1) → vse postanejo ENA porazdelitev → **ena tabela** za vse.
-- **z pove, za koliko standardnih odklonov je vrednost od povprečja** (pr. 18): z > 0 nad, z < 0 pod, z = 0 točno povprečje. (Jabolko 100 g → z = −1,67; jabolko 210 g → z = +2.)
+- **z pove, za koliko standardnih odklonov je vrednost od povprečja**: z > 0 nad, z < 0 pod, z = 0 točno povprečje. (Jabolko 100 g → z = −1,67; jabolko 210 g → z = +2.)
 - Ploščine se pri pretvorbi ne spremenijo: **F_Y(a) = F_Z(z_a)**.
-- Pr. 19 – dve smeri:
+- Dve smeri:
   1. **imam vrednost a → iščem verjetnost**: z_a = (a − μ)/σ → tabela → F_Z(z_a).
   2. **imam verjetnost P → iščem vrednost a** (kvantil): v tabeli poišči z s F_Z(z) = P → **a = μ + z·σ**.
 - Uporaba tudi za primerjavo različnih spremenljivk (npr. kdo je relativno boljši: 1,5σ nad povprečjem pri enem predmetu vs. 1σ pri drugem).
 
-### Primer 2.4 (prosojnica 20): P(Y > μ + 2σ) = ?
+### Primer 2.4: P(Y > μ + 2σ) = ?
 - z = ((μ + 2σ) − μ)/σ = **2** (velja za vsako normalno — μ in σ se pokrajšata).
 - P(Y > a) = 1 − F_Y(a) = 1 − F_Z(2) = 1 − 0,9772 = **0,0228 = 2,28 %** (desni rep).
 - Preverba s pravilom 68–95–99,7: μ ± 2σ = 95,44 % → zunaj 4,56 % → polovica v desnem repu = 2,28 % ✔.
@@ -156,7 +156,7 @@ Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
 5. **Interpretacija v besedah (s kontekstom in enotami):** »Verjetnost, da slučajno izbrano jabolko tehta 100 g ali manj, je 0,0475 (oz. približno 4,75 % jabolk tehta 100 g ali manj).«
 (+ po možnosti skica zvona s pobarvano ploščino)
 
-### Primer 2.3 — nadaljevanje (prosojnici 22–23)
+### Primer 2.3 — nadaljevanje
 
 **c) Zaboj s 600 jabolki — koliko jih tehta med 100 in 160 g?**
 1. Y ~ N(150, 30); iščem P(100 < Y ≤ 160) = F_Y(160) − F_Y(100)
@@ -178,7 +178,7 @@ Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
 
 ## V02 — 2. vaje (razvrščeni podatki, normalna porazdelitev)
 
-> ⚠️ **Izpit (profesor):** **vsako nalogo začni z enoto in spremenljivko** (z mersko enoto). Če ju zamenjaš, imaš lahko pri nalogi **0 točk**.
+> ⚠️ **Izpit:** **vsako nalogo začni z enoto in spremenljivko** (z mersko enoto). Če ju zamenjaš, imaš lahko pri nalogi **0 točk**.
 
 ### Naloga 1: reprezentančni nastopi (vzorec 100 nogometašev, FIFA)
 - **Enota:** en nogometaš.
@@ -199,7 +199,7 @@ Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
 - **c)** Primer za 3. razred:
   - f₃° = 0,18: 18 % nogometašev v vzorcu ima nad 40 do vključno 60 nastopov.
   - F₃° = 0,78: 78 % nogometašev v vzorcu ima do vključno 60 nastopov.
-- **Modus** (profesor): pri razvrščenih podatkih je modus **vedno sredina razreda z največjo frekvenco**. Tu je to Mo = 30 (2. razred, f₂ = 36).
+- **Modus**: pri razvrščenih podatkih je modus **vedno sredina razreda z največjo frekvenco**. Tu je to Mo = 30 (2. razred, f₂ = 36).
 - **d)** Histogram (`hist`) ali `ggplot`. Porazdelitev je **asimetrična v desno**: Mo = 30 ≤ Me = 30 < ȳ = 40,2 in dolg desni rep.
 - **e)** Peš račun, 3. razred:
   - f₃y₃ = 18 · 50 = 900;
@@ -220,7 +220,7 @@ Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
   - Izpiše Min, 1st Qu., Median, Mean, 3rd Qu., Max.
 - **Mediana** spada med **kvantile**, ki delijo populacijo na dva dela.
   - Njen **kvantilni rang je 0,5** (50/50).
-  - Interpretacija (profesor): »Ocenjujemo, da ima polovica nogometašev **do vključno 30** reprezentančnih nastopov, preostala polovica pa več kot toliko.«
+  - Interpretacija: »Ocenjujemo, da ima polovica nogometašev **do vključno 30** reprezentančnih nastopov, preostala polovica pa več kot toliko.«
 - **Frekvenčna porazdelitev** se oblikuje z `frq` (sjmisc) ali `freq` (summarytools).
   - Value so sredine razredov, N so frekvence.
   - Sledita dve skupini relativnih frekvenc, ki sta enaki, ker nimamo manjkajočih vrednosti.
@@ -247,7 +247,7 @@ Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
 - **Relativna frekvenca:** f₃° = f₃/n = 18/100 = 0,18 = 18 %. Formula je v **priročniku na str. 11**.
 
 ### Naloga 2: porodna teža ~ N(3,4; 0,3) kg
-- **Normalna porazdelitev je najpomembnejša porazdelitev v statistiki** (profesor).
+- **Normalna porazdelitev je najpomembnejša porazdelitev v statistiki**.
 - ⭐ **Definitivno na kolokviju in izpitu: kaj moramo vedeti o normalni porazdelitvi**
   1. Je **zvezna** porazdelitev.
   2. Določata jo **2 parametra**: aritmetična sredina μ in standardni odklon σ. Zapis: Y ~ N(μ, σ).
@@ -259,45 +259,45 @@ Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
      - prevoja sta pri μ ± σ;
      - repa se približujeta osi, a se je nikoli ne dotakneta.
 
-  - **Gostota verjetnosti f(y)** (profesor): preprosto povedano, je to **ime za krivuljo** (zvon).
+  - **Gostota verjetnosti f(y)**: preprosto povedano, je to **ime za krivuljo** (zvon).
     - Njena **višina ni verjetnost**; verjetnost je **ploščina pod njo**.
     - V R: `dnorm` vrne višino krivulje, `pnorm` pa ploščino.
     - Vir: **priročnik, str. 23**.
   > 🟥 **RDEČ OKVIRČEK (tabla):** **F(y) = P(Y ≤ y) = f°(Y ≤ y)**
   > Verjetnost, da Y zavzame vrednost ≤ y, je enaka deležu enot z vrednostjo ≤ y.
 
-  **Tri osnovne verjetnosti (tabla, V02):**
+  **Tri osnovne verjetnosti (tabla):**
   | Verjetnost | Porazdelitvena funkcija | Integral | Ploščina |
   |---|---|---|---|
   | P(Y ≤ a) | = F(a) | = ∫₋∞ᵃ f(y) dy | levo od a |
   | P(Y > b) | = 1 − F(b) | = ∫_b^∞ f(y) dy | desno od b |
   | P(a < Y ≤ b) | = F(b) − F(a) | = ∫ₐᵇ f(y) dy | med a in b |
 
-  - **Pri zveznih porazdelitvah imamo vedno intervale** (profesor). Verjetnost posamezne vrednosti je P(Y = a) = 0, ker ena točka nima ploščine. Zato je vseeno, ali pišemo < ali ≤.
+  - **Pri zveznih porazdelitvah imamo vedno intervale**. Verjetnost posamezne vrednosti je P(Y = a) = 0, ker ena točka nima ploščine. Zato je vseeno, ali pišemo < ali ≤.
   - **Standardizacija** (profesor: uvedel jo je Gauss):
     - vsak y spremenimo v **standardizirano vrednost z = (y − μ) / σ**;
     - dobimo spremenljivko **Z ~ N(0, 1)**;
     - standardiziramo lahko **VSE normalne porazdelitve**, zato zadošča ena tabela.
     - Zgodovinsko je po Gaussu poimenovana normalna (Gaussova) porazdelitev, tabele za Z pa so nastale kasneje. Za izpit uporabi profesorjevo razlago.
   - Priročnik, ki ga profesor kaže na ekranu, je **Statistični priročnik** (pogl. 9.2 Normalna porazdelitev).
-  - **Porazdelitvena funkcija** (profesor): vsako **verjetnostno** porazdelitev (diskretno in zvezno) lahko ponazorimo s porazdelitveno funkcijo **F(y) = P(Y ≤ y)**.
+  - **Porazdelitvena funkcija**: vsako **verjetnostno** porazdelitev (diskretno in zvezno) lahko ponazorimo s porazdelitveno funkcijo **F(y) = P(Y ≤ y)**.
     - Pove, kolikšna je verjetnost, da spremenljivka Y zavzame vrednost, **manjšo ali kvečjemu enako** izbrani vrednosti y.
     - Pri zvezni porazdelitvi je to **ploščina pod gostoto levo od y**.
     - V R: `pnorm(y, μ, σ)`. Primer: F(3,7) = 0,8413.
     - Velike črke pomenijo spremenljivko (Y), male pa izbrano vrednost (y).
-    - **Povezava z relativno frekvenco** (profesor): relativna frekvenca je **delež enot**. F(y) lahko zapišemo tudi kot **f°(Y ≤ y)**.
+    - **Povezava z relativno frekvenco**: relativna frekvenca je **delež enot**. F(y) lahko zapišemo tudi kot **f°(Y ≤ y)**.
       - Pove, **kolikšen delež enot ima vrednost spremenljivke manjšo ali kvečjemu enako y**.
       - To je analogija s **kumulativo relativnih frekvenc** Fₖ° iz frekvenčne tabele.
       - Primer: F(3,7) = 0,8413 pomeni, da ima 84,13 % novorojenčkov porodno težo do vključno 3,7 kg.
   6. **Ploščina pod krivuljo je enaka 1** (100 %). Če gremo v povprečje, je levo od μ točno **0,5**, desno pa **0,5**, ker je porazdelitev simetrična. Glej tudi P02, pr. 8 in 12.
-- ⚠️ **Izpit (profesor):** če se spremenljivka porazdeljuje normalno, **vedno zapiši** Y ~ N(μ, σ). Tu: **Y ~ N(3,4 kg; 0,3 kg)**.
+- ⚠️ **Izpit:** če se spremenljivka porazdeljuje normalno, **vedno zapiši** Y ~ N(μ, σ). Tu: **Y ~ N(3,4 kg; 0,3 kg)**.
 - **Enota:** en novorojenček. **Spremenljivka:** porodna teža (v kg), številska, zvezna, razmernostna, porazdeljena normalno.
 - »Največ novorojenčkov je težkih 3,4 kg« pomeni Mo = 3,4. Pri normalni porazdelitvi velja **Mo = Me = μ**.
-- ⚠️ **Izpit (profesor):** **ne piši »…«**. Vsakič ponovi celotno verigo formul, od verjetnosti do rezultata.
+- ⚠️ **Izpit:** **ne piši »…«**. Vsakič ponovi celotno verigo formul, od verjetnosti do rezultata.
 - **a)** P(Y ≤ 3,7) = P(Z ≤ (3,7 − 3,4)/0,3) = P(Z ≤ 1) = F(1) = **0,8413**. R: `pnorm(3.7, 3.4, 0.3)`.
 - **b)** P(3,1 < Y < 4,0) = 0,9772 − 0,1587 = **0,8186** → 81,86 %.
 - **c)** P(Y > 4,2) = `pnorm(4.2, 3.4, 0.3, lower.tail = FALSE)` = **0,0038** → 0,38 %.
-- **d) Iskanje z v tabeli** (profesor): poglej v tabelo in vzemi vrednost, ki je **bližje** iskani ploščini.
+- **d) Iskanje z v tabeli**: poglej v tabelo in vzemi vrednost, ki je **bližje** iskani ploščini.
   - F(0,25) = 0,5987 je od 0,60 oddaljena 0,0013, F(0,26) = 0,6026 pa 0,0026.
   - Bližje je 0,25, zato z = −0,25 (zaradi simetrije negativen).
 - **d)** `qnorm(0.60, 3.4, 0.3, lower.tail = FALSE)` = **3,32 kg**. Izračunani vrednosti pravimo **kvantil** (P₄₀, 40. percentil).
@@ -307,7 +307,7 @@ Primer: IQ ~ N(100, 15) → 68 % ljudi ima IQ med 85 in 115, 95 % med 70 in 130.
 - **a)**
   - z = (45 000 − 50 000)/2 880 = −1,74;
   - P(Y < 45 000) = **0,0413** → 4,13 % pnevmatik se izrabi pred iztekom garancije.
-- ⭐ **Vprašanje b (sprememba) je pogosto na izpitu.** Formule zanj ni, zato greš **po korakih** (profesor):
+- ⭐ **Vprašanje b (sprememba) je pogosto na izpitu.** Formule zanj ni, zato greš **po korakih**:
   1. **Stanje pred spremembo:** iz a) je f°(Y ≤ 45 000) = **4,09 %**.
   2. **Kaj se je spremenilo?** Koeficient variacije se je povečal za 50 %.
      - KV₁ = σ₁/μ = 2 880/50 000 = 0,0576;

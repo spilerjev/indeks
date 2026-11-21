@@ -20,22 +20,6 @@ module.exports = [
     'Izvoz je dovoljen, uvoz pa omejen s kvotami',
     'Carine so za vse države enake in nizke',
     'Cene so po vsem svetu enake po odločitvi vlad'], 3, 'Ni transportnih stroškov, carin in drugih ovir'],
-  ['Francija in Švica: število proizvodov na delavca', [
-    'Ure Francija, smuči Švica',
-    'Obe dobrini Francija',
-    'Obe dobrini Švica'], 1, 'Ure Švica, smuči Francija'],
-  ['Ure in smuči: Francija naredi 3 ure ali 6 smuči na delavca, Švica 4 ure ali 2 smuči. V katerem proizvodu', [
-    'Francija ure, Švica smuči',
-    'Obe državi se specializirata za smuči',
-    'Obe državi se specializirata za ure'], 2, 'Francija smuči, Švica ure'],
-  ['Kopalke in brisače: Grčija (1 kopalke = 5 brisač doma) in Portugalska (1 kopalke = 3 brisače doma) zamenjata', [
-    'Portugalska dobi 4 brisače več, Grčija prihrani 1 brisačo',
-    'Samo Portugalska pridobi, Grčija ostane enaka',
-    'Samo Grčija pridobi, Portugalska ostane enaka'], 3, 'Portugalska +1 brisača, Grčija prihrani 1 brisačo'],
-  ['Italija (pomaranče 1/4', [
-    'Da, Italija izvaža obe dobrini, ker je absolutno boljša',
-    'Da, Španija izvaža limone, ker je v njih relativno boljša',
-    'Ne, ker je Italija absolutno boljša pri obeh dobrinah'], 1, 'Ne, ker sta menjalni razmerji enaki (0,75)'],
   ['Kaj je potrošnikov presežek?', [
     'Razlika med ceno in mejnimi stroški podjetja',
     'Skupni izdatek potrošnikov za dobrino na trgu',

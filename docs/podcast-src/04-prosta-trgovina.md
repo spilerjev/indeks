@@ -1,10 +1,10 @@
-# Epizoda 4 — Učinki proste mednarodne trgovine (P03 + V03)
+# Epizoda 4 — Učinki proste mednarodne trgovine
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
 ## P03 — Učinki proste mednarodne trgovine
 
-### Prosojnica 2: Analitični okvir za proučevanje učinkov ekonomskih integracij
+### Analitični okvir za proučevanje učinkov ekonomskih integracij
 
 **Kaj proučujemo:** učinke integracij
 - na trgovino,
@@ -25,7 +25,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 3. teorija integracije: ustvarjanje in preusmerjanje trgovine.
 - **Premikanje krivulj:** pri **statični** analizi so krivulje ponudbe in povpraševanja (in meja proizvodnih možnosti) **dane in se ne premikajo**. Spremeni se le cena (npr. svetovna cena ali carina), zato se premikamo **vzdolž** krivulj. Pri **dinamični** analizi se krivulje **premikajo** zaradi kopičenja kapitala, znanja in tehnologije: krivulja ponudbe se premakne desno, meja proizvodnih možnosti navzven.
 
-### Prosojnice 3–5: Ponovitev mikroekonomskih orodij (učbenik str. 52)
+### Ponovitev mikroekonomskih orodij
 - **Individualna krivulja povpraševanja (D):** izpeljemo jo iz **krivulje cena–potrošnja (PCC)**, ki **povezuje točke optimalne izbire (ravnotežja) potrošnika** pri različnih cenah dobrine (dotik indiferenčne krivulje in proračunske premice).
   - Lastnost 1: v vsaki točki krivulje D potrošnik **maksimira koristnost** (MRS = razmerje cen).
   - Lastnost 2: ko se premikamo navzdol po krivulji (nižja cena), **raste raven koristnosti** (višja indiferenčna krivulja).
@@ -34,12 +34,12 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - Tržna krivulja S = vodoravna vsota krivulj MC podjetij.
 - Ta orodja (S, D, **potrošnikov in proizvajalčev presežek**) bomo uporabili za analizo blaginje v odprtem gospodarstvu.
 
-**Prosojnica 4, praznine (krivulja povpraševanja):**
+**Praznine (krivulja povpraševanja):**
 - PCC povezuje točke **ravnotežja (optimalne izbire) potrošnika** pri različnih cenah.
 - 1. V vsaki točki krivulje povpraševanja je potrošnik **v ravnotežju**, torej **maksimira koristnost** (MRS = P_H / P_O).
 - 2. Ko se premikamo **navzdol** po krivulji (nižja cena), se **koristnost (zadovoljstvo) povečuje** (U1 → U2 → U3).
 
-**Prosojnici 6–7: Individualna krivulja ponudbe, dolgo obdobje**
+**Individualna krivulja ponudbe, dolgo obdobje**
 - Pogoja za podjetje v dolgem obdobju:
   1. **P = LMC** (dolgoročni mejni stroški, maksimizacija dobička),
   2. **P ≥ LAC min** (cena pokrije vsaj minimum dolgoročnih povprečnih stroškov, sicer podjetje izstopi).
@@ -47,15 +47,15 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - Primerjava s kratkim obdobjem: 1. P = MC (MR = MC), 2. P ≥ **AVC** min → S = MC nad min AVC.
 - **Panoga v dolgem obdobju** (popolna konkurenca, prost vstop in izstop): **P = LMC = LAC min** → krivulja ponudbe panoge je **vodoravna** pri ceni LAC min, dobiček je nič.
 
-### Prosojnica 8: Kako meriti koristi in škode?
+### Kako meriti koristi in škode?
 - Uporabljamo koncept **potrošnikovega in proizvajalčevega presežka**.
 - **Predpostavke:**
   - koristi in škode so izražene **denarno** (v denarnih enotah, €),
   - vsaka enota koristi ali škode je **enako pomembna**, ne glede na to, kdo jo utrpi → **mejna koristnost denarja je konstantna** (enaka za vse).
-- **Kritika (prof):** v resnici to ne drži. Mejna koristnost denarja je **padajoča**: izguba 100 € bogatega prizadene manj kot revnega. Analiza zato meri **učinkovitost** (skupno blaginjo), **ne pa pravičnosti razdelitve**. Če dobitniki pridobijo več, kot poraženci izgubijo, je sprememba po tej metodi »koristna«, čeprav nekateri izgubijo.
+- **Kritika:** v resnici to ne drži. Mejna koristnost denarja je **padajoča**: izguba 100 € bogatega prizadene manj kot revnega. Analiza zato meri **učinkovitost** (skupno blaginjo), **ne pa pravičnosti razdelitve**. Če dobitniki pridobijo več, kot poraženci izgubijo, je sprememba po tej metodi »koristna«, čeprav nekateri izgubijo.
 - V analizi kljub temu **predpostavljamo, da je mejna koristnost denarja enaka za vse in konstantna** (ne pada z bogastvom), da **poenostavimo** analizo. Tako lahko koristi in škode različnih skupin (potrošnikov, proizvajalcev, države) preprosto **seštejemo** v neto učinek na blaginjo.
 
-### Prosojnici 9–10: Potrošnikov presežek (ponovitev mikroekonomije)
+### Potrošnikov presežek (ponovitev mikroekonomije)
 - Krivulja povpraševanja temelji na **mejni koristnosti** (D = MU): pove, koliko je potrošnik **pripravljen plačati** za vsako dodatno enoto.
 - **Potrošnikov presežek** = razlika med tem, kar je potrošnik **pripravljen plačati**, in **dejansko (tržno) ceno**, ki jo plača. Grafično je to **ploščina lika pod krivuljo povpraševanja in nad tržno ceno p\*** (do količine c\*).
 - **Če se cena zniža s p\* na p'** (količina naraste s c\* na c'), so potrošniki na boljšem. To izmerimo s **spremembo potrošnikovega presežka**.
@@ -63,10 +63,10 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - **A = (p\* − p') × c\***: pravokotnik levo od c\* = **prihranek** potrošnikov zaradi nižje cene pri **prvotnem obsegu** potrošnje,
   - **B = (p\* − p') × (c' − c\*) / 2**: trikotnik med c\* in c' = **dodaten presežek pri povečanem obsegu** potrošnje (delimo z 2, ker je trikotnik, ne pravokotnik).
 
-### Prosojnici 11–12: Proizvajalčev presežek (ponovitev)
+### Proizvajalčev presežek (ponovitev)
 - Krivulja ponudbe temelji na **mejnih stroških (MC)**: pove, za koliko je proizvajalec **pripravljen prodati** vsako dodatno enoto.
 - **Proizvajalčev presežek** = razlika med **dejansko ceno**, ki jo proizvajalec dobi, in ceno, po kateri bi bil **pripravljen prodati** (MC). Grafično je to **ploščina nad krivuljo ponudbe in pod tržno ceno**.
-- **Proizvajalčev presežek NI enak dobičku** (prof):
+- **Proizvajalčev presežek NI enak dobičku**:
   - v **kratkem obdobju**: PS = TR − TVC = **dobiček + fiksni stroški (FC)**. Fiksni stroški niso pod krivuljo MC, zato jih presežek ne odšteje,
   - v **dolgem obdobju** ni fiksnih stroškov (vsi so variabilni), zato je **PS = dobiček**. Podjetje proizvaja, kjer je P = LMC. *(P = MC velja v obeh obdobjih, razlika je v fiksnih stroških.)*
 - **Če se cena poveča s p\* na p'** (količina s q\* na q'), so ponudniki na boljšem. To izmerimo s **spremembo proizvajalčevega presežka**.
@@ -74,7 +74,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - **A** = povečanje pri **nespremenjenem obsegu prodaje** = **(p' − p\*) × q\*** (pravokotnik),
   - **B** = dodaten presežek zaradi **povečanega obsega prodaje** = **(p' − p\*) × (q' − q\*) / 2** (trikotnik).
 
-### Prosojnica 13: Mrtve izgube (ponovitev)
+### Mrtve izgube (ponovitev)
 - Primer na grafu: cena se dvigne nad ravnotežno (P0 → P1, npr. zaradi monopola, carine ali omejitve), količina pade s Q0 na Q1.
 - **Mrtva izguba (deadweight loss)** = **zmanjšanje družbene blaginje** (vsote potrošnikovega in proizvajalčevega presežka), ki je **nihče ne dobi**, ne potrošnik, ne proizvajalec, ne država.
   - Je **izguba alokacijske učinkovitosti**, ker je **cena večja od MC** (P > MC). Enote med Q1 in Q0 bi potrošniki cenili več (D), kot stanejo za proizvodnjo (MC), a se ne proizvedejo.
@@ -86,7 +86,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - nastane **mrtva izguba** (trikotnik med D in MC, med Q1 in Q0) → **manjša družbena blaginja**, alokacijska neučinkovitost.
   - Graf na prosojnici 13 prikazuje prav to situacijo (P1 > P0, Q1 < Q0).
 
-### Prosojnica 14: Analiza D in S v pogojih odprtega gospodarstva
+### Analiza D in S v pogojih odprtega gospodarstva
 - Uporaba mikroekonomskih orodij na primeru odprtega gospodarstva (mednarodna trgovina).
 - **Predpostavke:**
   - **parcialno ravnotežna** analiza (en trg),
@@ -94,7 +94,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - domači in uvoženi proizvodi so **popolni substituti** (homogeni). Potrošnikom ni mar, od kod je izdelek, **ne ločujejo po nacionalnosti** (poreklu), odloča samo cena.
 - **Uvoz je enak razliki med obsegom domačega povpraševanja in domače ponudbe** pri dani ceni: **M = D(p) − S(p)**.
 
-### Prosojnica 15: Krivulja uvoznega povpraševanja (MD_H)
+### Krivulja uvoznega povpraševanja (MD_H)
 - Izpeljemo jo iz domače ponudbe (S_H) in domačega povpraševanja (D_H): pri vsaki ceni je uvoz = vodoravna razdalja med D_H in S_H.
 - Pri **avtarkični ceni P_H\*** (presečišče D_H in S_H) je uvoz **0**. Nižja ko je cena (P' → P''), večja je razlika med D_H in S_H in **večji je uvoz** (M' → M'') → krivulja **MD_H je padajoča**.
 - **MD_H = XD_F**: uvozno povpraševanje domače države je enako izvozni ponudbi tuje države v ravnotežju (en trg).
@@ -108,7 +108,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Uvoz = presežno povpraševanje domače države:** **MD_H = D_H − S_H**.
 - Ker sta državi samo dve, je uvoz domače države hkrati **izvoz tuje države**. Povpraševanje po uvozu domače države je torej povpraševanje po izvozu tuje države → **MD_H = XD_F**.
 
-### Prosojnica 16: Krivulja izvozne ponudbe tuje države (XS_F)
+### Krivulja izvozne ponudbe tuje države (XS_F)
 - Enaka logika kot pri MD_H, le za **tujo državo F** in za **izvoz** (X = EX).
 - **Izvoz = presežna ponudba tuje države:** **XS_F = S_F − D_F**.
 - **Dorisana slika:**
@@ -119,7 +119,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **XS_F = MS_H**: izvozna ponudba tujine je hkrati **ponudba uvoza** za domačo državo (samo dve državi).
 - Fotografija: `Predavanja/P3_fotografije s predavanja/p16_krivulja_izvozne_ponudbe.webp`
 
-### Prosojnica 17: Prosta mednarodna trgovina, model dveh držav (primer: trg paradižnika)
+### Prosta mednarodna trgovina, model dveh držav (primer: trg paradižnika)
 
 **Italija (izvoznica):**
 - **avtarkija:** P = **20**, Q = **40** (D_IT = S_IT = 40),
@@ -143,12 +143,12 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Italija:** potrošniki −(40 − 20)·(40 + 20)/2 = **−600**, proizvajalci +(40 − 20)·(40 + 60)/2 = **+1000** → **neto +400** (= trikotnik 20·40/2).
 - **Obe državi neto pridobita**, svet skupaj +600.
 
-### Prosojnica 19: Države izvoznice in uvoznice
+### Države izvoznice in uvoznice
 - **Prosta mednarodna trgovina** (predpostavke): **ni transportnih stroškov**, **ni carin** ali drugih ovir v mednarodni trgovini.
 - **P_W > P\*** (domača avtarkična cena je **nižja** od svetovne) → pri P_W je **S > D** → presežek se **izvozi** (EXPORT).
 - **P_W < P\*** (domača avtarkična cena je **višja** od svetovne) → pri P_W je **D > S** → manjko se **uvozi** (IMPORT).
 
-### Prosojnica 20: Koristi mednarodne trgovine, država uvoznica (P_W < P_H\*)
+### Koristi mednarodne trgovine, država uvoznica (P_W < P_H\*)
 *Črke A–E so **oglišča** (točke) na grafu, ploskve se berejo kot liki med njimi: A = (0, P_H\*), B = (0, P_W), C = S pri P_W (q1), D = krivulja D pri P_W (q2), E = avtarkično ravnotežje (q\*, P_H\*).*
 
 Primerjava prosta trgovina in avtarkija (cena pade s P_H\* na P_W):
@@ -159,7 +159,7 @@ Primerjava prosta trgovina in avtarkija (cena pade s P_H\* na P_W):
 - Primer SLO: ABDE = +700, ABCE = −500, CDE = +200.
 - **Sklep: prosta mednarodna trgovina je zaželena**, ker je neto učinek na blaginjo države pozitiven (CDE > 0). Ima pa **dobitnike in poražence** (domači proizvajalci izgubijo), zato proizvajalci pogosto lobirajo za zaščito (carine).
 
-### Prosojnica 21: Koristi mednarodne trgovine, država izvoznica (P_W > P_F\*)
+### Koristi mednarodne trgovine, država izvoznica (P_W > P_F\*)
 *Oglišča: A = (0, P_W), B = krivulja D pri P_W, C = krivulja S pri P_W, D = (0, P_F\*), E = avtarkično ravnotežje (presečišče D in S pri P_F\*).*
 
 Primerjava prosta trgovina in avtarkija (cena **zraste** s P_F\* na P_W):
@@ -178,7 +178,7 @@ Primerjava prosta trgovina in avtarkija (cena **zraste** s P_F\* na P_W):
 | Prerazdelitev | od proizvajalcev k potrošnikom | od potrošnikov k proizvajalcem |
 | Neto | + trikotnik | + trikotnik |
 
-### Prosojnica 23 (na projekciji št. 32): Vpliv na blaginjo v domači in tuji državi, povzetek (slika 2.2)
+### Prosojnica 23 (na projekciji št. 32): Vpliv na blaginjo v domači in tuji državi, povzetek
 *Tu so A, B, C, D **ploskve** (ne oglišča kot na prosojnicah 20–21).*
 
 | | Domača (uvozna) država H | Tuja (izvozna) država F |

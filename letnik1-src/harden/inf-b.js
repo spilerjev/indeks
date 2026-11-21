@@ -310,14 +310,6 @@ module.exports = [
     'Neposreden (takojšnji) prehod na nov sistem',
     'Postopen prehod po posameznih oddelkih',
     'Pilotni prehod v eni poslovni enoti'], 2],
-  ['ERP kupimo in prilagodimo lastnim potrebam ali prilagodimo procese rešitvi.', [
-    'Prilagajanje rešitve je cenejše in hitrejše, ker procesov ni treba spreminjati',
-    'Prilagoditev procesov ni mogoča, ker so procesi podjetja določeni z zakonom',
-    'Med pristopoma ni razlike v stroških, tveganju ali času uvedbe rešitve'], 1],
-  ['Ali informatika podjetju sama po sebi zagotavlja konkurenčno prednost?', [
-    'Da, vsaka naložba v IT samodejno poveča dobiček in tržni delež',
-    'Ne, IT nima vpliva, ker jo enako uporabljajo vsa podjetja',
-    'Da, a samo pri podjetjih, ki prodajajo izključno prek spleta'], 3],
   ['Po katerih štirih lastnostih prepoznamo masovne podatke (big data)?', [
     'Količina, cena hrambe, zgoščenost in objektivnost podatkov',
     'Točnost, pravočasnost, popolnost in razumljivost podatkov',
@@ -346,10 +338,6 @@ module.exports = [
     'Javne (za vse kupce) in zasebne (za izbrane poslovne partnerje)',
     'Horizontalne (več panog) in vertikalne (ena država ali regija)',
     'Nakupne (za kupce) in prodajne (za trgovce na drobno in debelo)'], 1],
-  ['Boris je Anin podpis uspešno dešifriral z Aninim javnim ključem in podpis se ujema z besedilom. Kaj s tem ve?', [
-    'Da je prejemnikov zasebni ključ še vedno varen in tajen',
-    'Da je pošiljatelj sporočilo šifriral s prejemnikovim javnim ključem',
-    'Da sporočila na poti ni nihče prebral niti prestregel'], 3],
   ['Katero načelo NE sodi med tri osnovne etične teorije?', [
     'Maksimirati splošno družbeno dobro (utilitarizem)',
     'Maksimirati osebno dobro (egoizem)',
@@ -362,18 +350,10 @@ module.exports = [
     'Licence predstavljajo večino skupnih stroškov lastništva rešitve v prvih letih',
     'Po nakupu licenc dodatnih stroškov uvajanja in prilagajanja praviloma ni',
     'Stroški prilagajanja so nižji, če organizacija vnaprej ne opredeli svojih potreb'], 1],
-  ['Kupljeni ERP ne pokrije vseh potreb podjetja. Katere tri možnosti ima podjetje?', [
-    'Kupiti drugi ERP, razviti lastno rešitev ali zaposliti več informatikov',
-    'Uvesti sistem vzporedno, postopno ali pilotno v eni poslovni enoti',
-    'Prenesti IS v oblak, na lastni strežnik ali k zunanjemu izvajalcu'], 3],
   ['Kaj v informatiki imenujemo hrošč (bug)?', [
     'Program, ki se razmnožuje po omrežju brez gostitelja (črv)',
     'Koristen program s skritimi škodljivimi ukazi (trojanski konj)',
     'Program, ki vrine kopijo sebe v druge programe (virus)'], 0],
-  ['Kakšen dostop do podatkov potrebujejo analitiki na višjih ravneh odločanja?', [
-    'Vnaprej pripravljene zaslonske maske za vnos in popravljanje podatkov',
-    'Pripravljena tedenska poročila, ki se po vsebini in obliki ne spreminjajo',
-    'Neposredno ažuriranje trenutnih vrednosti v operativni bazi podatkov'], 2],
   ['Kaj pomeni funkcijska razdrobljenost (funkcijski silosi) v podjetju?', [
     'Vsak oddelek ima popoln pregled nad procesom, zamude nastanejo le pri kupcu',
     'Podjetje ima en sam IS, ki tesno povezuje vse poslovne funkcije in oddelke',

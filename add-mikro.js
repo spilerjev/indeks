@@ -1,3 +1,6 @@
+/* ONEMOGOČENO 21. 11. 2026: enkratna skripta, vsebina je že v data.json. Ponoven zagon izbriše 3 komplete Mikroekonomije in jih nadomesti s starimi.
+   Vprašanja zdaj nosijo stalni id (CLAUDE.md, razdelek »Stalni id«); popravljaj data.json oz. module v letnik*-src/. */
+throw new Error('add-mikro.js je enkratna skripta in je onemogočena (glej komentar na vrhu datoteke).');
 /* Napolni Mikroekonomija 1 -> 1. kolokvij (poglavja 1-3). Vir: prosojnice MIKRO1-3 (izvoz .key->PDF). */
 const fs = require('fs');
 const path = require('path');

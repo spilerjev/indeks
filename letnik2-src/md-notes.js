@@ -102,7 +102,8 @@ function scrubPrivate(md) {
    Datoteka se kopira v docs (objavljeno), v zapiskih pa se prikaže kot slika (klik = odpre v polni velikosti). */
 const IMG_EXT = /\.(webp|png|jpe?g|svg|gif)$/i;
 /* Ne objavljamo avtorskega gradiva profesorjev: izrezi in fotografije prosojnic ostanejo le v lokalnih zapiskih. */
-const IMG_NOPUBLISH = /slike s prosojnic|fotografije s predavanja|prosojnic[ae]?\//i;
+/* + slike učbeniških primerov in table z vaj (»Vaje/…/Primer 5.2 …png«, »…tabla…«), 21. 11. 2026: nadomestijo jih lastni grafi */
+const IMG_NOPUBLISH = /slike s prosojnic|fotografije s predavanja|prosojnic[ae]?\/|Primer[ _]\d+\.\d+[^/]*\.(png|jpe?g|webp|heic)$|tabla[^/]*\.(png|jpe?g|webp|heic)$/i;
 function imgFigure(rel, cap, img) {
   const path = require('path');
   rel = rel.replace(/^<|>$/g, '');

@@ -1,3 +1,6 @@
+/* ONEMOGOČENO 21. 11. 2026: enkratna skripta, vsebina je že v data.json. Ponoven zagon doda podvojen komplet (isti ID kompleta v delu).
+   Vprašanja zdaj nosijo stalni id (CLAUDE.md, razdelek »Stalni id«); popravljaj data.json oz. module v letnik*-src/. */
+throw new Error('add-pravo-vaje.js je enkratna skripta in je onemogočena (glej komentar na vrhu datoteke).');
 /* Doda scenarijska vprasanja iz vaj (Vaje 1-10) v Pravo: nov sklop "Naloge z vaj" v k1 in k2.
    Vir: prosojnice vaj asist. Palcic Vilfan; pravo preverjeno (ne dobesedne studentske belezke). */
 const fs = require('fs');

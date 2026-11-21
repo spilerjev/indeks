@@ -1,7 +1,6 @@
 // Matematika: težji napačni odgovori (november 2026) - formule podobne dolžine.
 module.exports = [
   ['Kakšno je definicijsko območje f(x) = √(x − 2)/(x − 5)?', ['(2, 5) ∪ (5, ∞)', '[2, ∞)', 'ℝ \\ {2, 5}'], 1],
-  ['q(p) = 6 − √p. Koeficient elastičnosti povpraševanja?', ['−√p / (6 − √p)', '−1 / (2(6 − √p))', '−p / (2(6 − √p))'], 2],
   ['Kaj pomeni E_q,p = −0,4?', [
     'Elastično: +1 % cene → količina −0,4 %',
     'Neelastično: +1 % cene → količina +0,4 %',

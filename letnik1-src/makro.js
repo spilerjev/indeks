@@ -2,6 +2,7 @@
    Viri: predavanja in učbenik; seznam pogostih izpitnih tem. Vprašanja in računske naloge so napisani na novo.
    Izpit je opisni (kategorije, vprašanja, UMAR, ekonomska analiza IS-LM/AD-AS, debata). Rezultati so preračunani;
    nekatere rešitve v študentskih zbirkah so napačne (npr. računovodstvo rasti), zato veljajo izračuni tukaj. */
+const { withId } = require('../ids-lib');   // stalni id vprašanja (CLAUDE.md): ne spreminjaj in ne briši
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 
 const NOTES_IZPIT = `
@@ -37,210 +38,194 @@ const NOTES_IZPIT = `
 `;
 
 const kategorije = [
-  Q('Kaj je likvidnostna past?', [
+  withId('qkczxby', Q('Kaj je likvidnostna past?', [
     'Pri zelo nizkih obrestnih merah dodaten denar ne zniža obresti - monetarna politika je neučinkovita',
     'Pri visokih obrestnih merah ljudje ne želijo držati denarja - fiskalna politika je neučinkovita',
     'Banke zaradi pomanjkanja rezerv ne morejo dajati kreditov, zato ponudba denarja pade',
     'Država zaradi visokega dolga ne more več prodajati obveznic na finančnih trgih'], 0,
-    'V likvidnostni pasti je špekulativno povpraševanje po denarju zelo elastično; LM je vodoravna, zato premik LM ne spremeni Y. Pogosta izpitna kategorija.'),
-  Q('Kaj je NAIRU (najnižja vzdržna stopnja brezposelnosti)?', [
+    'V likvidnostni pasti je špekulativno povpraševanje po denarju zelo elastično; LM je vodoravna, zato premik LM ne spremeni Y. Pogosta izpitna kategorija.')),
+  withId('qwtnta2', Q('Kaj je NAIRU (najnižja vzdržna stopnja brezposelnosti)?', [
     'Najnižja stopnja brezposelnosti, ki še ne pospešuje inflacije',
     'Stopnja brezposelnosti, pri kateri je inflacija enaka nič',
     'Najnižja stopnja brezposelnosti, ki jo je država kdaj dosegla',
     'Stopnja brezposelnosti, pri kateri je BDP najvišji'], 0,
-    'Pod NAIRU se plače in cene začnejo pospešeno dvigovati. Dolgoročna Phillipsova krivulja je navpična pri NAIRU.'),
-  Q('Kaj je seniorage?', [
+    'Pod NAIRU se plače in cene začnejo pospešeno dvigovati. Dolgoročna Phillipsova krivulja je navpična pri NAIRU.')),
+  withId('qjv082x', Q('Kaj je seniorage?', [
     'Prihodek centralne banke od izdajanja denarja',
     'Obresti, ki jih država plačuje na javni dolg',
     'Davek na dobiček poslovnih bank',
     'Pristojbina za menjavo tujih valut'], 0,
-    'CB izda denar, v zameno pridobi finančno premoženje (posojila, papirje) in od njega prejema donos.'),
-  Q('Kaj opisuje Humov mehanizem?', [
+    'CB izda denar, v zameno pridobi finančno premoženje (posojila, papirje) in od njega prejema donos.')),
+  withId('q12jqr49', Q('Kaj opisuje Humov mehanizem?', [
     'Država s primanjkljajem izgublja zlato, cene padejo, izvoz raste in bilanca se uravnoteži',
     'Država s presežkom pridobiva zlato, cene padejo in njen izvoz še naprej raste',
     'Centralna banka s prodajo zlata ohranja stalen devizni tečaj ne glede na cene',
     'Višje obrestne mere privabijo tuji kapital in okrepijo domačo valuto'], 0,
-    'Mehanizem pretoka zlata in cen pri zlatem standardu: pritok zlata dvigne cene in zmanjša konkurenčnost, odtok jih zniža. Cene morajo biti prilagodljive.'),
-  Q('Kaj ponazarja zapornikova dilema?', [
+    'Mehanizem pretoka zlata in cen pri zlatem standardu: pritok zlata dvigne cene in zmanjša konkurenčnost, odtok jih zniža. Cene morajo biti prilagodljive.')),
+  withId('qrzaio7', Q('Kaj ponazarja zapornikova dilema?', [
     'Racionalno ravnanje posameznikov vodi v izid, ki ni optimalen ne za posameznika ne za celoto',
     'Država z zaporno (prohibitivno) carino zaščiti domačo proizvodnjo pred vso tujo konkurenco',
     'Posameznik uživa korist javne dobrine, ne da bi zanjo kakor koli plačal ali prispeval',
     'Ukrepi vlade so neučinkoviti, ker jih ljudje že vnaprej predvidijo in upoštevajo'], 0,
-    'Iz teorije iger: vsak izbere najboljše glede na pričakovano izbiro drugega, oba pa končata slabše. Tretji odgovor je zastonjkarstvo, četrti racionalna pričakovanja.'),
-  Q('Kaj je strukturni deficit?', [
+    'Iz teorije iger: vsak izbere najboljše glede na pričakovano izbiro drugega, oba pa končata slabše. Tretji odgovor je zastonjkarstvo, četrti racionalna pričakovanja.')),
+  withId('q12h4mjb', Q('Kaj je strukturni deficit?', [
     'Deficit, ki bi ostal tudi pri potencialnem BDP, posledica diskrecijske politike',
     'Deficit, ki nastane samodejno zaradi recesije in izgine z okrevanjem',
     'Primanjkljaj v tekočem računu plačilne bilance zaradi visokega uvoza blaga',
     'Razmerje med javnim dolgom in BDP, izraženo v odstotkih BDP države'], 0,
-    'Ciklični deficit nastane zaradi delovanja avtomatskih stabilizatorjev v recesiji. Strukturni je odraz aktivne (ekspanzivne) fiskalne politike.'),
-  Q('Kaj je zastonjkarstvo (free riding)?', [
+    'Ciklični deficit nastane zaradi delovanja avtomatskih stabilizatorjev v recesiji. Strukturni je odraz aktivne (ekspanzivne) fiskalne politike.')),
+  withId('q103ahl7', Q('Kaj je zastonjkarstvo (free riding)?', [
     'Posameznik uživa korist dobrine ali dogovora, ne da bi k njemu prispeval',
     'Država brezplačno zagotavlja javne dobrine vsem državljanom enako',
     'Podjetje prejme državno subvencijo, ne da bi zaposlilo nove delavce',
     'Poslovna banka prejme kredit centralne banke brez plačila obresti'], 0,
-    'Problem javnih dobrin in dogovorov: obstaja, dokler kršenje ni sankcionirano.'),
-  Q('Kaj je bil Bretton-Woodski sporazum (1944)?', [
+    'Problem javnih dobrin in dogovorov: obstaja, dokler kršenje ni sankcionirano.')),
+  withId('q15vpp7k', Q('Kaj je bil Bretton-Woodski sporazum (1944)?', [
     'Sistem stalnih, a prilagodljivih paritet do dolarja; ustanovljena IMF in Svetovna banka',
     'Sporazum o prosto drsečih tečajih vseh valut brez kakršne koli povezave z zlatom',
     'Ustanovitvena pogodba Evropske gospodarske skupnosti in skupne carinske unije',
     'Sporazum o uvedbi evra kot skupne valute evropskih držav in ustanovitvi ECB'], 0,
-    'Dolar je bil vezan na zlato, druge valute na dolar. Sistem je propadel v začetku 70. let.'),
-  Q('Kaj trdi teorija javne izbire?', [
+    'Dolar je bil vezan na zlato, druge valute na dolar. Sistem je propadel v začetku 70. let.')),
+  withId('q1x3b3dx', Q('Kaj trdi teorija javne izbire?', [
     'Politiki ravnajo racionalno v lastnem interesu, npr. za ponovno izvolitev',
     'Država vedno izbere tisto politiko, ki maksimira skupno družbeno blaginjo',
     'Javne dobrine mora zagotavljati izključno zasebni sektor, ne država',
     'Volivci vedno izberejo stranko, ki obljublja najnižje davke'], 0,
-    'Povezuje ekonomijo in politiko: preučuje, kako se individualne preference prek volilnih sistemov združijo v družbeno izbiro.'),
-  Q('Kaj pomenijo racionalna pričakovanja za ekonomsko politiko?', [
+    'Povezuje ekonomijo in politiko: preučuje, kako se individualne preference prek volilnih sistemov združijo v družbeno izbiro.')),
+  withId('q1jirtyx', Q('Kaj pomenijo racionalna pričakovanja za ekonomsko politiko?', [
     'Pričakovani ukrepi vlade ne vplivajo na realni BDP, ker jih ljudje predvidijo',
     'Vlada lahko trajno zniža brezposelnost z nepričakovano inflacijo',
     'Ljudje svoja pričakovanja oblikujejo le na podlagi pretekle inflacije',
     'Fiskalna politika je učinkovitejša od monetarne v vsakem primeru'], 0,
-    'Pri racionalnih pričakovanjih in prožnih cenah "vlada ne more vleči ljudi za nos". Tretji odgovor opisuje prilagodljiva pričakovanja.'),
-  Q('Katere so sestavine indeksa človekovega razvoja (HDI)?', [
+    'Pri racionalnih pričakovanjih in prožnih cenah "vlada ne more vleči ljudi za nos". Tretji odgovor opisuje prilagodljiva pričakovanja.')),
+  withId('q1c3q22v', Q('Katere so sestavine indeksa človekovega razvoja (HDI)?', [
     'Dohodek na prebivalca, pričakovana življenjska doba, izobrazba',
     'BDP, stopnja brezposelnosti in stopnja inflacije',
     'Ginijev koeficient, javni dolg in proračunski deficit',
     'Rast BDP, produktivnost dela in naložbe v raziskave'], 0,
-    'HDI dopolnjuje BDP kot merilo razvitosti: dohodek, zdravje (življenjska doba) in znanje (šolanje, pismenost).'),
-  Q('Kaj je kvantitativno popuščanje?', [
+    'HDI dopolnjuje BDP kot merilo razvitosti: dohodek, zdravje (življenjska doba) in znanje (šolanje, pismenost).')),
+  withId('q17t5bfa', Q('Kaj je kvantitativno popuščanje?', [
     'Centralna banka kupuje dolgoročne obveznice, da zniža dolgoročne obrestne mere',
     'Centralna banka prodaja obveznice, da zmanjša količino denarja v obtoku',
     'Vlada znižuje davke, da poveča razpoložljivi dohodek gospodinjstev',
     'Centralna banka dvigne obvezne rezerve, da omeji kreditiranje'], 0,
-    'Nekonvencionalni ukrep, ko so kratkoročne obrestne mere že blizu nič (ECB po 2015).'),
-  Q('Kam štejemo proizvodnjo kanadskega podjetja Magna v Hočah in tovarne Krke na Hrvaškem?', [
+    'Nekonvencionalni ukrep, ko so kratkoročne obrestne mere že blizu nič (ECB po 2015).')),
+  withId('qgtwrq6', Q('Kam štejemo proizvodnjo kanadskega podjetja Magna v Hočah in tovarne Krke na Hrvaškem?', [
     'Magna: slovenski BDP in kanadski BNP; Krka: hrvaški BDP in slovenski BNP',
     'Magna: kanadski BDP in slovenski BNP; Krka: slovenski BDP in hrvaški BNP',
     'Oba štejemo v slovenski BDP, ker gre za slovenske delavce oziroma lastnike',
     'Magna: slovenski BDP in BNP; Krka: hrvaški BDP in BNP'], 0,
-    'BDP = proizvodnja na ozemlju države; BNP = proizvodnja rezidentov države, kjer koli. Pogosta izpitna tema.'),
-  Q('Zakaj BDP ni dobro merilo blaginje?', [
+    'BDP = proizvodnja na ozemlju države; BNP = proizvodnja rezidentov države, kjer koli. Pogosta izpitna tema.')),
+  withId('q17y26ml', Q('Zakaj BDP ni dobro merilo blaginje?', [
     'Ne zajame gospodinjskega dela, sive ekonomije in onesnaževanja',
     'Ker poleg materialnih dobrin vključuje tudi storitve, ki niso otipljive',
     'Ker ga statistični urad izračuna le enkrat na deset let',
     'Ker vključuje tudi izvoz, ki ga potrošijo tuji kupci'], 0,
-    'BDP zajame le tržne transakcije; ne upošteva prostega časa, porazdelitve dohodka in okolja.'),
-  Q('Kaj je demografska tranzicija?', [
+    'BDP zajame le tržne transakcije; ne upošteva prostega časa, porazdelitve dohodka in okolja.')),
+  withId('q1msgjid', Q('Kaj je demografska tranzicija?', [
     'Prehod od visoke rodnosti in smrtnosti k nizki rodnosti in smrtnosti z razvojem',
     'Preseljevanje prebivalstva iz razvitih v manj razvite države',
     'Upad prebivalstva zaradi vojn in epidemij v razvitih državah',
     'Hitra rast prebivalstva v razvitih državah zaradi priseljevanja'], 0,
-    'Najprej pade smrtnost (prebivalstvo hitro raste), nato še rodnost. Pogosta izpitna tema.'),
-  Q('Kaj je UMAR?', [
+    'Najprej pade smrtnost (prebivalstvo hitro raste), nato še rodnost. Pogosta izpitna tema.')),
+  withId('qxc8hgd', Q('Kaj je UMAR?', [
     'Urad za makroekonomske analize in razvoj, ki napoveduje gospodarska gibanja',
     'Urad za meroslovje, ki meri inflacijo in sestavlja košarico IPC',
     'Agencija za trg vrednostnih papirjev, ki nadzira ljubljansko borzo',
     'Oddelek Banke Slovenije, ki vodi monetarno politiko evrskega območja'], 0,
-    'Na izpitu je naloga branja UMAR-jeve napovedi (BDP, brezposelnost, inflacija).'),
+    'Na izpitu je naloga branja UMAR-jeve napovedi (BDP, brezposelnost, inflacija).')),
 ];
 
 const racunske = [
-  Q('C = 80 + 0,75Y, I = 40 (brez države in tujine). Koliko sta ravnotežni output in multiplikator?', [
+  withId('q1ipg591', Q('C = 80 + 0,75Y, I = 40 (brez države in tujine). Koliko sta ravnotežni output in multiplikator?', [
     'Y = 480, multiplikator 4', 'Y = 160, multiplikator 1,33', 'Y = 120, multiplikator 4', 'Y = 480, multiplikator 1,33'], 0,
-    'Y = 80 + 0,75Y + 40 → 0,25Y = 120 → Y = 480. m = 1/(1 − 0,75) = 4. (1,33 = 1/0,75 je napačen obrazec.)'),
-  Q('Centralna banka zniža stopnjo obveznih rezerv s 25 % na 8 %. Kako se spremeni denarni multiplikator?', [
+    'Y = 80 + 0,75Y + 40 → 0,25Y = 120 → Y = 480. m = 1/(1 − 0,75) = 4. (1,33 = 1/0,75 je napačen obrazec.)')),
+  withId('qb3zk1q', Q('Centralna banka zniža stopnjo obveznih rezerv s 25 % na 8 %. Kako se spremeni denarni multiplikator?', [
     'S 4 na 12,5', 'Z 2,5 na 0,8', 'Z 0,25 na 0,08', 'S 4 na 8'], 0,
-    'm = 1/r: 1/0,25 = 4, 1/0,08 = 12,5. Banke lahko ustvarijo več depozitov in kreditov - ekspanzivna politika.'),
-  Q('Delo raste 2 % letno, kapital 6 %, tehnološke spremembe 1 %. Uteži: delo ¾, kapital ¼. Kolikšna je rast outputa?', [
+    'm = 1/r: 1/0,25 = 4, 1/0,08 = 12,5. Banke lahko ustvarijo več depozitov in kreditov - ekspanzivna politika.')),
+  withId('q14qg62o', Q('Delo raste 2 % letno, kapital 6 %, tehnološke spremembe 1 %. Uteži: delo ¾, kapital ¼. Kolikšna je rast outputa?', [
     '4 %', '3 %', '9 %', '2 %'], 0,
-    'gQ = ¾·2 + ¼·6 + 1 = 1,5 + 1,5 + 1 = 4 %. (3 % = brez tehnoloških sprememb, 9 % = brez uteži.)'),
-  Q('Delo raste 2 % letno, kapital 6 %, tehnološke spremembe 1 % (uteži ¾ in ¼). Kolikšna je rast outputa na delavca?', [
+    'gQ = ¾·2 + ¼·6 + 1 = 1,5 + 1,5 + 1 = 4 %. (3 % = brez tehnoloških sprememb, 9 % = brez uteži.)')),
+  withId('qrh16pd', Q('Delo raste 2 % letno, kapital 6 %, tehnološke spremembe 1 % (uteži ¾ in ¼). Kolikšna je rast outputa na delavca?', [
     '2 %', '4 %', '1 %', '3 %'], 0,
-    'gQ − gL = 4 − 2 = 2 % (= ¼·(6 − 2) + 1: 1 iz poglabljanja kapitala in 1 iz tehnoloških sprememb).'),
-  Q('MNP = 0,8. Za koliko se poveča BDP, če država poveča izdatke za 100?', [
+    'gQ − gL = 4 − 2 = 2 % (= ¼·(6 − 2) + 1: 1 iz poglabljanja kapitala in 1 iz tehnoloških sprememb).')),
+  withId('q7noazf', Q('MNP = 0,8. Za koliko se poveča BDP, če država poveča izdatke za 100?', [
     'Za 500', 'Za 400', 'Za 125', 'Za 80'], 0,
-    'm = 1/(1 − 0,8) = 5 → 5 × 100 = 500.'),
-  Q('MNP = 0,8. Za koliko se spremeni BDP, če država zviša davke za 100?', [
+    'm = 1/(1 − 0,8) = 5 → 5 × 100 = 500.')),
+  withId('q1g36384', Q('MNP = 0,8. Za koliko se spremeni BDP, če država zviša davke za 100?', [
     'Zmanjša se za 400', 'Zmanjša se za 500', 'Zmanjša se za 80', 'Poveča se za 400'], 0,
-    'Davčni multiplikator = −MNP/(1 − MNP) = −0,8/0,2 = −4 → −400. Po absolutni vrednosti je manjši od multiplikatorja izdatkov (5).'),
-  Q('Država poveča izdatke za 100 in davke za 100 (uravnotežen proračun). Za koliko se spremeni BDP?', [
+    'Davčni multiplikator = −MNP/(1 − MNP) = −0,8/0,2 = −4 → −400. Po absolutni vrednosti je manjši od multiplikatorja izdatkov (5).')),
+  withId('q13lxzz0', Q('Država poveča izdatke za 100 in davke za 100 (uravnotežen proračun). Za koliko se spremeni BDP?', [
     'Poveča se za 100', 'Ne spremeni se', 'Poveča se za 500', 'Zmanjša se za 100'], 0,
-    'Multiplikator uravnoteženega proračuna je 1: +500 (izdatki) − 400 (davki) = +100 pri MNP = 0,8.'),
-  Q('BDP pade 4 % pod potencialnega. Za koliko se po Okunovem zakonu dvigne brezposelnost?', [
+    'Multiplikator uravnoteženega proračuna je 1: +500 (izdatki) − 400 (davki) = +100 pri MNP = 0,8.')),
+  withId('q1alh9wl', Q('BDP pade 4 % pod potencialnega. Za koliko se po Okunovem zakonu dvigne brezposelnost?', [
     'Za 2 odstotni točki', 'Za 4 odstotne točke', 'Za 8 odstotnih točk', 'Za 1 odstotno točko'], 0,
-    'Okun (Samuelson): na vsaka 2 % padca BDP pod potencialom se brezposelnost dvigne za 1 odstotno točko.'),
-  Q('Nominalni BDP je 1.100, deflator BDP 110. Koliko je realni BDP?', [
+    'Okun (Samuelson): na vsaka 2 % padca BDP pod potencialom se brezposelnost dvigne za 1 odstotno točko.')),
+  withId('q17cjkyr', Q('Nominalni BDP je 1.100, deflator BDP 110. Koliko je realni BDP?', [
     '1.000', '1.210', '990', '1.100'], 0,
-    'Realni BDP = nominalni / deflator × 100 = 1.100/110 × 100 = 1.000.'),
-  Q('M = 100, V = 5, Q = 250. Kolikšna je raven cen in kaj se zgodi, če M naraste za 10 % (V in Q stalna)?', [
+    'Realni BDP = nominalni / deflator × 100 = 1.100/110 × 100 = 1.000.')),
+  withId('qgnywa0', Q('M = 100, V = 5, Q = 250. Kolikšna je raven cen in kaj se zgodi, če M naraste za 10 % (V in Q stalna)?', [
     'P = 2; cene narastejo za 10 %', 'P = 2; cene se ne spremenijo', 'P = 0,5; cene padejo za 10 %', 'P = 2,5; cene narastejo za 5 %'], 0,
-    'MV = PQ → P = 500/250 = 2. Po kvantitativni teoriji rast M ob stalnih V in Q sorazmerno dvigne cene.'),
-  Q('Nominalna obrestna mera je 6 %, inflacija 2 %. Kolikšna je realna obrestna mera?', [
+    'MV = PQ → P = 500/250 = 2. Po kvantitativni teoriji rast M ob stalnih V in Q sorazmerno dvigne cene.')),
+  withId('qu8ek1w', Q('Nominalna obrestna mera je 6 %, inflacija 2 %. Kolikšna je realna obrestna mera?', [
     'Približno 4 %', 'Približno 8 %', 'Približno 3 %', 'Približno 12 %'], 0,
-    'Realna ≈ nominalna − inflacija = 6 − 2 = 4 %.'),
-  Q('BDP je 1.000, amortizacija 150. Koliko je NDP?', [
+    'Realna ≈ nominalna − inflacija = 6 − 2 = 4 %.')),
+  withId('q1j7cd0p', Q('BDP je 1.000, amortizacija 150. Koliko je NDP?', [
     '850', '1.150', '1.000', '150'], 0,
-    'NDP = BDP − amortizacija.'),
+    'NDP = BDP − amortizacija.')),
 ];
 
 const politike = [
-  Q('Kako ekspanzivna monetarna politika vpliva na BDP (transmisijski mehanizem)?', [
-    'Več denarja → nižje obrestne mere → več naložb → večje AD in BDP',
-    'Več denarja → višje obrestne mere → manj naložb → manjše AD in BDP',
-    'Več denarja → nižji davki → večja potrošnja → večje AD in BDP',
-    'Več denarja → višji tečaj → več izvoza → večje AD in BDP'], 0,
-    'V IS-LM se LM premakne desno: obrestna mera pade, Y naraste.'),
-  Q('Vlada želi višjo rast ob nespremenjeni obrestni meri. Kaj naredi v modelu IS-LM?', [
-    'Hkrati ekspanzivno fiskalno (IS desno) in monetarno politiko (LM desno)',
-    'Samo ekspanzivno fiskalno politiko - premik krivulje IS desno',
-    'Samo restriktivno monetarno politiko - premik krivulje LM levo',
-    'Ekspanzivno fiskalno in restriktivno monetarno politiko'], 0,
-    'Fiskalna ekspanzija sama dvigne obrestno mero (izrinjanje); monetarna ekspanzija ta dvig izniči. Izpitna analiza.'),
-  Q('Kaj se dolgoročno zgodi po povečanju AD, ko BDP preseže potencialnega (inflacijska vrzel)?', [
-    'Plače in cene rastejo, SRAS se premakne levo, BDP se vrne na potencialni ob višjih cenah',
-    'BDP trajno ostane nad potencialnim, cene in plače pa se ne spremenijo',
-    'Potencialni BDP se trajno poveča na raven, ki jo je dosegel dejanski BDP',
-    'AD se samodejno premakne nazaj, cene pa padejo pod prvotno raven cen'], 0,
-    'Analitično: AD↑ → Y↑, P↑ → w↑ → SRAS↓ → P↑, Y↓ do LRAS. Pogosta izpitna analiza.'),
-  Q('Zakaj je monetarna politika v likvidnostni pasti neučinkovita?', [
+  withId('q1udszdu', { q: "Centralna banka v recesiji poveča ponudbo denarja. Po kateri verigi se to prenese na BDP?",
+      options: ["Več denarja → nižje obrestne mere → več naložb → večje AD in BDP","Več denarja → višje obrestne mere → manj naložb → manjše AD in BDP","Več denarja → nižji davki → večja potrošnja → večje AD in BDP","Več denarja → višji tečaj → več izvoza → večje AD in BDP"],
+      correct: 0,
+      explanation: "V IS-LM se LM premakne desno: obrestna mera pade, Y naraste." }),
+  withId('qxvaguq', { q: "Podjetja so zelo občutljiva na obrestno mero, država pa je v recesiji. Kako naj vlada in centralna banka povečata BDP, obrestna mera pa naj ostane nespremenjena?",
+      options: ["Hkrati ekspanzivno fiskalno (IS desno) in monetarno politiko (LM desno)","Samo ekspanzivno fiskalno politiko - premik krivulje IS desno, LM miruje","Ekspanzivno fiskalno (IS desno) in restriktivno monetarno politiko (LM levo)","Samo ekspanzivno monetarno politiko - premik krivulje LM desno, IS miruje"],
+      correct: 0,
+      explanation: "Fiskalna ekspanzija sama dvigne obrestno mero in izrine naložbe; hkratna monetarna ekspanzija (LM desno) ta dvig izniči, zato Y zraste ob nespremenjeni obrestni meri." }),
+  withId('q137b1u6', { q: "Gospodarstvo že deluje na ravni potencialnega BDP, vlada pa močno poveča izdatke. Kaj se zgodi dolgoročno?",
+      options: ["Potencialni BDP se trajno poveča na raven, ki jo je dosegel dejanski BDP, cene se ne spremenijo","AD se samodejno premakne nazaj, cene padejo pod prvotno raven, BDP se vrne na potencialni","Plače in cene rastejo, SRAS se premakne levo, BDP se vrne na potencialni ob višjih cenah","Plače in cene rastejo, SRAS se premakne desno, BDP trajno ostane nad potencialnim"],
+      correct: 2,
+      explanation: "Analitično: AD↑ → Y↑, P↑ → w↑ → SRAS↓ → P↑, Y↓ do LRAS. Pogosta izpitna analiza." }),
+  withId('qljqdri', Q('Zakaj je monetarna politika v likvidnostni pasti neučinkovita?', [
     'Ker dodaten denar ne zniža obrestne mere, zato se naložbe ne povečajo',
     'Ker centralna banka v recesiji ne sme povečevati ponudbe denarja',
     'Ker višja obrestna mera izrine zasebne naložbe podjetij',
     'Ker previsoki davki zmanjšujejo razpoložljivi dohodek gospodinjstev'], 0,
-    'LM je vodoravna; prenos prek obrestne mere ne deluje. Tedaj je učinkovitejša fiskalna politika.'),
-  Q('Katera je temeljna omejitev fiskalne politike?', [
+    'LM je vodoravna; prenos prek obrestne mere ne deluje. Tedaj je učinkovitejša fiskalna politika.')),
+  withId('qnqymw7', Q('Katera je temeljna omejitev fiskalne politike?', [
     'Učinek izrinjanja zasebnih naložb zaradi višjih obrestnih mer',
     'Likvidnostna past, v kateri obrestne mere ne padejo',
     'Kvantitativno popuščanje, ki zniža dolgoročne obresti',
     'Pariteta kupne moči, ki določa devizni tečaj'], 0,
-    'Fiskalna ekspanzija dvigne obrestne mere in zmanjša zasebne naložbe; v recesiji je učinek majhen.'),
-  Q('Katera je glavna kritika keynesianske teorije?', [
-    'Učinek izrinjanja in nezmožnost reševanja stagflacije',
-    'Zanemarjanje agregatnega povpraševanja in vloge države',
-    'Predpostavka, da so plače in cene popolnoma prožne',
-    'Prepričanje, da je inflacija izključno denarni pojav'], 0,
-    'Keynesianci predpostavljajo toge plače in cene ter aktivno vlogo države; kritiki opozarjajo na izrinjanje, inflacijo in stagflacijo 70. let.'),
-  Q('Kaj je zunanjetrgovinska politika in s katerimi instrumenti deluje?', [
-    'Politika do tujine: devizni tečaj, carine, kvote, takse',
-    'Politika do tujine: davki, državni izdatki, transferji',
-    'Politika do tujine: obrestna mera in obvezne rezerve',
-    'Politika do tujine: minimalne plače in nadzor cen'], 0,
-    'Fiskalna: davki in izdatki. Monetarna: količina denarja, obresti. Dohodkovna: cene in plače.'),
-  Q('Kako v odprtem gospodarstvu velja zveza med varčevanjem, naložbami in neto izvozom?', [
-    'Zasebno varčevanje + proračunski presežek = domače naložbe + neto izvoz',
-    'Zasebno varčevanje = domače naložbe + proračunski deficit + uvoz',
-    'Domače naložbe = zasebno varčevanje + neto izvoz + davki',
-    'Neto izvoz = domače naložbe − davki + transferji gospodinjstvom'], 0,
-    'Celotno varčevanje (zasebno + javno) financira domače naložbe in neto tuje naložbe (NX). Če varčevanje preseže naložbe, je NX pozitiven. Izpitno vprašanje.'),
-  Q('Kako krepitev evra vpliva na mednarodno trgovino EU?', [
-    'Uvoz v EU se poceni in raste, izvoz EU se podraži in upade',
-    'Izvoz EU se poceni in raste, uvoz v EU se podraži in upade',
-    'Uvoz in izvoz EU se povečata, ker evro postane zanesljivejši',
-    'Na trgovino ne vpliva, ker cene določa pariteta kupne moči'], 0,
-    'Močnejši evro pomeni, da tujci za evrsko blago plačajo več (izvoz pade), Evropejci pa tuje blago dobijo ceneje.'),
-  Q('Kaj mora vlada storiti, da poveča mednarodno konkurenčnost in presežek tekočega računa?', [
-    'Znižati relativne stroške domačih dobrin (produktivnost, zmerne plače)',
-    'Povečati državne izdatke za nakup tujih dobrin in storitev',
-    'Dvigniti obrestne mere, da se domača valuta okrepi do tujih',
-    'Dvigniti plače nad rast produktivnosti, da se poveča potrošnja'], 0,
-    'Pri evru država nima lastnega tečaja; konkurenčnost izboljša z rastjo produktivnosti in zmernimi plačami (realna depreciacija).'),
-  Q('Kaj pravi teorija učinkovitih trgov o ceni delnic (random walk)?', [
+    'Fiskalna ekspanzija dvigne obrestne mere in zmanjša zasebne naložbe; v recesiji je učinek majhen.')),
+  withId('q9oy52o', { q: "Visoka inflacija ob hkratni visoki brezposelnosti v 70. letih je spodkopala zaupanje v aktivno politiko povpraševanja. Katera kritika keynesianske teorije je s tem povezana?",
+      options: ["Učinek izrinjanja in nezmožnost reševanja stagflacije","Zanemarjanje agregatnega povpraševanja in vloge države","Predpostavka, da so plače in cene popolnoma prožne","Prepričanje, da je inflacija izključno denarni pojav"],
+      correct: 0,
+      explanation: "Keynesianci predpostavljajo toge plače in cene ter aktivno vlogo države; kritiki opozarjajo na izrinjanje, inflacijo in stagflacijo 70. let." }),
+  withId('q168640f', { q: "Vlada uvede kvote za uvoz jekla in zviša carine na avtomobile. Katero politiko vodi in s katerimi instrumenti še deluje ta politika?",
+      options: ["Zunanjetrgovinsko: poleg carin in kvot še z deviznim tečajem in taksami","Fiskalno: poleg carin še z davki, državnimi izdatki in transferji","Monetarno: poleg kvot še z obrestno mero in obveznimi rezervami bank","Dohodkovno: poleg kvot še z minimalnimi plačami in nadzorom cen"],
+      correct: 0,
+      explanation: "Zunanjetrgovinska politika ureja odnose s tujino: devizni tečaj, carine, kvote, takse. Fiskalna deluje z davki in izdatki, monetarna s količino denarja in obrestmi, dohodkovna s cenami in plačami." }),
+  withId('q6xkuax', { q: "V državi zasebno varčevanje znaša 22 % BDP, domače naložbe 20 % BDP, proračun pa ima presežek 2 % BDP. Kolikšen je neto izvoz in iz katere zveze to sledi?",
+      options: ["4 % BDP, ker velja S_zas + (T − G) = I + NX","0 % BDP, ker velja S_zas = I + (T − G) + NX","2 % BDP, ker velja S_zas = I + NX","−4 % BDP, ker velja S_zas + (T − G) + NX = I"],
+      correct: 0,
+      explanation: "Celotno varčevanje (zasebno + javno) financira domače naložbe in neto tuje naložbe: S_zas + (T − G) = I + NX → 22 + 2 = 20 + NX → NX = 4 % BDP. Druga in četrta možnost postavita člena na napačno stran, tretja izpusti javno varčevanje." }),
+  withId('qi7rs0t', { q: "Evro se v enem letu okrepi do dolarja za 15 %. Kaj lahko pričakujemo pri trgovini EU z ZDA?",
+      options: ["Uvoz v EU se poceni in raste, izvoz EU se podraži in upade","Izvoz EU se poceni in raste, uvoz v EU se podraži in upade","Uvoz in izvoz EU se povečata, ker evro postane zanesljivejši","Na trgovino ne vpliva, ker cene določa pariteta kupne moči"],
+      correct: 0,
+      explanation: "Močnejši evro pomeni, da tujci za evrsko blago plačajo več (izvoz pade), Evropejci pa tuje blago dobijo ceneje." }),
+  withId('qqazggj', { q: "Država v evroobmočju ima primanjkljaj tekočega računa, lastne valute pa ne more razvrednotiti. Kako lahko izboljša mednarodno konkurenčnost?",
+      options: ["Dvigniti plače nad rast produktivnosti, da se poveča domača potrošnja in uvoz","Znižati relativne stroške domačih dobrin (produktivnost, zmerne plače)","Povečati državne izdatke za nakup tujih dobrin in storitev (uvoz)","Dvigniti obrestne mere, da se domača valuta okrepi in uvoz poceni"],
+      correct: 1,
+      explanation: "Pri evru država nima lastnega tečaja; konkurenčnost izboljša z rastjo produktivnosti in zmernimi plačami (realna depreciacija)." }),
+  withId('q1xrlyf8', Q('Kaj pravi teorija učinkovitih trgov o ceni delnic (random walk)?', [
     'Javno znane informacije so že v ceni, zato so spremembe nepredvidljive',
     'Cene delnic vedno sledijo rasti BDP z enoletnim zamikom',
     'Z analizo preteklih cen lahko zanesljivo napovemo prihodnje cene',
     'Cene delnic določa centralna banka z obrestno mero'], 0,
-    'Nenadna objava (npr. višji davki) cene takoj spremeni; predvidljive informacije pa so že vračunane.'),
+    'Nenadna objava (npr. višji davki) cene takoj spremeni; predvidljive informacije pa so že vračunane.')),
 ];
 
 module.exports = {

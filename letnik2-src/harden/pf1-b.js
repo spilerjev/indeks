@@ -32,14 +32,6 @@ module.exports = [
     'Večna renta z enakim zneskom do izteka posojila',
     'Brezkuponska obveznica z dospetjem ob koncu posojila',
     'Navadno obrestovanje glavnice po obrestni meri'], 3, 'Anuiteta: A = PV · r/[1 − (1 + r)⁻ⁿ]'],
-  ['Neenaki denarni tokovi (100, 110, 120, 130, 140).', [
-    'Da, s povprečnim tokom 120 in n = 5',
-    'Da, če dodamo rast tokov',
-    'Samo pri diskontni stopnji 10 %'], 3, 'Ne - vsak tok diskontiramo posebej in seštejemo'],
-  ['Kako se leta pri iskanju n', [
-    'Navzdol, ker se obresti pripisujejo ob koncu leta',
-    'Na najbližje celo število po pravilih zaokroževanja',
-    'Sploh se ne zaokrožujejo, zapišemo vse decimalke'], 3, 'Nikoli navzdol: 16,24 leta → 16,3 ali 17 let'],
   ['Kako iskanje r (podvojitev v 10 letih)', [
     'Oboje z logaritmom: r = ln 2 / 10',
     'Oboje s korenom: n = 2^(1/r)',
@@ -52,10 +44,6 @@ module.exports = [
     'n → 0: (1 + r)ⁿ → 1, zato PV → A',
     'r → ∞: faktor PVIFA → 0, zato PV → 0',
     'Perpetuitete ne moremo izpeljati iz anuitete'], 3, 'n → ∞: (1 + r)⁻ⁿ → 0, zato PV → C/r'],
-  ['Kako se na vajah priporoča računati z obrestno mero na obdobje?', [
-    'Vedno vpisati 0,03/12 neposredno v formulo',
-    'Obrestno mero zaokrožiti na eno decimalko',
-    'Uporabiti letno mero in spremeniti število obdobij'], 3, 'Najprej izračunati r na obdobje in jo shraniti v kalkulator'],
   ['Cena obveznice je:', [
     'Nominalna vrednost, zmanjšana za kupone',
     'Vsota vseh izplačanih kuponov do zapadlosti',

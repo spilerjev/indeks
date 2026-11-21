@@ -8,6 +8,8 @@ if (!file || !ids.length) { console.error('node sync-decks.js <modul> <deck-id> 
 const mods = [].concat(require(path.resolve(file)));
 const DATA_PATH = path.join(__dirname, 'data.json');
 const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
+const IDS = require('./ids-lib');   // stalni id vprašanj: iz modula (withId), sicer podedovan iz starega kompleta, sicer nov
+const TAKEN = IDS.takenIds(data);
 let n = 0;
 for (const id of ids) {
   let src = null, sid = null, pid = null;
@@ -16,7 +18,8 @@ for (const id of ids) {
   let hit = 0;
   for (const sem of data) for (const su of sem.subjects) if (su.id === sid) for (const p of su.parts) if (p.id === pid) {
     const i = (p.decks || []).findIndex((d) => d.id === id);
-    if (i >= 0) { p.decks[i] = JSON.parse(JSON.stringify(src)); hit++; } else { p.decks.push(JSON.parse(JSON.stringify(src))); hit++; }
+    const nd = IDS.assignDeckIds(JSON.parse(JSON.stringify(src)), i >= 0 ? p.decks[i] : null, TAKEN, sid + '/' + pid + '/' + id);
+    if (i >= 0) { p.decks[i] = nd; hit++; } else { p.decks.push(nd); hit++; }
   }
   if (!hit) throw new Error('V data.json ni dela ' + sid + '/' + pid);
   n += src.questions.length;

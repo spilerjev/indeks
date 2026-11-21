@@ -1,3 +1,6 @@
+/* ONEMOGOČENO 21. 11. 2026: enkratna skripta, vsebina je že v data.json. Ponoven zagon doda podvojen komplet makro-pregled.
+   Vprašanja zdaj nosijo stalni id (CLAUDE.md, razdelek »Stalni id«); popravljaj data.json oz. module v letnik*-src/. */
+throw new Error('add-makro-quiz.js je enkratna skripta in je onemogočena (glej komentar na vrhu datoteke).');
 /* Doda sklop dodatnih vprasanj v Makroekonomijo (iz obstojecih, preverjenih zapiskov). Ne spremeni obstojecih deckov. */
 const fs = require('fs');
 const path = require('path');

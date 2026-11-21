@@ -11,16 +11,6 @@ module.exports = [
   "Prostovoljna menjava, obojestransko zadovoljstvo, ciljno trženje, trženjski splet, dolgoročna dobičkonosnost"
  ],
  [
-  "Kaj je pravilno? 1) proizvodna",
-  [
-   "1 in 2",
-   "2, 3 in 4",
-   "1, 3 in 4"
-  ],
-  1,
-  "1, 2 in 4"
- ],
- [
   "Kaj loči družbeno odgovorno trženjsko usmeritev od trženjske?",
   [
    "Nižje cene za porabnike, ki jih omogoča skromnejši dobiček podjetja",

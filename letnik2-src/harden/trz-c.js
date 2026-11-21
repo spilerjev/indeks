@@ -10,10 +10,6 @@ module.exports = [
   [ "Merjenje gledanosti TV, panel gospodinjstev in NPS", [ "Ad-hoc raziskave", "Omnibus raziskave", "Eksperimenti" ], 3, "Kontinuirane raziskave" ],
   [ "\"Ali bo 10 % nižja cena povečala prodajo", [ "Eksplorativna", "Opisna", "Kvalitativna" ], 3, "Vzročna" ],
   [ "Trg z majhnim razmikom med tržnim minimumom in potencialom", [ "Razširljiv", "Ciljni", "Potencialni" ], 3, "Nerazširljiv" ],
-  [ "Kaj je Google naredil leta 2017 z izdelkom Glass?", [ "Izdelek je ukinil in prodal blagovno znamko", "Znižal je ceno in ga ponudil širši javnosti", "Dodal je funkcije za igre in zabavo" ], 3, "Lansiral je različico za poslovni trg" ],
-  [ "Kaj je mogoče sklepati iz uspeha Glass Enterprise Edition?", [ "Izdelek je bil dober od začetka, zgrešen je bil le čas lansiranja", "Poslovni trg je vedno donosnejši od potrošniškega trga", "Raziskave pri tehnološko dovršenih izdelkih niso nujne" ], 3, "Neuspeh na enem trgu ni neuspeh izdelka - spremeni ciljno skupino" ],
-  [ "Katere so po Rajamannarju (2021) paradigme trženja", [ "Proizvodna, izdelčna, prodajna, trženjska, družbena; smo v družbeni", "Masovno, ciljno, nišno, osebno, kvantno; smo v osebni", "Izdelki, čustva, podatki, digitalno, kvantno; smo v podatkovni" ], 3, "Izdelki, čustva, podatki, digitalno in družabno, kvantno; prehajamo v kvantno" ],
-  [ "Na čem temelji nova generacija pametnih očal (2025)", [ "Windows Mixed Reality", "Apple visionOS", "Meta Quest OS" ], 3, "Android XR in Gemini" ],
   [ "Katere komunikacijske poti so FORMALNE?", [ "Priporočila prijateljev in družine", "Spletne ocene in mnenja uporabnikov", "Forumi, blogi in družbena omrežja" ], 3, "Oglaševanje, PR, osebna prodaja" ],
   [ "Kateri dejavnik spada med DRUŽBENE?", [ "Življenjski slog", "Družbeni razred", "Motivacija" ], 3, "Referenčne skupine" ],
   [ "Kateri dva dejavnika posežeta med nakupno namero in nakupno odločitvijo?", [ "Cena izdelka in njegova kakovost", "Oglas in popust ob nakupu", "Kultura in družbeni razred" ], 3, "Stališča drugih in okoliščine" ],
@@ -35,10 +31,4 @@ module.exports = [
   [ "S čim moramo podpreti izbrane prednosti pri pozicioniranju?", [ "Samo z oglaševanjem", "Samo s ceno in popusti", "Samo z embalažo in logom" ], 1, "Z vsem trženjskim spletom" ],
   [ "Hostel Celica (20 celic = 20 edinstvenih doživetij)", [ "Najnižja cena med hosteli v mestu", "Izključnost, zaščitena s patentom", "Dostopnost in udobje za vse goste" ], 1, "Drugačnost, sporočljivost, donosnost" ],
   [ "Kaj prikazuje percepcijski zemljevid?", [ "Lokacije trgovin na zemljevidu", "Prodajo znamk po regijah", "Strukturo stroškov znamk" ], 1, "Položaj znamk v očeh porabnikov" ],
-  [ "Duolingo ima brezplačno različico, naročnino", [ "Nediferencirano", "Koncentrirano", "Individualno mikro" ], 1, "Diferencirano" ],
-  [ "Kako je pozicioniran Duolingo?", [ "Kot elitni akademski program za študente", "Kot najdražja in najcelovitejša jezikovna šola", "Kot aplikacija, namenjena samo poslovnežem" ], 1, "Kot zabavna, dostopna mobilna alternativa učenju" ],
-  [ "Argeta je v Avstriji, Švici in Nemčiji vstopila z izvozom v treh korakih", [ "Lastne tovarne → domači trgovci → spletna prodaja", "Licenca → franšiza → neposredni izvoz k trgovcem", "Spletna prodaja → etnotrgovine → lastne trgovine" ], 1, "Etnotrgovine → klasični trgovci → mednarodni trgovci" ],
-  [ "Kaj je pri Argeti standardizirano in kaj prilagojeno?", [ "Vse je prilagojeno posameznemu trgu", "Vse je standardizirano za vse trge", "Prilagojena je samo cena na trgu" ], 1, "Standardni receptura in znamka, prilagojeni okusi" ],
-  [ "Kakšna je bila internacionalizacija Argete po času?", [ "Globalno rojeno podjetje od začetka", "Najprej ZDA, nato Evropa in regija", "Hkrati na vseh trgih z enakim spletom" ], 1, "Postopna: regija → DACH → ~30 trgov → ZDA" ],
-  [ "Katera je primarna ciljna skupina Argete?", [ "Študenti z nizkim dohodkom, ki jedo na hitro", "Upokojenci, ki doma radi pripravijo malico", "Športniki, ki skrbno štejejo kalorije" ], 1, "Ženska z aktivno družino, ki skrbi za kakovost" ]
 ];

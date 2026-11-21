@@ -14,6 +14,8 @@ const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
 const bak = DATA_PATH + '.bak-prelet1';
 if (!fs.existsSync(bak)) fs.writeFileSync(bak, JSON.stringify(data));
 
+const IDS = require('./ids-lib');   // stalni id vprašanj: iz modula (withId), sicer podedovan iz starega kompleta, sicer nov
+const TAKEN = IDS.takenIds(data);
 const upsert = (list, items) => {
   for (const it of items || []) {
     const i = list.findIndex((x) => x.id === it.id);
@@ -35,7 +37,7 @@ for (const mod of MODULES) {
     if (mp.signup) part.signup = mp.signup;
     if (mp.audio) part.audio = mp.audio;   // zvočne razlage (sklop Poslušaj), glej letnik1-src/poslusaj.js
     part.decks = part.decks || [];
-    upsert(part.decks, mp.decks);
+    IDS.upsertDecks(part.decks, mp.decks, TAKEN, mod.id + '/' + mp.id);
     if (mp.flashcards) { part.flashcards = part.flashcards || []; upsert(part.flashcards, mp.flashcards); }
     if (mp.notesMd) part.notes = render(mp.notesMd);
     if (mp.prependNotesOf) {

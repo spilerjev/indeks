@@ -1,37 +1,5 @@
 // Temelji trženja: Google Glass in nakupno vedenje - težji odgovori
 module.exports = [
-  ['Katera trženjska usmeritev je prevladovala ob prvem vstopu Google Glass', [
-    'Proizvodna usmeritev: izdelek je bil poceni in množično dostopen',
-    'Prodajna usmeritev: močan poudarek na agresivni prodaji v trgovinah',
-    'Trženjska usmeritev: izdelek je bil razvit po željah ciljnih porabnikov'], 3, 'Izdelčna usmeritev: poudarek na inovativnem, tehnološko dovršenem izdelku'],
-  ['Katera je bila ključna napaka Googla pri Glass?', [
-    'Cena je bila prenizka, zato izdelek ni bil videti kakovosten',
-    'Oglaševanje je bilo preveč agresivno in je odvrnilo porabnike',
-    'Izdelek je na trg prišel prepozno za konkurenti iz Azije'], 3, 'Ni bilo raziskave, komu je izdelek namenjen in kaj potrebuje'],
-  ['Kakšna nevarnost grozi pri izdelčni usmeritvi', [
-    'Prodajna naravnanost, ki izdelke prodaja na silo',
-    'Preveč izdelkov v ponudbi, ki zmedejo porabnika',
-    'Nizka kakovost izdelka zaradi hitrega razvoja'], 3, 'Trženjska kratkovidnost: podjetje se zaljubi v izdelek'],
-  ['Koliko je stala prva različica Google Glass', [
-    '299 USD', '799 USD', '5.000 USD'], 3, '1.500 USD'],
-  ['Kaj označuje izraz "Glassholes"?', [
-    'Poslovne partnerje Googla, ki so izdelek prodajali v trgovinah',
-    'Razvijalce izdelka, ki so ga preizkušali pred lansiranjem',
-    'Model očal, namenjen poslovnemu trgu'], 3, 'Uporabnike očal, ki so vzbujali strah za zasebnost'],
-  ['Kaj je Google naredil leta 2017 z izdelkom Glass?', [
-    'Izdelek je ukinil in prodal blagovno znamko',
-    'Znižal je ceno in ga ponudil širši javnosti',
-    'Dodal je funkcije za igre in zabavo'], 3, 'Lansiral je različico za poslovni trg (Enterprise Edition)'],
-  ['Kaj je mogoče sklepati iz uspeha Glass Enterprise Edition?', [
-    'Izdelek je bil dober od začetka, zgrešen je bil le čas lansiranja',
-    'Poslovni trg je vedno donosnejši od potrošniškega',
-    'Trženjske raziskave pri tehnološko dovršenih izdelkih niso nujne'], 3, 'Neuspeh na enem trgu ni neuspeh izdelka - treba je prilagoditi ciljno skupino ali model'],
-  ['Katere so po Rajamannarju (2021) paradigme trženja', [
-    'Proizvodna, izdelčna, prodajna, trženjska, družbena; smo v družbeni',
-    'Mikro, makro, mezo, globalno in lokalno; smo v globalni',
-    'Masovno, ciljno, nišno, osebno, kvantno; smo v osebni'], 3, 'Izdelki, čustva, podatki, digitalno in družabno, kvantno; prehajamo v kvantno'],
-  ['Na čem temelji nova generacija pametnih očal (2025)', [
-    'Windows Mixed Reality', 'Apple visionOS', 'Meta Quest OS'], 3, 'Android XR in Gemini AI'],
   ['Kateri elementi sestavljajo trženjski splet (4P)', [
     'Ljudje, procesi, fizični dokazi in cena',
     'Konkurenca, dobavitelji, posredniki in javnosti',

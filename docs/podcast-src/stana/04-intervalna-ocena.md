@@ -1,15 +1,15 @@
-# Epizoda 4 — Točkovna in intervalna ocena (P04 + V04)
+# Epizoda 4 — Točkovna in intervalna ocena
 
 Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
-## P04 — Ocenjevanje parametrov: točkovna in intervalna ocena (27. 10. 2026)
+## P04 — Ocenjevanje parametrov: točkovna in intervalna ocena
 
-Gradivo: gradivo (22 prosojnic), R: gradivo.
+Gradivo: gradivo, R: gradivo.
 
 ### Pregled v enem stavku
 Iz vzorca izračunamo oceno (npr. ȳ = 15 l), ker pa vemo, da se ocene od vzorca do vzorca razlikujejo, okoli nje postavimo **interval**, za katerega smo npr. 95 % prepričani, da zajame pravo vrednost parametra.
 
-### Oznake (pr. 3)
+### Oznake
 | | populacija | en vzorec | vsi možni vzorci |
 |---|---|---|---|
 | število enot | N | n | (N nad n) |
@@ -18,11 +18,11 @@ Iz vzorca izračunamo oceno (npr. ȳ = 15 l), ker pa vemo, da se ocene od vzorca
 | variabilnost | σ², σ | s², s | Var(g), **SE(g)** |
 Γ (gama) = splošna oznaka za parameter, ki ga ocenjujemo.
 
-### Točkovna vs. intervalna ocena (pr. 4)
+### Točkovna vs. intervalna ocena
 - **Točkovna:** g(v) = ena številka (npr. ȳ = 15 l).
 - **Intervalna:** g_s < Γ < g_z ; α — dvostranska, ali enostranska (samo spodnja ali samo zgornja meja).
 
-### Stopnja tveganja α (pr. 5) ⭐
+### Stopnja tveganja α ⭐
 - α = verjetnost, da se zgodi tisto, česar nočemo = **delež vzorcev, pri katerih interval NE zajame prave vrednosti**.
 - **Stopnja zaupanja = 1 − α** (α = 5 % ↔ 95 % interval zaupanja).
 - α izberemo **vnaprej** (ali ga določi naročnik), ne iz podatkov.
@@ -32,10 +32,10 @@ Iz vzorca izračunamo oceno (npr. ȳ = 15 l), ker pa vemo, da se ocene od vzorca
 - Kompromis: manjši α → večja zanesljivost, a širši (manj natančen) interval. α = 0 bi dal interval (−∞, ∞) — 100 % pravilen, a neuporaben.
 - Iz α nato dobimo z (tabela): dvostransko z_α/2, enostransko z_α.
 
-### Iz česa sestavimo interval (pr. 6)
+### Iz česa sestavimo interval
 1. α → iz tabele z_α/2 (ali z_α), 2. točkovna ocena g(v), 3. standardna napaka SE(g), 4. predpostavka, da je **g ~ N(E(g), SE(g))** — velja, če je Y normalna ALI **n ≥ 100** (centralni limitni izrek).
 
-### Dvostranski interval (pr. 7) ⭐⭐
+### Dvostranski interval ⭐⭐
 
 **g(v) − z_α/2 · SE(g) < Γ < g(v) + z_α/2 · SE(g) ; α**
 - = ocena ± **odklon zaupanja D_g = z_α/2 · SE(g)** (»margin of error«)
@@ -43,7 +43,7 @@ Iz vzorca izračunamo oceno (npr. ȳ = 15 l), ker pa vemo, da se ocene od vzorca
 - α = 5 % → z_0,025 = **1,96**; α = 1 % → z_0,005 = **2,58** (spet 1,96!)
 - Razlaga: »Pri α = 5 % ocenjujemo, da je prava vrednost med g_s in g_z« oz. »95-odstotni interval zaupanja je med … in …«
 
-### Enostranski interval (pr. 8)
+### Enostranski interval
 - samo spodnja meja: g(v) − z_α · SE < Γ → »prava vrednost je **najmanj** g_s«
 - samo zgornja meja: Γ < g(v) + z_α · SE → »prava vrednost je **največ** g_z«
 - ⚠️ tu **z_α** (ne z_α/2): ves α je v enem repu → α = 5 % → z = 1,645; α = 1 % → z = 2,33.
@@ -52,13 +52,13 @@ Iz vzorca izračunamo oceno (npr. ȳ = 15 l), ker pa vemo, da se ocene od vzorca
 - Graf: večina intervalov (1 − α) zajame pravo vrednost, delež α je zgreši — pri konkretnem intervalu ne vemo, ali je med »dobrimi«.
 - **Meje zaokrožujemo NAVZVEN** (spodnjo navzdol, zgornjo navzgor) → interval ne zožamo → tveganje ne preseže α.
 
-### Aritmetična sredina, veliki vzorci (pr. 11–12)
+### Aritmetična sredina, veliki vzorci
 - cenilka ȳ = Σyᵢ/n, **nepristranska**: E(ȳ) = μ_Y
 - **SE(ȳ) = σ/√n · √((N−n)/(N−1))**; ker σ ne poznamo → **se(ȳ) = s/√n · √(1 − f)**, f = n/N (delež izbora; √(1−f) = popravek za končno populacijo, pri majhnem f ≈ 1)
 - ko SE ocenimo s s → strogo vzeto **t-porazdelitev** (m = n − 1 stopinj prostosti), za velike n skoraj enaka Z.
 - Interval za μ: ȳ ± z_α/2 · se(ȳ); za **total** Y_tot = N·μ: N·ȳ ± z_α/2 · N·se(ȳ) (= meje za μ pomnožene z N, ista α).
 
-### Primer 4.1 — mleko (pr. 13–16)
+### Primer 4.1 — mleko
 N = 60 000 gospodinjstev, n = 200, ȳ = 15 l, s = 12 l, α = 5 %.
 1. se(ȳ) = 12/√200 · √(1 − 200/60 000) = 0,8485 · 0,9983 = **0,847**
 2. t(199; 0,025) = 1,9759 ≈ **1,98** (z bi dal 1,96 — skoraj isto)
@@ -66,27 +66,27 @@ N = 60 000 gospodinjstev, n = 200, ȳ = 15 l, s = 12 l, α = 5 %.
 4. Razlaga: »Na podlagi vzorčnih podatkov pri α = 5 % ocenjujemo, da je bila povprečna mesečna količina kupljenega mleka med 13,3 in 16,7 litra na gospodinjstvo.«
 5. Total: ×60 000 → **≈ 800 379 < Y_tot < 999 621 l** (prosojnica uporablja nezaokrožene meje in zaokroži navzven).
 
-### Primer 3.3 nadaljevanje (pr. 17–18)
+### Primer 3.3 nadaljevanje
 Vseh 15 vzorcev (n = 4) iz majhne populacije (μ = 4): z z-jem 2 od 15 intervalov zgreši μ → 13,3 % > 5 % (?!) — ker je n majhen in uporabimo s namesto σ. S **t-porazdelitvijo** (m = 3, širši intervali) zgreši samo 1/15 = 6,7 %. → pri majhnih vzorcih t, ne z.
 
-### Delež (pr. 19–20)
+### Delež
 - dihotomna spremenljivka (ima lastnost a / nima), parameter **Π = N_a/N**, cenilka **p = n_a/n** (nepristranska)
 - n ≥ 100 → p ~ N
 - **se(p) = √(p(1−p)/n) · √(1 − f)**
 - interval: p ± z_α/2 · se(p); število enot N_a = N·Π → meje × N.
 
-### Primer 4.2 — JEK2 (pr. 21)
+### Primer 4.2 — JEK2
 n = 34 100, N = 1 696 893, n_a = 8140 proti; α = 1 %, **»največ«** → enostranska zgornja meja.
 1. p = 8140/34 100 = **0,2387**
 2. se(p) = √(0,2387·0,7613/34 100) · √(1 − 0,0201) = **0,002285**
 3. z_0,01 = **2,33** (enostransko!)
 4. Π < 0,2387 + 2,33 · 0,002285 = **0,2441 → 24,4 %**; N_a < 1 696 893 · 0,2441 ≈ **414 000** (prosojnica: 414 042)
 5. »Pri α = 1 % ocenjujemo, da gradnje JEK2 ne podpira največ 24,4 % oz. največ ≈ 414 000 volilnih upravičencev.«
-- **Na tabli (profesorica):** najprej ENOTA = volilni upravičenec, SPR = podpira gradnjo? DA/NE (dihotomna) → PAR: Π in N_a. Zapis: Γ < g ; α → Π < p_z ; α → Π < p + z_α · se(p) ; α → Π < 0,239 + 2,33 · 0,002 → **Π < 0,244 ; α = 1 %**.
+- **Na tabli:** najprej ENOTA = volilni upravičenec, SPR = podpira gradnjo? DA/NE (dihotomna) → PAR: Π in N_a. Zapis: Γ < g ; α → Π < p_z ; α → Π < p + z_α · se(p) ; α → Π < 0,239 + 2,33 · 0,002 → **Π < 0,244 ; α = 1 %**.
 - Število: N_a < N · 0,244 = 1 696 893 · 0,244 = 414 041,9 → **zaokrožimo navzgor (navzven) → 414 042** (tako dobi prosojnica).
 - Pozor: z se(p) zaokroženim na 0,002 je 0,239 + 0,00466 = 0,2437 → 0,244 (navzgor); natančno 0,2440 — isto.
 
-### Zgled vprašanj (pr. 22) — rešitve
+### Zgled vprašanj — rešitve
 1. Raznolikost vzorčnih ocen merimo s **C. standardno napako** povprečne cene (ne s standardnim odklonom — ta meri raznolikost posameznih parcel).
 2. NI pravilna: **D.** Širina ∝ 1/√n → n z 125 na 250 (2×) → širina se zmanjša za faktor √2 (≈ 29 %), **ne prepolovi**. Za prepolovitev bi rabili 4× večji vzorec. (A, B, C, E držijo.)
 

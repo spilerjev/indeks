@@ -20,6 +20,9 @@ npx esbuild /mnt/user-data/outputs/indeks-app.jsx --bundle --loader:.jsx=jsx \
   --external:lucide-react --external:react --external:react-dom
 ```
 
+## Pravila za vsebino (avtorske pravice) - BERI NAJPREJ
+Glej `CLAUDE.md`: brez dobesednih izpitnih vprašanj in oznak »Izpit 2017«, brez kopij prosojnic in fotografij, podcasti samo iz naših zapiskov.
+
 ## POMEMBNO - stanje pipeline-a (beri najprej)
 Delovni imenik se med sejami **ponastavi**. Ta zip je bil **rekonstruiran iz zgrajenega `indeks-app.jsx`**, zato je struktura poenostavljena:
 
@@ -61,7 +64,6 @@ Struktura `data.json`: `[ {id, name, subjects:[ {id, name, tier, parts:[ {id, na
 ## Odprti TODO-ji
 - **Računovodstvo - računske naloge** (svoj razdelek, `calc:true`): metode vrednotenja proizvodov (Super Frost, "Metoda"), amortizacija (Ciklon), časovne razmejitve kot T-konti, prodaja OOS (3 scenariji). Vir na Drive (mapa Racunovodstvo/Vaje, PDF-ji "Metode vrednotenja proizvodov", "Aktivne in pasivne časovne razmejitve").
 - Več nalog knjiženja (gotovinska prodaja z DDV + stroški prodanih hkrati).
-- Pretekli **izpiti** (Drive: Racunovodstvo/Izpiti) - vključi.
 - **Statistika**: vzorčenje (vzorčne ocene, napake), uravnoteženje dolžine odgovorov.
 - Namestitev / računi / deljenje (deployment).
 

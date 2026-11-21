@@ -1,3 +1,6 @@
+/* ONEMOGOČENO 21. 11. 2026: enkratna skripta, vsebina je že v data.json. Ponoven zagon izbriše komplet Uvoda v poslovanje in ga nadomesti s starim.
+   Vprašanja zdaj nosijo stalni id (CLAUDE.md, razdelek »Stalni id«); popravljaj data.json oz. module v letnik*-src/. */
+throw new Error('add-uvod.js je enkratna skripta in je onemogočena (glej komentar na vrhu datoteke).');
 /* Enkratna skripta: napolni Uvod v poslovanje -> 1. kolokvij (uvod/k1) z vprašanji + zapiski.
    Vir: prosojnice P1-P5 (School/Uvod v poslovanje 1). Zažene se z: node add-uvod.js  (nato node build.js) */
 const fs = require('fs');

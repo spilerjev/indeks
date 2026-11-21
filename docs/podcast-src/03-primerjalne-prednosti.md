@@ -1,4 +1,4 @@
-# Epizoda 3 — Teorija primerjalnih prednosti (P02 + V02)
+# Epizoda 3 — Teorija primerjalnih prednosti
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
@@ -6,13 +6,13 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 *(Povzetek je narejen iz prosojnic.)*
 
-### Prosojnice 1–2: Mednarodna menjava (MM)
+### Mednarodna menjava (MM)
 - **Mednarodna menjava** = menjava blaga in storitev (ter proizvodnih faktorjev) **med državami**, prek državnih meja.
 - **Motivi** so enaki kot pri menjavi znotraj gospodarstva: **pridobitev ekonomske koristi**.
 - Predpostavka: **prosta MM** (brez carin in ovir).
 - Osnovna teorija, ki razlaga vzroke in posledice MM, je **teorija primerjalnih (komparativnih) prednosti**, v dveh inačicah: 1. absolutnih, 2. relativnih prednosti.
 
-### Prosojnice 3–6: Teorija absolutnih primerjalnih prednosti (Adam Smith, 1723–1790)
+### Teorija absolutnih primerjalnih prednosti (Adam Smith, 1723–1790)
 - **Pogoj za MM:** razlike v **absolutnih produktivnostih** (stroških proizvodnje) in posledično v **cenah proizvodov**.
 - Država se **specializira** v proizvodnji dobrine, kjer je **absolutno produktivnejša** (porabi manj ur). To dobrino **izvaža**, drugo **uvaža**.
 - **Primer (ur/liter):**
@@ -26,7 +26,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - **Menjava 1 l O za 1 l V:** SLO proizvede 1 l vina (5 ur) in ga zamenja za 1 l olja, ki bi ga doma proizvajala 8 ur → **prihranek 3 ure**. HR proizvede 1 l olja (7 ur) in dobi 1 l vina, ki bi ga doma proizvajala 9 ur → **prihranek 2 uri**. **Obe državi pridobita.**
 - **Slabost:** teorija ni dovolj splošna. Kaj, če je ena država produktivnejša v **vsem**? Po Smithu menjave ne bi bilo, kar ne drži.
 
-### Prosojnice 7–10: Teorija relativnih primerjalnih prednosti (David Ricardo, 1817; 1772–1823)
+### Teorija relativnih primerjalnih prednosti (David Ricardo, 1817; 1772–1823)
 - Odpravlja slabost teorije absolutnih prednosti.
 - **Pogoj za MM:** razlike v **relativnih produktivnostih** (oportunitetnih stroških, relativnih cenah) med državami. Absolutne razlike niso potrebne.
 - Država se specializira v dobrini, kjer je **relativno najbolj produktivna** (najnižji oportunitetni strošek). To izvaža, drugo uvaža.
@@ -44,7 +44,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
     - HR da 2 P in dobi 1 K. Doma bi 1 K stal 3 P → **prihrani 1 kg P** (v urah: 2 P = 2/3 ure, 1 K doma = 1 ura → prihranek 1/3 ure).
   - **Obe pridobita**, čeprav je SLO v vsem boljša. Menjalno razmerje (2 P : 1 K) mora biti **med** domačima razmerjema (1 in 3).
 
-### Prosojnici 11–12: Koristi pri enakih relativnih produktivnostih (PDF str. 6)
+### Koristi pri enakih relativnih produktivnostih
 
 | Država | Ribe (ur/kg) | Piščanci (ur/kg) | Produktivnost R (kg/uro) | Produktivnost P (kg/uro) | MR (R : P) |
 |---|---|---|---|---|---|
@@ -57,7 +57,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Ali se rezultat spremeni? DA:** **ni relativnih (primerjalnih) prednosti → ni koristi od menjave.** Nobena država ne more kupiti dobrine ceneje, kot jo proizvede doma.
 - **Pogoj za koristno MM** po Ricardu so **razlike v relativnih produktivnostih** (oportunitetnih stroških), ne absolutne razlike.
 
-### Prosojnica 13: Sklepi na osnovi teorije primerjalnih prednosti (PDF str. 7)
+### Sklepi na osnovi teorije primerjalnih prednosti
 
 - **V proizvodnji česa naj se specializira vsaka država?** V proizvodnji dobrine, kjer ima **primerjalno (relativno) prednost**, torej **najnižje oportunitetne stroške** oziroma je relativno najbolj produktivna. Izvaža to dobrino, uvaža pa tisto, kjer ima primerjalno slabost.
 - **Za koga je prosta MM koristna?** Za **vse sodelujoče države**, tudi za tisto, ki je absolutno manj produktivna v vseh proizvodih. Pogoj je, da se relativne produktivnosti razlikujejo in da je menjalno razmerje med obema domačima (avtarkičnima) razmerjema.
@@ -66,7 +66,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Za kakšno MM se je treba zavzemati?** Za **prosto (liberalizirano) mednarodno menjavo**. Od tod teoretična utemeljitev trgovinske liberalizacije, ekonomskih integracij (EU) in WTO.
 - *Opomba:* koristi so na ravni **države kot celote**. Znotraj države so dobitniki in poraženci (izvozne proti uvozno-konkurenčnim panogam), kar je tema P3.
 
-**Dopolnilo s predavanja (prof):**
+**Dopolnilo s predavanja:**
 - **Protekcionizem** = vse oblike **omejevanja** mednarodne menjave (carine, kvote, subvencije, necarinske ovire). Ne želimo si ga.
 - **Dampinške cene (damping)** = prodaja v tujini po ceni, **nižji od cene na domačem trgu** (ali pod stroški), da bi izrinili konkurenco. Gre za **nelojalno konkurenco**, ki si je ne želimo. WTO in EU dovolita **protidampinške dajatve** kot izjemo od proste menjave.
 - Sklep: zavzemamo se za **prosto mednarodno menjavo**.

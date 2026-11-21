@@ -216,7 +216,6 @@ const attach = [
   ['Kratkoročna sredstva 30.000 €, dolgoročna 50.000 €', 'rac-vzvod'],
   ['Podjetje Triglav', 'rac-triglav'],
   ['Plesna šola', 'rac-pcr-ples'],
-  ['Šola jadranja', 'rac-pcr-jadranje'],
   ['Podjetje plača anuiteto dolgoročnega posojila 45.000', 'rac-anuiteta'],
 ].map(([q, fig, o]) => ({ subj: 'rac', q, fig, ...(o || {}) }));
 

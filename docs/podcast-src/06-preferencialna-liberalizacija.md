@@ -1,4 +1,4 @@
-# Epizoda 6 — Preferencialna liberalizacija (P05 + V05)
+# Epizoda 6 — Preferencialna liberalizacija
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
@@ -14,17 +14,17 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 **A) Preferencialna liberalizacija s stroškovno UČINKOVITEJŠO partnerico (P cenejša od ROW) ⭐ — ustvarjanje trgovine**
 - **Začetno stanje (MFN carina T):** ponudba uvoza iz P je vodoravna pri **P_P + T**, iz ROW pri **P_W + T** (P_P < P_W); skupna ponudba = domača ponudba + najcenejši uvoz; uvoz **samo iz P**. Cena na domačem trgu **P_P + T**; cena na meji **P_P**; domača proizvodnja **q₂**, domača potrošnja **q₃**, uvoz **q₃ − q₂ iz P**.
 - **Po odpravi carine za uvoz iz P:** skupna ponudba postane domača + P brez carine (vodoravna pri P_P); domača cena pade na **P_P**; cena na meji **P_P** (ni spremembe); domača proizvodnja se **zmanjša q₂ → q₁**; domača potrošnja se **poveča q₃ → q₄**; uvoz se poveča **q₃ − q₂ → q₄ − q₁**, še vedno iz P. **Enak učinek kot nediskriminacijska (MFN) liberalizacija** (uvoza iz ROW ni tako kot prej).
-- **Blaginja (slika 2.5):** ΔPotrošnikov presežek = **+(A + B + C + D)**; ΔProizvajalčev presežek = **−A**; ΔJF prihodki = **−C**; **ΔW = B + D > 0** (= **ustvarjanje trgovine**: B = proizvodni, D = potrošni učinek).
+- **Blaginja:** ΔPotrošnikov presežek = **+(A + B + C + D)**; ΔProizvajalčev presežek = **−A**; ΔJF prihodki = **−C**; **ΔW = B + D > 0** (= **ustvarjanje trgovine**: B = proizvodni, D = potrošni učinek).
 
 **B) Preferencialna liberalizacija s stroškovno MANJ UČINKOVITO partnerico (P_P > P_W, a P_P < P_W + T) ⭐ — ustvarjanje IN preusmerjanje**
 - **Začetno stanje:** uvoz iz ROW (cenejše), domača cena **P_W + T**, cena na meji **P_W**; proizvodnja q₂, potrošnja q₃, uvoz q₃ − q₂ iz ROW.
 - **Po CU s P:** carina na uvoz iz P odpade → skupna ponudba = domača + P pri **P_P**; domača cena **P_P** (prej P_W + T), cena na meji **P_P** (prej P_W → **višja**); potrošnja ↑ (q₃ → q₄); proizvodnja ↓ (q₂ → q₁); del neučinkovite domače proizvodnje nadomesti cenejši uvoz (**q₂ − q₁**); celoten uvoz (**q₄ − q₁**) se **v celoti preusmeri iz ROW na P**.
-- **Blaginja (slika 2.6):** ΔCS = **+(A + B + C + D)**; ΔPS = **−A**; ΔJF = **−(C + G)**; **ΔW = (B + D) − G**.
+- **Blaginja:** ΔCS = **+(A + B + C + D)**; ΔPS = **−A**; ΔJF = **−(C + G)**; **ΔW = (B + D) − G**.
   1. **pozitiven učinek (+): ustvarjanje trgovine (B + D)**;
   2. **negativen učinek (−): preusmerjanje trgovine (G)**, angl. *border price effect* (povišanje cene na meji s P_W na P_P): G = (P_P − P_W) × (q₃ − q₂) prvotnega uvoza, država zdaj plača **več za isto količino** in izgubi carinski prihodek. Pozitivni učinek B + D je *trade volume effect* (učinek obsega trgovanja). Fotografija: `Predavanja/P5_fotografije s predavanja/manj_ucinkovita_partnerica_blaginja.webp`.
   3. **Trije sklopi držav:** domača (H), partnerica (P) in **ostali svet (ROW)**, ki ni del integracije.
 
-**Logika Vinerjeve nejasnosti (pr. 6):** 1. **Liberalizacija (+) = ustvarjanje trgovine:** draga domača proizvodnja se nadomesti z ceneje uvoženim blagom iz partnerice in potrošniki kupijo več po nižji ceni. 2. **Diskriminacija (−) = preusmerjanje trgovine:** uvoz se preusmeri **iz stroškovno učinkovitejšega ROW na manj učinkovito partnerico (P)**, ker je ROW diskriminiran s carino. Koncept je priljubljen kljub pomanjkljivostim, ker je **preprost, nazoren** in omogoča jasno ločevanje obeh učinkov (tudi empirično) 🔎. Za EU proces je bila značilna vrsta **recipročnih** preferencialnih liberalizacij → proučujemo 3 (skupine) držav; RoW = *rest of the world*.
+**Logika Vinerjeve nejasnosti:** 1. **Liberalizacija (+) = ustvarjanje trgovine:** draga domača proizvodnja se nadomesti z ceneje uvoženim blagom iz partnerice in potrošniki kupijo več po nižji ceni. 2. **Diskriminacija (−) = preusmerjanje trgovine:** uvoz se preusmeri **iz stroškovno učinkovitejšega ROW na manj učinkovito partnerico (P)**, ker je ROW diskriminiran s carino. Koncept je priljubljen kljub pomanjkljivostim, ker je **preprost, nazoren** in omogoča jasno ločevanje obeh učinkov (tudi empirično) 🔎. Za EU proces je bila značilna vrsta **recipročnih** preferencialnih liberalizacij → proučujemo 3 (skupine) držav; RoW = *rest of the world*.
 
 **Dopolnilo s predavanja (10. 11.):** pri stroškovno **učinkovitejši** partnerici je prisoten **samo učinek ustvarjanja trgovine**: uvoz se poveča, ker del proizvodnje neučinkovitih domačih proizvajalcev nadomesti cenejši uvoz iz P (in potrošniki kupijo več). Učinek je **enak kot pri MFN (nediskriminacijski) liberalizaciji**.
 
@@ -39,7 +39,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - Preferencialna liberalizacija **ne vodi vedno k povečanju blaginje** (Vinerjeva nejasnost), nasprotno od **nediskriminacijskega (MFN)** znižanja carin.
 - Učinek na tretje države je vedno negativen → **nediskriminacijsko znižanje carin je v tej teoriji vedno boljše** kot oblikovanje FTA/CU.
 - **Zakaj WTO dovoljuje integracije?** 🔎 ker integracije lahko izboljšajo blaginjo članic (ustvarjanje trgovine, dinamični učinki: ekonomije obsega, konkurenca, naložbe), ker imajo politične cilje, in ker čl. 24 postavlja pogoje, da ne gre za skriti protekcionizem.
-**Verjetnost, da integracija poveča blaginjo, je večja (Artis & Lee 1997; učbenik str. 73), če/čim:** (1) višje so začetne carine nasproti partnericam in nižje nasproti nečlanicam; (2) manjša je razlika v proizvodnih stroških med tretjimi državami in partnericami; (3) imajo članice podobno proizvodno strukturo in velike razlike v stroških teh podobnih proizvodov (konkurenčne, ne komplementarne gospodarstva); (4) večji je delež integracije v svetovni proizvodnji/trgovini/potrošnji (integriraš se z glavnimi trgovinskimi partnerji); (5) pri transportnih stroških: partnerice so geografsko blizu.
+**Verjetnost, da integracija poveča blaginjo, je večja (Artis & Lee 1997), če/čim:** (1) višje so začetne carine nasproti partnericam in nižje nasproti nečlanicam; (2) manjša je razlika v proizvodnih stroških med tretjimi državami in partnericami; (3) imajo članice podobno proizvodno strukturo in velike razlike v stroških teh podobnih proizvodov (konkurenčne, ne komplementarne gospodarstva); (4) večji je delež integracije v svetovni proizvodnji/trgovini/potrošnji (integriraš se z glavnimi trgovinskimi partnerji); (5) pri transportnih stroških: partnerice so geografsko blizu.
 
 ### 2. del — WTO, FTA vs. CU, Kemp–Wan, empirija
 **WTO načela:** osnovno načelo GATT/WTO = **nediskriminacija** (MFN). FTA in CU to načelo kršijo; **člen 24 GATT dovoljuje FTA/CU pod pogoji:** (1) sporazum mora pokriti **bistveni del trgovine** (*substantially all the trade* — ni dovoljeno izbrati le posameznih sektorjev); (2) carine znotraj integracije morajo biti **odpravljene (v razumnem roku)** 🔎; (3) **CU: skupna zunanja tarifa ne sme biti višja/bolj restriktivna kot carine članic pred ustanovitvijo CU**. Primer učinka CU v EGS (1968): delež uvoza EEC-6 iz EEC-6 narašča.
@@ -50,7 +50,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 ---
 
-## 📒 Dopolnilni zapiski — P04, P05 in V03 (teden 3.–7. 11. 2026)
+## 📒 Dopolnilni zapiski — P04, P05 in V03
 > Vir: `Predavanja/P4-EUSLO_carine_Canvas.pdf`, `Predavanja/P5-EUSLO_preferencialna-liberalizacija_2026_Canvas.pdf`, `Vaje/vaje3_MM_2026.pdf`. Izpolnjene prosojnice s predavanj potrjujejo zgornje (tudi 🔎 ugibanja); spodaj le, kar je dodatno ali je bilo rečeno na glas.
 
 ### P04 — carine (izpolnjene črte)
@@ -121,7 +121,7 @@ j) glede na začetek (carina 30 %, P = 26): ΔCS = 6 · (13,5 + 15)/2 = **+85,5*
   - **ΔW = +24**
   - Kontrola: od začetka (P = 26) −6 + 24 = **+18** ✓.
   - Ročna rešitev (ΔW = 2,5) meša CS glede na f) (58) in PS glede na začetek (55,5) → **napačno**.
-**Graf partnerske države (P5, prosojnici 13–14, slika 2.7), razlaga:**
+**Graf partnerske države, razlaga:**
 - **Pred CU:** v P je cena **P_W** (P izvaža po svetovni ceni). Potrošnja q6, proizvodnja q7, izvoz **q7 − q6**.
 - **Po CU:** H odpravi carino samo za P, ROW pa še vedno plača T. Izvozniki iz P lahko v H prodajajo dražje kot prej (do P_W + T). Ker je izvozna ponudba P **naraščajoča** (P ni majhna), se cena ustali **vmes: P_W < P_CU < P_W + T**.
 - **Cena v obeh državah se oblikuje na P_CU:** tudi doma v P cena zraste na P_CU, ker proizvajalci doma ne bodo prodajali ceneje, kot dobijo v H.
@@ -129,7 +129,7 @@ j) glede na začetek (carina 30 %, P = 26): ΔCS = 6 · (13,5 + 15)/2 = **+85,5*
 - **Blaginja P:** potrošniki **−I** (trapez med P_W in P_CU levo do D_P), proizvajalci **+(I + J)** (trapez med P_W in P_CU do S_P) → **ΔW = J** = (P_CU − P_W) · [(q8 − q5) + (q7 − q6)] / 2 > 0.
 - **Desni graf (H):** TS₁ = skupna ponudba v H (domača S_H + naraščajoča izvozna ponudba partnerice). Domača cena pade s P_W + T na **P_CU** (in ne vse do P_P kot pri majhni državi). Ploskve A, B, C, D, G kot prej.
 
-**Profova rešitev na tabli (P5, učinek na blaginjo partnerske države, prosojnica 13):**
+**Profova rešitev na tabli (učinek na blaginjo partnerske države):**
 
 | | Pred integracijo | Po integraciji (CU) |
 |---|---|---|
@@ -144,7 +144,7 @@ j) glede na začetek (carina 30 %, P = 26): ΔCS = 6 · (13,5 + 15)/2 = **+85,5*
 - **2 pozitivna učinka:** 1) **+ obseg trgovine** (večji izvoz), 2) **+ višja cena: P_W → P_CU**. Na tabli je pripisano **Meade**: James Meade (1955) je analizo razširil na partnerico in učinke cen/obsega.
 - Fotografija: `Predavanja/P5_fotografije s predavanja/partnerica_blaginja_profova_resitev.webp`
 
-**Prosojnica 16: Učinek na blaginjo tretjih držav (RoW), graf**
+**Učinek na blaginjo tretjih držav (RoW), graf**
 - Opustitev predpostavke majhne države. RoW je **izvoznik** (D_W in S_W na trgu RoW).
 - Cene: **P_FT** (prosta trgovina), **P_MFN** (cena, ki jo RoW dobi pri MFN carini, pred CU), **P_CU−T** (po CU: v H se cena zniža na P_CU, RoW pa še vedno plača carino T → dobi le **P_CU − T**, torej še nižjo ceno).
 - Pred CU (P_MFN): povpraševanje q9, ponudba q12 → izvoz **q12 − q9**. Po CU (P_CU−T): povpraševanje q10, ponudba q11 → izvoz **q11 − q10 (↓)**.

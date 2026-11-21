@@ -1,12 +1,12 @@
-# Epizoda 1 — Osnovni pojmi in opisna statistika (P01 + V01)
+# Epizoda 1 — Osnovni pojmi in opisna statistika
 
 Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
 ## P01 — Uvod (ponovitev osnovnih pojmov, opisna statistika)
 
-Vir: gradivo (12 prosojnic)
+Vir: gradivo
 
-### Statistika (prosojnice 2–3)
+### Statistika
 - **Definicija** (Statistični terminološki slovar, 2001):
   - znanost o metodah zbiranja, analize in predstavitve podatkov;
   - zbiranje, obdelava in objavljanje podatkov;
@@ -22,7 +22,7 @@ Vir: gradivo (12 prosojnic)
   - Mosteller: »S statistiko je enostavno lagati, še bolj enostavno pa brez.«;
   - Wilks: statistično razmišljanje bo enako pomembno kot branje in pisanje.
 
-### Osnovni statistični pojmi (prosojnice 4–5)
+### Osnovni statistični pojmi
 | Pojem | Pomen | Oznaka |
 |---|---|---|
 | Populacija | množica vseh enot, ki nas zanimajo (krajevni, časovni, stvarni pogoji) | P(u₁, u₂, …, u_N) |
@@ -40,7 +40,7 @@ Vir: gradivo (12 prosojnic)
   - enota je študent (Š1 … Š444), torej N = 444;
   - spremenljivke so LR (leto rojstva), SŠ (srednja šola), Matura (točke), OS (ocena pri Osnovah statistike).
 
-### Merske lestvice (prosojnici 6–7) ⭐
+### Merske lestvice ⭐
 
 Od merske lestvice je odvisno, **katere parametre smemo izračunati**. Lestvico določimo glede na to, kako lahko primerjamo dve vrednosti y_A in y_B.
 
@@ -91,7 +91,7 @@ Od merske lestvice je odvisno, **katere parametre smemo izračunati**. Lestvico 
 2. Ali ima razlika pomen? Če ne, je **ordinalna**.
 3. Ali ima ničla pomen, tako da je smiselno razmerje? Če ne, je **intervalna**, sicer je **razmernostna**.
 
-### Opisna in sklepna statistika (prosojnice 8–9)
+### Opisna in sklepna statistika
 - **Opisna (deskriptivna) statistika:** iz populacije velikosti N izračunamo **parameter**. Sem spadajo:
   - frekvenčne porazdelitve, tabele in grafikoni;
   - srednje vrednosti (μ, Me, Mo);
@@ -103,7 +103,7 @@ Od merske lestvice je odvisno, **katere parametre smemo izračunati**. Lestvico 
   - dobimo **porazdelitev vzorčnih ocen**;
   - ugotovitve posplošimo na populacijo.
 
-**Poglobljeno (prosojnica 8):**
+**Poglobljeno:**
 
 | | Opisna statistika | Sklepna statistika |
 |---|---|---|
@@ -139,12 +139,12 @@ Od merske lestvice je odvisno, **katere parametre smemo izračunati**. Lestvico 
 
 - Pri vzorčni varianci delimo z **n − 1**. S tem dobimo nepristransko oceno, ker smo μ nadomestili z ocenjeno ȳ in eno prostostno stopnjo »porabili«.
 
-### Univariatna, bivariatna in multivariatna analiza (prosojnica 10)
+### Univariatna, bivariatna in multivariatna analiza
 - **Univariatna analiza (1 spremenljivka):** povprečna ocena pri SA.
 - **Bivariatna analiza (2 spremenljivki):** povezava med oceno pri SA in oceno pri OS.
 - **Multivariatna analiza (več kot 2 spremenljivki):** ocena pri SA v odvisnosti od OS, Matematike in kohezijske regije.
 
-### Zgledna izpitna vprašanja (prosojnici 11–12) — rešitve
+### Zgledna izpitna vprašanja — rešitve
 1. **Kaj je statistična enota?** Odgovor je **E (zaposlena oseba)**.
    - C (vsi zaposleni) je populacija.
    - B in D sta spremenljivki.
@@ -198,22 +198,22 @@ Od merske lestvice je odvisno, **katere parametre smemo izračunati**. Lestvico 
 | | Populacija / vzorec | Enota | Spremenljivka (lestvica) | Parameter / ocena |
 |---|---|---|---|---|
 | a) | **populacija**: vsa gospodinjstva v občini | gospodinjstvo | število članov (razmernostna) | **modus** = 4 (parameter) |
-| b) | **vzorec** 5 % vpisanih študentov EF | študent | tel. številka (imenska, samo oznaka!), kraj prebivališča (imenska), oddaljenost (razmernostna) | **ocena modusa: Mo = Ljubljana** (po profesorju); posledično ocena deleža v LJ > 0,5 |
+| b) | **vzorec** 5 % vpisanih študentov EF | študent | tel. številka (imenska, samo oznaka!), kraj prebivališča (imenska), oddaljenost (razmernostna) | **ocena modusa: Mo = Ljubljana**; posledično ocena deleža v LJ > 0,5 |
 | c) | **vzorec** 2 % pošiljke žarnic | žarnica | **kakovost žarnice** (pokvarjena / brezhibna): kategorialna, imenska, **dihotomna** (2 vrednosti) | **ocena** deleža pokvarjenih = 0,10 |
 | d) | **populacija**: vsi zaposleni v podjetju | zaposleni | neto plača (razmernostna) | **kvantil**: prvi kvartil Q₁ = 1200 € (parameter) |
 
-- **Kvantil** (profesor na vajah) je vrednost, ki deli populacijo na **dva dela**: pod njo je določen delež enot, nad njo pa ostanek.
-  - Q₁ = 1200 € pomeni: **četrtina zaposlenih ima plačo do VKLJUČNO 1200 €, ostali (75 %) pa VEČ kot 1200 €** (profesor poudaril).
+- **Kvantil** je vrednost, ki deli populacijo na **dva dela**: pod njo je določen delež enot, nad njo pa ostanek.
+  - Q₁ = 1200 € pomeni: **četrtina zaposlenih ima plačo do VKLJUČNO 1200 €, ostali (75 %) pa VEČ kot 1200 €**.
   - Kvantil **ni delež**: delež je v kvantilu podan vnaprej, kvantil pa je **vrednost** spremenljivke (v €).
   - Posebni kvantili so mediana (50 %), kvartili (25/50/75 %), decili (10 %, 20 % …) in percentili.
-- **Delež** (oz. ocena deleža) je **najpogostejši parameter pri kategorialnih spremenljivkah** (profesor na vajah). Drugi je modus.
+- **Delež** (oz. ocena deleža) je **najpogostejši parameter pri kategorialnih spremenljivkah**. Drugi je modus.
 - Vzorec → govorimo o **oceni** parametra; populacija → o **parametru**.
 - Telefonska številka je kljub številkam **imenska** spremenljivka.
 
 ### Naloga 2: letni neto prejemki (n = 46, v tisoč €)
 **a) Enota:** en zaposleni (v finančni industriji). **Spremenljivka:** letni neto prejemki **(v 1000 €)**, razmernostna.
 
-> ⚠️ **Izpit (profesor):** pri spremenljivki **vedno napiši mersko enoto** (tu: v 1000 €). **Ne krajšaj** imena spremenljivke, ne piši npr. »LNP«, ampak »letni neto prejemki«.
+> ⚠️ **Izpit:** pri spremenljivki **vedno napiši mersko enoto** (tu: v 1000 €). **Ne krajšaj** imena spremenljivke, ne piši npr. »LNP«, ampak »letni neto prejemki«.
 
 | Ocena | Formula | Vrednost |
 |---|---|---|
@@ -225,7 +225,7 @@ Od merske lestvice je odvisno, **katere parametre smemo izračunati**. Lestvico 
 | koeficient variacije | kv = s / ȳ | **0,419 (41,9 %)** |
 | mediana (za primerjavo) | | 25,05 |
 
-- **⚠️ Izpit: kako zapisati izračun (profesor)**
+- **⚠️ Izpit: kako zapisati izračun**
 1. Napiši **formulo**.
 2. **Vstavi številke** vanjo, da se vidi postopek.
 3. Napiši **rezultat**.
@@ -302,7 +302,7 @@ Samo formula in »x = 16« ni dovolj, ker izgleda prepisano.
 - **F₃ = 44:** 44 v vzorec vključenih zaposlenih ima letne neto prejemke **do vključno 60,5 · 1000 € = 60.500 €**.
 - **F₃° = 0,957:** 95,7 % v vzorec vključenih zaposlenih ima letne neto prejemke **do vključno 60.500 €**.
 
-**Sredina razreda (profesor):** sredina razreda je **reprezentant vseh vrednosti v posameznem razredu**. Brez sredin razredov frekvenčne porazdelitve v R ne moremo narediti. Vsako vrednost nadomestimo s sredino njenega razreda z ukazom `recode(...)` iz paketa `car`.
+**Sredina razreda:** sredina razreda je **reprezentant vseh vrednosti v posameznem razredu**. Brez sredin razredov frekvenčne porazdelitve v R ne moremo narediti. Vsako vrednost nadomestimo s sredino njenega razreda z ukazom `recode(...)` iz paketa `car`.
 
 **c) Ocene iz razvrščenih podatkov** (vsaka vrednost nadomeščena s sredino razreda):
 - ȳ = 32,67, s² = 235,17, s = 15,34, kv = 46,9 %.
@@ -311,7 +311,7 @@ Samo formula in »x = 16« ni dovolj, ker izgleda prepisano.
   - Iz nerazvrščenih podatkov bi bil P₉₀ ≈ 45,05.
   - 90 % oseb ima torej prejemke največ ~50 tisoč €.
 
-### Frekvenčna porazdelitev v R: `frq` in `freq` (profesor) ⭐ 1. kolokvij
+### Frekvenčna porazdelitev v R: `frq` in `freq` ⭐ 1. kolokvij
 **`frq()` iz paketa `sjmisc`:** ta tabela bo **zagotovo na 1. kolokviju**, z zbrisanimi vrednostmi, ki jih moraš dopolniti.
 
 ```

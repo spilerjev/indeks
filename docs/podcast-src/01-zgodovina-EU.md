@@ -1,10 +1,10 @@
-# Epizoda 1 — Zgodovina evropskega povezovanja (P01)
+# Epizoda 1 — Zgodovina evropskega povezovanja
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
 ## P01 — Zgodovina EU
 
-### Stran 2 (prosojnici 3–4): Razrušena Evropa
+### Razrušena Evropa
 
 **Kaj prikazujeta:** fotografije uničenja v 2. svetovni vojni.
 - **Berlin 1945:** Reichstag, Frankfurter Allee, Unter der Linden, Brandenburška vrata, Berlinska katedrala (posnetek iz 1945 ob posnetku iz 1997 → obnova).
@@ -19,7 +19,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 **Za izpit:** zapomni si vzročno verigo *uničenje v vojni → potreba po miru in obnovi → gospodarsko povezovanje kot sredstvo za mir*.
 
-### Ključno vprašanje leta 1945 (PDF str. 3, prosojnica 5)
+### Ključno vprašanje leta 1945
 
 - **Zakaj 2. svetovna vojna?** Več razlogov, med njimi **politika siromašenja sosedov** (*beggar-thy-neighbour*): v 1930-ih so države s carinami, kvotami in devalvacijami reševale sebe na račun drugih → propad trgovine, kriza, nacionalizem.
 - **Kako preprečiti naslednjo vojno?** Kaj je povzročilo vojno:
@@ -30,9 +30,9 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - **»nevtralizirati« Nemčijo: Morgenthaujev plan (1944)** za deindustrializacijo in kmetijsko državo,
   - sprejeti komunizem,
   - **začeti s procesom evropskega integriranja**.
-- **Dejanska rešitev:** **evropska integracija** + močna Zahodna Nemčija (zaradi hladne vojne, glej prosojnico 6).
+- **Dejanska rešitev:** **evropska integracija** + močna Zahodna Nemčija (zaradi hladne vojne).
 
-### Razdeljena Evropa (PDF str. 3–4, prosojnice 6–8)
+### Razdeljena Evropa
 
 - **Začetek hladne vojne:**
   - SZ vzpostavi komunizem na Vzhodu,
@@ -41,10 +41,10 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Oblikovanje zahodnonemške države:** **blokada Berlina 1948** (SZ zapre kopenske poti, zahod odgovori z zračnim mostom) → **nastanek ZRN 1949** (in NDR oktobra 1949).
 - Koncept **»nevtralizirati« Nemčijo zamenja močna Zahodna Nemčija + evropska integracija**.
 - **Vojaški zvezi:** **NATO (1949–)** in **Varšavski pakt (1955–1991)**.
-- Prosojnica 7: zemljevid. Zahod (modro), komunistični vzhod (rdeče), nevtralne in nevezane države (rumeno: Švica, Avstrija, Švedska, Finska, Irska, Jugoslavija, Španija, Portugalska).
-- Prosojnica 8: **Berlinski zid** (zgrajen **13. 8. 1961**, padel 9. 11. 1989), prehod Charlie 1961 (soočenje ameriških in sovjetskih tankov), stražni stolpi, ostanki zidu na Potsdamer Platzu.
+- Zemljevid. Zahod (modro), komunistični vzhod (rdeče), nevtralne in nevezane države (rumeno: Švica, Avstrija, Švedska, Finska, Irska, Jugoslavija, Španija, Portugalska).
+- **Berlinski zid** (zgrajen **13. 8. 1961**, padel 9. 11. 1989), prehod Charlie 1961 (soočenje ameriških in sovjetskih tankov), stražni stolpi, ostanki zidu na Potsdamer Platzu.
 
-### Stran 5 (prosojnici 9–10): Prvi koraki k evropski integraciji (ne-EU)
+### Prvi koraki k evropski integraciji (ne-EU)
 
 **Marshallov načrt (1948–1951)** = ERP (*European Recovery Plan*): ameriška pomoč za obnovo Evrope. Iz njega sta nastali dve instituciji:
 
@@ -99,16 +99,16 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 | Ekonomija | reparacije, protekcionizem, »siromašenje sosedov« | Marshallova pomoč, liberalizacija, OEEC/EPU |
 | Rezultat | kriza, nacionalizem, nova vojna | rast, mir, evropska integracija |
 
-### Stran 6 (prosojnici 11–12): Poglobitev integracije, dva pristopa
+### Poglobitev integracije, dva pristopa
 
-**Prosojnica 11: zakaj je bilo treba integracijo poglobiti (okoli leta 1950)**
+**Zakaj je bilo treba integracijo poglobiti (okoli leta 1950)**
 - Hladna vojna se je zaostrovala (blokada Berlina 1948, korejska vojna 1950).
 - Leta 1949 je nastala ZRN in ZDA so želele, da se **oboroži** proti SZ.
 - Francija se je bala **močne in neodvisne ZRN** (izkušnja po Versaillesu in dveh vojnah).
 - OEEC je bila **prešibak instrument**: bila je samo medvladna, brez pristojnosti in s soglasnim odločanjem.
 - **Rešitev:** Nemčijo **vključiti** in njeno vojno industrijo (premog, jeklo) postaviti pod skupni **nadnacionalni** nadzor. To je bila Schumanova deklaracija 1950 → **ESPJ 1951**.
 
-**Prosojnica 12: dva pristopa k integraciji**
+**Dva pristopa k integraciji**
 
 | | **Federalni** (nadnacionalni) | **Medvladni** |
 |---|---|---|

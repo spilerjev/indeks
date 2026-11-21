@@ -127,7 +127,7 @@ const CFG = {
     { id: 'mpsp-rac-v34', name: 'Računske: razmestitev, napovedovanje, regresija (vaje 3–4)', from: ['mpsp-v3-rac', 'mpsp-maja-rac'], calc: true },
   ],
   'y2s1/mpsp/izpit': [
-    { id: 'mpsp-izpit12', name: 'Stara izpitna vprašanja: zaloge, MRP, planiranje, kakovost', from: ['mpsp-izpit', 'mpsp-izpit2'] },
+    { id: 'mpsp-izpit12', name: 'Naloge v slogu izpita: zaloge, MRP, planiranje, kakovost', from: ['mpsp-izpit', 'mpsp-izpit2'] },
     'mpsp-izpit3',
     { id: 'mpsp-v56', name: 'Vaje 5-6: planiranje zmogljivosti, drevo odločanja, simulacija, lokacija', from: ['mpsp-v56-teorija', 'mpsp-v56-drevo'] },
     'mpsp-v56-rac',

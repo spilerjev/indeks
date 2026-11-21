@@ -1,10 +1,10 @@
-# Epizoda 6 — Osnove preizkušanja domnev (P06 + V06)
+# Epizoda 6 — Osnove preizkušanja domnev
 
 Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
 ## P06 — Osnove statističnega preizkušanja domnev
 
-### Pr. 2 – ponovitev P05 (predavanje 10. 11. 2026, zapisi s table)
+### Ponovitev P05 (predavanje 10. 11. 2026, zapisi s table)
 - **Točnost vs. natančnost** (tarče na tabli):
   - natančno + **pristransko** → **netočno** (zadetki skupaj, a mimo centra)
   - **nenatančno** + nepristransko → **netočno** (zadetki okoli centra, a razpršeni)
@@ -15,7 +15,7 @@ Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj,
 - **Stratificirano vs. ESV:** ESV ločeno po stratumih → manjša variabilnost znotraj stratumov → manjša varianca cenilke → manjša SE → **ožja (natančnejša) intervalna ocena pri isti α in istem n**.
 - Bistvena pomanjkljivost **kvotnega** vzorčenja: **ni verjetnostno (slučajno)** → ne moremo sklepati na populacijo.
 
-### Pr. 3 – profesorica (10. 11.)
+### Profesorica (10. 11.)
 - Preizkušanje domnev = **osrednji del semestra**.
 - Dva pogosta načina sklepanja: **intervalna ocena** ali **preizkušanje domnev**. Intervalna ocena je uporabna predvsem pri **velikih vzorcih** — pri majhnih je se velika (širok, neuporaben interval) in ne velja predpostavka normalnosti (n ≥ 100).
 - **Razlika v logiki:** pri intervalni oceni nič ne predpostavimo — iz vzorca ocenimo, kje je parameter. Pri preizkusu domneve **najprej nekaj predpostavimo** (H₀, npr. μ = 2 kg) in nato preverimo, ali vzorec tej predpostavki preveč nasprotuje.
@@ -32,7 +32,7 @@ Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj,
 - Primeri: H₀: μ = 2 kg, H₁: μ ≠ 2 kg; H₀: μ ≥ 2, H₁: μ < 2; H₀: μ₁ ≤ μ₂, H₁: μ₁ > μ₂; H₀: σ₁ = σ₂, H₁: σ₁ ≠ σ₂; H₀: f_j = f′_j (skladnost porazdelitve).
 - **Nesestavljene** domneve (po ena vrednost v H₀ in H₁: Γ = Γ₀ proti Γ = Γ₁) — v praksi redke. **Sestavljene** (v praksi običajne): H₁ ima **več možnih vrednosti** (≠, <, >).
 
-**Pr. 4 – profesorica (10. 11.):** H₀ = domneva, ki jo želimo preveriti; vanjo **praviloma dvomimo** (ne vedno). Če ji na podlagi vzorca ne moremo verjeti → zavrnemo in sklepamo v skladu s H₁. Domneve vedno **v parih** (H₀ + H₁ = logično nasprotje).
+**Profesorica (10. 11.):** H₀ = domneva, ki jo želimo preveriti; vanjo **praviloma dvomimo** (ne vedno). Če ji na podlagi vzorca ne moremo verjeti → zavrnemo in sklepamo v skladu s H₁. Domneve vedno **v parih** (H₀ + H₁ = logično nasprotje).
 - **Pravilo: enačaj (=, ≥, ≤) je VEDNO v H₀**; H₁ ima ≠, < ali >.
 - Tri variante (hlebec 2 kg):
   | Kaj želimo dokazati | H₀ | H₁ | preizkus |
@@ -41,7 +41,7 @@ Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj,
   | hlebci so **prelahki** | μ ≥ 2 | μ < 2 | enostranski levi |
   | hlebci so **pretežki** | μ ≤ 2 | μ > 2 | enostranski desni |
 
-**Pr. 5 – profesorica:** nesestavljena = v domnevi **ena sama točka na premici** (H₀ in H₁ = dve konkretni, različni vrednosti) → redko v praksi. Sestavljena = **več vrednosti** → običajno.
+**Profesorica:** nesestavljena = v domnevi **ena sama točka na premici** (H₀ in H₁ = dve konkretni, različni vrednosti) → redko v praksi. Sestavljena = **več vrednosti** → običajno.
 - Preverjeno (⚠️ delno): »v H₁ so vse vrednosti razen ničelne« drži le pri **dvostranskem** (H₁: μ ≠ μ₀). Pri enostranskem je v H₁ samo **ena stran** (μ < μ₀), druga stran (μ > μ₀) pa spada v H₀ → takrat je sestavljena tudi H₀ (μ ≥ μ₀). Skupaj H₀ ∪ H₁ vedno pokrijeta vse možnosti.
 
 ### Pravilni in nepravilni sklepi ⭐
@@ -101,7 +101,7 @@ Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj,
 - **p enostranskega = p dvostranskega / 2** (če je ocena na »pravi« strani).
 - **ASA 2016:** p = 0,05 se uporablja, ker je pač navada. **Nizka p ≠ nujno vsebinska pomembnost** (statistična vs. praktična značilnost). Zlorabe: objavljanje samo značilnih rezultatov, manipulacija vzorca, naknadno postavljanje domnev po poznavanju rezultatov.
 
-### Zgled vprašanj (pr. 28–29)
+### Zgled vprašanj
 **1. Plašči:** proizvajalec želi **dokazati** porast trajnosti s 45 000 na 50 000 km (σ = 8000 znan, n = 25) → dokazovana trditev gre v H₁, trenutno stanje v H₀ → **B: H₀: μ = 45 000 ; H₁: μ = 50 000** (nesestavljeni domnevi, kot pri primeru 6.1 a). Ostali odgovori so napačni: A in D mešata σ² oz. ȳ (ocene) v domnevi — domneve so vedno o **parametru**, ne o vzorčni oceni; C in E dajo dokazovano trditev v H₀.
 **2.** Slika z oznakami (porazdelitvi H₀ in H₁, α, β) je slika — razlaga: α = ploščina H₀-porazdelitve v K, β = ploščina H₁-porazdelitve v S, 1 − β = ploščina H₁ v K.
 
@@ -121,7 +121,7 @@ Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj,
 - **Enostranski preizkus:** H₁ z znakom **<** ali **>**. Kritično območje je samo na **eni** strani: pri < na **levi**, pri > na **desni**.
 - **Beseda 8:** profesor je v besedilu »in je zato ne bi zavrnili« zamenjal z »**in jo zato sprejmemo**«. Sklep »H₀ velja«, ko v resnici velja H₁, je **napaka 2. vrste**.
 
-**Pojmi (profesor):**
+**Pojmi:**
 - **Statistična domneva** je trditev o vrednosti nekega parametra v populaciji.
 - **Ničelna domneva H₀** je domneva, ki jo **preverjamo** na podlagi vzorčnih podatkov. Vedno vsebuje enačaj (=, ≤, ≥).
 - **Alternativna domneva H₁** je trditev, ki **nasprotuje ničelni domnevi**: H₀ in H₁ se izključujeta in skupaj pokrijeta vse možnosti. Vanjo zapišemo trditev, ki jo želimo **dokazati**. Sprejmemo jo, če H₀ zavrnemo.
@@ -135,14 +135,14 @@ Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj,
 - **α** (stopnja značilnosti) si izberemo sami, npr. 5 %.
 - **β** lahko izračunamo samo, če je H₁ **nesestavljena** (Naloga 1, beseda 9).
 - **Moč preizkusa** (1 − β) je verjetnost, da H₀ pravilno zavrnemo, ko res ne velja.
-- ⚠️ **Izpit (profesor):** nikoli ne reci »**sprejmemo H₀**«, ampak »**H₀ ne moremo zavrniti**«.
+- ⚠️ **Izpit:** nikoli ne reci »**sprejmemo H₀**«, ampak »**H₀ ne moremo zavrniti**«.
   - Analogija s sodiščem: sodnik razsodi »**not guilty**« (ni dokazov za krivdo), ne pa »innocent« (nedolžen).
   - Ne zavrnjena H₀ pomeni le, da podatki ne nasprotujejo H₀, ne pa, da je dokazana.
-- **Zakaj nikoli ne »sprejmemo« H₀** (profesor):
+- **Zakaj nikoli ne »sprejmemo« H₀**:
   - Če je ocena na vzorcu blizu H₀ in bi H₀ sprejeli, lahko naredimo **napako 2. vrste (β)**. Njene verjetnosti ne poznamo, ker je H₁ sestavljena.
   - Zato H₀ ne sprejmemo, ampak rečemo **»H₀ ne moremo zavrniti«**. Odločitev zadržimo: podatki ne zadoščajo za sklep.
   - β lahko zmanjšamo z **večjim vzorcem** (manjša standardna napaka), ne pa z izbiro, kot jo imamo pri α.
-- **Najvišja še dopustna stopnja značilnosti je α = 0,05** (profesor).
+- **Najvišja še dopustna stopnja značilnosti je α = 0,05**.
   - Če je **p-vrednost > 0,05**, smo v območju, ko **H₀ ne moremo zavrniti**.
   - Če je **p ≤ 0,05**, H₀ zavrnemo.
   - Pri 2a je p = 0,0124 ≤ 0,05, zato zavrnemo; pri 2b je p = 0,9938 > 0,05, zato ne moremo zavrniti.
@@ -160,7 +160,7 @@ a) **H₀: μ = 4000; H₁: μ ≠ 4000** (dvostranski). Z-preizkus (Y normalna,
 b) **H₀: μ ≥ 4000; H₁: μ < 4000** (enostranski levi). Kritična z = −1,645; z = +2,5 je v območju sprejema → **H₀ ne zavrnemo**; p = P(Z < 2,5) = **0,9938**. Ni dokaza, da je stroj počasnejši (vzorec je celo višji od 4000).
 c) **H₀: μ ≤ 4000; H₁: μ > 4000** (enostranski desni). Kritična z = +1,645; 2,5 > 1,645 → **zavrnemo H₀**; p = P(Z > 2,5) = **0,0062** (= 0,0124/2). Stroj ima značilno **večjo** zmogljivost od pogodbene.
 
-**4. korak: sklep ima dva dela** (profesor):
+**4. korak: sklep ima dva dela**:
 - **Statistični sklep:** pri α = 0,05 **zavrnemo H₀** (μ = 4000) in **sprejmemo H₁**: aritmetična sredina **ni enaka** 4000.
   - ⚠️ **Ne** sprejmemo, da je μ = 4050. 4050 je samo vzorčna ocena, prave vrednosti μ ne poznamo. Sprejmemo le trditev iz H₁ (μ ≠ 4000).
 - **Vsebinski sklep:** »Povprečna zmogljivost stroja **ni enaka** predvideni s kupoprodajno pogodbo.«

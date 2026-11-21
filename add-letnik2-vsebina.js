@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { render } = require('./letnik2-src/md-notes');
+const { scrubSources } = require('./letnik2-src/notes-sources');
 
 const DATA_PATH = path.join(__dirname, 'data.json');
 const SCHOOL = path.join(process.env.HOME, 'Documents/School');
@@ -16,6 +17,8 @@ if (!fs.existsSync(bak)) fs.writeFileSync(bak, JSON.stringify(data));
 const sem = data.find((s) => s.id === 'y2s1');
 if (!sem) throw new Error('Ni semestra y2s1 - najprej zaženi add-letnik2.js');
 
+const IDS = require('./ids-lib');   // stalni id vprašanj: iz modula (withId), sicer podedovan iz starega kompleta, sicer nov
+const TAKEN = IDS.takenIds(data);
 const upsert = (list, items) => {
   for (const it of items || []) {
     const i = list.findIndex((x) => x.id === it.id);
@@ -31,7 +34,7 @@ for (const mod of MODULES) {
   subj.parts = mod.parts.map((mp) => {
     const ex = subj.parts.find((p) => p.id === mp.id) || {};
     const part = { ...ex, id: mp.id, name: mp.name, type: mp.type, ...(mp.date ? { date: mp.date } : {}), ...(mp.signup ? { signup: mp.signup } : {}), ...(mp.audio ? { audio: mp.audio } : {}), decks: ex.decks ? [...ex.decks] : [] };
-    upsert(part.decks, mp.decks);
+    IDS.upsertDecks(part.decks, mp.decks, TAKEN, mod.id + '/' + mp.id);
     if (mp.flashcards) { part.flashcards = part.flashcards ? [...part.flashcards] : []; upsert(part.flashcards, mp.flashcards); }
     if (mp.notes) {
       const file = path.join(SCHOOL, mp.notes.file);
@@ -41,6 +44,8 @@ for (const mod of MODULES) {
     }
     // informacije o predmetu na VRH zapiskov (npr. "kako zapisati rešitev"), idempotentno prek oznake
     if (mp.appendNotesMd || mp.notesHtml) part.notes = (mp.appendNotesMd ? render(mp.appendNotesMd) : '') + (mp.notesHtml || '') + '<!--/dodatek-->' + (part.notes || '').split('<!--/dodatek-->').pop().split('<!--dodatek-->')[0];
+    // brez sklicev na prosojnice, PDF, datoteke in osebe (CLAUDE.md); ZAPISKI.md v School jih lahko obdržijo
+    if (part.notes) part.notes = scrubSources(part.notes, mod.id + '/' + mp.id);
     return part;
   });
   const q = subj.parts.reduce((n, p) => n + p.decks.reduce((m, d) => m + d.questions.length, 0), 0);
@@ -55,7 +60,7 @@ for (const mod of require('./letnik2-src/povezi')) {
   for (const mp of mod.parts) {
     const part = subj.parts.find((p) => p.id === mp.id);
     if (!part) throw new Error('Ni dela ' + mod.id + '/' + mp.id);
-    upsert(part.decks, mp.decks);
+    IDS.upsertDecks(part.decks, mp.decks, TAKEN, mod.id + '/' + mp.id);
   }
 }
 

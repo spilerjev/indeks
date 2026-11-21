@@ -1,3 +1,6 @@
+/* ONEMOGOČENO 21. 11. 2026: enkratna skripta, vsebina je že v data.json. Ponoven zagon podvoji vprašanja v kompletih pk1-vaje in pk2-vaje.
+   Vprašanja zdaj nosijo stalni id (CLAUDE.md, razdelek »Stalni id«); popravljaj data.json oz. module v letnik*-src/. */
+throw new Error('add-pravo-vaje2.js je enkratna skripta in je onemogočena (glej komentar na vrhu datoteke).');
 /* Doda ŠE VEČ scenarijskih vprasanj v obstojeci sklop "Naloge z vaj" (pk1-vaje / pk2-vaje). Vir: Vaje 1-10. */
 const fs = require('fs');
 const path = require('path');

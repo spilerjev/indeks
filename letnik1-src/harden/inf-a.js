@@ -135,16 +135,6 @@ module.exports = [
     'Geslo vedno pozna tudi skrbnik sistema v podjetju',
     'Geslo deluje samo znotraj krajevnega omrežja LAN'], 2,
     'Geslo lahko pozabimo, uganemo ali ga kdo izvabi'],
-  ['ERP kupimo in prilagodimo lastnim potrebam', [
-    'Prilagajanje rešitve je cenejše, ker procesov ni treba spreminjati',
-    'Prilagoditev procesov ni mogoča, ker so procesi določeni z zakonom',
-    'Med pristopoma ni razlike v stroških, tveganju ali času uvedbe'], 1,
-    'Prilagajanje rešitve je drago in tvegano, procesi dobijo najboljšo prakso'],
-  ['Ali informatika podjetju sama po sebi zagotavlja konkurenčno prednost?', [
-    'Da, vsaka naložba v IT samodejno poveča dobiček podjetja',
-    'Ne, IT nima vpliva, ker jo uporabljajo vsa podjetja',
-    'Da, a samo pri podjetjih, ki prodajajo prek spleta'], 3,
-    'Ne, le če je IS boljši in bolje izkoriščen kot pri tekmecih'],
 
   // ---- stari kvizi (biz, is, varnost, ai, blockchain)
   ['Kaj je značilno za operativno bazo podatkov (database)?', [

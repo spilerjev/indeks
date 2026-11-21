@@ -498,12 +498,17 @@ function Login({ year, onBack }) {
               : "Vpiši e-naslov in geslo."}
           </div>
           {up && (
+            // vzdevek, ne prijavni podatek: "username" bi Applova Gesla zapolnila z e-naslovom (prijava je z e-naslovom)
             <input type="text" required value={username} onChange={(e) => setUsername(e.target.value)} maxLength={20}
-              placeholder="uporabniško ime (3–20 znakov)" autoCapitalize="none" autoCorrect="off" autoComplete="username"
+              name="nickname" id="ix-nickname"
+              placeholder="uporabniško ime (3–20 znakov)" autoCapitalize="none" autoCorrect="off" autoComplete="nickname"
+              data-1p-ignore="true" data-lpignore="true"
               style={{ ...inputStyle, marginBottom: 10 }} />
           )}
+          {/* e-naslov je prijavni podatek računa -> "username", da ga upravitelj gesel shrani skupaj z geslom */}
           <input type={up ? "email" : "text"} required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
-            placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off" autoComplete={up ? "email" : "username"}
+            name="email" id="ix-email"
+            placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off" autoComplete="username"
             style={{ ...inputStyle, marginBottom: 10 }} />
           <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
             placeholder="Geslo" autoComplete={up ? "new-password" : "current-password"} style={inputStyle} />
@@ -549,13 +554,70 @@ function Login({ year, onBack }) {
   );
 }
 
-// stabilen id vprašanja iz besedila (za sledenje uporabe v mešanih kvizih)
-function qid(q) {
-  const s = (q && q.q) || "";
+/* Stalni id vprašanja (ključ statistike qstat, mixuse, rankedseen in vprašanj v matchu).
+   Vprašanja v data.json nosijo q.id (ids-lib.js, assign-ids.js; nikoli se ne spremeni). Kopije brez id (npr. iz starejše
+   gradnje) gredo prek aliasa starih hashev besedila (qid-alias.json) na nov ključ, sicer je ključ hash besedila. */
+const QID_ALIAS = __QID_ALIAS_JSON__;
+/* QID-MIGRACIJA:START (blok uporablja test-qid-migracija.js; ne spreminjaj oznak) */
+function qhash(text) {
+  const s = text || "";
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
   return "q" + (h >>> 0).toString(36);
 }
+function qidWith(q, A) {
+  if (q && q.id) return q.id;
+  const h = qhash((q && q.q) || "");
+  return (A && A.alias && A.alias[h]) || h;
+}
+/* Migracija starih ključev ob VSAKEM zagonu (brez zastavice: stara gradnja v odprtem zavihku lahko še piše pod stare ključe).
+   qstat: star zapis se združi v novega, kot da bi stari odgovori prišli pred novimi (f = 0,9^n = 1 - nov.a/10), nato se izbriše.
+   mixuse: števci se seštejejo. rankedseen: ključi v seznamih se preslikajo. copy (isto besedilo, različna vsebina): nov id
+   dobi kopijo statistike starega ključa, samo če zapisa še nima (star ključ ostane, ker je še živ id).
+   resume: zavrže nedokončan kviz, ki vsebuje vprašanje s starim besedilom (hash je ključ aliasa). Vrne seznam spremenjenih ključev. */
+function migrateQids(st, A) {
+  const alias = (A && A.alias) || {}, copy = (A && A.copy) || {};
+  const olds = Object.keys(alias), changed = [];
+  const num = (x) => (typeof x === "number" && isFinite(x) ? x : 0);
+  const obj = (v) => v && typeof v === "object" && !Array.isArray(v);
+  const qs = st.get("indeks.qstat.v1", null);
+  if (obj(qs)) {
+    let ch = false;
+    for (const o of olds) {
+      if (!(o in qs)) continue;
+      const s = qs[o], t = alias[o], n = qs[t];
+      if (obj(s)) {
+        if (!obj(n)) qs[t] = { a: num(s.a), c: num(s.c) };
+        else { const f = Math.min(1, Math.max(0, 1 - num(n.a) / 10)); qs[t] = { a: num(n.a) + num(s.a) * f, c: num(n.c) + num(s.c) * f }; }
+      }
+      delete qs[o]; ch = true;
+    }
+    for (const h of Object.keys(copy)) if (obj(qs[h])) for (const t of copy[h]) if (!(t in qs)) { qs[t] = { a: num(qs[h].a), c: num(qs[h].c) }; ch = true; }
+    if (ch) { st.set("indeks.qstat.v1", qs); changed.push("qstat"); }
+  }
+  const mu = st.get("indeks.mixuse.v1", null);
+  if (obj(mu)) {
+    let ch = false;
+    for (const o of olds) { if (!(o in mu)) continue; const t = alias[o]; mu[t] = num(mu[t]) + num(mu[o]); delete mu[o]; ch = true; }
+    for (const h of Object.keys(copy)) if (h in mu) for (const t of copy[h]) if (!(t in mu)) { mu[t] = num(mu[h]); ch = true; }
+    if (ch) { st.set("indeks.mixuse.v1", mu); changed.push("mixuse"); }
+  }
+  const rs = st.get("indeks.rankedseen.v1", null);
+  if (obj(rs)) {
+    let ch = false;
+    for (const k of Object.keys(rs)) if (Array.isArray(rs[k]) && rs[k].some((id) => alias[id])) { rs[k] = rs[k].map((id) => alias[id] || id); ch = true; }
+    if (ch) { st.set("indeks.rankedseen.v1", rs); changed.push("rankedseen"); }
+  }
+  const re = st.get("indeks.resume.v1", null);
+  if (obj(re)) {
+    const stale = (e) => obj(e) && Object.values(e).some((v) => Array.isArray(v) && v.some((q) => obj(q) && typeof q.q === "string" && alias[qhash(q.q)]));
+    const bad = Object.keys(re).filter((k) => stale(re[k]));
+    if (bad.length) { bad.forEach((k) => delete re[k]); st.set("indeks.resume.v1", re); changed.push("resume"); }
+  }
+  return changed;
+}
+/* QID-MIGRACIJA:END */
+function qid(q) { return qidWith(q, QID_ALIAS); }
 function loadMixUse() { return store.get(MIX_KEY, {}); }
 // uteženo vzorčenje brez ponavljanja: že uporabljena vprašanja dobijo utež 0.8^uporab
 function weightedSample(pool, n) {
@@ -588,6 +650,7 @@ function recordQ(q, ok) {
   m[id] = { a: s.a * 0.9 + 1, c: s.c * 0.9 + (ok ? 1 : 0) };
   store.set(QSTAT_KEY, m);
 }
+try { migrateQids(store, QID_ALIAS); } catch (e) { /* migracija ne sme ustaviti aplikacije */ }
 const themeKeyOf = (d) => { const m = /tema\s*(\d+)/i.exec(d.name || ""); return m ? "t" + m[1] : "d:" + (d.id || d.name); };
 
 /* Pametno uteženo vzorčenje:
@@ -836,6 +899,22 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-dark .ix-mark{background:rgba(255,196,60,.32);}
 @media (max-width:760px){.ix-root .ix-tocpanel{left:8px;right:8px;}.ix-root .ix-tocbtn{left:12px;bottom:12px;}}
 .ix-notes h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin:0 0 8px;}
+.ix-figfill .ix-ffslot{min-width:30px;padding:2px 6px;font-size:12.5px;line-height:1.25;background:var(--paper);z-index:2;white-space:nowrap;}
+@media (max-width:560px){.ix-figfill .ix-ffslot{min-width:24px;padding:1px 4px;font-size:11px;}}
+.ix-nsearch{position:relative;margin:0 0 14px;}
+.ix-nsearch input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--ink);font-size:15px;padding:3px 0;}
+.ix-nsearch .ix-kbd{font-size:11.5px;color:var(--ink2);border:1px solid var(--line);border-radius:5px;padding:0 6px;line-height:18px;}
+.ix-nsearch-res{margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--paper2);overflow:hidden;}
+.ix-nsearch-tab{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12.5px;color:var(--ink2);cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ix-nsearch-tab.on{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.ix-nsearch-group{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--terra);padding:10px 8px 4px;}
+.ix-nsearch-item{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;background:none;border:0;border-radius:9px;padding:8px 9px;cursor:pointer;color:var(--ink);font-size:14px;line-height:1.4;}
+.ix-nsearch-item:hover{background:var(--paper);}
+.ix-nsearch-snip{font-size:13px;color:var(--ink2);overflow-wrap:anywhere;}
+.ix-notes a.ix-goto{color:var(--terra);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;cursor:pointer;}
+.ix-notes a.ix-goto:hover{text-decoration-thickness:2px;}
+.ix-flash{animation:ixflash 1.8s ease-out;border-radius:8px;}
+@keyframes ixflash{0%,35%{box-shadow:0 0 0 3px var(--terra);}100%{box-shadow:0 0 0 3px transparent;}}
 .ix-notes .note-card{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--terra);border-radius:12px;padding:14px 16px;margin:12px 0;}
 .ix-notes ul{margin:6px 0;padding-left:20px;}
 .ix-notes li{margin:5px 0;}
@@ -1603,7 +1682,7 @@ export default function App() {
             {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} soc={soc} user={session && session.user} />}
             {route.view === "profile" && <ProfileView user={session.user} soc={soc} socErr={socErr} reload={reloadSocial} go={setRoute} />}
             {route.view === "duel" && <GlossCtx.Provider value={false}><DuelView route={route} go={setRoute} userId={userId} formulas={formulas} soc={soc} setNavGuard={setNavGuard} /></GlossCtx.Provider>}
-            {route.view === "notes" && <NotesView route={route} go={setRoute} user={session && session.user} />}
+            {route.view === "notes" && <NotesView key={route.sem + "/" + route.subj + "/" + route.part} route={route} go={setRoute} user={session && session.user} />}
             {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView key={[route.sem, route.subj, route.part, route.deck].join("/")} route={route} go={setRoute} record={record} userId={userId || null} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
             {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
@@ -2459,7 +2538,7 @@ function WrongReview({ wrong }) {
                   </div>
                 ))}
               </div>
-            ) : w.type === "grid" || w.type === "tree" ? (
+            ) : w.type === "grid" || w.type === "tree" || w.type === "figfill" ? (
               <div style={{ display: "grid", gap: 4 }}>
                 {w._blanks.map((b) => {
                   const pid = w.gMap[b.key]; const placed = pid != null ? ((w._pool.find((x) => x.id === pid) || {}).val) : "—";
@@ -2628,7 +2707,7 @@ function QuizView({ route, go, record, userId, duel }) {
       if (st.done) { if (k === "r" || k === "R") { e.preventDefault(); st.restart(); } else if ((k === "n" || k === "N") && st.goNext) { e.preventDefault(); st.goNext(); } return; }
       const q = st.q; if (!q) return;
       if (!st.answered) {
-        if (q.type === "match" || q.type === "grid" || q.type === "tree") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
+        if (q.type === "match" || q.type === "grid" || q.type === "tree" || q.type === "figfill") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
         if (k === "ArrowDown" || k === "ArrowUp") { e.preventDefault(); st.move(k === "ArrowDown" ? 1 : -1); return; }
         if ((k === "Enter" || k === " ") && st.cur != null) { e.preventDefault(); st.choose(st.cur); return; }
         const n = parseInt(k, 10);
@@ -2653,7 +2732,7 @@ function QuizView({ route, go, record, userId, duel }) {
     const r = resumeState; if (!r) return;
     let ii = r.i, pk = r.picked;
     const cq = r.run[ii];
-    if (pk != null && cq && (cq.type === "match" || cq.type === "grid" || cq.type === "tree")) { ii = ii + 1; pk = null; } // ovire z mapami ne obnavljamo - naprej
+    if (pk != null && cq && (cq.type === "match" || cq.type === "grid" || cq.type === "tree" || cq.type === "figfill")) { ii = ii + 1; pk = null; } // ovire z mapami ne obnavljamo - naprej
     setShuffleQ(!!r.shuffleQ); setRun(r.run); setDone(false); setMoreOpen(false); setOpenGloss({}); setMSel(null); setMMap({}); setGSel(null); setGMap({});
     setCorrect(r.correctCount || 0); setWrong(r.wrong || []); saved.current = false; attemptT.current = r.attemptT || Date.now(); setLeft(RANKED_SECONDS);
     if (ii >= r.run.length) { // vse je bilo že odgovorjeno - samo še zaključi in zapiši
@@ -2748,13 +2827,13 @@ function QuizView({ route, go, record, userId, duel }) {
   const answered = picked !== null;
   kb.current = { ...kb.current, q, answered, choose, next, cur,
     move: (d) => { if (!q.options) return; const n = q.options.length; let c = cur == null ? (d > 0 ? 0 : n - 1) : (cur + d + n) % n; if (c === hideOpt) c = (c + d + n) % n; setCur(c); },
-    canSubmit: q.type === "match" ? Object.keys(mMap).length >= q.pairs.length : (q.type === "grid" || q.type === "tree") ? Object.keys(gMap).length >= q._blanks.length : false,
+    canSubmit: q.type === "match" ? Object.keys(mMap).length >= q.pairs.length : (q.type === "grid" || q.type === "tree" || q.type === "figfill") ? Object.keys(gMap).length >= q._blanks.length : false,
     submit: q.type === "match" ? submitMatch : submitGrid };
   const stemLow = (q.q || "").toLowerCase();
   const restLow = ((q.options ? q.options.join(" ") : (q.pairs ? q.pairs.map((p) => p.term + " " + p.def).join(" ") : "")) + " " + (q.explanation || "") + " " + (q.more || "")).toLowerCase();
   const inTxt = (g, t) => (g.b ? new RegExp("\\b" + g.s + "\\b").test(t) : t.includes(g.s));
   const defQ = /\bkaj (pomeni|je|prikazuje|opisuje|označuje|razumemo)\b|\bkako (opredelimo|definiramo)\b|\bopredeli\b|definicij|\bkatere vrste\b|\bkateri tip\b|\bza kaj se uporablja\b/.test(stemLow);
-  const gloss = (!glossOn || exam || q.type === "match" || q.type === "grid" || q.type === "tree") ? [] : GLOSSARY.filter((g) => {
+  const gloss = (!glossOn || exam || q.type === "match" || q.type === "grid" || q.type === "tree" || q.type === "figfill") ? [] : GLOSSARY.filter((g) => {
     if (g.subj && (Array.isArray(g.subj) ? g.subj.indexOf(subj.id) < 0 : g.subj !== subj.id)) return false;
     const inRest = inTxt(g, restLow), inStem = inTxt(g, stemLow);
     if (!inRest && !inStem) return false;
@@ -3061,6 +3140,12 @@ function QuizView({ route, go, record, userId, duel }) {
           <TreeQ q={q} gMap={gMap} gTarget={gTarget} answered={answered} poolVal={poolVal} onSlot={placeGrid} />
           {!answered && <>{poolChips()}{submitBtn()}</>}
         </div>
+      ) : q.type === "figfill" ? (
+        <div>
+          <div style={{ fontSize: 13, color: "var(--ink2)", marginBottom: 12 }}>Klikni vrednost spodaj, nato prazno mesto v grafu (ali obratno). Klik na zapolnjeno mesto ga izprazni.</div>
+          <FigFillQ q={q} gMap={gMap} gTarget={gTarget} answered={answered} poolVal={poolVal} onSlot={placeGrid} />
+          {!answered && <>{poolChips()}{submitBtn()}</>}
+        </div>
       ) : (
       <div className={"ix-opts" + (!answered && cur != null ? " kbnav" : "")} onMouseMove={() => { if (!answered && cur != null) setCur(null); }} style={{ display: "grid", gap: 10 }}>
         {q.options.map((opt, idx) => {
@@ -3093,7 +3178,7 @@ function QuizView({ route, go, record, userId, duel }) {
       {duel && duel.ability && duel.ability.armed && !answered && <div style={{ fontSize: 12.5, color: "var(--terra)", marginTop: 8, fontWeight: 600 }}>Vse ali nič je aktivno: pravilen odgovor = 3× škoda, napačen = −20 HP.</div>}
       {!answered && (
         <div className="ix-kbdhint">
-          {q.type === "match" || q.type === "grid" || q.type === "tree"
+          {q.type === "match" || q.type === "grid" || q.type === "tree" || q.type === "figfill"
             ? <span><kbd className="ix-kbd">Enter</kbd> preveri</span>
             : <><span><kbd className="ix-kbd">1</kbd>–<kbd className="ix-kbd">{q.options.length}</kbd> izberi odgovor</span><span><kbd className="ix-kbd">↑</kbd> <kbd className="ix-kbd">↓</kbd> označi{cur != null ? <>, <kbd className="ix-kbd">Enter</kbd> potrdi</> : ""}</span></>}
         </div>
@@ -3229,8 +3314,10 @@ function rpcErr(error, fallback) {
   if (/does not exist|schema cache|could not find/i.test(m)) return "Arena še ni vklopljena (v Supabase zaženi supabase/1v1.sql).";
   return m.replace(/^[A-Z0-9]+: /, "") || fallback || "Napaka.";
 }
-/* ID vprašanja za match: besedilo + možnosti (qid uporablja samo besedilo, ki se lahko ponovi). */
-function duelQid(q) {
+/* ID vprašanja za match: stalni id (isti id = ista vsebina, zato popravek besedila ali možnosti ne pokvari odprtih matchov). */
+const duelQid = (q) => qid(q);
+/* Prejšnji ID vprašanja za match (do 21. 11. 2026): hash besedila in možnosti. resolveDuel ga še razreši (matchi, ustvarjeni prej). */
+function duelQidLegacy(q) {
   const s = (q.q || "") + "|" + (q.options || []).join("|") + (q.pairs ? "|" + q.pairs.map((p) => p.term).join("|") : "");
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
@@ -3273,7 +3360,7 @@ function resolveDuel(st) {
   const loc = partByKey(st.part_key);
   if (!loc) return { error: "Tega dela ni več v aplikaciji." };
   const byId = {};
-  rankedPool(loc.part).forEach((q) => { const id = duelQid(q); if (!byId[id]) byId[id] = q; });
+  rankedPool(loc.part).forEach((q) => { [duelQid(q), duelQidLegacy(q)].forEach((id) => { if (!byId[id]) byId[id] = q; }); });
   const qs = (st.question_ids || []).map((id) => byId[id]).filter(Boolean);
   if (qs.length !== (st.question_ids || []).length) return { ...loc, questions: qs, error: "Vprašanja se ne ujemajo s to različico aplikacije. Osveži stran (nova različica) in poskusi znova." };
   return { ...loc, questions: qs };
@@ -4915,6 +5002,155 @@ function splitNotes(html) {
   });
   return secs;
 }
+/* ---- Iskanje po zapiskih (in karticah, slovarčku) ----
+   Indeks se zgradi leno ob prvem iskanju iz DATA (isti razdelki kot kazalo: h2 = razdelek, h3 = podrazdelek). Ujemanje brez
+   velikih črk in šumnikov; vse besede morajo biti v istem podrazdelku; beseda se ujema po začetku (daljše besede brez zadnjih
+   2 znakov, vsaj 4 znaki), zato »berlinski zid« najde tudi »Berlinskega zidu«. Vprašanj kvizov ne išče (izdalo bi odgovore). */
+const foldTxt = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[đĐ]/g, "d").toLowerCase();
+const decodeEnt = (s) => s.replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+const plainTxt = (h) => decodeEnt((h || "").replace(/<(script|style)[\s\S]*?<\/\1>/gi, " ").replace(/<figure[\s\S]*?<\/figure>/gi, " ").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").replace(/\s+([,.;:!?)])/g, "$1").replace(/([(])\s+/g, "$1").trim();
+const escHtml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const NOTES_INDEX = {};
+function notesIndex(year) {
+  if (NOTES_INDEX[year]) return NOTES_INDEX[year];
+  const units = [];
+  DATA.filter((s) => s.year === year).forEach((sem) => sem.subjects.forEach((subj) => subj.parts.forEach((part) => {
+    const base = { sem: sem.id, subj: subj.id, part: part.id, subjName: subj.name, partName: part.name, year };
+    if (part.notes) splitNotes(part.notes).forEach((sec) => {
+      sec.body.split(/(?=<h3[\s>])/).forEach((pc) => {
+        const m = /^<h3[^>]*\sid="([^"]+)"[^>]*>([\s\S]*?)<\/h3>/.exec(pc);
+        const text = plainTxt(pc);
+        if (text) units.push({ ...base, kind: "notes", secLabel: sec.label, subTitle: m ? notesLabel(m[2]) : null, text, f: foldTxt(text) });
+      });
+    });
+    (part.flashcards || []).forEach((fc) => (fc.cards || []).forEach((c) => {
+      const text = plainTxt(String(c.front || "")) + " → " + plainTxt(String(c.back || ""));
+      units.push({ ...base, kind: "card", secLabel: fc.name, subTitle: null, text, f: foldTxt(text) });
+    }));
+  })));
+  GLOSSARY.forEach((g) => { const text = g.t + " → " + g.d; units.push({ year, kind: "gloss", subjName: "Slovarček", partName: "", secLabel: g.t, subTitle: null, text, f: foldTxt(text) }); });
+  return (NOTES_INDEX[year] = units);
+}
+const searchStems = (q) => foldTxt(q).split(/[^a-z0-9]+/).filter(Boolean).map((w) => (w.length >= 6 ? w.slice(0, Math.max(4, w.length - 2)) : w.length === 5 ? w.slice(0, 4) : w));
+const stemRe = (st) => new RegExp("(^|[^a-z0-9])" + escRe(st), "g");
+/* označi zadetke v navadnem besedilu (brez oznak); ujemanje po zloženem besedilu, označi do konca besede */
+function markFolded(s, stems) {
+  const f = foldTxt(s);
+  if (f.length !== s.length || !stems.length) return s;
+  const rs = [];
+  stems.forEach((st) => { const re = stemRe(st); let m; while ((m = re.exec(f))) { const a = m.index + m[1].length; let b = a + st.length; while (b < f.length && /[a-z0-9]/.test(f[b])) b++; rs.push([a, b]); } });
+  if (!rs.length) return s;
+  rs.sort((x, y) => x[0] - y[0]);
+  let out = "", p = 0;
+  for (const [a, b] of rs) { if (a < p) continue; out += s.slice(p, a) + '<mark class="ix-mark">' + s.slice(a, b) + "</mark>"; p = b; }
+  return out + s.slice(p);
+}
+function highlightStems(html, stems) {
+  if (!stems || !stems.length) return html;
+  const out = html.split(/(<[^>]+>)/).map((p) => (p.startsWith("<") ? p : markFolded(p, stems))).join("");
+  return out.replace(/<details([^>]*)>([\s\S]*?)<\/details>/g, (m, a, inner) => (inner.includes("ix-mark") && !/\sopen/.test(a) ? "<details" + a + " open>" + inner + "</details>" : m));
+}
+function searchNotes(q, year, subjId) {
+  const stems = searchStems(q);
+  if (!stems.length || q.trim().length < 2) return null;
+  const res = stems.map(stemRe), out = [];
+  for (const u of notesIndex(year)) {
+    if (subjId && u.kind !== "gloss" && u.subj !== subjId) continue;
+    let n = 0, first = -1, okAll = true;
+    for (const re of res) { re.lastIndex = 0; let c = 0, m; while ((m = re.exec(u.f))) { c++; if (first < 0 || m.index < first) first = m.index + m[1].length; } if (!c) { okAll = false; break; } n += c; }
+    if (!okAll) continue;
+    const a = Math.max(0, first - 70), b = Math.min(u.text.length, first + 150);
+    const snip = (a > 0 ? "… " : "") + markFolded(escHtml(u.text.slice(a, b)), stems) + (b < u.text.length ? " …" : "");
+    out.push({ ...u, n, snip });
+  }
+  return { stems, items: out };
+}
+/* Čakajoči skok po iskanju v drug del (NotesView ga prebere ob prikazu). */
+let NOTES_PENDING = null;
+const NOTES_Q_KEY = "indeks.notesq.v1";
+
+function NotesSearch({ year, subj, partKey, onLocal, go }) {
+  const saved = (() => { try { return JSON.parse(sessionStorage.getItem(NOTES_Q_KEY) || "null"); } catch (e) { return null; } })();
+  const [q, setQ] = useState(saved && saved.q ? saved.q : "");
+  const [dq, setDq] = useState(q);
+  const [all, setAll] = useState(!!(saved && saved.all));
+  const [show, setShow] = useState(!!(saved && saved.q && saved.from === partKey && saved.show));
+  const inp = useRef(null);
+  useEffect(() => { const t = setTimeout(() => setDq(q), 160); return () => clearTimeout(t); }, [q]);
+  useEffect(() => { try { sessionStorage.setItem(NOTES_Q_KEY, JSON.stringify({ q, all, show, from: partKey })); } catch (e) {} }, [q, all, show, partKey]);
+  useEffect(() => {
+    const k = (e) => {
+      const t = e.target, tag = t && t.tagName, typing = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable);
+      if ((e.key === "/" && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) || ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K"))) { e.preventDefault(); if (inp.current) { inp.current.focus(); inp.current.select(); } setShow(true); }
+    };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, []);
+  // gumb nazaj po skoku na zadetek vrne na prejšnji položaj in znova pokaže rezultate
+  useEffect(() => { const p = (e) => { if (e.state && typeof e.state.ixNotesY === "number" && inp.current && inp.current.value.trim().length >= 2) setShow(true); }; window.addEventListener("popstate", p); return () => window.removeEventListener("popstate", p); }, []);
+  const res = useMemo(() => (dq.trim().length >= 2 ? searchNotes(dq, year, all ? null : subj.id) : null), [dq, year, all, subj.id]);
+  const notes = res ? res.items.filter((x) => x.kind === "notes") : [];
+  const cards = res ? res.items.filter((x) => x.kind !== "notes") : [];
+  const groups = [];
+  notes.forEach((x) => { const g = x.sem + "/" + x.subj + "/" + x.part; let gr = groups.find((y) => y.key === g); if (!gr) groups.push((gr = { key: g, title: (all ? x.subjName + " · " : "") + x.partName, items: [] })); gr.items.push(x); });
+  const open = (x) => {
+    setShow(false);
+    const key = x.sem + "/" + x.subj + "/" + x.part;
+    const tg = { key, secLabel: x.secLabel, subTitle: x.subTitle, stems: res.stems };
+    if (key === partKey) onLocal(tg);
+    else { NOTES_PENDING = tg; try { sessionStorage.setItem(NOTES_Q_KEY, JSON.stringify({ q, all, show: true, from: partKey })); } catch (e) {} go({ view: "notes", year: x.year, sem: x.sem, subj: x.subj, part: x.part }); }
+  };
+  const total = notes.length + cards.length;
+  return (
+    <div className="ix-nsearch">
+      <div className="ix-formsearch" style={{ margin: 0 }}>
+        <Search size={15} color="var(--ink2)" />
+        <input ref={inp} value={q} onChange={(e) => { setQ(e.target.value); setShow(true); }} onFocus={() => setShow(true)}
+          onKeyDown={(e) => { if (e.key === "Escape") { setShow(false); e.currentTarget.blur(); } if (e.key === "Enter" && notes[0]) open(notes[0]); }}
+          placeholder={all ? "Išči po zapiskih vseh predmetov letnika…" : "Išči po zapiskih predmeta (npr. berlinski zid)…"} aria-label="Išči po zapiskih" />
+        {q ? <button onClick={() => { setQ(""); setDq(""); }} aria-label="Počisti iskanje" className="ix-formx"><X size={13} /></button> : <span className="ix-kbd">/</span>}
+      </div>
+      {show && q.trim().length >= 2 && (
+        <div className="ix-nsearch-res" role="region" aria-label="Rezultati iskanja">
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", padding: "8px 10px 6px", borderBottom: "1px solid var(--line)" }}>
+            <span className="ix-chip" style={{ flex: 1, minWidth: 140 }}>{res ? (total ? slPl(notes.length, ["razdelek", "razdelka", "razdelki", "razdelkov"]) + (cards.length ? ` · ${cards.length} v karticah/slovarčku` : "") : "Ni zadetkov.") : "…"}</span>
+            <button className={"ix-nsearch-tab" + (!all ? " on" : "")} onClick={() => setAll(false)}>{subj.name}</button>
+            <button className={"ix-nsearch-tab" + (all ? " on" : "")} onClick={() => setAll(true)}>Vsi predmeti letnika</button>
+            <button onClick={() => setShow(false)} aria-label="Zapri rezultate" className="ix-formx"><X size={14} /></button>
+          </div>
+          <div style={{ maxHeight: "min(60vh, 520px)", overflowY: "auto", padding: "4px 6px 10px" }}>
+            {groups.map((gr) => (
+              <div key={gr.key}>
+                <div className="ix-nsearch-group">{gr.title}</div>
+                {gr.items.slice(0, 40).map((x, i) => (
+                  <button key={i} className="ix-nsearch-item" onClick={() => open(x)}>
+                    <span style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
+                      <b style={{ flex: 1, minWidth: 0 }}>{x.secLabel}{x.subTitle ? " › " + x.subTitle : ""}</b>
+                      <span className="ix-chip" style={{ color: "var(--terra)", flexShrink: 0 }}>{x.n}×</span>
+                    </span>
+                    <span className="ix-nsearch-snip" dangerouslySetInnerHTML={{ __html: x.snip }} />
+                  </button>
+                ))}
+                {gr.items.length > 40 && <div className="ix-chip" style={{ padding: "4px 10px" }}>… še {gr.items.length - 40} zadetkov - natančneje določi iskanje</div>}
+              </div>
+            ))}
+            {cards.length > 0 && (
+              <div>
+                <div className="ix-nsearch-group">Kartice in slovarček</div>
+                {cards.slice(0, 20).map((x, i) => (
+                  <div key={i} className="ix-nsearch-item" style={{ cursor: "default" }}>
+                    <span className="ix-chip" style={{ textTransform: "none", letterSpacing: 0 }}>{x.kind === "gloss" ? "Slovarček" : (all ? x.subjName + " · " : "") + x.partName + " · " + x.secLabel}</span>
+                    <span className="ix-nsearch-snip" dangerouslySetInnerHTML={{ __html: x.snip }} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 function loadReadPos(key) { const all = store.get(READ_KEY, {}); return all[key] || null; }
 function mergeReadPos(a, b) { const out = { ...(a || {}) }; Object.keys(b || {}).forEach((k) => { if (!out[k] || (b[k].t || 0) > (out[k].t || 0)) out[k] = b[k]; }); return out; }
 let readPosTimer = null;
@@ -4947,6 +5183,7 @@ function NotesView({ route, go, user }) {
   const [q, setQ] = useState("");
   const manual = useRef(false);
   const ql = q.trim().length >= 2 ? q.trim() : "";
+  const [hl, setHl] = useState(null);   // označeni zadetki iskanja (NotesSearch)
   const hits = useMemo(() => (ql ? secs.map((sec) => countHits(sec.text, ql.toLowerCase())) : null), [secs, ql]);
 
   // zaznamek z računa (druga naprava): novejši zapis zmaga
@@ -4976,6 +5213,48 @@ function NotesView({ route, go, user }) {
       scrollToEl(subId || "hd-" + secId);
     }, 60);
   };
+  /* Notranje povezave v zapiskih (<a class="ix-goto" data-goto="naslov razdelka">, letnik2-src/notes-sources.js):
+     odpre razdelek, ga pomakne v pogled in na kratko poudari. Skok je vnos v zgodovini brskalnika (isti URL), zato gumb
+     nazaj vrne na prejšnji položaj; hash poti se ne spremeni. */
+  const normT = (t) => (t || "").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+  const findTarget = (t) => {
+    const n = normT(t);
+    for (const sec of secs) {
+      if (normT(sec.label) === n) return { sec, sub: null };
+      const sub = sec.subs.find((x) => normT(x.title) === n);
+      if (sub) return { sec, sub };
+    }
+    return null;
+  };
+  const gotoTarget = (tg, mark) => {
+    try { window.history.replaceState({ ...(window.history.state || {}), ixNotesY: window.scrollY }, ""); window.history.pushState({ ixNotesJump: true }, ""); } catch (e) {}
+    jumpTo(tg.sec.id, tg.sub ? tg.sub.id : null, mark);
+    setTimeout(() => { const el = document.getElementById(tg.sub ? tg.sub.id : "hd-" + tg.sec.id); if (el) { el.classList.remove("ix-flash"); void el.offsetWidth; el.classList.add("ix-flash"); setTimeout(() => el.classList.remove("ix-flash"), 1900); } }, 140);
+  };
+  const onNotesClick = (e) => {
+    const a = e.target && e.target.closest ? e.target.closest("a[data-goto]") : null;
+    if (!a) return;
+    e.preventDefault();
+    const tg = findTarget(a.getAttribute("data-goto"));
+    if (tg) gotoTarget(tg);
+  };
+  // skok na zadetek iskanja: v istem delu takoj, iz drugega dela prek NOTES_PENDING ob prikazu
+  const gotoSearch = (tg) => {
+    setHl(tg.stems);
+    const sec = secs.find((x) => normT(x.label) === normT(tg.secLabel));
+    if (!sec) return;
+    const sub = tg.subTitle ? sec.subs.find((x) => normT(x.title) === normT(tg.subTitle)) || null : null;
+    gotoTarget({ sec, sub }, !sub);
+  };
+  useEffect(() => {
+    const pd = NOTES_PENDING;
+    if (pd && pd.key === key) { NOTES_PENDING = null; setTimeout(() => gotoSearch(pd), 60); }
+  }, []); // eslint-disable-line
+  useEffect(() => {
+    const onPop = (e) => { const y = e.state && e.state.ixNotesY; if (typeof y === "number") setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 40); };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
   const pin = (sec, sub) => { const pos = { sec: sec.id, label: sec.label, sub: sub ? sub.id : null, subTitle: sub ? sub.title : null, manual: true }; saveReadPos(key, pos, user); setBm({ ...pos, t: Date.now() }); manual.current = true; };
   const clearBm = () => { saveReadPos(key, null, user); setBm(null); manual.current = false; };
 
@@ -5082,6 +5361,13 @@ function NotesView({ route, go, user }) {
         </button>
       </div>
 
+      <NotesSearch year={sem.year} subj={subj} partKey={key} onLocal={gotoSearch} go={go} />
+      {hl && (
+        <div className="ix-chip" style={{ display: "flex", alignItems: "center", gap: 8, margin: "-4px 0 12px", textTransform: "none", letterSpacing: 0 }}>
+          <Search size={13} /> Označeni zadetki iskanja
+          <button onClick={() => setHl(null)} className="ix-formx" aria-label="Odstrani oznake"><X size={13} /></button>
+        </div>
+      )}
       {bm && bmSec && (
         <div className="ix-card" style={{ padding: "12px 14px", marginBottom: 14, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", borderLeft: "3px solid var(--teal)" }}>
           <BookmarkCheck size={18} color="var(--teal)" />
@@ -5094,7 +5380,7 @@ function NotesView({ route, go, user }) {
         </div>
       )}
 
-      <div style={{ display: "grid", gap: 12 }}>
+      <div style={{ display: "grid", gap: 12 }} onClick={onNotesClick} onKeyDown={(e) => { if (e.key === "Enter") onNotesClick(e); }}>
         {secs.map((sec, i) => {
           const isOpen = open.has(sec.id);
           const isBm = bm && bm.sec === sec.id;
@@ -5120,7 +5406,7 @@ function NotesView({ route, go, user }) {
                       <Bookmark size={13} /> Pripni
                     </button>
                   </div>
-                  <div className="ix-notes" dangerouslySetInnerHTML={{ __html: ql ? highlightHtml(sec.body, ql) : sec.body }} />
+                  <div className="ix-notes" dangerouslySetInnerHTML={{ __html: ql ? highlightHtml(sec.body, ql) : hl ? highlightStems(sec.body, hl) : sec.body }} />
                   {i + 1 < secs.length && (
                     <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 14 }}>
                       <button onClick={() => jumpTo(secs[i + 1].id)} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "9px 14px", display: "flex", alignItems: "center", gap: 6 }}>
@@ -5178,6 +5464,33 @@ function layoutTree(root) {
     return it;
   })(root, 0, null);
   return { items, rows: row, depth };
+}
+/* Vstavi v graf (type: "figfill"): SVG iz figures/figfill.js, čez njega gumbi za prazna mesta (koordinate v pikslih viewBoxa,
+   postavljene v odstotkih, zato se z grafom pomanjšajo na telefonu). Vnos, čipi in preverjanje so isti kot pri drevesu. */
+function FigFillQ({ q, gMap, gTarget, answered, poolVal, onSlot }) {
+  const svg = (q.fill && q.fill.svg) || "";
+  const vb = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(svg); const W = vb ? +vb[1] : 360, H = vb ? +vb[2] : 236;
+  const pos = {}; ((q.fill && q.fill.slots) || []).forEach((sl) => { pos[sl.id] = sl; });
+  return (
+    <div className="ix-figfill" style={{ position: "relative", maxWidth: 620, margin: "0 auto 14px" }}>
+      <div className="ix-fig bare" style={{ margin: 0, padding: 0, border: 0 }} dangerouslySetInnerHTML={{ __html: svg }} />
+      {q._blanks.map((b) => {
+        const p = pos[b.key]; if (!p) return null;
+        const pid = gMap[b.key], placed = pid != null ? poolVal(pid) : null, ok = answered && placed === b.val;
+        let st = {};
+        if (answered) st = { color: ok ? "var(--teal)" : "var(--red)", background: ok ? "var(--okbg)" : "var(--badbg)", borderColor: ok ? "var(--teal)" : "var(--red)" };
+        else if (gTarget === b.key) st = { borderColor: "var(--terra)", boxShadow: "0 0 0 3px color-mix(in srgb, var(--terra) 18%, transparent)" };
+        else if (placed != null) st = { background: "var(--paper2)", borderStyle: "solid" };
+        return (
+          <button key={b.key} type="button" data-slot={b.key} onClick={() => onSlot(b.key)} disabled={answered} title={b.name} aria-label={b.name}
+            className="ix-tslot blank ix-ffslot" style={{ position: "absolute", left: (p.x / W * 100) + "%", top: (p.y / H * 100) + "%", transform: "translate(-50%,-50%)", ...st }}>
+            {placed != null ? placed : "?"}
+            {answered && !ok && <span style={{ display: "block", fontSize: 10.5, color: "var(--teal)", fontWeight: 700 }}>{b.val}</span>}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 function TreeQ({ q, gMap, gTarget, answered, poolVal, onSlot }) {
   const { items, rows, depth } = useMemo(() => layoutTree(q.root), [q]);
@@ -5239,6 +5552,12 @@ function processQuestion(q) {
     const blanks = [];
     q.rows.forEach((row, r) => row.cells.forEach((val, c) => { const key = r + "-" + c; if (!fixed.has(key)) blanks.push({ key, val }); }));
     const _pool = shuffle(blanks.map((b, idx) => ({ id: idx, val: b.val })));
+    return { ...q, _blanks: blanks, _pool };
+  }
+  if (q.type === "figfill") {
+    // vstavi v graf: prazna mesta iz q.slots (koordinate v q.fill), zaloga = pravilne vrednosti + odvečni čipi
+    const blanks = (q.slots || []).map((sl) => ({ key: sl.id, val: String(sl.val), name: sl.name || sl.id }));
+    const _pool = shuffle(blanks.map((b) => b.val).concat((q.distractors || []).map(String)).map((val, idx) => ({ id: idx, val })));
     return { ...q, _blanks: blanks, _pool };
   }
   if (q.type === "tree") {

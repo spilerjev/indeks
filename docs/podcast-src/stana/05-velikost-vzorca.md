@@ -1,4 +1,4 @@
-# Epizoda 5 — Velikost vzorca in vzorčenja z omejitvami (P05 + V05)
+# Epizoda 5 — Velikost vzorca in vzorčenja z omejitvami
 
 Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
@@ -50,7 +50,7 @@ Formule veljajo za vzorec **s ponavljanjem (nₛ)**; preračun na vzorec **brez 
 
 ȳ_str = (13 100 · 27 + 24 450 · 15 + 22 450 · 8)/60 000 = **15,0008 l**; var = 0,05173 → se = **0,2275**; interval **14,56 < μ < 15,45 l ; α = 0,05**; vsota (×60 000): **≈ 873 302 < Y_tot < 926 798 l ; α = 0,05**. (Prosojnica je izračun pustila prazen — lasten izračun, preveri z R.)
 
-### Zgled vprašanj (pr. 27) — MOL, cena m² zemljišč v 3 skupinah
+### Zgled vprašanj — MOL, cena m² zemljišč v 3 skupinah
 a) **stratificirano vzorčenje** (stratumi: mestna, primestna, podeželska; v vsakem ESV).
 b) okvir vzorčenja = **seznam vseh zazidljivih zemljišč na območju MOL** (po stratumih: trije seznami zemljišč).
 c) natančnost izražamo z **odklonom zaupanja D_ȳ = z · se(ȳ_str)** (parameter: aritmetična sredina cene m²).
@@ -86,7 +86,7 @@ c) 1) **populacije**; 2) **neslučajen** (namerno izbran).
 
 ---
 
-## 📒 Dopolnilni zapiski — P05 in V05 (teden 3.–7. 11. 2026)
+## 📒 Dopolnilni zapiski — P05 in V05
 
 ### P05 — poudarki s predavanja
 - **Točkovna ocena** = na vzorcu izračunamo eno številko; **intervalna** = od točkovne gremo »malo gor, malo dol« (D_g = odklon zaupanja = polovica širine intervala). **α** = delež vzorcev, s katerimi zgrešimo; z_{α/2}, ker gledamo na obe strani in α razpolovimo.

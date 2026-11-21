@@ -86,12 +86,6 @@ module.exports = [
     'pasivne časovne razmejitve'], 3, 'kratkoročni del dolgoročnih finančnih obveznosti'],
   ['A/E = ?', [
     '1 − D/E', 'D/A', 'E/A'], 3, '1 + D/E (D = vse obveznosti)'],
-  ['Vaje 1: ROE 17,47 % → 15,82 %. Kateri faktor', [
-    'neto marža', 'obračanje sredstev', 'davčna obremenitev'], 3, 'multiplikator kapitala'],
-  ['Zakaj je lastniški kapital v Vajah 1 zrasel?', [
-    'izdaja novih delnic',
-    'prevrednotenje zalog',
-    'novo posojilo'], 3, 'zadržan dobiček'],
   ['Zakaj je dolg običajno cenejši od lastniškega kapitala?', [
     'ker banke obresti ne zaračunajo',
     'ker ga ni treba vrniti',

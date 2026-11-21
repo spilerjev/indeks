@@ -3,3 +3,5 @@ node_modules/
 .DS_Store
 data.json.bak*
 .preizpit-bak/
+dist/preview.js
+letnik2-src/notes-fixes.local.js

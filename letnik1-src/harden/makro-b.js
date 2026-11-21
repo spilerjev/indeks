@@ -129,14 +129,6 @@ module.exports = [
     'Urad za meroslovje, ki meri inflacijo in sestavlja košarico indeksa potrošnih cen',
     'Agencija za trg vrednostnih papirjev, ki nadzira ljubljansko borzo in sklade',
     'Oddelek Banke Slovenije, ki vodi monetarno politiko in nadzira poslovne banke'], 3],
-  ['Vlada želi višjo rast ob nespremenjeni obrestni meri.', [
-    'Samo ekspanzivno fiskalno politiko - premik krivulje IS desno, LM miruje',
-    'Ekspanzivno fiskalno (IS desno) in restriktivno monetarno politiko (LM levo)',
-    'Samo ekspanzivno monetarno politiko - premik krivulje LM desno, IS miruje'], 0],
-  ['Kaj se dolgoročno zgodi po povečanju AD, ko BDP preseže potencialnega', [
-    'Potencialni BDP se trajno poveča na raven, ki jo je dosegel dejanski BDP, cene se ne spremenijo',
-    'AD se samodejno premakne nazaj, cene padejo pod prvotno raven, BDP se vrne na potencialni',
-    'Plače in cene rastejo, SRAS se premakne desno, BDP trajno ostane nad potencialnim'], 2],
   ['Zakaj je monetarna politika v likvidnostni pasti neučinkovita?', [
     'Ker višja obrestna mera izrine zasebne naložbe, zato se BDP ne poveča',
     'Ker dodaten denar takoj dvigne cene, realna ponudba denarja pa ostane enaka',
@@ -145,18 +137,6 @@ module.exports = [
     'Likvidnostna past, v kateri obrestne mere ne morejo več pasti',
     'Kvantitativno popuščanje, ki zniža dolgoročne obrestne mere',
     'Neodvisnost centralne banke, ki vladi prepoveduje zadolževanje'], 3],
-  ['Kaj je zunanjetrgovinska politika in s katerimi instrumenti deluje?', [
-    'Politika do tujine: davki, državni izdatki in transferji',
-    'Politika do tujine: obrestna mera in obvezne rezerve bank',
-    'Politika do tujine: minimalne plače, nadzor cen in dohodkov'], 0],
-  ['Kako v odprtem gospodarstvu velja zveza med varčevanjem, naložbami in neto izvozom?', [
-    'Zasebno varčevanje + neto izvoz = domače naložbe + proračunski presežek',
-    'Domače naložbe + proračunski presežek = zasebno varčevanje + neto uvoz',
-    'Zasebno varčevanje = domače naložbe + proračunski deficit + neto izvoz'], 2],
-  ['Kaj mora vlada storiti, da poveča mednarodno konkurenčnost in presežek tekočega računa?', [
-    'Dvigniti plače nad rast produktivnosti, da se poveča domača potrošnja in uvoz',
-    'Povečati državne izdatke za nakup tujih dobrin in storitev (uvoz)',
-    'Dvigniti obrestne mere, da se domača valuta okrepi in uvoz poceni'], 1],
   ['Kaj pravi teorija učinkovitih trgov o ceni delnic (random walk)?', [
     'Z analizo preteklih cen lahko zanesljivo napovemo prihodnje gibanje cen',
     'Cene delnic vedno sledijo rasti BDP z enoletnim zamikom (slučajni hod)',
@@ -197,10 +177,6 @@ module.exports = [
     '1 / (MNV − MNU) - večji, ker izvoz poveča domači dohodek',
     '1 / MNV - enak kot v zaprtem gospodarstvu, uvoz ne vpliva',
     'MNP / (MNV + MNU) - manjši, ker davki odtekajo v proračun'], 0],
-  ['Tečaj se spremeni z 1,30 $/€ na 1,05 $/€.', [
-    'Dolar depreciira, evro apreciira; ameriški izvoz v evroobmočje zraste',
-    'Pri drsečem tečaju gre za revalvacijo evra in devalvacijo dolarja',
-    'Evro apreciira, dolar depreciira; ameriški uvoz iz evroobmočja pade'], 2],
   ['Katero pravilo za strukturni primanjkljaj določa fiskalni pakt?', [
     'Na letni ravni ne sme presegati 3 % BDP',
     'Na letni ravni ne sme presegati 60 % BDP',

@@ -1,22 +1,22 @@
-# Epizoda 3 — Teoretične osnove vzorčenja (P03 + V03)
+# Epizoda 3 — Teoretične osnove vzorčenja
 
 Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
-## P03 — Teoretične osnove vzorčenja (20. 10. 2026)
+## P03 — Teoretične osnove vzorčenja
 
-Gradivo: gradivo (25 prosojnic, Aleša Lotrič Dolinar), R koda: gradivo.
+Gradivo: gradivo (Aleša Lotrič Dolinar), R koda: gradivo.
 > ℹ️ Predavanja 20. 10. nisi bil (bolan). Spodaj je razlaga iz prosojnic; vaje V03 (23. 10.) so že rešene naprej.
 
-### Pr. 2 – ponovitev P02
+### Ponovitev P02
 Gostota in porazdelitvena funkcija; kvantil (vrednost) ↔ kvantilni rang (porazdelitvena funkcija); normalna porazdelitev: 2 parametra (μ, σ), simetrična, unimodalna; Z ~ N(0, 1).
 
-### Pr. 3 – vzorčno opazovanje
+### Vzorčno opazovanje
 - **Vzorčno opazovanje** = proučevanje populacije z opazovanjem **dela enot (vzorca)**, na podlagi katerega **sklepamo** na celotno populacijo. Vzorec je podmnožica populacije.
 - **Velikost vzorca**: točno število **n** ali **vzorčni delež f = n/N**.
 - **Razlogi za vzorčenje:** nižja cena, krajši čas, manj zahtevno, bojazen za pristranskost (npr. zaradi preveč manjkajočih podatkov), včasih popolno opazovanje ni mogoče ali smiselno (npr. test, ki uniči izdelek).
 - **Pred analizo premisli o:** (1) metodi ocenjevanja izbranega parametra, (2) načinu vzorčenja, (3) velikosti vzorca.
 
-### Pr. 4 – način izbire enot v vzorec
+### Način izbire enot v vzorec
 | | Slučajna izbira (verjetnostno) | Neslučajna izbira (neverjetnostno) |
 |---|---|---|
 | Verjetnost izbire enote | **enaka za vse enote** | **ni znana** |
@@ -26,7 +26,7 @@ Gostota in porazdelitvena funkcija; kvantil (vrednost) ↔ kvantilni rang (poraz
 
 → **Statistična teorija daje prednost slučajni izbiri.** (Povezava s TT: kvotni vzorec je neverjetnostni.)
 
-### Pr. 5–6 – postopek slučajne izbire (3 koraki)
+### Postopek slučajne izbire (3 koraki)
 1. **Vzorčni okvir** = oštevilčen seznam **vseh N** enot (registri). Primer 3.1: študenti, vpisani danes v 2. letnik UPEŠ EF; Primer 3.2: podjetja, vpisana v register 1. 1. 2026.
 2. S **generatorjem (psevdo)slučajnih števil** (enakomerna porazdelitev) ustvarimo n slučajnih števil: poštena kocka (za seznam do 6 enot) ali v R `sample(X, n)`, npr. `sample(50, size = 8, replace = FALSE)`.
 3. Izberemo enote, katerih zaporedne številke se ujemajo z generiranimi števili.
@@ -35,7 +35,7 @@ Gostota in porazdelitvena funkcija; kvantil (vrednost) ↔ kvantilni rang (poraz
 - **s ponavljanjem** – števila se lahko ponovijo → isto enoto lahko izberemo večkrat;
 - **brez ponavljanja** – števila morajo biti različna → vsaka enota največ enkrat. **Običajno v družboslovju** (omejena velikost populacije, razlike med enotami so večje).
 
-### Pr. 7–8 – enostavno slučajno vzorčenje (ESV, angl. SRS)
+### Enostavno slučajno vzorčenje (ESV, angl. SRS)
 Populacija N enot → okvir z oznakami 1…N → generiramo n enakomernih slučajnih števil → vzorec = teh n enot.
 **Vsaka enota je izbrana z enako verjetnostjo ⇒ vsak vzorec iste velikosti je izbran z enako verjetnostjo.**
 
@@ -46,14 +46,14 @@ $$\binom{N}{n} = \frac{N!}{n!\,(N-n)!}$$
 - Primer 3.1: N = 400 študentov, n = 4 → C(400, 4) = **1 050 739 900**; n = 50 → C(400, 50) = **1,70359 · 10⁶⁴** (zato nikoli ne gledamo vseh vzorcev, ampak jih obravnavamo teoretično).
 - R: `choose(6, 4)`, vse vzorce izpiše `combn(y, 4)` (paket `combinat`).
 
-### Pr. 9–12 – Primer 3.3: vsi možni vzorci (hipotetični)
+### Primer 3.3: vsi možni vzorci (hipotetični)
 Populacija 6 enot, **Y = 2, 3, 7, 4, 3, 5**. Populacijski parametri:
 - **μ_Y = 4**, **σ²_Y = 2,67**, **σ_Y = 1,63** (populacijska varianca deli z N, ne z N−1).
 - Vzorci brez ponavljanja s po **n = 4**: C(6, 4) = 6!/(4!·2!) = **15 vzorcev**.
 - Za vsak vzorec v (v = 1…15) izračunamo vzorčno oceno ȳ_v, npr. vzorec 1 (2, 3, 7, 4) → ȳ₁ = 16/4 = **4**; vzorec 2 (2, 3, 7, 3) → 3,75; … vzorec 15 (7, 4, 3, 5) → 4,75.
 - Vseh 15 ocen: 4; 3,75; 4,25; 3; 3,5; 3,25; 4; 4,5; 4,25; 3,5; 4,25; 4,75; 4,5; 3,75; 4,75.
 
-### Pr. 10 – cenilka in vzorčna ocena ⭐ (pojmi za kolokvij)
+### Cenilka in vzorčna ocena ⭐ (pojmi za kolokvij)
 | Pojem | Pomen | Oznaka |
 |---|---|---|
 | **Parameter** | prava (populacijska) vrednost, ena sama, nepoznana | Γ (npr. μ) |
@@ -63,7 +63,7 @@ Populacija 6 enot, **Y = 2, 3, 7, 4, 3, 5**. Populacijski parametri:
 Verjetnostna porazdelitev cenilke (vzorčnih ocen) je odvisna od ocenjevanega parametra.
 ⚠️ Kdor reče »spremenljivka, katere vrednosti so vzorčne ocene«, misli **cenilko**, ne parameter (glej vprašanje 1E spodaj).
 
-### Pr. 13 – porazdelitev vzorčnih ocen: tri mere ⭐
+### Porazdelitev vzorčnih ocen: tri mere ⭐
 Čez vseh C(N, n) vzorcev (q ≤ C(N, n) različnih ocen):
 
 | Mera | Formula |
@@ -72,7 +72,7 @@ Verjetnostna porazdelitev cenilke (vzorčnih ocen) je odvisna od ocenjevanega pa
 | **Varianca** vzorčnih ocen | Var(g) = E[g − E(g)]² = (1 / C(N,n)) · Σ (g_v − μ_g)² |
 | **Standardna napaka** (SE, standardni odklon vzorčnih ocen) | SE(g) = √Var(g) |
 
-### Pr. 14–15 – Primer 3.3: cenilka za aritmetično sredino
+### Primer 3.3: cenilka za aritmetično sredino
 - Frekvenčna porazdelitev 15 ocen: vrednosti 3 | 3,25 | 3,5 | 3,75 | 4 | 4,25 | 4,5 | 4,75 s frekvencami 1 | 1 | 2 | 2 | 2 | 3 | 2 | 2 (skupaj 15).
 - **E(ȳ) = 4 = μ_Y** (povprečje vseh 15 ocen = pravo povprečje → cenilka je nepristranska).
 - **Var(ȳ)** (iz vseh vzorcev) = 0,27 in z obrazcem za **ESV brez ponavljanja**:
@@ -89,7 +89,7 @@ $$var(\bar y)=\frac{s_Y^2}{n}\cdot\frac{N-n}{N}, \qquad se(\bar y)=\frac{s_Y}{\s
 (Pri oceni je v imenovalcu popravka **N**, pri pravi varianci **N − 1**. Pozor na vrstni red: v števcu je N − n.)
 - **Velike črke (Var, SE, σ)** = prave vrednosti iz vseh vzorcev; **male črke (var, se, s)** = ocene iz enega vzorca.
 
-### Pr. 16–19 – R izpis (primer 3.3)
+### R izpis (primer 3.3)
 ```r
 y <- c(2, 3, 7, 4, 3, 5)
 mean(y)                         # 4  (populacijska sredina)
@@ -106,7 +106,7 @@ hist(y_precna, breaks = seq(2.5, 5, by = 0.25))   # porazdelitev vzorčnih ocen
 ⚠️ `var()` v R deli z **n − 1**; ko računamo populacijsko varianco ali varianco **vseh** vzorčnih ocen, pomnožimo z (n−1)/n.
 Histogram ocen: razpon 3–4,75, vrh pri 4,0–4,25 (3 vzorci), približno zvonast.
 
-### Pr. 20 – merila za kakovost cenilke ⭐
+### Merila za kakovost cenilke ⭐
 
 Parameter lahko ocenimo z različnimi cenilkami (za »povprečje«: ȳ, mediana, (y_min + y_max)/2). Niso vse enako dobre. Merila:
 1. **Nepristranskost** (unbiasedness): **E(g) = Γ**, pričakovana vrednost cenilke je enaka pravi vrednosti parametra.
@@ -115,18 +115,18 @@ Parameter lahko ocenimo z različnimi cenilkami (za »povprečje«: ȳ, mediana,
 
 Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
 
-### Pr. 21 – cenilka za varianco (pristranskost!) ⭐
+### Cenilka za varianco (pristranskost!) ⭐
 - Parameter: σ²_Y = (1/**N**) Σ(y_i − μ)². Cenilka: **s²_Y = (1/(n−1)) Σ(y_i − ȳ)²**.
 - **Vzorci s ponavljanjem:** E(s²) = σ² → nepristranska.
 - **Vzorci brez ponavljanja:** **E(s²) = N/(N−1) · σ²** → rahlo pristranska glede na σ² (pri velikem N zanemarljivo, saj N/(N−1) ≈ 1; je pa nepristranska za varianco z deljenjem z N−1).
 - Zato se v cenilki deli z **n − 1**, ne z n.
 
-### Pr. 22–23 – oblika porazdelitve vzorčnih ocen
+### Oblika porazdelitve vzorčnih ocen
 - Možne zvezne porazdelitve vzorčnih ocen: **normalna (Z), t, χ², F** (to so tiste štiri iz P02, pr. 7).
 - **Centralni limitni izrek:** pri **velikih vzorcih (n ≥ 100)** se vzorčne ocene za parametre, ki so **vsote** slučajnih spremenljivk (aritmetična sredina μ, vsota Y_tot, **delež** Π, število enot z lastnostjo N_a), porazdeljujejo **približno normalno**, ne glede na porazdelitev Y.
 - Torej (če Y ~ N(μ_Y, σ_Y) **ali** n ≥ 100): **g ~ N(E(g), SE(g))**. Zvon je centriran pri E(g), robovi E(g) ± SE(g), ± 2SE(g), ± 3SE(g). Zveza z P02: ± 2SE ≈ 95,44 %, ± 3SE ≈ 99,73 %.
 
-### Pr. 24–25 – vprašanja za preverjanje znanja (rešeno)
+### Vprašanja za preverjanje znanja (rešeno)
 **1.** (38 000 študentov, slučajni vzorec n = 300, povprečni izdatki.) Katera trditev **NI** pravilna?
 - A ✔ vrednosti ȳ za vse vzorce s po 300 študenti prikazuje porazdelitev vzorčnih ocen;
 - B ✔ porazdelitev vzorčnih ocen = porazdelitev cenilke;
@@ -151,7 +151,7 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
 
 > ⚠️ Vsako nalogo začni z enoto in spremenljivko. Normalno porazdelitev zapiši kot Y ~ N(μ, σ). Ne piši »…«, ampak celotno verigo formul.
 
-### Naloga 1: vijaki v škatlah — ⭐ tipičen izpitni primer (profesor)
+### Naloga 1: vijaki v škatlah — ⭐ tipičen izpitni primer
 - **a) Enota:** ena kartonasta škatla. **Spremenljivka:** število zapakiranih vijakov v škatli (v vijakih), številska, diskretna (modeliramo jo z normalno), razmernostna.
 - **Iz podatkov:** 95,44 % škatel je med 680 in 720 vijaki. To je **μ ± 2σ**, zato velja 700 ± 2σ = 720 → **σ = 10 vijakov**. **Y ~ N(700; 10)**.
 - **b)** **Me = 700 vijakov**, **ker je normalna porazdelitev simetrična**. Polovica ploščine je levo od μ, polovica desno.
@@ -160,8 +160,8 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
 - **d)** F(705) = P(Y ≤ 705) = P(Z ≤ (705 − 700)/10) = P(Z ≤ 0,5) = F(0,5) = **0,6915**.
   - 69,15 % škatel vsebuje do vključno 705 vijakov.
   - Na grafu gostote je to ploščina levo od 705.
-- **Prevoj ogive** (profesor): porazdelitvena funkcija ima prevoj pri **y = μ = 700, kjer je F = 0,5**. Tam je najstrmejša, ker ima gostota tam vrh. Gostota (zvon) ima prevoja drugje, pri μ ± σ (690 in 710).
-- ⚠️ **Past pri e) (profesor):** študenti pri e) spet narišejo **zvon (gostoto)**. To je **NAROBE**! Porazdelitvena funkcija ni zvon.
+- **Prevoj ogive**: porazdelitvena funkcija ima prevoj pri **y = μ = 700, kjer je F = 0,5**. Tam je najstrmejša, ker ima gostota tam vrh. Gostota (zvon) ima prevoja drugje, pri μ ± σ (690 in 710).
+- ⚠️ **Past pri e):** študenti pri e) spet narišejo **zvon (gostoto)**. To je **NAROBE**! Porazdelitvena funkcija ni zvon.
 - **e)** Porazdelitvena funkcija: krivulja S od 0 do 1, os y je F(y). Pri y = 705 je višina 0,6915, pri 700 pa 0,5.
 
 - **f) 🏠 Domača naloga (dodatna alineja):** izračunajte 7. decil D₇.
@@ -179,7 +179,7 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
 - **a)** Proračun 120 000 € / 240 € = **500 izdelkov** = 500/5000 = **10 %** izdelkov se sme pokvariti v garanciji.
   - P(Y ≤ g) = 0,10 → z₀,₁₀ = −1,28 (tabela; R: −1,2816).
   - g = μ + z · σ = 5 + (−1,28) · 1,56 = 5 − 2,00 = **3,00 let**.
-  - Odgovor (profesor): podjetje naj da garancijo **največ 3 leta**. Pri daljši garanciji bi se v garancijski dobi pokvarilo več kot 10 % izdelkov in stroški bi presegli 120 000 €.
+  - Odgovor: podjetje naj da garancijo **največ 3 leta**. Pri daljši garanciji bi se v garancijski dobi pokvarilo več kot 10 % izdelkov in stroški bi presegli 120 000 €.
   - R: `qnorm(0.10, 5, 1.56)` = 3,0008.
 - **b)** Garancija 2 leti, proračun 12 000 € / 240 € = **50 izdelkov** = 50/5000 = **1 %**.
   - P(Y ≤ 2) = 0,01 → z₀,₀₁ = −2,33 (tabela; R: −2,3263).
@@ -195,7 +195,7 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
 | a | Vsaka normalna porazdelitev je simetrična. | **DRŽI** | simetrična okoli μ. ⚠️ **Obratno ne drži:** vsaka simetrična porazdelitev ni normalna. |
 | b | Pri Z je ~68,3 % vrednosti med −3 in +3. | **NE DRŽI** | za interval med −1 in +1 bi držalo (68,27 %); med −3 in +3 je **99,73 %** |
 | c | Pri Z sta standardni odklon in varianca vedno enaka. | **DRŽI** | σ = 1, σ² = 1² = 1 |
-| d | Vzorčni okvir je oštevilčen seznam vseh enot, zajetih v vzorec. | **NE DRŽI** | je oštevilčen seznam **vseh N enot populacije** (P03, pr. 7) |
+| d | Vzorčni okvir je oštevilčen seznam vseh enot, zajetih v vzorec. | **NE DRŽI** | je oštevilčen seznam **vseh N enot populacije** |
 | e | Iz N = 10 izberemo n = 3 brez ponavljanja; možnih vzorcev je 30. | **NE DRŽI** | (10 nad 3) = 10!/(3!·7!) = **120** |
 
 - d in e sta bili rešeni po teoriji vzorčenja, potrjeno na vajah.
@@ -214,7 +214,7 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
   - R: `choose(23, 11)`.
 - Na vsaki enajsterici (vzorcu) lahko izračunamo **oceno povprečja** ȳ. Dobimo 1.352.078 vzorčnih ocen, ki se med seboj razlikujejo. To vodi do **cenilke** in porazdelitve vzorčnih ocen.
 
-- **Cenilka aritmetične sredine** (profesor):
+- **Cenilka aritmetične sredine**:
   - Ocene povprečja se od vzorca do vzorca spreminjajo. Kar se v statistiki spreminja, lahko obravnavamo kot **spremenljivko**.
   - Cenilka ȳ je torej (slučajna) spremenljivka, njene vrednosti pa so ocene povprečij pri vseh možnih vzorcih.
 - **Aritmetična sredina cenilke** je **povprečje vseh povprečij**. V matematiki ji rečemo **matematično upanje** oz. **pričakovana vrednost** cenilke, E(ȳ).
@@ -225,15 +225,15 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
 - **Nepristranskost:** če je **pričakovana vrednost cenilke enaka vrednosti parametra**, E(g) = Γ, je **cenilka nepristranska**. Tu velja E(ȳ) = μ, zato je ȳ nepristranska cenilka za μ.
   - Pravilno je »**cenilka** je nepristranska«, ne »spremenljivka«.
 
-- **Variabilnost cenilke** merimo z dvema parametroma (profesor; obrazci str. 25):
+- **Variabilnost cenilke** merimo z dvema parametroma (obrazci str. 25):
   1. **Varianca cenilke:** Var(ȳ) = σ²_Y / n · (N − n)/(N − 1).
-     - ⚠️ Pazi na vrstni red: v števcu je **N − n**, v imenovalcu **N − 1** (P03, pr. 15).
+     - ⚠️ Pazi na vrstni red: v števcu je **N − n**, v imenovalcu **N − 1**.
      - Iz vzorca jo ocenimo: var(ȳ) = s²_Y / n · (N − n)/N.
   2. **Standardni odklon cenilke** je koren variance. Ima posebno ime, ki je **neskončno pomembno: STANDARDNA NAPAKA**, SE(ȳ) = √Var(ȳ).
      - Ocena iz vzorca: se(ȳ) = s_Y/√n · √((N − n)/N).
      - Je v osnovnih merskih enotah spremenljivke.
 
-### Naloga 4: manjkajoče besede (P03)
+### Naloga 4: manjkajoče besede
 - a) f = n/N je **vzorčni delež**.
 - b) Cenilka parametra je **slučajna** spremenljivka …
 - c) Aritmetična sredina vseh vzorčnih ocen je enaka **pričakovani vrednosti (matematičnemu upanju)** vzorčnih ocen, E(g).

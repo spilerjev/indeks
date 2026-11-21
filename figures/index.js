@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 function load() {
-  const figs = {}, attach = [];
+  const figs = {}, attach = [], fills = {};
   fs.readdirSync(__dirname).filter((f) => f.endsWith('.js') && f !== 'index.js' && f !== 'lib.js').sort().forEach((f) => {
     const m = require(path.join(__dirname, f));
     Object.entries(m.figs || {}).forEach(([id, svg]) => {
@@ -17,12 +17,13 @@ function load() {
       figs[id] = svg;
     });
     attach.push(...(m.attach || []));
+    Object.entries(m.fills || {}).forEach(([id, v]) => { if (fills[id]) throw new Error('Graf za vstavljanje ' + id + ' je definiran dvakrat (' + f + ')'); fills[id] = v; });
   });
-  return { figs, attach };
+  return { figs, attach, fills };
 }
 
 function applyFigures(data) {
-  const { figs, attach } = load();
+  const { figs, attach, fills } = load();
   const used = new Set();
   const bad = [];
   attach.forEach((a) => {
@@ -40,6 +41,15 @@ function applyFigures(data) {
     if (!n) bad.push('ni vprašanja: [' + (a.subj || '*') + '] ' + a.q);
     used.add(a.fig);
   });
+  // naloge »vstavi v graf« (type: "figfill"): q.figfill = id iz fills -> q.fill = { svg, slots }; vsako mesto mora imeti koordinate
+  data.forEach((s) => s.subjects.forEach((su) => su.parts.forEach((p) => (p.decks || []).forEach((d) => (d.questions || []).forEach((q) => {
+    if (q.type !== 'figfill') return;
+    const fl = fills[q.figfill];
+    if (!fl) { bad.push('figfill: neznan graf ' + q.figfill + ' (' + (q.q || '').slice(0, 40) + ')'); return; }
+    const miss = (q.slots || []).filter((sl) => !fl.slots.some((x) => x.id === sl.id)).map((sl) => sl.id);
+    if (miss.length) bad.push('figfill ' + q.figfill + ': mesta brez koordinat: ' + miss.join(', '));
+    q.fill = { svg: fl.svg, slots: fl.slots.filter((x) => (q.slots || []).some((sl) => sl.id === x.id)) };
+  })))));
   if (bad.length) console.warn('\n⚠️  GRAFI - napake pri pripenjanju (preveri figures/*.js):\n  ' + bad.join('\n  ') + '\n');
   // v izhod samo uporabljeni grafi
   const out = {};

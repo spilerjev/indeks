@@ -58,10 +58,6 @@ module.exports = [
     'Pri μ − σ in μ + σ, kjer ima prevoja zvon',
     'Pri y = 0, kjer je F(0) = 0,5',
     'Nima prevoja, ker je monotono naraščajoča'], 3, 'Pri y = μ, kjer je F = 0,5'],
-  ['Kdaj je med nepristranskimi cenilkami', [
-    'Ko ima manjšo stopnjo tveganja α',
-    'Ko ima večjo standardno napako',
-    'Ko je poleg tega tudi dosledna'], 3, 'Ko ima manjšo standardno napako'],
   ['Kateri NI razlog za vzorčenje?', [
     'Nižja cena raziskave',
     'Krajši čas zbiranja podatkov',

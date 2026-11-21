@@ -1,4 +1,4 @@
-# Epizoda 7 — Ekonomske integracije in WTO (P06)
+# Epizoda 7 — Ekonomske integracije in WTO
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
@@ -27,10 +27,10 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Plitva in globoka integracija:** plitva = predvsem odprava carin. Globoka = tudi usklajevanje pravil (standardi, storitve, naložbe, konkurenca, javna naročila).
 - **Stopnje (Balassa):** (preferencialni trgovinski sporazum) → območje proste trgovine → carinska unija → skupni trg → ekonomska unija → ekonomska in monetarna (politična) unija (glej tabelo pri P01, prosojnica 16).
 
-- **Prosojnica 4 (tabela stopenj, Balassa):** prof jo je le omenila kot ponovitev (glej P01, prosojnica 16).
+- **Prosojnica 4 (tabela stopenj, Balassa):** prof jo je le omenila kot ponovitev.
 - **Prosojnica 5 (ostali kriteriji vrst integracij):** *preskočeno na predavanju.* Kriteriji: geografski (subregionalne, regionalne, medregionalne, globalne), obseg (parcialne, sektorske, celovite), metode (institucionalne, tržne, pozitivne, negativne), vrsta aktivnosti (proizvodne, storitve, faktorji, varnostne in politične, ekonomske in monetarne, delovanje trga).
 
-### Prosojnica 6: Svetovna trgovinska organizacija (STO / WTO)
+### Svetovna trgovinska organizacija (STO / WTO)
 - **Ustanovljena: 1. 1. 1995** na podlagi **urugvajskega kroga pogajanj GATT (1986–1994)**. Sporazum iz Marakeša je bil podpisan aprila 1994.
 - **Trije stebri:**
   - **GATT** (*General Agreement on Tariffs and Trade*, 1947): splošni sporazum o carinah in trgovini z **blagom**,
@@ -45,7 +45,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - Sporazum iz leta 1994: postopno zniževanje carin do leta 2001.
 - Generalna direktorica: **Ngozi Okonjo-Iweala** (od 1. 3. 2021, drugi mandat 1. 9. 2025 – 31. 8. 2029).
 
-### Prosojnica 7: WTO, glavne naloge
+### WTO, glavne naloge
 - zagotoviti, da trgovina čim bolj teče **prosto in pregledno** (odprava carinskih in necarinskih ovir; damping, subvencije, standardi),
 - pogajanja za nove sporazume o odpravi ovir,
 - **spremljanje izvajanja sporazumov**,
@@ -57,15 +57,15 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - zagotoviti, da liberalizacija spoštuje **trajnostni razvoj (varstvo okolja)**. *Prof ni povedala, vpisano po Doha agendi, preveri.*
   - izboljšati dostop **manj razvitih držav (MRD)** do globalnih trgov za njihov izvoz.
 
-### Prosojnica 8: Doha runda in ministrske konference (1)
+### Doha runda in ministrske konference (1)
 - **9. ministrska konferenca, Bali, december 2013:**
   - znižanje carin, znižanje kmetijskih subvencij razvitih držav, reforma carinske birokracije in formalnosti,
-  - ⭐ **najpomembnejše (prof): prvi globalni (multilateralni) sporazum, sprejet v okviru WTO** → **TFA** (*Trade Facilitation Agreement*, sporazum o olajševanju trgovine), v veljavi od **22. 2. 2017**. Poenostavi carinske postopke, zlasti za podjetja iz manj razvitih držav.
+  - ⭐ **najpomembnejše: prvi globalni (multilateralni) sporazum, sprejet v okviru WTO** → **TFA** (*Trade Facilitation Agreement*, sporazum o olajševanju trgovine), v veljavi od **22. 2. 2017**. Poenostavi carinske postopke, zlasti za podjetja iz manj razvitih držav.
 - **10. ministrska konferenca, Nairobi, 2015:**
   - **takojšnja odprava izvoznih subvencij za kmetijske proizvode** v razvitih državah (za države v razvoju postopno, do konca 2023),
   - **EU: leta 2017 odpravi izvozne subvencije za kmetijske proizvode**.
 
-### Prosojnice 9+: Ministrske konference (2)
+### Ministrske konference (2)
 - **12. ministrska konferenca, Ženeva, junij 2022 (MC12):**
   - ⭐ **Sporazum o ribiških subvencijah:** prepoved subvencij za **nezakonit, neprijavljen in nereguliran ribolov** (IUU: *illegal, unreported, unregulated*), za ribolov **prelovljenih staležev** in na **nereguliranem odprtem morju**. V veljavi od septembra 2025.
   - dogovor tudi o širšem procesu: podaljšanje moratorija na e-trgovino, prehranska varnost, odpoved patentnim pravicam za cepiva proti covidu (TRIPS), zaveza k reformi WTO.

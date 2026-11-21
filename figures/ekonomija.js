@@ -397,30 +397,30 @@ function prag(o) {
 
 /* ---------------- PF1 ---------------- */
 function sml(o = {}) {
-  const f = new Fig({ qmax: 2.25, pmax: 29, xl: 'β', yl: 'r (%)', title: 'SML: r = r_{f} + β (r_{m} − r_{f})', mr: 30 });
-  f.fn((b) => 5 + 10 * b, 0, 2.2, 'c3'); f.text(2.2, 27, 'SML', { anchor: 'start', dx: 4, dy: 4, cls: 'tc' });
-  f.guideH(15, 1).guideV(1, 15).pt(1, 15, 'M', -8, -6);
-  f.ytick(5, '5 = r_{f}').ytick(15, '15 = r_{m}').xtick(1, '1');
-  if (o.a) { f.pt(0.9, 13, 'A', 0, 15).guideV(0.9, 13).seg(0.9, 13, 0.9, 14, 'cS').xtick(0.9, '0,9'); }
-  if (o.c) { f.pt(1.8, 25, 'C', 0, -8).guideV(1.8, 25).seg(1.8, 23, 1.8, 25, 'cD').pt(1.1, 16, 'B', 8, -6).xtick(1.8, '1,8'); }
-  if (!o.a && !o.c) { f.pt(1.6, 24, 'nad SML', 0, -8).pt(1.4, 15.5, 'pod SML', 0, 15); }
-  f.legend(null, 'tržna premija r_{m} − r_{f} = 10 % = naklon SML (pri β = 1 je r = r_{m})');
-  if (o.a) f.legend(null, 'A: zahtevana 5 + 0,9 · 10 = 14 % > pričakovana 13 % → pod SML');
-  if (o.c) f.legend(null, 'C: zahtevana 5 + 1,8 · 10 = 23 % < pričakovana 25 % → nad SML');
+  const f = new Fig({ qmax: 1.9, pmax: 21, xl: 'β', yl: 'r (%)', title: 'SML: r = r_{f} + β (r_{m} − r_{f})', mr: 30 });
+  f.fn((b) => 3 + 8 * b, 0, 1.8, 'c3'); f.text(1.8, 17.4, 'SML', { anchor: 'start', dx: 4, dy: 4, cls: 'tc' });
+  f.guideH(11, 1).guideV(1, 11).pt(1, 11, 'M', -8, -6);
+  f.ytick(3, '3 = r_{f}').ytick(11, '11 = r_{m}').xtick(1, '1');
+  if (o.a) { f.pt(0.75, 8, 'A', 0, 15).guideV(0.75, 8).seg(0.75, 8, 0.75, 9, 'cS').xtick(0.75, '0,75'); }
+  if (o.c) { f.pt(1.5, 17, 'C', 0, -8).guideV(1.5, 17).seg(1.5, 15, 1.5, 17, 'cD').pt(1.25, 13, 'B', 8, -6).xtick(1.5, '1,5'); }
+  if (!o.a && !o.c) { f.pt(1.4, 17, 'nad SML', 0, -8).pt(1.2, 10, 'pod SML', 0, 15); }
+  f.legend(null, 'tržna premija r_{m} − r_{f} = 8 % = naklon SML (pri β = 1 je r = r_{m})');
+  if (o.a) f.legend(null, 'A: zahtevana 3 + 0,75 · 8 = 9 % > pričakovana 8 % → pod SML');
+  if (o.c) f.legend(null, 'C: zahtevana 3 + 1,5 · 8 = 15 % < pričakovana 17 % → nad SML');
   f.legend(null, 'nad SML: podcenjena (kupi); pod SML: precenjena (prodaj)');
   return f.svg();
 }
 function smlX(o = {}) {
-  const f = new Fig({ qmax: 1.65, pmax: 19, xl: 'β', yl: 'r (%)', title: 'Delnica X (β = 1,2): premiki SML', mr: 60 });
+  const f = new Fig({ qmax: 1.65, pmax: 18, xl: 'β', yl: 'r (%)', title: 'Delnica Omega (β = 1,4): premiki SML', mr: 60 });
   const L = (rf, pr) => (b) => rf + pr * b, all = !o.infl && !o.prem;
-  f.fn(L(4, 5), 0, 1.6, 'c3'); f.text(1.6, 12, 'osnova', { anchor: 'start', dx: 4, dy: 4 }); f.dot(1.2, 10).ytick(10, '10');
-  if (o.infl || all) { f.fn(L(6, 5), 0, 1.6, 'c4'); f.text(1.6, 14, 'inflacija +2', { anchor: 'start', dx: 4, dy: 4 }); f.dot(1.2, 12).ytick(12, '12').ytick(6, '6'); }
-  if (o.prem || all) { f.fn(L(4, 8), 0, 1.6, 'c5'); f.text(1.6, 16.8, 'premija +3', { anchor: 'start', dx: 4, dy: 4 }); f.dot(1.2, 13.6).ytick(13.6, '13,6'); }
-  if (all) { f.fn(L(6, 8), 0, 1.6, 'cS'); f.text(1.6, 18.8, 'oboje', { anchor: 'start', dx: 4, dy: 4, cls: 'tS' }); f.dot(1.2, 15.6).ytick(15.6, '15,6'); }
-  f.vline(1.2, 0, 18, 'gd'); f.ytick(4, '4').xtick(1.2, '1,2');
+  f.fn(L(2, 5), 0, 1.6, 'c3'); f.text(1.6, 10, 'osnova', { anchor: 'start', dx: 4, dy: 4 }); f.dot(1.4, 9).ytick(9, '9');
+  if (o.infl || all) { f.fn(L(4, 5), 0, 1.6, 'c4'); f.text(1.6, 12, 'inflacija +2', { anchor: 'start', dx: 4, dy: 4 }); f.dot(1.4, 11).ytick(11, '11').ytick(4, '4'); }
+  if (o.prem || all) { f.fn(L(2, 7.5), 0, 1.6, 'c5'); f.text(1.6, 14, 'premija +2,5', { anchor: 'start', dx: 4, dy: 4 }); f.dot(1.4, 12.5).ytick(12.5, '12,5'); }
+  if (all) { f.fn(L(4, 7.5), 0, 1.6, 'cS'); f.text(1.6, 16, 'oboje', { anchor: 'start', dx: 4, dy: 4, cls: 'tS' }); f.dot(1.4, 14.5).ytick(14.5, '14,5'); }
+  f.vline(1.4, 0, 17, 'gd'); f.ytick(2, '2').xtick(1.4, '1,4');
   if (o.infl || all) f.legend(null, 'inflacija: r_{f} in r_{m} +2 → SML vzporedno navzgor (naklon enak)');
-  if (o.prem || all) f.legend(null, 'premija +3: SML strmejša, učinek = β · 3 = 3,6 o. t.');
-  if (all) f.legend(null, 'oboje: 6 + 1,2 · 8 = 15,6 % (+5,6 o. t.)');
+  if (o.prem || all) f.legend(null, 'premija +2,5: SML strmejša, učinek = β · 2,5 = 3,5 o. t.');
+  if (all) f.legend(null, 'oboje: 4 + 1,4 · 7,5 = 14,5 % (+5,5 o. t.)');
   return f.svg();
 }
 function diverz() {
@@ -483,51 +483,51 @@ function mreza() {
     f.text(x, y, t, { cls: 'tv', dy: -1 }); f.text(x, y, d + ' min', { dy: 11 });
   };
   const L = (x1, y1, x2, y2, crit) => f.arrow(x1, y1, x2, y2, crit ? 'cS' : 'ar');
-  box(9, 20, 'O1', 30, 1); box(37, 32, 'O2', 20, 0); box(37, 8, 'O3', 40, 1); box(64, 20, 'O4', 20, 1); box(90, 20, 'O5', 50, 1);
-  L(16.5, 22, 29, 31, 0); L(16.5, 18, 29, 9, 1); L(44.5, 31, 56, 22, 0); L(44.5, 9, 56, 18, 1); L(71.5, 20, 82, 20, 1);
-  f.legend('a2', 'kritična pot O1→O3→O4→O5: 30 + 40 + 20 + 50 = 140 min');
-  f.legend('a0', 'O2: pot je 20 min krajša → rezerva 20 min');
-  f.legend(null, 'daljši O2 podaljša TPČ šele, ko preseže rezervo');
+  box(9, 20, 'O1', 25, 1); box(37, 32, 'O2', 35, 1); box(37, 8, 'O3', 20, 0); box(64, 20, 'O4', 30, 1); box(90, 20, 'O5', 40, 1);
+  L(16.5, 22, 29, 31, 1); L(16.5, 18, 29, 9, 0); L(44.5, 31, 56, 22, 1); L(44.5, 9, 56, 18, 0); L(71.5, 20, 82, 20, 1);
+  f.legend('a2', 'kritična pot O1→O2→O4→O5: 25 + 35 + 30 + 40 = 130 min');
+  f.legend('a0', 'O3: pot je 15 min krajša → rezerva 15 min');
+  f.legend(null, 'daljši O3 podaljša TPČ šele, ko preseže rezervo');
   return f.svg();
 }
 function dom() {
-  const f = new Fig({ qmin: 150, qmax: 410, pmin: 120000, pmax: 330000, xl: 'Q', yl: 'TC', title: 'Dom (Primer 5.1): izbira postopka', ml: 56, mr: 74 });
-  const R = (q) => 15000 + 820 * q, M = (q) => 35000 + 730 * q, A = (q) => 80000 + 580 * q;
-  f.fn(R, 150, 400, 'cS').fn(M, 150, 400, 'c4').fn(A, 150, 400, 'cD');
-  f.path([[150, R(150)], [222.2, R(222.2)]], 'cS thick').path([[222.2, M(222.2)], [300, M(300)]], 'c4 thick').path([[300, A(300)], [400, A(400)]], 'cD thick');
-  f.text(400, R(400), 'ročen', { anchor: 'start', dx: 4, dy: 0, cls: 'tS' }); f.text(400, M(400), 'mehaniziran', { anchor: 'start', dx: 4, dy: 4, cls: 'tc' }); f.text(400, A(400), 'avtomatiz.', { anchor: 'start', dx: 4, dy: 8, cls: 'tD' });
-  f.guideV(222.2, R(222.2)).guideV(300, A(300)).dot(222.2, R(222.2)).dot(300, A(300));
-  [[200, 'Q = 200'], [350, 'Q = 350']].forEach(([q, t]) => f.vline(q, 120000, 325000, 'gd'));
-  f.xtick(200, '200').xtick(222.2, '222').xtick(300, '300').xtick(350, '350').ytick(179000, '179.000').ytick(283000, '283.000');
-  f.legend(null, 'TC = FC + AVC · Q (FC 15.000 / 35.000 / 80.000; AVC 820 / 730 / 580)');
-  f.legend(null, 'Q < 223: ročen; 223–300: mehaniziran; Q > 300: avtomatiziran');
+  const f = new Fig({ qmin: 150, qmax: 460, pmin: 90000, pmax: 310000, xl: 'Q', yl: 'TC', title: 'Kolesarnica Vrtiljak: izbira postopka', ml: 56, mr: 74 });
+  const R = (q) => 12000 + 640 * q, M = (q) => 30000 + 565 * q, A = (q) => 72000 + 445 * q;
+  f.fn(R, 150, 450, 'cS').fn(M, 150, 450, 'c4').fn(A, 150, 450, 'cD');
+  f.path([[150, R(150)], [240, R(240)]], 'cS thick').path([[240, M(240)], [350, M(350)]], 'c4 thick').path([[350, A(350)], [450, A(450)]], 'cD thick');
+  f.text(450, R(450), 'ročni', { anchor: 'start', dx: 4, dy: 0, cls: 'tS' }); f.text(450, M(450), 'polavtomat.', { anchor: 'start', dx: 4, dy: 4, cls: 'tc' }); f.text(450, A(450), 'robotski', { anchor: 'start', dx: 4, dy: 8, cls: 'tD' });
+  f.guideV(240, R(240)).guideV(350, A(350)).dot(240, R(240)).dot(350, A(350));
+  [200, 400].forEach((q) => f.vline(q, 90000, 305000, 'gd'));
+  f.xtick(200, '200').xtick(240, '240').xtick(350, '350').xtick(400, '400').ytick(140000, '140.000').ytick(250000, '250.000');
+  f.legend(null, 'TC = FC + AVC · Q (FC 12.000 / 30.000 / 72.000; AVC 640 / 565 / 445)');
+  f.legend(null, 'Q < 240: ročni; 240–350: polavtomatski; Q > 350: robotski');
   f.legend(null, 'prelomna točka = razlika FC / razlika AVC');
   return f.svg();
 }
 function zamenjava() {
-  const yrs = [1, 2, 3, 4], inv = [150, 100, 100, 125], vzd = [50, 65, 80, 105], izz = [0, 15, 26.7, 45], tot = [200, 180, 206.7, 275];
-  const f = new Fig({ qmax: 4.6, pmax: 300, xl: 'leta', yl: 'AC (tisoč €)', title: 'Primer 5.8: kdaj zamenjati stroj', mr: 64 });
+  const yrs = [1, 2, 3, 4], inv = [200, 150, 120, 130], vzd = [40, 50, 63.3, 97.5], izz = [0, 10, 20, 45], tot = [240, 210, 203.3, 272.5];
+  const f = new Fig({ qmax: 4.6, pmax: 300, xl: 'leta', yl: 'AC (tisoč €)', title: 'Tiskarna Črkolik: kdaj zamenjati stroj', mr: 64 });
   const line = (arr, cls, name, dy = 4) => { f.path(yrs.map((y, k) => [y, arr[k]]), cls); yrs.forEach((y, k) => f.dot(y, arr[k])); f.text(4, arr[3], name, { anchor: 'start', dx: 6, dy, cls: cls === 'c3' ? 'tc' : 't' }); };
   line(inv, 'c4', 'investicija'); line(vzd, 'cS', 'vzdrževanje', 10); line(izz, 'c5', 'izzivalec'); line(tot, 'c3', 'skupaj AC');
-  f.guideV(2, 180).pt(2, 180, '180 (min)', 0, -9);
+  f.guideV(3, 203.3).pt(3, 203.3, '203,3 (min)', 0, -9);
   yrs.forEach((y) => f.xtick(y, String(y)));
-  f.legend(null, 'AC = (500 − preostala vr.)/n + vzdrževanje/n + izzivalec/n');
+  f.legend(null, 'AC = (600 − preostala vr.)/n + vzdrževanje/n + izzivalec/n');
   f.legend(null, 'investicija na leto pada, ostalo raste → oblika U');
-  f.legend(null, 'najnižji AC po 2 letih (180) → takrat zamenjamo');
+  f.legend(null, 'najnižji AC po 3 letih (203,3) → takrat zamenjamo');
   return f.svg();
 }
 function hamburger() {
-  const f = new Fig({ qmin: 60000, qmax: 145000, pmax: 1400000, pmin: -1400000, xl: 'Q', yl: 'dobiček', title: 'Hamburger (Primer 5.11): lokaciji', ml: 66, mr: 30 });
-  const L1 = (q) => 29.5 * q - 2950000, L2 = (q) => 35 * q - 3150000;
-  f.hline(0, 60000, 140000, 'gd');
-  f.fn(L1, 60000, 140000, 'c4').fn(L2, 60000, 140000, 'cS');
-  f.text(140000, L1(140000), 'L1', { anchor: 'start', dx: 4, dy: 8, cls: 'tc' }); f.text(140000, L2(140000), 'L2', { anchor: 'start', dx: 4, dy: -2, cls: 'tS' });
-  f.dot(100000, 0).dot(90000, 0).text(100000, 0, '100k', { dy: 14 }).text(90000, 0, '90k', { dy: -6 });
-  f.pt(130000, L1(130000), '', 0, 0).pt(120000, L2(120000), '', 0, 0).guideV(130000, L1(130000)).guideV(120000, L2(120000));
-  f.ytick(L1(130000), '885.000').ytick(L2(120000), '1.050.000').ytick(0, '0').xtick(120000, '120k').xtick(130000, '130k');
+  const f = new Fig({ qmin: 60000, qmax: 155000, pmax: 1500000, pmin: -900000, xl: 'Q', yl: 'dobiček', title: 'Zelenko: dve lokaciji', ml: 66, mr: 30 });
+  const L1 = (q) => 18 * q - 1710000, L2 = (q) => 24 * q - 2160000;
+  f.hline(0, 60000, 150000, 'gd');
+  f.fn(L1, 60000, 150000, 'c4').fn(L2, 60000, 150000, 'cS');
+  f.text(150000, L1(150000), 'L1', { anchor: 'start', dx: 4, dy: 8, cls: 'tc' }); f.text(150000, L2(150000), 'L2', { anchor: 'start', dx: 4, dy: -2, cls: 'tS' });
+  f.dot(95000, 0).dot(90000, 0).text(95000, 0, '95k', { dy: 14 }).text(90000, 0, '90k', { dy: -6 });
+  f.pt(145000, L1(145000), '', 0, 0).pt(130000, L2(130000), '', 0, 0).guideV(145000, L1(145000)).guideV(130000, L2(130000));
+  f.ytick(L1(145000), '900.000').ytick(L2(130000), '960.000').ytick(0, '0').xtick(130000, '130k').xtick(145000, '145k');
   f.legend(null, 'π = (PC − VC) · Q − FC; naklon = prispevek za kritje');
-  f.legend(null, 'L1: 29,5 · 130.000 − 2,95 mio = 885.000; prag 100.000');
-  f.legend(null, 'L2: 35 · 120.000 − 3,15 mio = 1.050.000; prag 90.000 → L2');
+  f.legend(null, 'L1: 18 · 145.000 − 1,71 mio = 900.000; prag 95.000');
+  f.legend(null, 'L2: 24 · 130.000 − 2,16 mio = 960.000; prag 90.000 → L2');
   return f.svg();
 }
 
@@ -651,11 +651,11 @@ const attach = [
     ['Kaj stori centralna banka ob inflaciji?', 'mk-ad-levo'],
     ['Banke morajo po novem v obveznih rezervah držati večji delež vlog', 'mk-ad-levo'],
     ['Katera kombinacija politik zniža visoko inflacijo?', 'mk-ad-levo'],
-    ['Kaj se dolgoročno zgodi po povečanju AD', 'mk-ad-dolg'],
-    ['Kako ekspanzivna monetarna politika vpliva na BDP', 'mk-islm'],
+    ['Gospodarstvo že deluje na ravni potencialnega BDP, vlada pa močno poveča izdatke.', 'mk-ad-dolg'],
+    ['Centralna banka v recesiji poveča ponudbo denarja.', 'mk-islm'],
     ['Kaj predstavlja IS krivulja v modelu IS-LM?', 'mk-islm'],
     ['Kaj predstavljata krivulji IS in LM?', 'mk-islm'],
-    ['Vlada želi višjo rast ob nespremenjeni obrestni meri', 'mk-islm-mix'],
+    ['Podjetja so zelo občutljiva na obrestno mero, država pa je v recesiji.', 'mk-islm-mix'],
     ['Kaj je likvidnostna past?', 'mk-likvidnostna'],
     ['Kaj prikazuje kratkoročna Phillipsova krivulja?', 'mk-phillips'],
     ['Kakšna je Phillipsova krivulja kratkoročno in dolgoročno?', 'mk-phillips'],
@@ -676,7 +676,6 @@ const attach = [
     ['Koliko pragov rentabilnosti ima podjetje pri proporcionalnih', 'u-prag'],
     ['Kateri je obrazec za prag rentabilnosti', 'u-prag'],
     ['Kako podjetje zniža prag rentabilnosti?', 'u-prag'],
-    ['Zmogljivost 120.000 enot, FC = 160 mio EUR', 'u-prag-120k'],
     ['Zmogljivost je 60.000 izdelkov, P = 12 EUR', 'u-prag-60k'],
     ['Zmogljivost je 25.000 izdelkov, P = 15 EUR', 'u-prag-25k'],
     ['Zmogljivost je 150.000 enot, P = 40 EUR', 'u-prag-150k'],
@@ -689,23 +688,23 @@ const attach = [
     ['Kako vpliva nižja korelacija med delnicama', 'pf-korel'],
     ['Kaj je tržna premija za tveganje?', 'pf-sml'],
     ['Kaj prikazuje premica trga vrednostnih papirjev (SML)?', 'pf-sml'],
-    ['Delnica A: pričakovana donosnost E = 13 %', 'pf-sml-a'],
-    ['Delnica C: pričakovana donosnost E = 25 %', 'pf-sml-c'],
+    ['Po CAPM ocenjujete delnico A', 'pf-sml-a'],
+    ['Po CAPM ocenjujete delnico C', 'pf-sml-c'],
     ['Investitor ima dobro razpršeno premoženje. Za katero tveganje', 'pf-sml'],
     ['Kaj se zgodi s SML, če se pričakovana inflacija', 'pf-sml-infl'],
-    ['Delnica X: β = 1,2, rf 4 %, rm 9 %. Pričakovana inflacija', 'pf-sml-infl'],
-    ['Delnica X: β = 1,2, rf 4 %, rm 9 %. Tržna premija', 'pf-sml-prem'],
-    ['Delnica X: β = 1,2, rf 4 %, rm 9 % (zahtevana donosnost 10 %)', 'pf-sml-x'],
+    ['Omega (β 1,4; rf 2 %; rm 7 %): vlagatelji pričakujejo', 'pf-sml-infl'],
+    ['Omega (β 1,4; rf 2 %; rm 7 %): vlagatelji postanejo', 'pf-sml-prem'],
+    ['Omega (β 1,4; rf 2 %; rm 7 %, zahtevana donosnost 9 %)', 'pf-sml-x'],
     ['Projekta A in B se medsebojno izključujeta in se razlikujeta po obsegu', 'pf-npv'],
   ]),
   ...A('mpsp', [
-    ['Trije delavci, 5 operacij', 'mp-mreza'],
-    ['Kritična pot O1 → O3 → O4 → O5 = 140 min', 'mp-mreza'],
-    ['Dom (Primer 5.1)', 'mp-dom'],
-    ['Primer 5.8', 'mp-zamenjava'],
-    ['Hamburger (Primer 5.11): lokacija 1 ima večjo', 'mp-hamburger'],
-    ['Hamburger (Primer 5.11): podatki za lokaciji sta v tabeli. Kolikšni sta prelomni', 'mp-hamburger'],
-    ['Hamburger (Primer 5.11): podatki za lokaciji sta v tabeli. Kolikšen je dobiček', 'mp-hamburger'],
+    ['Mizarska delavnica: trije delavci, 5 operacij', 'mp-mreza'],
+    ['Mizarska delavnica: kritična pot O1 → O2 → O4 → O5 = 130 min', 'mp-mreza'],
+    ['Kolesarnica Vrtiljak', 'mp-dom'],
+    ['Tiskarna Črkolik', 'mp-zamenjava'],
+    ['Zelenko: lokacija 1 ima večjo', 'mp-hamburger'],
+    ['Zelenko izbira lokacijo nove trgovine (podatki v tabeli, enota = vreča substrata). Kolikšni sta prelomni', 'mp-hamburger'],
+    ['Zelenko izbira lokacijo nove trgovine (podatki v tabeli, enota = vreča substrata). Kolikšen je dobiček', 'mp-hamburger'],
   ]),
 ];
 

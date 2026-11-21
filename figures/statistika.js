@@ -181,7 +181,6 @@ const attach = [
     ['Normalna porazdelitev: kolikšen delež enot ni več kot 1,7σ', 'st-17'],
     ['Kje ima porazdelitvena funkcija normalne porazdelitve prevoj?', 'st-cdf'],
     ['Kako se spremenita α in β', 'st-alfa-beta'],
-    ['Preizkus H₀: μ ≤ μ₀, H₁: μ > μ₀ (n = 36, σ = 120 ur)', 'st-test-desno'],
   ]),
   ...A('stat', [
     ['Kateri grafikon pokaže, koliko enot ima vrednost do posamezne meje', 'st-ogiva'],
@@ -189,7 +188,6 @@ const attach = [
   ]),
   ...A('mat', [
     ['Ploščina med y = x in y = x² na [0, 1]?', 'mat-xx2'],
-    ['f(x) = x·ln(3 − x).', 'mat-xln'],
   ]),
 ];
 

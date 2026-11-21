@@ -7,7 +7,6 @@ module.exports = [
   [ "Analiza ocene pri SA v odvisnosti od ocene pri OS", [ "Univariatna", "Bivariatna", "Sklepna" ], 2, "Multivariatna" ],
   [ "Kateri izmed naštetih je RELATIVNA mera variabilnosti?", [ "Standardni odklon", "Variacijski razmik", "Kvartilni odklon" ], 1, "Koeficient variacije" ],
   [ "ȳ = 30,5 in Me = 25,05, boxplot ima osamelce zgoraj", [ "Simetrična", "Asimetrična v levo", "Sploščena (platikurtična)" ], 3, "Asimetrična v desno" ],
-  [ "Kaj želi profesorica pri zapisu rešitve izračuna na izpitu?", [ "Končni rezultat in R ukaz, s katerim je bil izračunan", "Formulo in rezultat, interpretacija ni potrebna", "Vstavljene številke in rezultat, formula ni potrebna" ], 2, "Formulo, številke, rezultat in interpretacijo z enoto" ],
   [ "Kaj je f(y) pri zvezni porazdelitvi?", [ "Verjetnost, da spremenljivka zavzame vrednost y", "Kumulativna verjetnost P(Y ≤ y) do vrednosti y", "Kvantil porazdelitve pri dani verjetnosti y" ], 1, "Gostota; verjetnost je ploščina pod krivuljo" ],
   [ "Kaj je F(y)?", [ "Gostota verjetnosti pri vrednosti y", "Verjetnost P(Y > y), desni rep", "Verjetnost P(Y = y), točkovna" ], 0, "Porazdelitvena funkcija P(Y ≤ y)" ],
   [ "P(Y > b) = ?", [ "F(b)", "F(−b) − 1", "f(b)" ], 2, "1 − F(b)" ],

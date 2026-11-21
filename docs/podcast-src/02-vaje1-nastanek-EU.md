@@ -1,8 +1,8 @@
-# Epizoda 2 — 1. vaje: nastanek EU, pogodbe, širitve (V01)
+# Epizoda 2 — 1. vaje: nastanek EU, pogodbe, širitve
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
-## V01 — 1. vaje (19. 10. 2026): Zgodovina in nastanek EU
+## V01 — 1. vaje: Zgodovina in nastanek EU
 
 **1. Prvi povojni koraki, dva pristopa**
 - Prvi koraki: Marshallov načrt → **OEEC (1948)** in **EPU (1950–58)**, Svet Evrope (1949), Beneluks (carinska unija 1948).
@@ -156,9 +156,9 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - **Domino 1 (1960-ta):** EGS → ustanovitev EFTA (obrambni blok) → prošnja VB 1961 + DK, IE, NO → širitev 1973 + sporazumi EFTA–EGS.
   - **Domino 2 (konec 1980-ih):** EC92 → EFTA se boji preusmeritve trgovine → EEA (1994) in prošnje AT 1989, SE 1991, FI in NO 1992 → širitev 1995. Podobno tudi države SVE (evropski sporazumi → 2004).
 
-**Opombi z vaj:** CH na zemljevidu = **Švica** (lat. *Confoederatio Helvetica*). EGS je bila **gospodarsko močnejša in je imela večji trg** kot EFTA (večji BDP, hitrejša rast, prosojnica 19). Zato je delovala kot magnet (učinek domin).
+**Opombi z vaj:** CH na zemljevidu = **Švica** (lat. *Confoederatio Helvetica*). EGS je bila **gospodarsko močnejša in je imela večji trg** kot EFTA (večji BDP, hitrejša rast). Zato je delovala kot magnet (učinek domin).
 
-**Vprašanje 3 podrobneje: evropesimizem 1975–1986** (podrobnosti glej zgoraj, prosojnici 23–24)
+**Vprašanje 3 podrobneje: evropesimizem 1975–1986** (podrobnosti glej zgoraj)
 - **Kaj pomeni:** integracija je **obstala**. Odločitve so bile blokirane, skupni trg je bil razdrobljen z necarinskimi ovirami, rast je bila nizka in brezposelnost visoka. Uporabljal se je tudi izraz »**evroskleroza**«. Po »zlatih letih« 1958–73 (hitra rast, carinska unija prej, kot je bilo načrtovano) je sledil zastoj.
 - **Politični dejavniki:**
   1. **Luksemburški kompromis (1966)** po politiki praznega stola: dejanski **veto** za »zelo pomembne nacionalne interese«. Harmonizacija standardov je zahtevala soglasje, zato je potekala zelo počasi.
@@ -187,7 +187,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - Rešitev je prinesla šele ostra protiinflacijska politika okoli 1980 (Volcker v ZDA, Thatcher) in ekonomika ponudbe.
 - **Povezava z EU:** inflacija je bila v vsaki državi drugačna (DE nizka, IT in UK visoka), zato fiksni tečaji niso bili mogoči → propad kače in Wernerjevega plana.
 
-**Vprašanje 4 podrobneje: tehnične ovire in Cassis de Dijon** (podrobnosti sodbe glej zgoraj, prosojnica 24)
+**Vprašanje 4 podrobneje: tehnične ovire in Cassis de Dijon** (podrobnosti sodbe glej zgoraj)
 - **Tehnične ovire za trgovanje** so **necarinske ovire**, ki izhajajo iz različnih nacionalnih:
   - **standardov in tehničnih predpisov** o lastnostih izdelka: sestava, velikost, varnost, npr. različne vtičnice ali zahtevan delež alkohola,
   - **postopkov testiranja in certificiranja**: izdelek, odobren v FR, mora v DE znova skozi preizkuse,
@@ -209,7 +209,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
 - *»So v bistvu težile k zaščiti potrošnikov?«* → **Delno drži.** Uradno so jih države upravičevale z varstvom potrošnikov in zdravja. V praksi pa so pogosto pomenile **prikrit protekcionizem** domačih proizvajalcev. Pri Cassisu je Nemčija trdila, da ščiti potrošnike (šibkejši liker naj bi spodbujal pitje). Sodišče je odgovorilo, da za varstvo potrošnika zadošča **oznaka** na steklenici, prepoved pa je nesorazmerna.
 - **Načelo vzajemnega priznavanja:** dobrine, ki so **zakonito proizvedene in v prometu v eni članici**, se lahko **prosto prodajajo v vseh drugih članicah**, tudi če ne izpolnjujejo njihovih nacionalnih standardov (razen pri nujnih razlogih, kot sta zdravje in varnost).
 
-**Vprašanje 5 podrobneje: Delors, Single Market Programme, EC92** (podrobnosti glej zgoraj, prosojnici 25–26)
+**Vprašanje 5 podrobneje: Delors, Single Market Programme, EC92** (podrobnosti glej zgoraj)
 - **Zakaj Delorsova pobuda:**
   1. **Evroskleroza:** nizka rast, visoka brezposelnost, zaostajanje za **ZDA in Japonsko** (predvsem v visoki tehnologiji).
   2. Obstajala je **carinska unija**, ne pa pravi skupni trg. Trg je bil razdrobljen s **fizičnimi, tehničnimi in davčnimi ovirami**, kar pomeni manj ekonomij obsega in šibko konkurenco.
@@ -227,14 +227,14 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
   - **kapitalskih kontrol:** popolna liberalizacija pretoka kapitala od **1. 7. 1990**.
 
 **Z vaj (5):**
-- **Osnovna elementa EC92** (prosojnica 26): (1) **liberalizacija menjave blaga in storitev** in (2) **liberalizacija faktorjev proizvodnje** (kapital, delo).
+- **Osnovna elementa EC92**: (1) **liberalizacija menjave blaga in storitev** in (2) **liberalizacija faktorjev proizvodnje** (kapital, delo).
 - **Harmonizacija:** države se **dogovorijo za enaka (usklajena) pravila** na ravni EU, npr. za standarde izdelkov, stopnje DDV ali predpise. Nacionalna pravila se nadomestijo ali uskladijo s skupnimi, običajno z **direktivo**, ki jo vsaka država prenese v svoje pravo.
   - **Razlika do vzajemnega priznavanja:** pri harmonizaciji vsi sprejmejo **ista pravila**. Pri vzajemnem priznavanju vsak obdrži **svoja pravila**, a priznava pravila drugih.
   - Stara harmonizacija je bila soglasna in podrobna, zato počasna. Novi pristop (1985) harmonizira samo bistvene zahteve.
 
 **Z vaj (6, 7):** samo na hitro, preostanek je **za doma**. Osnovna pogodba EU je **Maastrichtska** (1992/93). Sledijo Amsterdamska (1997), Niška (2001), neuspela ustavna (2004) in **Lizbonska** (2007/09, velja danes). Odgovori so zgoraj pri točkah 6 in 7.
 
-**Vprašanje 8 podrobneje: kopenhagenski kriteriji** (glej tudi prosojnico 32)
+**Vprašanje 8 podrobneje: kopenhagenski kriteriji**
 - Sprejeti so bili na **Evropskem svetu v Kopenhagnu, junija 1993**, ko je EU vzhodnim državam ponudila možnost članstva.
 1. **Politični kriterij:** stabilne institucije, ki zagotavljajo **demokracijo, pravno državo, človekove pravice ter spoštovanje in zaščito manjšin**.
    - Mora biti izpolnjen že **pred začetkom pogajanj**.
@@ -257,7 +257,7 @@ Integracija je obstala: odločitve so bile blokirane, gospodarstvo je stagniralo
 - Vse članice EU (razen DK z izjemo) so se zavezale, da bodo evro prevzele, ko izpolnijo kriterije. Švedska jih namenoma ne izpolnjuje (ni v ERM II).
 - Snov o EMU pride na vrsto kasneje (teden 10: kača v tunelu, EMS, ERM).
 
-**Vprašanje 9 podrobneje: širitve** (glej tudi prosojnice 21–32)
+**Vprašanje 9 podrobneje: širitve**
 
 | # | Leto | Države | Skupaj | Ozadje |
 |---|---|---|---|---|

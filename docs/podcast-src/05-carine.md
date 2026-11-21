@@ -1,4 +1,4 @@
-# Epizoda 5 — Učinki uvedbe carin in carinska reforma EU (P04 + V04)
+# Epizoda 5 — Učinki uvedbe carin in carinska reforma EU
 
 Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
 
@@ -6,7 +6,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 *Praznine so izpolnjene vnaprej po učbeniški logiki; preveri z razlago profesorice.*
 
-### Prosojnica 1: Učinki uvedbe MFN carine, majhna država
+### Učinki uvedbe MFN carine, majhna država
 - **MFN carina** (*most favoured nation*, načelo največjih ugodnosti) = **nediskriminacijska carina** (WTO): **enaka za uvoz iz vseh držav**.
 - **Majhna država ne more vplivati na svetovno ceno** (je *price taker*), ker je njen uvoz premajhen glede na svetovni trg.
 - **Vpliv uvedbe carine na ceno:**
@@ -14,12 +14,12 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - cena uvoženega proizvoda na domačem trgu **se poveča za znesek carine** → P_FT + T,
   - cena doma proizvedenega proizvoda **se prav tako poveča na P_FT + T** (popolna substituta, ena cena na trgu).
 
-### Prosojnica 2 (3): Novo ravnotežje
+### Novo ravnotežje
 1. **Potrošni učinek:** domača potrošnja se **zmanjša** (q4 → q3).
 2. **Proizvodni učinek:** domača proizvodnja se **poveča** (q1 → q2).
 3. **Uvozni (trgovinski) učinek:** uvoz se **zmanjša** (q4 − q1 → q3 − q2).
 
-### Prosojnica 3 (2): Učinki na blaginjo, majhna država (MFN carina : prosta trgovina)
+### Učinki na blaginjo, majhna država (MFN carina : prosta trgovina)
 - **Δ PP** (potrošnikov presežek) = **−(A + B + C + D)**: potrošniki plačajo višjo ceno in kupijo manj,
 - **Δ PRP** (proizvajalčev presežek) = **+A**,
 - **Δ JF prihodkov** (javne finance, carina) = **+C** = T × uvoz (q3 − q2),
@@ -27,14 +27,14 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Kaj je B?** **Izguba proizvodne učinkovitosti** (proizvodna mrtva izguba): enote med q1 in q2 se zdaj proizvedejo doma z **višjimi stroški** (MC > P_FT), namesto da bi jih ceneje uvozili.
 - **Kaj je D?** **Izguba potrošne učinkovitosti** (potrošna mrtva izguba): potrošniki ne kupijo več enot med q3 in q4, ki bi jih cenili **več od svetovne cene**.
 
-### Prosojnica 4: 4 učinki uvedbe MFN carine
+### 4 učinki uvedbe MFN carine
 - **Potrošni učinek:** potrošnja pade, potrošniki izgubijo A + B + C + D.
 - **Proizvodni učinek:** proizvodnja zraste, proizvajalci pridobijo A.
 - **Fiskalni učinek:** država pridobi **C** (carinski prihodki).
 - **Prerazdelitveni učinek:** **A** gre od potrošnikov k proizvajalcem, **C** od potrošnikov k državi.
 - **Neto izguba družbene blaginje = B + D** (dva trikotnika mrtvih izgub).
 
-### Prosojnica 6: Povzetek, majhna država (slika 2.3)
+### Povzetek, majhna država
 
 | | Prosta trgovina | MFN carina |
 |---|---|---|
@@ -46,20 +46,20 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)**.
 
-### Prosojnica 7: Velika država
+### Velika država
 - **Velika država lahko vpliva na svetovno ceno**, ker je njen uvoz pomemben del svetovnega povpraševanja.
 - **Svetovna cena po uvedbi carine (cena na meji): pade** s P_FT na **P'**, ker se zmanjša povpraševanje po uvozu, zato morajo tuji izvozniki znižati ceno.
 - **Cena na domačem trgu: P' + T** (= P'_T). Zraste, a **za manj kot T**, ker del carine plačajo tuji izvozniki.
 - **Domača potrošnja se zmanjša** (q4 → q3), **domača proizvodnja se poveča** (q1 → q2), **uvoz se zmanjša** (q3 − q2), vse manj kot pri majhni državi.
 
-### Prosojnica 8: Sprememba pogojev menjave za veliko državo
+### Sprememba pogojev menjave za veliko državo
 - Cena na svetovnem trgu **pade** pod ceno pred uvedbo carine.
 - Cena na meji (*border price*) **pade** pod ceno pred uvedbo carine.
 - V veliki domači državi se z uvedbo carine **izboljšajo pogoji menjave** (*terms of trade*).
 - **Pogoji menjave** = razmerje med indeksom cen izvoznih in uvoznih proizvodov (P_X / P_M).
 - **Izboljšanje pogojev menjave:** država lahko **uvozi** več na enoto izvoženega proizvoda.
 
-### Prosojnice 9–10: Učinki na blaginjo, velika država (slika 2.4)
+### Učinki na blaginjo, velika država
 1. **Δ PP = −(A + B + C + D)**,
 2. **Δ PRP = +A**,
 3. **Δ JF prihodkov = C + E**. C plačajo domači potrošniki, **E plačajo tuji izvozniki** (= uvoz × padec svetovne cene, P_FT − P').
@@ -83,7 +83,7 @@ Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)*
 | Kdo plača carino | le domači potrošniki | delno tudi tuji izvozniki (E) |
 | Δ W | −(B + D), vedno izguba | E − (B + D), lahko pozitivna |
 
-**Dopolnilo s predavanja (P4, prosojnica 1):**
+**Dopolnilo s predavanja:**
 - **WTO = STO** (Svetovna trgovinska organizacija).
 - **Pravilo MFN (največje ugodnosti) in nediskriminacije:** če članica WTO eni državi prizna ugodnejšo carinsko stopnjo, jo mora **enako ponuditi vsem ostalim članicam WTO**. Izjeme so carinske unije in območja proste trgovine (npr. EU), kar je osnova za temo preferencialne liberalizacije (P5).
 - **P_W = P_FT**: svetovna cena = cena pri **prosti trgovini** (FT = *free trade*), ne »prostotrgovinski sporazum«.

@@ -1,3 +1,6 @@
+/* ONEMOGOČENO 21. 11. 2026: enkratna skripta, vsebina je že v data.json. Ponoven zagon izbriše 4 komplete Prava (izgubi qid in id) in povrne popravke možnosti.
+   Vprašanja zdaj nosijo stalni id (CLAUDE.md, razdelek »Stalni id«); popravljaj data.json oz. module v letnik*-src/. */
+throw new Error('add-pravo.js je enkratna skripta in je onemogočena (glej komentar na vrhu datoteke).');
 // Enkratna skripta: vstavi vsebino predmeta Pravo iz pravo-src/ v data.json
 const fs = require("fs");
 const path = require("path");
