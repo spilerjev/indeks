@@ -2164,7 +2164,7 @@ function PartView({ route, stats, go, soc, user }) {
               <span style={{ width: 34, height: 34, borderRadius: 10, background: "var(--terra)", display: "grid", placeItems: "center", flexShrink: 0 }}><Swords size={16} color="#fff" /></span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: 15 }}>Izzovi prijatelje · duel, trio, četverka</div>
-                <div className="ix-chip" style={{ marginTop: 2 }}>ista vprašanja za vse · hkrati · {BATTLE_ON ? "klasika ali bitka z liki" : "klasika ali bitka"}</div>
+                <div className="ix-chip" style={{ marginTop: 2 }}>ista vprašanja za vse · hkrati · {BATTLE_ON ? "klasika ali bitka z liki" : BASIC_ON ? "klasika ali bitka" : "točke za pravilne in hitre odgovore"}</div>
               </div>
               <ChevronRight size={18} color="var(--ink2)" />
             </button>
@@ -3141,6 +3141,9 @@ const MODE_LABEL = { classic: "Klasika", basic: "Bitka", battle: "Bitka z liki" 
 /* Bitka z liki (liki, oprema, battle pass, meta) je začasno skrita – vrne se kasneje kot "drop".
    Koda in strežnik ostaneta; za vklop nastavi na true. Stari matchi z liki se še vedno prikažejo pravilno. */
 const BATTLE_ON = false;
+/* Navadna Bitka (vsi 100 HP) je tudi začasno skrita – v areni je samo Klasika. Za vklop nastavi na true. */
+const BASIC_ON = false;
+const ONLY_CLASSIC = !BATTLE_ON && !BASIC_ON;   // izbira načina se ne prikaže
 const isBattle = (mode) => mode === "basic" || mode === "battle";   // oba bojna načina (HP)
 const LETNIK_LABELS = { 1: "1. letnik", 2: "2. letnik", 3: "3. letnik", 4: "1. letnik mag.", 5: "2. letnik mag." };
 const SMERI = ["Poslovna", "Ekonomska"];                 // smeri od 2. letnika naprej (1. letnik je skupen)
@@ -3394,7 +3397,7 @@ function CharPicker({ character, items, onChange, compact, level }) {
 function NewMatch({ soc, presetFriend, presetLoc, onClose, onPick, go }) {
   const friends = (soc && soc.friends) || [];
   const [sel, setSel] = useState(() => (presetFriend ? [presetFriend.user_id] : []));
-  const [mode, setMode] = useState(() => { const m = store.get("indeks.arena.mode", "classic"); return m === "battle" && !BATTLE_ON ? "classic" : m; });
+  const [mode, setMode] = useState(() => { const m = store.get("indeks.arena.mode", "classic"); return (m === "battle" && !BATTLE_ON) || (m === "basic" && !BASIC_ON) ? "classic" : m; });
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
@@ -3421,34 +3424,36 @@ function NewMatch({ soc, presetFriend, presetLoc, onClose, onPick, go }) {
         <div style={{ fontSize: 13.5, color: "var(--ink2)" }}>Še nimaš prijateljev. <button onClick={() => { onClose(); go({ view: "profile" }); }} className="ix-pill" style={{ marginLeft: 4 }}>Dodaj jih v profilu</button></div>
       ) : (
         <>
+          {!ONLY_CLASSIC && (<>
           <div className="ix-chip" style={{ marginBottom: 6 }}>1. Način</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 8, marginBottom: 14 }}>
             <button onClick={() => pickMode("classic")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "classic" ? "var(--teal)" : undefined, background: mode === "classic" ? "var(--okbg)" : undefined }}>
               <b style={{ fontSize: 14 }}><Trophy size={13} style={{ verticalAlign: -2 }} /> Klasika</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Točke: 100 za pravilen odgovor + do 50 za hitrost. Zmaga največ točk.</div>
             </button>
-            <button onClick={() => pickMode("basic")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "basic" ? "var(--terra)" : undefined, background: mode === "basic" ? "var(--badbg)" : undefined }}>
+            {BASIC_ON && (<button onClick={() => pickMode("basic")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "basic" ? "var(--terra)" : undefined, background: mode === "basic" ? "var(--badbg)" : undefined }}>
               <b style={{ fontSize: 14 }}><Zap size={13} style={{ verticalAlign: -2 }} /> Bitka</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Vsi enaki (100 HP): vprašanja tečejo, dokler nekomu ne zmanjka HP. Brez izbire lika in opreme.</div>
-            </button>
+            </button>)}
             {BATTLE_ON && (<button onClick={() => pickMode("battle")} className="ix-card" style={{ padding: "10px 12px", textAlign: "left", cursor: "pointer", borderColor: mode === "battle" ? "var(--terra)" : undefined, background: mode === "battle" ? "var(--badbg)" : undefined }}>
               <b style={{ fontSize: 14 }}><Swords size={13} style={{ verticalAlign: -2 }} /> Bitka z liki</b><div style={{ fontSize: 12, color: "var(--ink2)", marginTop: 3 }}>Do 0 HP, z liki, sposobnostmi in opremo (do 2). Kdo je meta, vidiš na profilu.</div>
             </button>)}
           </div>
+          </>)}
           {mode === "classic" && (
             <>
-              <div className="ix-chip" style={{ marginBottom: 6 }}>2. Pogoj zmage</div>
+              <div className="ix-chip" style={{ marginBottom: 6 }}>{ONLY_CLASSIC ? 1 : 2}. Pogoj zmage</div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 4 }}>
                 {WIN_RULES.map((w) => <button key={w.id} onClick={() => pickWin(w.id)} className={"ix-pill" + (winId === w.id ? " on" : "")} title={w.desc}>{w.label}</button>)}
               </div>
               <div style={{ fontSize: 12.5, color: "var(--ink2)", marginBottom: 14 }}>{(WIN_RULES.find((w) => w.id === winId) || WIN_RULES[0]).desc}</div>
             </>
           )}
-          <div className="ix-chip" style={{ marginBottom: 6 }}>{mode === "classic" ? "3" : "2"}. Nasprotniki ({isBattle(mode) ? "duel: 1" : "1–3"}) · {SIZE_LABEL[size] || "Duel"}</div>
+          <div className="ix-chip" style={{ marginBottom: 6 }}>{(mode === "classic" ? 3 : 2) - (ONLY_CLASSIC ? 1 : 0)}. Nasprotniki ({isBattle(mode) ? "duel: 1" : "1–3"}) · {SIZE_LABEL[size] || "Duel"}</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
             {friends.map((f) => { const on = sel.includes(f.user_id); return (
               <button key={f.id} onClick={() => toggle(f.user_id)} className={"ix-pill" + (on ? " on" : "")} disabled={!on && maxOpp > 1 && sel.length >= maxOpp}>{f.username}</button>
             ); })}
           </div>
-          <div className="ix-chip" style={{ marginBottom: 6 }}>{mode === "classic" ? "4" : "3"}. Kviz</div>
+          <div className="ix-chip" style={{ marginBottom: 6 }}>{(mode === "classic" ? 4 : 3) - (ONLY_CLASSIC ? 1 : 0)}. Kviz</div>
           {err && <div style={{ color: "var(--terra)", fontSize: 13, marginBottom: 8 }}>{err}</div>}
           {presetLoc ? (
             <button onClick={() => pick(presetLoc)} disabled={busy || !sel.length} className="ix-btn" style={{ background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "12px 18px", display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center" }}>
@@ -3763,7 +3768,7 @@ function ProfileView({ user, soc, socErr, reload, go }) {
           <div className="ix-sec" style={{ color: "var(--terra)", marginBottom: 0 }}><Swords size={14} /> Arena · matchi</div>
           <button onClick={() => setPicker({})} disabled={!(soc && soc.friends && soc.friends.length)} className="ix-pill on" style={{ marginLeft: "auto" }}><Swords size={13} style={{ verticalAlign: -2 }} /> Nov match</button>
         </div>
-        <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55 }}>Duel, trio ali četverka: vsi rešujejo ista vprašanja hkrati, napredek vidite v živo. <b style={{ color: "var(--ink)" }}>Klasika</b>: {RANKED_N} vprašanj, 100 točk za pravilen odgovor + do 50 za hitrost. <b style={{ color: "var(--ink)" }}>Bitka</b>: vsi enaki s 100 HP, pravilen odgovor udari vse nasprotnike, serija ojača, kritiki podvojijo, 2 zaporedna napačna = −10 HP; vprašanja tečejo, dokler nekomu ne zmanjka HP (največ {DUEL_BATTLE_N}, {fmtTime(DUEL_BATTLE_SECONDS)}).{BATTLE_ON && <> <b style={{ color: "var(--ink)" }}>Bitka z liki</b>: isto, a z liki, sposobnostmi in opremo.</>} Prekinjen match se ne šteje.</div>
+        <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55 }}>Duel, trio ali četverka: vsi rešujejo ista vprašanja hkrati, napredek vidite v živo. <b style={{ color: "var(--ink)" }}>Klasika</b>: {RANKED_N} vprašanj, 100 točk za pravilen odgovor + do 50 za hitrost.{BASIC_ON && <> <b style={{ color: "var(--ink)" }}>Bitka</b>: vsi enaki s 100 HP, pravilen odgovor udari vse nasprotnike, serija ojača, kritiki podvojijo, 2 zaporedna napačna = −10 HP; vprašanja tečejo, dokler nekomu ne zmanjka HP (največ {DUEL_BATTLE_N}, {fmtTime(DUEL_BATTLE_SECONDS)}).</>}{BATTLE_ON && <> <b style={{ color: "var(--ink)" }}>Bitka z liki</b>: isto, a z liki, sposobnostmi in opremo.</>} Prekinjen match se ne šteje.</div>
         {invited.map((c) => (
           <div key={c.id} className="ix-row">
             <Swords size={16} color="var(--terra)" />
