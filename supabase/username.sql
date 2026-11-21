@@ -5,7 +5,7 @@
 alter table public.profiles add column if not exists username text;
 create unique index if not exists profiles_username_lower on public.profiles (lower(username));
 
--- 1) prijava z uporabniškim imenom: ime -> e-naslov (kliče ga neprijavljen odjemalec pred signInWithPassword)
+-- 1) (opuščeno) prijava z uporabniškim imenom: ime -> e-naslov. Razkrivalo je e-naslove, zato je zaprto spodaj.
 create or replace function public.login_email(p_username text)
 returns text
 language sql
@@ -15,8 +15,21 @@ set search_path = public
 as $$
   select email from public.profiles where lower(username) = lower(trim(p_username)) limit 1;
 $$;
-revoke all on function public.login_email(text) from public;
-grant execute on function public.login_email(text) to anon, authenticated;
+-- ZAPRTO (21. 11. 2026): funkcija je vsakomur vračala e-naslov. Nihče je ne sme klicati; app uporablja username_taken.
+revoke all on function public.login_email(text) from public, anon, authenticated;
+
+-- 1b) ali je ime zasedeno (brez e-naslova) - kliče ga registracija pred signUp
+create or replace function public.username_taken(p_username text)
+returns boolean
+language sql
+security definer
+stable
+set search_path = public
+as $$
+  select exists (select 1 from public.profiles where lower(username) = lower(trim(p_username)));
+$$;
+revoke all on function public.username_taken(text) from public;
+grant execute on function public.username_taken(text) to anon, authenticated;
 
 -- 2) nastavitev lastnega uporabniškega imena: oblika, filter neprimernih besed, unikatnost
 create or replace function public.set_username(p_username text)
@@ -56,7 +69,7 @@ security definer
 set search_path = public
 as $$
   select r.user_id,
-         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''), left(split_part(coalesce(p.email, ''), '@', 1), 3) || '***') as name,
+         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''), 'Igralec') as name,
          count(*) as runs,
          round(avg(100.0 * r.correct / nullif(r.total, 0)), 1) as avg_pct,
          max(round(100.0 * r.correct / nullif(r.total, 0))) as best_pct,

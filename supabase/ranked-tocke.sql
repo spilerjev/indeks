@@ -54,9 +54,7 @@ as $$
     where x.part_key = p_part_key
   )
   select r.user_id,
-         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''),
-                  nullif(trim((select u.raw_user_meta_data->>'username' from auth.users u where u.id = r.user_id)), ''),
-                  left(split_part(coalesce(p.email, ''), '@', 1), 3) || '***') as name,
+         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''), 'Igralec') as name,
          count(*) as runs,
          greatest(0, sum(r.d))::int as rating,
          round(avg(100.0 * r.correct / nullif(r.total, 0)), 1) as avg_pct,
@@ -94,9 +92,7 @@ as $$
     having count(*) >= 5
   )
   select per.user_id,
-         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''),
-                  nullif(trim((select u.raw_user_meta_data->>'username' from auth.users u where u.id = per.user_id)), ''),
-                  left(split_part(coalesce(p.email, ''), '@', 1), 3) || '***') as name,
+         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''), 'Igralec') as name,
          count(*) as parts,
          sum(per.n) as runs,
          sum(per.rt)::int as rating,
@@ -126,9 +122,7 @@ as $$
     having count(*) >= 5
   )
   select per.user_id,
-         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''),
-                  nullif(trim((select u.raw_user_meta_data->>'username' from auth.users u where u.id = per.user_id)), ''),
-                  left(split_part(coalesce(p.email, ''), '@', 1), 3) || '***') as name,
+         coalesce(nullif(trim(p.username), ''), nullif(trim(p.nickname), ''), 'Igralec') as name,
          count(*) as parts,
          sum(per.n) as runs,
          sum(per.rt)::int as rating,

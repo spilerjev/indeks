@@ -5,8 +5,8 @@
 -- 1) vzdevek za lestvico (uporabnik ureja samo svojega)
 alter table public.profiles add column if not exists nickname text;
 drop policy if exists "update own profile" on public.profiles;
-create policy "update own profile" on public.profiles
-  for update using (auth.uid() = id) with check (auth.uid() = id);
+-- profil se piše SAMO prek security definer funkcij (update_profile, set_username); neposreden UPDATE je zaprt (varnost, 21. 11. 2026)
+revoke insert, update, delete on public.profiles from anon, authenticated;
 
 -- 2) rezultati ranked testov
 create table if not exists public.ranked_results (
@@ -33,7 +33,7 @@ security definer
 set search_path = public
 as $$
   select r.user_id,
-         coalesce(nullif(trim(p.nickname), ''), left(split_part(coalesce(p.email, ''), '@', 1), 3) || '***') as name,
+         coalesce(nullif(trim(p.nickname), ''), 'Igralec') as name,
          count(*) as runs,
          round(avg(100.0 * r.correct / nullif(r.total, 0)), 1) as avg_pct,
          max(round(100.0 * r.correct / nullif(r.total, 0))) as best_pct,

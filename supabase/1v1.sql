@@ -1,7 +1,7 @@
 -- indeks. — Arena: profil, prijatelji, matchi za 2–4 igralce (duel / trio / četverka), klasika + bitka z liki
 -- RAZLIČICA: 8 (12. 11. 2026, 22:30) — predaja ob odhodu, pogoji zmage v klasiki, XP/nivoji in odklepanje, gledalci, slika profila, bucket avatars
 -- Zaženi enkrat v Supabase: SQL Editor -> New query -> prilepi -> Run.
--- Varno za ponovni zagon (if not exists / or replace / drop policy if exists).
+-- POZOR: ponovni zagon IZBRIŠE vse matche (drop table challenges ... spodaj) in s tem XP iz matchev. Za popravke funkcij zaženi samo ustrezen del.
 -- Predpogoj: supabase/ranked.sql in supabase/username.sql (tabela profiles z email, username; user_stats).
 -- Opomba: tabele matchev iz prve (1v1) različice te datoteke se pobrišejo in ustvarijo na novo (shema je drugačna).
 
@@ -19,8 +19,8 @@ alter table public.profiles add column if not exists updated_at timestamptz;
 drop policy if exists "read own profile" on public.profiles;
 create policy "read own profile" on public.profiles for select using (auth.uid() = id);
 drop policy if exists "update own profile" on public.profiles;
-create policy "update own profile" on public.profiles
-  for update using (auth.uid() = id) with check (auth.uid() = id);
+-- profil se piše SAMO prek security definer funkcij (update_profile, set_username); neposreden UPDATE je zaprt (varnost, 21. 11. 2026)
+revoke insert, update, delete on public.profiles from anon, authenticated;
 
 drop function if exists public.update_profile(smallint, text, text);
 drop function if exists public.update_profile(smallint, text, text, text);
@@ -39,7 +39,9 @@ begin
   if p_letnik is not null and (p_letnik < 1 or p_letnik > 5) then raise exception 'Letnik naj bo med 1 in 5.'; end if;
   if v_smer is not null and length(v_smer) > 60 then raise exception 'Smer naj ima največ 60 znakov.'; end if;
   if v_bio is not null and length(v_bio) > 200 then raise exception 'Opis naj ima največ 200 znakov.'; end if;
-  if p_photo is not null and length(p_photo) > 300 then raise exception 'Neveljaven naslov slike.'; end if;
+  if p_photo is not null and (length(p_photo) > 300 or
+     p_photo not like 'https://fdcnkqjbuatsisznqcos.supabase.co/storage/v1/object/public/avatars/' || auth.uid()::text || '.jpg%')
+    then raise exception 'Neveljaven naslov slike.'; end if;
   insert into public.profiles (id, email, letnik, smer, bio, avatar, perk, photo, updated_at)
     values (auth.uid(), (select email from auth.users where id = auth.uid()), p_letnik, v_smer, v_bio, left(p_character, 30), left(p_perk, 30), p_photo, now())
     on conflict (id) do update set letnik = excluded.letnik, smer = excluded.smer, bio = excluded.bio,
@@ -835,7 +837,7 @@ drop policy if exists "unlocks read" on public.arena_unlocks;
 create policy "unlocks read" on public.arena_unlocks for select to authenticated using (true);
 
 -- =====================================================================
--- 4) JAVNA STATISTIKA IGRALCA (vidijo jo prijatelji): zmage/porazi po velikosti in načinu + vadba
+-- 4) STATISTIKA IGRALCA (samo zase in za prijatelje; drugim vrne null): zmage/porazi po velikosti in načinu + vadba
 -- =====================================================================
 create or replace function public.player_stats(p_uid uuid)
 returns jsonb
@@ -844,7 +846,8 @@ stable
 security definer
 set search_path = public
 as $$
-  with m as (
+  with ok as (select (p_uid = auth.uid() or public.are_friends(auth.uid(), p_uid)) as v),
+  m as (
     select c.id, c.mode, c.size, c.winner, (c.winner = p_uid) as won
     from public.challenges c join public.challenge_players cp on cp.challenge_id = c.id and cp.user_id = p_uid
     where c.status = 'done' and cp.status in ('host', 'accepted', 'left')
@@ -856,7 +859,7 @@ as $$
          lateral jsonb_array_elements(coalesce(d.val->'attempts', '[]'::jsonb)) as a
     where s.user_id = p_uid and a->>'pct' is not null
   )
-  select jsonb_build_object(
+  select case when not (select v from ok) then null else jsonb_build_object(
     'duel_w',   (select count(*) from m where size = 2 and won is true),
     'duel_l',   (select count(*) from m where size = 2 and winner is not null and won is not true),
     'trio_w',   (select count(*) from m where size = 3 and won is true),
@@ -870,7 +873,7 @@ as $$
     'avg_pct',  (select round(avg(pct)) from att),
     'xp',       public.player_xp(p_uid),
     'level',    public.level_of(public.player_xp(p_uid))
-  );
+  ) end;
 $$;
 revoke all on function public.player_stats(uuid) from public, anon;
 grant execute on function public.player_stats(uuid) to authenticated;
