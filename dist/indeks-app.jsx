@@ -474,7 +474,7 @@ function TermsGate({ user, onAccepted, onSignOut }) {
       <div className="ix-card" style={{ padding: 24 }}>
         <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 8 }}>{had ? "Posodobili smo pogoje" : "Pogoji uporabe in zasebnost"}</div>
         <div style={{ color: "var(--ink2)", fontSize: 14.5, lineHeight: 1.55 }}>
-          {had ? "Pogoje uporabe in politiko zasebnosti smo dopolnili" : "Pred nadaljevanjem potrdi pogoje uporabe in politiko zasebnosti"} (različica {termsDate(TERMS_VERSION)}). Na kratko: kaj vidijo drugi uporabniki (ime, slika, rezultati na lestvicah in v areni), kateri ponudniki hranijo podatke in kako račun izbrišeš sam v profilu. indeks. ni povezan z EF UL, vsebina pa je študijska pomoč brez jamstva za pravilnost.
+          {had ? "Pogoje uporabe in politiko zasebnosti smo dopolnili" : "Pred nadaljevanjem potrdi pogoje uporabe in politiko zasebnosti"} (različica {termsDate(TERMS_VERSION)}). Podrobnosti so v povezavah spodaj. indeks. ni povezan z EF UL, vsebina pa je študijska pomoč brez jamstva za pravilnost.
         </div>
         <div style={{ display: "grid", gap: 6, margin: "14px 0 4px", fontSize: 14.5 }}>
           <a href="#/pogoji" target="_blank" rel="noopener" style={linkBtn}>Preberi pogoje uporabe</a>
