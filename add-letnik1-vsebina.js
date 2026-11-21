@@ -33,6 +33,7 @@ for (const mod of MODULES) {
     if (mp.date) part.date = mp.date;
     if (mp.dates) part.dates = mp.dates;
     if (mp.signup) part.signup = mp.signup;
+    if (mp.audio) part.audio = mp.audio;   // zvočne razlage (sklop Poslušaj), glej letnik1-src/poslusaj.js
     part.decks = part.decks || [];
     upsert(part.decks, mp.decks);
     if (mp.flashcards) { part.flashcards = part.flashcards || []; upsert(part.flashcards, mp.flashcards); }
