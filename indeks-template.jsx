@@ -3,7 +3,7 @@ import {
   GraduationCap, BookOpen, ChevronLeft, ChevronRight, FileText,
   CheckCircle2, XCircle, RotateCcw, Trophy, Layers, Lock,
   BarChart3, Brain, Shuffle, Check, X, Moon, Sun, ChevronDown, Calculator, LogOut, Users, Sigma, Search,
-  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List, ListChecks, Plus, Headphones, Play, Pause
+  Swords, UserPlus, Pencil, UserRound, Crown, Clock, Zap, Bookmark, BookmarkCheck, ChevronUp, ChevronsDownUp, ChevronsUpDown, List, ListChecks, Plus, Headphones, Play, Pause, Volume2, VolumeX
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { createPortal } from "react-dom";
@@ -3290,11 +3290,11 @@ function StatsLine({ s, full }) {
   if (!s) return null;
   return (
     <span className="ix-chip" style={{ display: "inline-flex", gap: "4px 10px", flexWrap: "wrap", textTransform: "none", letterSpacing: ".04em" }}>
-      {s.level != null && <span title={`${s.xp || 0} XP`}>nivo <b style={{ color: "var(--terra)" }}>{s.level}</b></span>}
+      {BATTLE_ON && s.level != null && <span title={`${s.xp || 0} XP`}>nivo <b style={{ color: "var(--terra)" }}>{s.level}</b></span>}
       <span title="Duel: zmage–porazi">duel <b style={{ color: "var(--ink)" }}>{statPair(s, "duel")}</b></span>
       <span title="Trio: zmage–porazi">trio <b style={{ color: "var(--ink)" }}>{statPair(s, "trio")}</b></span>
       <span title="Četverka: zmage–porazi">četverka <b style={{ color: "var(--ink)" }}>{statPair(s, "squad")}</b></span>
-      <span title="Zmage v bitkah">bitke <b style={{ color: "var(--terra)" }}>{s.battle_w || 0}</b></span>
+      {!ONLY_CLASSIC && <span title="Zmage v bitkah">bitke <b style={{ color: "var(--terra)" }}>{s.battle_w || 0}</b></span>}
       {(full || s.attempts > 0) && <span title="Rešeni kvizi · povprečje">vadba <b style={{ color: "var(--teal)" }}>{s.attempts || 0}×{s.avg_pct != null ? ` · ${s.avg_pct} %` : ""}</b></span>}
     </span>
   );
@@ -3657,8 +3657,8 @@ function ProfileView({ user, soc, socErr, reload, go }) {
             <div className="ix-chip">zmag / matchev</div>
           </div>
         </div>
-        <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}><StatsLine s={rec} full />{BATTLE_ON ? <button onClick={() => setCharOpen((o) => !o)} className={"ix-pill" + (charOpen ? " on" : "")} style={{ marginLeft: "auto" }}><Zap size={12} style={{ verticalAlign: -1 }} /> Lik in oprema</button> : <span style={{ marginLeft: "auto" }} />}<button onClick={() => { const v = !soundOn(); store.set(SOUND_KEY, v); setSnd(v); if (v) sfx("click"); }} className={"ix-pill" + (snd ? " on" : "")} title="Zvoki ob odgovorih, povabilih in udarcih">{snd ? "🔊 Zvoki" : "🔇 Zvoki"}</button></div>
-        <XpBar s={rec} />
+        <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}><StatsLine s={rec} full />{BATTLE_ON ? <button onClick={() => setCharOpen((o) => !o)} className={"ix-pill" + (charOpen ? " on" : "")} style={{ marginLeft: "auto" }}><Zap size={12} style={{ verticalAlign: -1 }} /> Lik in oprema</button> : <span style={{ marginLeft: "auto" }} />}<button onClick={() => { const v = !soundOn(); store.set(SOUND_KEY, v); setSnd(v); if (v) sfx("click"); }} className={"ix-pill" + (snd ? " on" : "")} title={ONLY_CLASSIC ? "Zvoki ob odgovorih in povabilih" : "Zvoki ob odgovorih, povabilih in udarcih"}>{snd ? <Volume2 size={12} style={{ verticalAlign: -1 }} /> : <VolumeX size={12} style={{ verticalAlign: -1 }} />} Zvoki</button></div>
+        {BATTLE_ON && <XpBar s={rec} />}
         {photoMsg && <div style={{ fontSize: 13, marginTop: 6, color: photoMsg.err ? "var(--terra)" : "var(--teal)" }}>{photoMsg.err || photoMsg.ok}</div>}
         {BATTLE_ON && charOpen && (
           <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
