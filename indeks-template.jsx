@@ -1772,7 +1772,7 @@ function Header({ onHome, home, dark, onToggleTheme, gloss, onToggleGloss, formu
       {user
         ? <button onClick={onProfile} className="ix-chip" title="Profil, prijatelji in izzivi 1v1"
             style={{ marginLeft: "auto", position: "relative", maxWidth: 200, overflow: "visible", background: "none", border: "1px solid var(--line)", borderRadius: 999, padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
-            {photo ? <Pic photo={photo} name={profileName} size={20} /> : BATTLE_ON && charId ? <CharArt id={charId} size={20} /> : <UserRound size={14} />}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{profileName || displayName(user)}</span>
+            {PHOTOS_ON && photo ? <Pic photo={photo} name={profileName} size={20} /> : BATTLE_ON && charId ? <CharArt id={charId} size={20} /> : <UserRound size={14} />}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{profileName || displayName(user)}</span>
             {badge > 0 && <span className="ix-badge">{badge}</span>}
           </button>
         : <span className="ix-chip" style={{ marginLeft: "auto" }}>EF · UPEŠ</span>}
@@ -3143,6 +3143,7 @@ const MODE_LABEL = { classic: "Klasika", basic: "Bitka", battle: "Bitka z liki" 
 const BATTLE_ON = false;
 /* Navadna Bitka (vsi 100 HP) je tudi začasno skrita – v areni je samo Klasika. Za vklop nastavi na true. */
 const BASIC_ON = false;
+const PHOTOS_ON = false;  // profilne slike (naložene fotografije): izklopljene, ker ne sodijo v temo strani; namesto njih začetnica imena
 const ONLY_CLASSIC = !BATTLE_ON && !BASIC_ON;   // izbira načina se ne prikaže
 const isBattle = (mode) => mode === "basic" || mode === "battle";   // oba bojna načina (HP)
 const LETNIK_LABELS = { 1: "1. letnik", 2: "2. letnik", 3: "3. letnik", 4: "1. letnik mag.", 5: "2. letnik mag." };
@@ -3171,7 +3172,7 @@ function Pic({ photo, name, size, style }) {
   const [ok, setOk] = useState(true);
   useEffect(() => { setOk(true); }, [photo]);
   const box = { width: size, height: size, borderRadius: "50%", flexShrink: 0, ...(style || {}) };
-  if (!photo || !ok) return <span title={name} style={{ ...box, background: "var(--terra)", color: "#fff", display: "grid", placeItems: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: Math.round(size * 0.46), lineHeight: 1 }}>{(name || "?").charAt(0).toUpperCase()}</span>;
+  if (!PHOTOS_ON || !photo || !ok) return <span title={name} style={{ ...box, background: "var(--terra)", color: "#fff", display: "grid", placeItems: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: Math.round(size * 0.46), lineHeight: 1 }}>{(name || "?").charAt(0).toUpperCase()}</span>;
   return <img src={photo} alt={name} title={name} onError={() => setOk(false)} style={{ ...box, objectFit: "cover", display: "block", border: "1px solid var(--line)" }} />;
 }
 /* Nalaganje profilne slike: pomanjšaj na 256 px (canvas), JPEG, v bucket avatars/<uid>.jpg, URL shrani v profil. */
@@ -3630,11 +3631,13 @@ function ProfileView({ user, soc, socErr, reload, go }) {
       {/* PROFIL */}
       <div className="ix-card" style={{ padding: 22, marginBottom: 18 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-          <button onClick={() => fileRef.current && fileRef.current.click()} title="Profilna slika (klik za nalaganje)" disabled={photoBusy} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, position: "relative" }}>
-            <Pic photo={p.photo} name={username} size={64} />
-            <span style={{ position: "absolute", right: -4, bottom: -4, width: 22, height: 22, borderRadius: 999, background: "var(--ink)", color: "var(--paper)", display: "grid", placeItems: "center", border: "2px solid var(--paper2)" }}><Pencil size={11} /></span>
-          </button>
-          <input ref={fileRef} type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} />
+          {PHOTOS_ON ? (
+            <button onClick={() => fileRef.current && fileRef.current.click()} title="Profilna slika (klik za nalaganje)" disabled={photoBusy} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, position: "relative" }}>
+              <Pic photo={p.photo} name={username} size={64} />
+              <span style={{ position: "absolute", right: -4, bottom: -4, width: 22, height: 22, borderRadius: 999, background: "var(--ink)", color: "var(--paper)", display: "grid", placeItems: "center", border: "2px solid var(--paper2)" }}><Pencil size={11} /></span>
+            </button>
+          ) : <Pic name={username} size={64} />}
+          {PHOTOS_ON && <input ref={fileRef} type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} />}
           {BATTLE_ON && <button onClick={() => setCharOpen((o) => !o)} title="Moj lik in oprema (klik za spremembo)" style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}><CharArt id={myChar.id} size={44} /></button>}
           <div style={{ flex: 1, minWidth: 160 }}>
             {!uEdit ? (
@@ -3659,7 +3662,7 @@ function ProfileView({ user, soc, socErr, reload, go }) {
         </div>
         <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}><StatsLine s={rec} full />{BATTLE_ON ? <button onClick={() => setCharOpen((o) => !o)} className={"ix-pill" + (charOpen ? " on" : "")} style={{ marginLeft: "auto" }}><Zap size={12} style={{ verticalAlign: -1 }} /> Lik in oprema</button> : <span style={{ marginLeft: "auto" }} />}<button onClick={() => { const v = !soundOn(); store.set(SOUND_KEY, v); setSnd(v); if (v) sfx("click"); }} className={"ix-pill" + (snd ? " on" : "")} title={ONLY_CLASSIC ? "Zvoki ob odgovorih in povabilih" : "Zvoki ob odgovorih, povabilih in udarcih"}>{snd ? <Volume2 size={12} style={{ verticalAlign: -1 }} /> : <VolumeX size={12} style={{ verticalAlign: -1 }} />} Zvoki</button></div>
         {BATTLE_ON && <XpBar s={rec} />}
-        {photoMsg && <div style={{ fontSize: 13, marginTop: 6, color: photoMsg.err ? "var(--terra)" : "var(--teal)" }}>{photoMsg.err || photoMsg.ok}</div>}
+        {PHOTOS_ON && photoMsg && <div style={{ fontSize: 13, marginTop: 6, color: photoMsg.err ? "var(--terra)" : "var(--teal)" }}>{photoMsg.err || photoMsg.ok}</div>}
         {BATTLE_ON && charOpen && (
           <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
             <div className="ix-sec" style={{ color: "var(--terra)" }}><Zap size={14} /> Moj lik za bitke</div>
