@@ -203,6 +203,7 @@ module.exports = {
         { id: 'eeu-ep6', n: 6, title: 'Preferencialna liberalizacija (P05 + V05)', sub: 'Kako lahko prosta trgovina osiromaši državo', file: 'podcast/eeu-k1/06-preferencialna-liberalizacija.m4a', sec: 1450 },
         { id: 'eeu-ep7', n: 7, title: 'Ekonomske integracije in WTO (P06, 1. del)', sub: 'Stopnje ekonomskih integracij in kriza WTO', file: 'podcast/eeu-k1/07-integracije-WTO.m4a', sec: 1701 },
         { id: 'eeu-ep8', n: 8, title: 'Sporazumi pri WTO, GSP, EGP, EFTA, CEFTA (P06, 2. del)', sub: 'Mehanika mednarodnih trgovinskih sporazumov', file: 'podcast/eeu-k1/08-sporazumi-EGP-EFTA-CEFTA.m4a', sec: 1109 },
+        { id: 'eeu-ep9', n: 9, title: 'Velikost trga in prihranki obsega: model BE-COMP (P07)', sub: 'Model BE-COMP in cenejše letalske karte', file: 'podcast/eeu-k1/09-velikost-trga-BE-COMP.m4a', sec: 1718 },
       ],
       notes: {
         file: '2. letnik (2026-27)/1. semester/Ekonomika EU in Slovenija/ZAPISKI.md',
