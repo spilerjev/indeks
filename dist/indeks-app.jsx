@@ -1685,8 +1685,8 @@ function FormulaDock({ subjId }) {
 
 /* ---- UVODNA STRAN: pozdrav, izbira letnika, viri, avtorske pravice (vidna tudi brez prijave) ---- */
 const YEAR_INFO = {
-  1: { title: "1. letnik", sub: "UPEŠ · 2025/26", sources: "predavanja in vaje 1. letnika UPEŠ (2025/26), sprotni zapiski s predavanj ter stari kolokviji in izpiti starejših generacij" },
-  2: { title: "2. letnik", sub: "UPEŠ · 2026/27 · sproti dopolnjeno", sources: "predavanja in vaje 2. letnika UPEŠ (2026/27), sprotni zapiski s predavanj ter stari kolokviji in izpiti starejših generacij" },
+  1: { title: "1. letnik", sub: "UPEŠ · 2025/26", sources: "snov predmetov 1. letnika UPEŠ (2025/26): avtorjevi zapiski s predavanj in vaj ter naloge, sestavljene v slogu kolokvijev in izpitov" },
+  2: { title: "2. letnik", sub: "UPEŠ · 2026/27 · sproti dopolnjeno", sources: "snov predmetov 2. letnika UPEŠ (2026/27): avtorjevi zapiski s predavanj in vaj ter naloge, sestavljene v slogu kolokvijev in izpitov" },
 };
 const yearTotals = (y) => {
   const subs = DATA.filter((s) => s.year === y).flatMap((s) => s.subjects);
@@ -1733,8 +1733,8 @@ function Welcome({ user, go }) {
         <div className="ix-sec" style={{ color: "var(--teal)" }}><FileText size={14} /> Od kod je snov</div>
         <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, lineHeight: 1.6, color: "var(--ink2)" }}>
           {YEARS.map((y) => YEAR_INFO[y] && <li key={y}><b style={{ color: "var(--ink)" }}>{y}. letnik:</b> {YEAR_INFO[y].sources}.</li>)}
-          <li>Vprašanja, razlage in povzetke je pripravil avtor s pomočjo umetne inteligence. Lahko se zmotijo - pri dvomu preveri v gradivu predavateljev.</li>
-          <li>indeks. je neuraden študentski pripomoček in ni povezan z Ekonomsko fakulteto UL. Gradiva predavateljev ostajajo last njihovih avtorjev.</li>
+          <li>Vprašanja, razlage in povzetke je pripravil avtor s pomočjo umetne inteligence. Lahko se zmotijo - pri dvomu preveri v uradnem gradivu predmeta.</li>
+          <li>indeks. je neuraden študentski pripomoček in ni povezan z Ekonomsko fakulteto UL. Ne nadomešča predavanj, vaj in uradnega gradiva.</li>
         </ul>
       </section>
 
