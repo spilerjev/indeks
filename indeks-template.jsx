@@ -453,7 +453,7 @@ function Login({ year, onBack }) {
     if (mode === "up") {
       const uname = username.trim();
       // zasedenost imena preverimo pred ustvarjanjem računa
-      const taken = await supabase.rpc("login_email", { p_username: uname });
+      const taken = await supabase.rpc("username_taken", { p_username: uname }); // vrne samo da/ne (nikoli e-naslova)
       if (!taken.error && taken.data) { setBusy(false); setErr("Uporabniško ime je že zasedeno."); return; }
       const consent = { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString(), marketing_consent: marketing, username: uname };
       const { data, error } = await supabase.auth.signUp({ email: addr, password, options: { emailRedirectTo: window.location.origin + window.location.pathname, data: consent } });
@@ -470,10 +470,9 @@ function Login({ year, onBack }) {
       return;
     }
     if (!addr.includes("@")) {
-      // prijava z uporabniškim imenom: ime -> e-naslov
-      const r = await supabase.rpc("login_email", { p_username: addr });
-      if (r.error || !r.data) { setBusy(false); setErr(r.error ? "Prijava z uporabniškim imenom še ni vklopljena - vpiši e-naslov." : "Uporabniško ime ne obstaja."); return; }
-      addr = r.data;
+      // prijava z uporabniškim imenom je izklopljena: login_email je razkrival e-naslove (launch-varnost.sql)
+      setBusy(false); setErr("Za prijavo vpiši e-naslov svojega računa (ne uporabniškega imena).");
+      return;
     }
     const { error } = await supabase.auth.signInWithPassword({ email: addr, password });
     setBusy(false);
@@ -496,7 +495,7 @@ function Login({ year, onBack }) {
           <div style={{ color: "var(--ink2)", fontSize: 14, marginBottom: 16, lineHeight: 1.5 }}>
             {up
               ? "Ustvari brezplačen račun: uporabniško ime, e-naslov in geslo."
-              : "Vpiši uporabniško ime ali e-naslov in geslo."}
+              : "Vpiši e-naslov in geslo."}
           </div>
           {up && (
             <input type="text" required value={username} onChange={(e) => setUsername(e.target.value)} maxLength={20}
@@ -504,7 +503,7 @@ function Login({ year, onBack }) {
               style={{ ...inputStyle, marginBottom: 10 }} />
           )}
           <input type={up ? "email" : "text"} required autoFocus value={email} onChange={(e) => setEmail(e.target.value)}
-            placeholder={up ? "ime@email.com" : "uporabniško ime ali ime@email.com"} autoCapitalize="none" autoCorrect="off" autoComplete={up ? "email" : "username"}
+            placeholder="ime@email.com" autoCapitalize="none" autoCorrect="off" autoComplete={up ? "email" : "username"}
             style={{ ...inputStyle, marginBottom: 10 }} />
           <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
             placeholder="Geslo" autoComplete={up ? "new-password" : "current-password"} style={inputStyle} />
