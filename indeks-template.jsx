@@ -2224,9 +2224,6 @@ function Fold({ id, icon, title, color, meta, last, children }) {
 }
 
 /* ---- KOLOKVIJ: ločene sekcije Zapiski / Kvizi / Flashcardi ---- */
-/* Zvočne razlage (Poslušaj) so do selitve datotek z GitHub Pages skrite: vidi jih samo račun z uporabniškim imenom iz AUDIO_BETA. */
-const AUDIO_BETA = ["coconut"];
-const audioAllowed = (soc) => !!(soc && soc.profile && AUDIO_BETA.includes(String(soc.profile.username || "").toLowerCase()));
 function PartView({ route, stats, go, soc, user }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
@@ -2293,7 +2290,7 @@ function PartView({ route, stats, go, soc, user }) {
       </div>
 
       {/* POSLUŠAJ: zvočne razlage po predavanjih */}
-      {part.audio && part.audio.length > 0 && audioAllowed(soc) && (
+      {part.audio && part.audio.length > 0 && (
         <Fold id="audio" icon={<Headphones size={14} />} title="Poslušaj" color="var(--terra)" meta={slPl(part.audio.length, ["epizoda", "epizodi", "epizode", "epizod"])}>
           <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55, marginBottom: 10 }}>Pogovorna razlaga snovi po predavanjih, narejena iz zapiskov. Za avtobus, hojo ali ponavljanje z zaprtimi očmi. Kje si ostal, si app zapomni.</div>
           <AudioList eps={part.audio} user={user} ctx={{ sem: sem.id, subj: subj.id, part: part.id, subjName: subj.name, partName: part.name }} />
