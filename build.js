@@ -40,7 +40,7 @@ function findPart(sid, pid) {
 const tpl = fs.readFileSync(require('path').join(__dirname,'indeks-template.jsx'), 'utf8');
 const FORMULAS = require(require('path').join(__dirname,'formulas.js'));
 const CHARACTERS = require(require('path').join(__dirname,'characters.js'));
-const out = tpl.replace('__DATA_JSON__', JSON.stringify(DATA)).replace('__FORMULAS_JSON__', JSON.stringify(FORMULAS)).replace('__CHARACTERS_JSON__', JSON.stringify(CHARACTERS)).replace('__FIGS_JSON__', () => JSON.stringify(FIGS)).replace('__QID_ALIAS_JSON__', () => JSON.stringify({ alias: ALIAS.alias || {}, copy: ALIAS.copy || {} }));
+const out = tpl.replace('__DATA_JSON__', JSON.stringify(DATA)).replace('__FORMULAS_JSON__', JSON.stringify(FORMULAS)).replace('__CHARACTERS_JSON__', JSON.stringify(CHARACTERS)).replace('__FIGS_JSON__', () => JSON.stringify(FIGS)).replace('__LEGAL_JSON__', () => JSON.stringify(require('./legal').loadLegal())).replace('__QID_ALIAS_JSON__', () => JSON.stringify({ alias: ALIAS.alias || {}, copy: ALIAS.copy || {} }));
 fs.writeFileSync(require('path').join(__dirname, 'dist/indeks-app.jsx'), out);
 
 let q = 0; DATA.forEach(s => s.subjects.forEach(su => su.parts.forEach(p => (p.decks||[]).forEach(d => q += (d.questions||[]).length))));
