@@ -410,9 +410,9 @@ const TERMS = [
   ["Tvoje pravice", "Kadarkoli lahko zahtevaš vpogled, popravek ali izbris računa in podatkov ter prekličeš soglasje za obvestila - piši na zgornji kontakt. Pritožbo lahko vložiš pri Informacijskem pooblaščencu RS."],
   ["Spremembe", "Pogoje lahko posodobimo; o bistvenih spremembah te obvestimo po e-pošti ali v aplikaciji."],
 ];
-function TermsBox() {
+function TermsBox({ full }) {
   return (
-    <div style={{ marginTop: 8, maxHeight: 220, overflowY: "auto", padding: "10px 12px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", fontSize: 12.5, lineHeight: 1.5, color: "var(--ink2)" }}>
+    <div style={{ marginTop: full ? 0 : 8, maxHeight: full ? "none" : 220, overflowY: "auto", padding: "10px 12px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", fontSize: 12.5, lineHeight: 1.5, color: "var(--ink2)" }}>
       <div style={{ fontWeight: 800, color: "var(--ink)", marginBottom: 6 }}>Pogoji uporabe in zasebnost ({TERMS_VERSION.split("-").reverse().join(". ")})</div>
       {TERMS.map(([h, t]) => (
         <div key={h} style={{ marginBottom: 7 }}><b style={{ color: "var(--ink)" }}>{h.endsWith(".") ? h : h + "."}</b> {t}</div>
@@ -1752,10 +1752,31 @@ function Welcome({ user, go }) {
 }
 
 function Footer() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    const k = (e) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k);
+  }, [open]);
+  const link = { background: "none", border: "none", padding: 0, cursor: "pointer", color: "inherit", font: "inherit", letterSpacing: "inherit", textDecoration: "underline", textUnderlineOffset: 3 };
   return (
     <footer className="ix-chip" style={{ marginTop: 48, paddingTop: 16, borderTop: "1px solid var(--line)", display: "flex", flexWrap: "wrap", gap: "6px 14px", justifyContent: "space-between", textTransform: "none", letterSpacing: ".02em", fontWeight: 500 }}>
       <span>© {new Date().getFullYear()} indeks. · Leon Špiler. Vse pravice pridržane.</span>
-      <span>Neuraden pripomoček, ni povezan z EF UL.</span>
+      <span style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
+        <button type="button" onClick={() => setOpen(true)} style={link}>Pogoji uporabe in zasebnost</button>
+        <a href={"mailto:" + TERMS_CONTACT} style={{ ...link, textDecoration: "underline" }}>Kontakt</a>
+        <span>Neuraden pripomoček, ni povezan z EF UL.</span>
+      </span>
+      {open && (
+        <div role="dialog" aria-modal="true" aria-label="Pogoji uporabe in zasebnost" onClick={() => setOpen(false)}
+          style={{ position: "fixed", inset: 0, zIndex: 95, background: "rgba(0,0,0,.45)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div className="ix-card ix-fade" onClick={(e) => e.stopPropagation()}
+            style={{ width: "100%", maxWidth: 560, maxHeight: "85vh", overflowY: "auto", padding: 16, textTransform: "none", letterSpacing: "normal", fontWeight: 400, background: "var(--paper2)" }}>
+            <TermsBox full />
+            <button type="button" onClick={() => setOpen(false)} className="ix-btn" style={{ marginTop: 12, marginLeft: "auto", display: "block", background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "9px 18px" }}>Zapri</button>
+          </div>
+        </div>
+      )}
     </footer>
   );
 }
