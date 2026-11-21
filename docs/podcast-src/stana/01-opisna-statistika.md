@@ -144,19 +144,6 @@ Od merske lestvice je odvisno, **katere parametre smemo izračunati**. Lestvico 
 - **Bivariatna analiza (2 spremenljivki):** povezava med oceno pri SA in oceno pri OS.
 - **Multivariatna analiza (več kot 2 spremenljivki):** ocena pri SA v odvisnosti od OS, Matematike in kohezijske regije.
 
-### Zgledna izpitna vprašanja — rešitve
-1. **Kaj je statistična enota?** Odgovor je **E (zaposlena oseba)**.
-   - C (vsi zaposleni) je populacija.
-   - B in D sta spremenljivki.
-2. **Na kateri lestvici merimo stopnjo izobrazbe?** Odgovor je **D (ordinalni)**.
-3. **Najpogostejši kraj je »Ljubljana«; kako se imenuje ta parameter?** Odgovor je **D (modus)**.
-4. **Plače so unimodalne in desno asimetrične; katera trditev je pravilna?** Odgovor je **D**.
-   - D drži: decili kot meje razredov dajo v vsakem razredu 10 % enot.
-   - A je napačna, ker je VR = max − min.
-   - B je napačna. Pri desni asimetriji velja **Mo < Me < μ**, zato pod modusom leži *manj* kot 50 % enot.
-   - C je past. 0,5 je *kvantilni rang* mediane, njen rang pa je (N+1)/2.
-   - E je napačna, ker je vrstni red obrnjen.
-
 ---
 
 ## V01 — 1. vaje (osnovni pojmi, opisna statistika, uvod v R)

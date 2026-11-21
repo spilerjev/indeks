@@ -1,6 +1,6 @@
 # Epizoda 1 — Uvod v pravoznanstvo
 
-Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski z vaj in povzetek snovi, pripravljeni za zvočno razlago.
+Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski in povzetek snovi, pripravljeni za zvočno razlago.
 
 ## Povzetek snovi
 
@@ -47,7 +47,7 @@ Nižji akti morajo biti v skladu z višjimi.
 - **Pritožbeni razlogi:** (1) kršitev **postopka**, (2) kršitev **materialnega prava** (uporabi napačen člen ali zakon), (3) **nepravilno/nepopolno ugotovljeno dejansko stanje**.
 - **Vrhovno sodišče** ne ugotavlja več dejanskega stanja, odloča le o **pravnih vprašanjih**, s čimer skrbi za **enotno sodno prakso**.
 - **Ustavno sodišče** ni del rednega sodstva. Odloča o **ustavni pritožbi** (kršitev človekove pravice), ko so izčrpana vsa pravna sredstva, in o ustavnosti zakonov.
-- ⚠️ V zapiskih piše »EU sodišče za človekove pravice«, kar je **napačno**. Pravilno je **Evropsko sodišče za človekove pravice (ESČP)**, ki **ni** organ EU, ampak spada pod **Svet Evrope** (Strasbourg). Pred njim tožiš **državo**, ko izčrpaš vsa domača pravna sredstva.
+- ⚠️ Pogosta zamenjava: ne »EU sodišče za človekove pravice«, ampak **Evropsko sodišče za človekove pravice (ESČP)**, ki **ni** organ EU, ampak spada pod **Svet Evrope** (Strasbourg). Pred njim tožiš **državo**, ko izčrpaš vsa domača pravna sredstva.
 
 ### Pravna sredstva
 - **Redno pravno sredstvo:** **pritožba**. **Izredno:** **revizija** (in druga).
@@ -60,7 +60,7 @@ Nižji akti morajo biti v skladu z višjimi.
 - **Vacatio legis** je čas od objave do začetka veljavnosti. Če zakon ne določi drugače, je to **15 dni po objavi** v Uradnem listu (154. člen URS).
 - **Derogacijska klavzula** določa, kateri prejšnji predpis preneha veljati, npr. »Z dnem uveljavitve tega zakona preneha veljati zakon …«.
 
-### Retroaktivnost (155. člen URS) — primer v ppt: Zakon o varstvu potrošnikov
+### Retroaktivnost (155. člen URS)
 - **Prava retroaktivnost** je **prepovedana**: zakon ne more urejati razmerij, ki so se **v celoti zgodila v preteklosti** (ne more veljati za nazaj).
 - **Izjema, 3 pogoji (vsi hkrati):** (1) učinek za nazaj lahko določi **le zakon** (ne podzakonski akt) za **posamezne določbe**, (2) to zahteva **javna korist**, (3) s tem se **ne posega v pridobljene pravice**.
 - **Neprava retroaktivnost** je **dovoljena** (pod pogojem varstva zaupanja). Nov zakon posega v **razmerja, ki so nastala prej, pa še trajajo** (nedokončani procesi). Primer: nova davčna pravila veljajo za obveznost, ki še **ni bila plačana/zaključena**, preden si jo plačal.

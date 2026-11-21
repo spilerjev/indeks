@@ -150,7 +150,7 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
 
 > ⚠️ Vsako nalogo začni z enoto in spremenljivko. Normalno porazdelitev zapiši kot Y ~ N(μ, σ). Ne piši »…«, ampak celotno verigo formul.
 
-### Naloga 1: vijaki v škatlah — ⭐ tipičen izpitni primer
+### Naloga 1: vijaki v škatlah
 - **a) Enota:** ena kartonasta škatla. **Spremenljivka:** število zapakiranih vijakov v škatli (v vijakih), številska, diskretna (modeliramo jo z normalno), razmernostna.
 - **Iz podatkov:** 95,44 % škatel je med 680 in 720 vijaki. To je **μ ± 2σ**, zato velja 700 ± 2σ = 720 → **σ = 10 vijakov**. **Y ~ N(700; 10)**.
 - **b)** **Me = 700 vijakov**, **ker je normalna porazdelitev simetrična**. Polovica ploščine je levo od μ, polovica desno.
@@ -171,7 +171,7 @@ Primer 3.3: ali je ȳ nepristranska? E(ȳ) = 4 = μ_Y → **da**.
   - Interpretacija: 70 % škatel vsebuje do vključno 705,2 vijaka, 30 % pa več.
   - R: `qnorm(0.7, 700, 10)` = 705,24.
 
-### Naloga 2: FotoExpert, garancija merilnikov — ⚠️ že bila na izpitu (študenti niso vedeli, za kaj gre)
+### Naloga 2: FotoExpert, garancija merilnikov
 - **Enota:** en merilnik osvetljenosti. **Spremenljivka:** **trajnost merilnika** (čas delovanja do večje napake, v letih), številska, zvezna, razmernostna.
 - Profesor: zanima nas **trajnost**. Radi vidimo, da so **stroški** garancijskih popravil **nižji**.
 - »Najpogosteje po 5 letih« pomeni Mo = 5, pri normalni pa velja Mo = μ. **Y ~ N(5 let; 1,56 leta)**.
