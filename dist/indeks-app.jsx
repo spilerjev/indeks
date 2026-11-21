@@ -5754,8 +5754,8 @@ function TreeQ({ q, gMap, gTarget, answered, poolVal, onSlot }) {
   useEffect(() => { const m = () => setCw(wrap.current ? wrap.current.clientWidth : 0); m(); window.addEventListener("resize", m); return () => window.removeEventListener("resize", m); }, []);
   const narrow = cw ? cw <= 560 : (typeof window !== "undefined" && window.innerWidth <= 760);
   const rowH = narrow ? 56 : 62, padL = 10, padT = 26;
-  const endW = Math.max(60, ...items.filter((it) => it.n.kind === "end").map((it) => String(it.n.label || "").length * 8 + 16));   // prostor za napise na koncih vej
-  const colW = cw ? Math.max(140, Math.min(185, (cw - endW - padL * 2) / Math.max(1, depth))) : 185;
+  const endW = Math.max(60, ...items.filter((it) => it.n.kind === "end").map((it) => String(it.n.label || "").length * (narrow ? 7 : 8) + 16));   // prostor za napise na koncih vej
+  const colW = cw ? Math.max(narrow ? 108 : 140, Math.min(185, (cw - endW - padL * 2) / Math.max(1, depth))) : 185;
   const W = padL * 2 + depth * colW + endW, H = padT + rows * rowH + 10;
   const cx = (it) => padL + it.d * colW + 22, cy = (it) => padT + it.row * rowH + rowH / 2;
   return (
@@ -5784,7 +5784,7 @@ function TreeQ({ q, gMap, gTarget, answered, poolVal, onSlot }) {
                   {blank && answered && placed !== String(n.slot) && <span style={{ display: "block", fontSize: 10.5, color: "var(--teal)", fontWeight: 700 }}>{String(n.slot)}</span>}
                 </button>
               )}
-              {n.kind === "end" ? <div style={{ fontSize: 13, fontWeight: 700, whiteSpace: "nowrap", background: "var(--paper)", padding: "2px 4px" }}>{n.label}</div>
+              {n.kind === "end" ? <div style={{ fontSize: narrow ? 12 : 13, fontWeight: 700, whiteSpace: "nowrap", background: "var(--paper)", padding: "2px 4px" }}>{n.label}</div>
                 : <div className={"ix-tshape " + (n.kind === "decision" ? "dec" : "chance")}>{n.label}</div>}
             </div>
           );
