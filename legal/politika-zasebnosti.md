@@ -50,7 +50,7 @@ Podatkov ne prodajamo in jih ne posredujemo tretjim osebam za njihove namene. Up
 
 | Obdelovalec | Kaj dela | Kje |
 |---|---|---|
-| Supabase Inc. | baza, prijava, potrditvena e-sporočila, shramba slik profila | strežniki v EU; podjetje iz ZDA (standardne pogodbene klavzule) |
+| Supabase Inc. | baza, prijava, potrditvena e-sporočila, shramba slik profila | strežniki v EU (Irska); podjetje iz ZDA (standardne pogodbene klavzule) |
 | GitHub Inc. (GitHub Pages) | gostovanje spletne strani (dnevniki dostopa z IP-naslovom) | ZDA (okvir EU–ZDA za zasebnost podatkov) |
 | Google (Google Fonts) | nalaganje pisav (vidi IP-naslov) | ZDA (okvir EU–ZDA za zasebnost podatkov) |
 
