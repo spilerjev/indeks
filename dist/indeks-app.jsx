@@ -411,25 +411,85 @@ function checkEmail(addr) {
   return null;
 }
 
-/* Pogoji uporabe in zasebnost. Ob spremembi besedila dvigni TERMS_VERSION (shrani se v user_metadata ob registraciji). */
-const TERMS_VERSION = "2026-11-11";
+/* Pogoji uporabe in politika zasebnosti: besedilo je v legal/*.md (vstavi ga build.js prek legal.js), strani #/pogoji in #/zasebnost.
+   Ob vsebinski spremembi dvigni TERMS_VERSION: prijavljeni uporabniki z drugo različico v user_metadata.terms_version
+   dobijo zaslon za ponovno potrditev (TermsGate). Ob registraciji se zapiše v user_metadata (Login). */
+const TERMS_VERSION = "2026-11-21";
 const TERMS_CONTACT = "leon.spiler@gmail.com";
-const TERMS = [
-  ["Kaj je indeks.", "Brezplačen študijski pripomoček za študente EF UL. Vsebina je pripravljena skrbno, a brez jamstva za popolnost in pravilnost - za izpit veljajo uradna gradiva predmeta."],
-  ["Upravljavec podatkov", `Leon Špiler, kontakt: ${TERMS_CONTACT}.`],
-  ["Kateri podatki in zakaj", "E-naslov in geslo (geslo je šifrirano) za prijavo ter statistika reševanja kvizov za sinhronizacijo med napravami. Iz statistike vseh uporabnikov prikazujemo le anonimna skupna povprečja."],
-  ["Obvestila in ponudbe", "Samo če to posebej označiš: na e-naslov ti občasno pošljemo novosti in ponudbe indeks. (npr. če bo kdaj kakšen del plačljiv). Soglasje ni pogoj za uporabo in ga lahko kadarkoli prekličeš."],
-  ["Komu podatke posredujemo", "E-naslova in drugih podatkov ne prodajamo in ne posredujemo tretjim osebam za njihove namene. Podatke tehnično hrani ponudnik baze Supabase kot obdelovalec."],
-  ["Tvoje pravice", "Kadarkoli lahko zahtevaš vpogled, popravek ali izbris računa in podatkov ter prekličeš soglasje za obvestila - piši na zgornji kontakt. Pritožbo lahko vložiš pri Informacijskem pooblaščencu RS."],
-  ["Spremembe", "Pogoje lahko posodobimo; o bistvenih spremembah te obvestimo po e-pošti ali v aplikaciji."],
-];
-function TermsBox({ full }) {
+const LEGAL = {"pogoji":{"title":"Pogoji uporabe","html":"<p>Različica z dne 21. 11. 2026, velja od 21. 11. 2026.</p>\n<h2>1. Kaj je indeks.</h2>\n<p>indeks. (indeksapp.com, v nadaljevanju »aplikacija«) je brezplačen študijski pripomoček s kvizi, zapiski, karticami, zvočnimi razlagami in igrami za študente Ekonomske fakultete Univerze v Ljubljani.</p>\n<p>Aplikacijo kot zasebnik upravlja <b>Leon Špiler</b>, Slovenija (v nadaljevanju »mi«). Kontakt: <b>{{KONTAKT}}</b>.</p>\n<p><b>indeks. je neuraden pripomoček in ni povezan z Ekonomsko fakulteto ali Univerzo v Ljubljani.</b> Fakulteta ga ni pregledala ali odobrila. Imena predmetov in programov uporabljamo samo za opis vsebine.</p>\n<h2>2. Sprejem pogojev</h2>\n<p>Ko ustvariš račun, potrdiš, da si te pogoje prebral in se z njimi strinjaš ter da si seznanjen s <a href=\"#/zasebnost\">Politiko zasebnosti</a>. Brez računa lahko vidiš samo uvodno stran in ta dva dokumenta.</p>\n<h2>3. Račun</h2>\n<ul><li>Račun lahko ustvari oseba, stara vsaj 15 let.</li><li>Podatki ob registraciji morajo biti resnični. Na osebo je dovoljen en račun.</li><li>Za geslo in dostop do računa skrbiš sam. Računa ne deli z drugimi. Če sumiš zlorabo, nam piši.</li><li>Račun lahko kadarkoli izbrišeš sam v profilu (gumb »Izbriši račun«).</li></ul>\n<h2>4. Vsebina aplikacije</h2>\n<ul><li>Vsebina (vprašanja, razlage, zapiski, kartice, grafi, zvočne razlage) je naša lastna študijska pomoč. Pripravljamo jo iz lastnih zapiskov s predavanj in vaj ter javno dostopnih virov.</li><li>Pripravljamo jo skrbno, <b>vendar brez jamstva, da je popolna, pravilna ali posodobljena</b>. Za kolokvije in izpite veljajo uradna gradiva in navodila nosilcev predmetov.</li><li>Vprašanja v aplikaciji niso uradna izpitna vprašanja fakultete in ne napovedujejo, kaj bo na izpitu.</li><li>Če najdeš napako ali meniš, da vsebina krši tvoje pravice (na primer avtorske), nam piši na {{KONTAKT}}. Prijavo pregledamo in sporno vsebino v razumnem roku popravimo ali umaknemo.</li></ul>\n<h2>5. Kaj smeš in česa ne smeš</h2>\n<p>Aplikacijo smeš uporabljati za lastno učenje.</p>\n<p><b>Ni dovoljeno:</b></p>\n<ul><li>kopirati, prodajati, objavljati ali drugače razširjati vsebine aplikacije v celoti ali v večjem delu, na primer v drugih aplikacijah, skupinah ali na spletnih straneh;</li><li>samodejno pobirati vsebine (scraping, boti) ali čezmerno obremenjevati strežnikov;</li><li>goljufati v rangiranih testih, na lestvicah in v areni (skripte, spreminjanje aplikacije, več računov, dogovarjanje izidov);</li><li>dostopati do tujih računov ali podatkov ter izkoriščati varnostne ranljivosti (ranljivost nam raje sporoči, hvala);</li><li>uporabljati aplikacijo v nasprotju z zakonom ali pravili fakultete, na primer med kolokvijem ali izpitom, kjer to ni dovoljeno.</li></ul>\n<h2>6. Uporabniško ime, profil in arena</h2>\n<p>Uporabniško ime, slika profila ter rezultati na lestvicah in v areni so <b>vidni vsem prijavljenim uporabnikom</b>. Letnik, smer, opis in statistika so vidni tvojim prijateljem. Podrobnosti so v Politiki zasebnosti.</p>\n<p>Za vse, kar objaviš v profilu, odgovarjaš sam. <b>Ni dovoljeno:</b></p>\n<ul><li>žaljivo, nespodobno, sovražno ali diskriminatorno ime, opis ali slika;</li><li>predstavljanje za drugo osebo ali uporaba tuje fotografije brez dovoljenja;</li><li>slike, za katere nimaš pravic;</li><li>oglaševanje in neželena sporočila.</li></ul>\n<p>Neprimerno vsebino lahko prijaviš na {{KONTAKT}}.</p>\n<h2>7. Lestvice, točke in nivoji</h2>\n<p>Točke, XP, nivoji, liki in oprema so del igre. <b>Nimajo denarne vrednosti</b> in jih ni mogoče zamenjati, prodati ali prenesti. Pravila točkovanja lahko spremenimo. Rezultate, ki so nastali z goljufijo ali zaradi napake sistema, lahko popravimo ali izbrišemo.</p>\n<p>Liki v areni so šaljive karikature znanih ekonomistov in podjetnikov. Ne izražajo mnenja o teh osebah in z njimi niso povezani.</p>\n<h2>8. Ukrepi ob kršitvah</h2>\n<p>Ob kršitvi teh pogojev lahko vsebino umaknemo, spremenimo uporabniško ime, izbrišemo rezultate ter račun začasno ali trajno onemogočimo. Praviloma te prej opozorimo, razen pri hujših kršitvah.</p>\n<h2>9. Pravice na aplikaciji</h2>\n<p>Aplikacija, njena koda, oblika, ime »indeks.« in vsebina so naša last ali jih uporabljamo z dovoljenjem. Z uporabo dobiš osebno, neprenosljivo in brezplačno pravico do uporabe za učenje. Druge pravice ti ne pripadajo.</p>\n<h2>10. Razpoložljivost in spremembe storitve</h2>\n<p>Aplikacija je brezplačna in na voljo takšna, kot je. Ne jamčimo, da bo vedno dosegljiva in brez napak ali da se napredek ne bo nikoli izgubil. Funkcije lahko spremenimo, dodamo ali ukinemo. Če bi storitev ukinili, te o tem obvestimo vnaprej, kadar je to mogoče.</p>\n<p>Če bodo kdaj del aplikacije plačljive funkcije, bodo zanje veljali ločeni pogoji (cena, plačilo, odstop od pogodbe). O njih te obvestimo, preden kar koli plačaš.</p>\n<h2>11. Odgovornost</h2>\n<p>V obsegu, ki ga dovoljuje zakon, ne odgovarjamo za škodo zaradi uporabe ali nezmožnosti uporabe aplikacije, zaradi napak v vsebini (tudi za slabši rezultat na kolokviju ali izpitu) ali zaradi izgube podatkov. To ne velja za škodo, povzročeno namenoma ali iz hude malomarnosti, in ne posega v pravice potrošnikov po zakonu.</p>\n<h2>12. Spremembe pogojev</h2>\n<p>Pogoje lahko posodobimo. Ob bistveni spremembi te ob naslednji prijavi prosimo za ponovno potrditev. Dokler je ne potrdiš, aplikacije ne moreš uporabljati, račun pa lahko kadarkoli izbrišeš.</p>\n<h2>13. Pravo in spori</h2>\n<p>Za te pogoje velja pravo Republike Slovenije. Spore poskušamo rešiti sporazumno, zato nam najprej piši. Sicer je pristojno stvarno pristojno sodišče v Ljubljani, razen če zakon potrošniku zagotavlja sodišče po njegovem prebivališču.</p>\n<h2>Kontakt</h2>\n<p>{{KONTAKT}}</p>"},"zasebnost":{"title":"Politika zasebnosti","html":"<p>Različica z dne 21. 11. 2026.</p>\n<h2>1. Upravljavec</h2>\n<p>Upravljavec osebnih podatkov je <b>Leon Špiler</b>, zasebnik, Slovenija. E-pošta: <b>{{KONTAKT}}</b>.</p>\n<p>Pooblaščene osebe za varstvo podatkov nimamo, ker je zakon ne zahteva. Za vsa vprašanja nam piši na zgornji naslov.</p>\n<p>indeks. ni povezan z Ekonomsko fakulteto ali Univerzo v Ljubljani. Fakulteta tvojih podatkov iz aplikacije ne dobi.</p>\n<h2>2. Katere podatke obdelujemo, zakaj in na kateri podlagi</h2>\n<div class=\"ix-legal-tbl\"><table><thead><tr><th>Podatki</th><th>Namen</th><th>Pravna podlaga (GDPR, 6. člen)</th></tr></thead><tbody><tr><td data-h=\"Podatki\">E-naslov, uporabniško ime in geslo (hranimo samo zgoščeno vrednost gesla, gesla ne vidimo)</td><td data-h=\"Namen\">račun in prijava</td><td data-h=\"Pravna podlaga (GDPR, 6. člen)\">izvajanje pogodbe (točka b)</td></tr><tr><td data-h=\"Podatki\">Profil: letnik, smer, kratek opis, slika profila, izbrani lik in oprema</td><td data-h=\"Namen\">prilagojena domača stran, profil v areni</td><td data-h=\"Pravna podlaga (GDPR, 6. člen)\">izvajanje pogodbe (b)</td></tr><tr><td data-h=\"Podatki\">Učni podatki: rezultati kvizov in kartic, rangirani testi, matchi v areni, XP in nivo, seznam prijateljev in prošenj</td><td data-h=\"Namen\">statistika, priporočila, sinhronizacija med napravami, lestvice in arena</td><td data-h=\"Pravna podlaga (GDPR, 6. člen)\">izvajanje pogodbe (b)</td></tr><tr><td data-h=\"Podatki\">Podatki na računu: zaznamek branja zapiskov, položaj poslušanja zvočnih razlag, osebni seznam opravil</td><td data-h=\"Namen\">nadaljevanje tam, kjer si ostal, na vseh napravah</td><td data-h=\"Pravna podlaga (GDPR, 6. člen)\">izvajanje pogodbe (b)</td></tr><tr><td data-h=\"Podatki\">Zapis o sprejemu pogojev (različica in čas)</td><td data-h=\"Namen\">dokaz, da si pogoje sprejel</td><td data-h=\"Pravna podlaga (GDPR, 6. člen)\">zakoniti interes (f)</td></tr><tr><td data-h=\"Podatki\">Soglasje za obvestila</td><td data-h=\"Namen\">pošiljanje novosti in ponudb indeks. na tvoj e-naslov</td><td data-h=\"Pravna podlaga (GDPR, 6. člen)\">privolitev (a), samo če jo ob registraciji označiš</td></tr><tr><td data-h=\"Podatki\">Tehnični podatki: IP-naslov, vrsta brskalnika, čas dostopa (dnevniki strežnikov)</td><td data-h=\"Namen\">varnost, preprečevanje zlorab, odpravljanje napak</td><td data-h=\"Pravna podlaga (GDPR, 6. člen)\">zakoniti interes (f)</td></tr></tbody></table></div>\n<p>Občutljivih podatkov (zdravje, prepričanja ipd.) ne zbiramo. Ne izvajamo avtomatiziranega odločanja ali profiliranja s pravnimi učinki. Priporočila v aplikaciji (na primer »najšibkejši sklop«) so samo učni namigi.</p>\n<p>Podatki o računu so potrebni za sklenitev in izvajanje pogodbe (pogojev uporabe). Brez njih računa ne moreš ustvariti.</p>\n<h2>3. Kaj vidijo drugi uporabniki</h2>\n<p><b>Vsem prijavljenim</b> uporabnikom so vidni:</p>\n<ul><li><b>uporabniško ime</b> in <b>slika profila</b> (na lestvicah, v areni, v zgodovini matchev in prenosu matchev v živo);</li><li><b>rezultati rangiranih testov</b> na lestvicah (rang, povprečje, čas), ko v delu rešiš vsaj 5 testov;</li><li><b>matchi v areni</b> in njihovi podatki: kdo je igral, del snovi, točke, število pravilnih odgovorov in zmagovalec.</li></ul>\n<p><b>Samo tvojim prijateljem</b> so vidni še letnik, smer, opis in statistika (zmage in porazi po načinih, število rešenih kvizov, povprečna uspešnost).</p>\n<p>Slika profila je shranjena na javnem naslovu. Kdor pozna točen naslov slike, jo lahko odpre tudi brez prijave.</p>\n<p><b>E-naslova ne prikazujemo drugim uporabnikom.</b> Iz statistike vseh uporabnikov prikazujemo le skupna, anonimna povprečja, na primer povprečno uspešnost pri sklopu, ko so ga rešili vsaj 3 uporabniki.</p>\n<h2>4. Brskalnik (localStorage)</h2>\n<p>Aplikacija v tvojem brskalniku shrani prijavno sejo, napredek, nedokončane kvize in nastavitve (tema, izbrani letnik, odprti razdelki, zvoki). To je nujno za delovanje, zato zanj ne potrebujemo soglasja. <b>Ne uporabljamo piškotkov za oglaševanje ali sledenje in ne uporabljamo analitike.</b></p>\n<h2>5. Komu podatke posredujemo</h2>\n<p>Podatkov ne prodajamo in jih ne posredujemo tretjim osebam za njihove namene. Uporabljamo te obdelovalce, ki podatke obdelujejo samo po naših navodilih:</p>\n<div class=\"ix-legal-tbl\"><table><thead><tr><th>Obdelovalec</th><th>Kaj dela</th><th>Kje</th></tr></thead><tbody><tr><td data-h=\"Obdelovalec\">Supabase Inc.</td><td data-h=\"Kaj dela\">baza, prijava, potrditvena e-sporočila, shramba slik profila</td><td data-h=\"Kje\">strežniki v EU; podjetje iz ZDA (standardne pogodbene klavzule)</td></tr><tr><td data-h=\"Obdelovalec\">GitHub Inc. (GitHub Pages)</td><td data-h=\"Kaj dela\">gostovanje spletne strani (dnevniki dostopa z IP-naslovom)</td><td data-h=\"Kje\">ZDA (okvir EU–ZDA za zasebnost podatkov)</td></tr><tr><td data-h=\"Obdelovalec\">Google (Google Fonts)</td><td data-h=\"Kaj dela\">nalaganje pisav (vidi IP-naslov)</td><td data-h=\"Kje\">ZDA (okvir EU–ZDA za zasebnost podatkov)</td></tr></tbody></table></div>\n<p>Podatke lahko razkrijemo državnim organom, kadar to zahteva zakon.</p>\n<h2>6. Koliko časa hranimo podatke</h2>\n<ul><li>Podatke računa, profila in učne podatke hranimo, <b>dokler imaš račun</b>.</li><li>Ko račun izbrišeš, se takoj izbrišejo račun, profil, slika profila, statistika, rangirani rezultati, prijateljstva in matchi, ki si jih ustvaril. V matchih drugih igralcev ostane le anonimen zapis poteza brez imena.</li><li>Soglasje za obvestila velja do preklica.</li><li>Tehnične dnevnike hranijo obdelovalci po svojih pravilih, praviloma nekaj tednov.</li></ul>\n<h2>7. Tvoje pravice</h2>\n<p>Pravico imaš do:</p>\n<ul><li><b>dostopa</b> do svojih podatkov in kopije;</li><li><b>popravka</b> netočnih podatkov (večino lahko popraviš sam v profilu);</li><li><b>izbrisa</b> računa in podatkov (gumb »Izbriši račun« v profilu);</li><li><b>omejitve obdelave</b> in <b>ugovora</b> obdelavi na podlagi zakonitega interesa;</li><li><b>prenosljivosti</b> podatkov v strojno berljivi obliki;</li><li><b>preklica soglasja</b> za obvestila kadarkoli, s sporočilom na {{KONTAKT}}. Preklic ne vpliva na zakonitost prej poslanih obvestil.</li></ul>\n<p>Zahtevo pošlji na {{KONTAKT}}. Odgovorimo najpozneje v enem mesecu. Zaradi varnosti lahko preverimo, da zahteva prihaja z e-naslova računa.</p>\n<p>Če meniš, da podatke obdelujemo nezakonito, se lahko pritožiš pri <b>Informacijskem pooblaščencu RS</b> (Dunajska cesta 22, 1000 Ljubljana, gp.ip@ip-rs.si, www.ip-rs.si).</p>\n<h2>8. Starost</h2>\n<p>Račun lahko ustvari oseba, stara vsaj 15 let. Če ugotovimo, da je račun ustvaril mlajši brez soglasja staršev, ga izbrišemo.</p>\n<h2>9. Varnost</h2>\n<p>Do celotne baze dostopa samo upravljavec. Pravila na bazi uporabniku dovolijo spreminjati samo lastne podatke, brati pa lastne podatke in tisto, kar je po razdelku 3 vidno drugim. Povezava je šifrirana (HTTPS), gesla so shranjena zgoščeno. Če pride do kršitve varnosti, ki ogroža tvoje podatke, te obvestimo v skladu z zakonom.</p>\n<h2>10. Spremembe</h2>\n<p>Ob bistveni spremembi te politike te ob naslednji prijavi prosimo za ponovno potrditev. Prejšnje različice so na voljo na zahtevo.</p>"}};
+const termsDate = (v) => v.split("-").reverse().map((x) => String(+x)).join(". ");
+const legalHtml = (page) => LEGAL[page].html.split("{{KONTAKT}}").join(`<a href="mailto:${TERMS_CONTACT}">${TERMS_CONTACT}</a>`);
+const linkBtn = { background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--terra)", fontWeight: 700, textDecoration: "underline", font: "inherit" };
+
+function LegalView({ page, go, user }) {
+  const other = page === "pogoji" ? "zasebnost" : "pogoji";
+  useEffect(() => { document.title = LEGAL[page].title + " · indeks."; return () => { document.title = "indeks."; }; }, [page]);
   return (
-    <div style={{ marginTop: full ? 0 : 8, maxHeight: full ? "none" : 220, overflowY: "auto", padding: "10px 12px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", fontSize: 12.5, lineHeight: 1.5, color: "var(--ink2)" }}>
-      <div style={{ fontWeight: 800, color: "var(--ink)", marginBottom: 6 }}>Pogoji uporabe in zasebnost ({TERMS_VERSION.split("-").reverse().join(". ")})</div>
-      {TERMS.map(([h, t]) => (
-        <div key={h} style={{ marginBottom: 7 }}><b style={{ color: "var(--ink)" }}>{h.endsWith(".") ? h : h + "."}</b> {t}</div>
-      ))}
+    <div className="ix-fade" style={{ maxWidth: 720, margin: "0 auto" }}>
+      <button onClick={() => (window.history.length > 1 ? window.history.back() : go({ view: user ? "home" : "welcome" }))} className="ix-chip"
+        style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, padding: 0, marginBottom: 14 }}>
+        <ChevronLeft size={15} /> Nazaj
+      </button>
+      <div className="ix-card" style={{ padding: "22px 22px 26px" }}>
+        <h1 className="ix-serif" style={{ fontSize: 28, fontWeight: 900, margin: "0 0 6px", letterSpacing: "-.02em" }}>{LEGAL[page].title}</h1>
+        <div className="ix-notes ix-legal" dangerouslySetInnerHTML={{ __html: legalHtml(page) }} />
+        <div style={{ marginTop: 22, paddingTop: 14, borderTop: "1px solid var(--line)", fontSize: 14 }}>
+          Preberi še: <a href={"#/" + other} style={linkBtn}>{LEGAL[other].title}</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Izbris računa (GDPR 17. člen): slika profila iz shrambe, nato RPC delete_my_account (supabase/varnost.sql; profil, statistika,
+   ranked, prijateljstva in matchi gredo prek on delete cascade), nato lokalni podatki in odjava. */
+async function deleteMyAccount(user) {
+  if (!user) return false;
+  const ok = await ixConfirm({ title: "Izbriši račun", text: "Trajno izbrišem tvoj račun z uporabniškim imenom, profilom, sliko, statistiko, rezultati na lestvicah, prijatelji in matchi? Tega ni mogoče razveljaviti.", ok: "Izbriši račun", danger: true });
+  if (!ok) return false;
+  try { await supabase.storage.from("avatars").remove([user.id + ".jpg"]); } catch (e) {}
+  const { error } = await supabase.rpc("delete_my_account");
+  if (error) { await ixAlert({ title: "Izbris ni uspel", text: (rpcErr(error) || "Napaka.") + " Poskusi znova ali piši na " + TERMS_CONTACT + "." }); return false; }
+  try { Object.keys(localStorage).filter((k) => k.indexOf("indeks.") === 0 && k !== "indeks.theme").forEach((k) => localStorage.removeItem(k)); } catch (e) {}
+  try { await supabase.auth.signOut({ scope: "local" }); } catch (e) {}
+  await ixAlert({ title: "Račun je izbrisan", text: "Tvoj račun in podatki so izbrisani. Hvala, da si uporabljal indeks." });
+  window.location.hash = "#/";
+  return true;
+}
+
+/* Ponovna potrditev pogojev: prijavljen uporabnik z drugo (ali nobeno) različico pogojev vidi samo ta zaslon. */
+function TermsGate({ user, onAccepted, onSignOut }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const had = !!(user && user.user_metadata && user.user_metadata.terms_version);
+  async function accept() {
+    setBusy(true); setErr("");
+    const { error } = await supabase.auth.updateUser({ data: { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString() } });
+    setBusy(false);
+    if (error) { setErr("Shranjevanje ni uspelo: " + error.message); return; }
+    onAccepted();
+  }
+  return (
+    <div className="ix-fade" style={{ maxWidth: 460, margin: "6vh auto 0" }}>
+      <div className="ix-card" style={{ padding: 24 }}>
+        <div className="ix-serif" style={{ fontWeight: 800, fontSize: 22, marginBottom: 8 }}>{had ? "Posodobili smo pogoje" : "Pogoji uporabe in zasebnost"}</div>
+        <div style={{ color: "var(--ink2)", fontSize: 14.5, lineHeight: 1.55 }}>
+          {had ? "Pogoje uporabe in politiko zasebnosti smo dopolnili" : "Pred nadaljevanjem potrdi pogoje uporabe in politiko zasebnosti"} (različica {termsDate(TERMS_VERSION)}). Na kratko: kaj vidijo drugi uporabniki (ime, slika, rezultati na lestvicah in v areni), kateri ponudniki hranijo podatke in kako račun izbrišeš sam v profilu. indeks. ni povezan z EF UL, vsebina pa je študijska pomoč brez jamstva za pravilnost.
+        </div>
+        <div style={{ display: "grid", gap: 6, margin: "14px 0 4px", fontSize: 14.5 }}>
+          <a href="#/pogoji" target="_blank" rel="noopener" style={linkBtn}>Preberi pogoje uporabe</a>
+          <a href="#/zasebnost" target="_blank" rel="noopener" style={linkBtn}>Preberi politiko zasebnosti</a>
+        </div>
+        {err && <div style={{ color: "var(--terra)", fontSize: 13, marginTop: 10 }}>{err}</div>}
+        <button onClick={accept} disabled={busy}
+          style={{ width: "100%", marginTop: 16, padding: "11px 13px", borderRadius: 10, border: "none", background: "var(--ink)", color: "var(--paper)", fontSize: 15, fontWeight: 700, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
+          {busy ? "Trenutek…" : "Sprejmem"}
+        </button>
+        <div style={{ marginTop: 14, display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap", fontSize: 13, color: "var(--ink2)" }}>
+          <button onClick={onSignOut} style={{ ...linkBtn, color: "var(--ink2)", fontWeight: 600 }}>Odjava</button>
+          <button onClick={() => deleteMyAccount(user)} style={{ ...linkBtn, color: "var(--ink2)", fontWeight: 600 }}>Ne strinjam se, izbriši račun</button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -446,7 +506,6 @@ function Login({ year, onBack, initialMode, notice }) {
   const [warned, setWarned] = useState("");
   const [terms, setTerms] = useState(false);
   const [marketing, setMarketing] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
   const [hint, setHint] = useState(false); // namig ob napačni prijavi: e-naslov namesto imena + pozabljeno geslo
   const switchMode = (m) => { setMode(m); setErr(""); setInfo(""); setFix(""); setHint(false); };
   const inputStyle = { width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)", fontSize: 15, outline: "none" };
@@ -556,12 +615,9 @@ function Login({ year, onBack, initialMode, notice }) {
               <label style={{ display: "flex", gap: 8, alignItems: "flex-start", cursor: "pointer" }}>
                 <input type="checkbox" checked={terms} onChange={(e) => setTerms(e.target.checked)} style={{ marginTop: 2 }} />
                 <span>Strinjam se s{" "}
-                  <button type="button" onClick={() => setShowTerms((v) => !v)}
-                    style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--terra)", fontWeight: 700, textDecoration: "underline", fontSize: 13 }}>
-                    pogoji uporabe in zasebnosti
-                  </button>.</span>
+                  <a href="#/pogoji" target="_blank" rel="noopener" style={linkBtn}>pogoji uporabe</a> in sem prebral{" "}
+                  <a href="#/zasebnost" target="_blank" rel="noopener" style={linkBtn}>politiko zasebnosti</a>.</span>
               </label>
-              {showTerms && <TermsBox />}
               <label style={{ display: "flex", gap: 8, alignItems: "flex-start", cursor: "pointer", marginTop: 8 }}>
                 <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} style={{ marginTop: 2 }} />
                 <span>Želim prejemati novosti in ponudbe indeks. na e-naslov (neobvezno, prekličem lahko kadarkoli).</span>
@@ -1008,6 +1064,13 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-notes .note-card{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--terra);border-radius:12px;padding:14px 16px;margin:12px 0;}
 .ix-notes ul{margin:6px 0;padding-left:20px;}
 .ix-notes li{margin:5px 0;}
+.ix-legal h2{font-size:19px;margin:24px 0 8px;}
+.ix-legal a{color:var(--terra);text-decoration:underline;text-underline-offset:2px;}
+.ix-legal-tbl{overflow-x:auto;margin:10px 0 14px;}
+.ix-legal table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.ix-notes.ix-legal th,.ix-notes.ix-legal td{text-align:left;vertical-align:top;padding:8px 10px;border:none;border-bottom:1px solid var(--line);background:none;}
+.ix-legal th{font-weight:700;color:var(--ink2);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;}
+@media (max-width:600px){.ix-legal thead{display:none;}.ix-legal tr{display:block;padding:8px 0;border-bottom:1px solid var(--line);}.ix-notes.ix-legal td{display:block;border:none;padding:2px 0;}.ix-legal td::before{content:attr(data-h);display:block;font-size:11.5px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em;}}
 .ix-notes p{margin:8px 0;color:var(--ink2);}
 .ix-notes .tip,.ix-notes .warn{margin-top:10px;padding:9px 12px;border-radius:9px;font-size:14px;background:var(--paper);border-left:3px solid var(--teal);}
 .ix-notes .warn{border-left-color:var(--red);}
@@ -1614,6 +1677,7 @@ function routeToHash(r, fallbackYear) {
   if (r.view === "allstats") return "#/letnik-" + yr + "/statistika";
   if (r.view === "profile") return "#/profil";
   if (r.view === "newpass") return "#/novo-geslo";
+  if (r.view === "legal") return "#/" + r.page;
   if (r.view === "duel") return "#/izziv/" + r.id;
   const base = "#/" + r.sem + "/" + r.subj;
   if (r.view === "subject") return base;
@@ -1635,6 +1699,7 @@ function hashToRoute(hash) {
   if (seg[0] === "novo-geslo") return { view: "newpass" };
   // povezava iz e-pošte, ki ni veljavna ali je potekla (#error=access_denied&error_code=otp_expired...)
   if (/^error(_code)?=/.test(seg[0])) return { view: "newpass", linkErr: true };
+  if (seg[0] === "pogoji" || seg[0] === "zasebnost") return { view: "legal", page: seg[0] };
   if (seg[0] === "izziv" && seg[1]) return { view: "duel", id: seg[1] };
   const sem = DATA.find((x) => x.id === seg[0]);
   const subj = sem && sem.subjects.find((x) => x.id === seg[1]);
@@ -1716,6 +1781,20 @@ export default function App() {
       if (!error && (!data || !data.username)) supabase.rpc("set_username", { p_username: meta.username }).then(() => {});
     });
   }, [userId]); // eslint-disable-line
+  // različica sprejetih pogojev: najprej iz seje, sicer sveže z računa (druga naprava je morda že potrdila); ob napaki omrežja ne zaklenemo
+  const [termsOk, setTermsOk] = useState(null);
+  useEffect(() => {
+    if (!userId) { setTermsOk(null); return; }
+    const meta = (session.user && session.user.user_metadata) || {};
+    if (meta.terms_version === TERMS_VERSION) { setTermsOk(true); return; }
+    let off = false; setTermsOk(null);
+    supabase.auth.getUser().then(({ data, error }) => {
+      if (off) return;
+      const v = data && data.user && data.user.user_metadata && data.user.user_metadata.terms_version;
+      setTermsOk(error ? true : v === TERMS_VERSION);
+    });
+    return () => { off = true; };
+  }, [userId]); // eslint-disable-line
   const { stats, record } = useCloudStats(userId || null);
   const comm = useCommunity(userId || null);
   const { soc, socErr, reload: reloadSocial } = useSocial(userId || null);
@@ -1763,9 +1842,11 @@ export default function App() {
             <button onClick={() => window.location.reload()} className="ix-btn" style={{ background: "var(--teal)", color: "#fff", border: "1px solid var(--teal)", padding: "8px 14px" }}>Osveži</button>
           </div>
         )}
-        {session && route.view !== "welcome" && <SocialBanner soc={soc} route={route} go={setRoute} reload={reloadSocial} />}
+        {session && termsOk && route.view !== "welcome" && route.view !== "legal" && <SocialBanner soc={soc} route={route} go={setRoute} reload={reloadSocial} />}
         {authLoading ? (
           <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
+        ) : route.view === "legal" ? (
+          <LegalView page={route.page} go={setRoute} user={session && session.user} />
         ) : route.view === "welcome" ? (
           <Welcome user={session && session.user} go={setRoute} />
         ) : route.view === "newpass" ? (
@@ -1774,6 +1855,10 @@ export default function App() {
                 notice="Povezava za novo geslo ni veljavna ali je potekla. Velja eno uro in deluje samo enkrat. Zahtevaj novo spodaj." />
         ) : !session ? (
           <Login year={route.view === "home" ? route.year : null} onBack={() => setRoute({ view: "welcome" })} />
+        ) : termsOk === null ? (
+          <div style={{ textAlign: "center", color: "var(--ink2)", padding: "18vh 0", fontSize: 15 }}>Nalagam…</div>
+        ) : !termsOk ? (
+          <TermsGate user={session.user} onAccepted={() => setTermsOk(true)} onSignOut={signOut} />
         ) : (
           <>
             {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} userId={userId || null} />}
@@ -1931,31 +2016,16 @@ function Welcome({ user, go }) {
 }
 
 function Footer() {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (!open) return;
-    const k = (e) => { if (e.key === "Escape") setOpen(false); };
-    window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k);
-  }, [open]);
-  const link = { background: "none", border: "none", padding: 0, cursor: "pointer", color: "inherit", font: "inherit", letterSpacing: "inherit", textDecoration: "underline", textUnderlineOffset: 3 };
+  const link = { color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 };
   return (
     <footer className="ix-chip" style={{ marginTop: 48, paddingTop: 16, borderTop: "1px solid var(--line)", display: "flex", flexWrap: "wrap", gap: "6px 14px", justifyContent: "space-between", textTransform: "none", letterSpacing: ".02em", fontWeight: 500 }}>
       <span>© {new Date().getFullYear()} indeks. · Leon Špiler. Vse pravice pridržane.</span>
       <span style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
-        <button type="button" onClick={() => setOpen(true)} style={link}>Pogoji uporabe in zasebnost</button>
-        <a href={"mailto:" + TERMS_CONTACT} style={{ ...link, textDecoration: "underline" }}>Kontakt</a>
+        <a href="#/pogoji" style={link}>Pogoji uporabe</a>
+        <a href="#/zasebnost" style={link}>Zasebnost</a>
+        <a href={"mailto:" + TERMS_CONTACT} style={link}>Kontakt</a>
         <span>Neuraden pripomoček, ni povezan z EF UL.</span>
       </span>
-      {open && (
-        <div role="dialog" aria-modal="true" aria-label="Pogoji uporabe in zasebnost" onClick={() => setOpen(false)}
-          style={{ position: "fixed", inset: 0, zIndex: 95, background: "rgba(0,0,0,.45)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-          <div className="ix-card ix-fade" onClick={(e) => e.stopPropagation()}
-            style={{ width: "100%", maxWidth: 560, maxHeight: "85vh", overflowY: "auto", padding: 16, textTransform: "none", letterSpacing: "normal", fontWeight: 400, background: "var(--paper2)" }}>
-            <TermsBox full />
-            <button type="button" onClick={() => setOpen(false)} className="ix-btn" style={{ marginTop: 12, marginLeft: "auto", display: "block", background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "9px 18px" }}>Zapri</button>
-          </div>
-        </div>
-      )}
     </footer>
   );
 }
@@ -4021,6 +4091,16 @@ function ProfileView({ user, soc, socErr, reload, go }) {
       </div>
       {!socErr && <LiveMatches userId={uid} go={go} />}
       {!socErr && <ArenaMeta userId={uid} go={go} />}
+      <div className="ix-card" style={{ padding: "16px 18px", marginTop: 18 }}>
+        <div className="ix-chip" style={{ marginBottom: 6 }}>Račun</div>
+        <div style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.55 }}>
+          Prijavljen kot <b style={{ color: "var(--ink)" }}>{user.email}</b>. E-naslova drugi uporabniki ne vidijo. Kaj hranimo in kdo kaj vidi: <a href="#/zasebnost" style={linkBtn}>politika zasebnosti</a> · <a href="#/pogoji" style={linkBtn}>pogoji uporabe</a>.
+        </div>
+        <button onClick={() => deleteMyAccount(user)} className="ix-btn"
+          style={{ marginTop: 12, background: "transparent", color: "var(--terra)", border: "1px solid var(--terra)", padding: "8px 14px", fontSize: 13.5 }}>
+          Izbriši račun
+        </button>
+      </div>
     </div>
   );
 }
