@@ -17,3 +17,12 @@
 Pozor: NotebookLM kljub nastavitvi slovenščine včasih zgenerira v srbščini (cirilični naslov). Pred prenosom preveri naslov; če je v cirilici, Regenerate.
 Prenos: Studio → posnetek → tri pike → Download. Brave odpre okno Shrani; Leon klikne Save (zadnja mapa = mapa predmeta EEU v School), nato datoteko premaknemo sem kot `0N-<ime>.m4a` in v `docs/podcast/eeu-k1/`.
 Viri: https://indeksapp.com/podcast-src/<datoteka> (brez osebnih podatkov, brez izpitnih vprašanj).
+
+## Ponovni posnetki z lastnimi primeri namesto nalog z vaj (21. 11. 2026 zvečer, vir commit 118cca0)
+| Ep | Vir | Zvezek | Stanje |
+|---|---|---|---|
+| 5 | 05-carine.md | https://notebooklm.google.com/notebook/386f673d-bc16-466d-a161-291342d5a12e | generira |
+| 4 | 04-prosta-trgovina.md | https://notebooklm.google.com/notebook/1c2a216e-ad48-437b-8e6a-2d2724c01901 | generira |
+| 6 | 06-preferencialna-liberalizacija.md | https://notebooklm.google.com/notebook/3aed9385-0619-4e2e-bfbd-2c1bd0dfcdeb | generira |
+| 3 | 03-primerjalne-prednosti.md | https://notebooklm.google.com/notebook/c456bf0b-101d-414f-b3c1-bafd13bafd68 | generira |
+| 2 | 02-vaje1-nastanek-EU.md (razlagalno, ne kviz) | https://notebooklm.google.com/notebook/f2c46639-11b7-412d-8e3e-7f46e09c212e | Generate later (limit) |
