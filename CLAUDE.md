@@ -3,7 +3,9 @@
 Velja za VSO novo in predelano vsebino: kvize, zapiske, kartice, slike in podcaste. Podlaga: dopis UL študentom o študijskih gradivih (https://arhiv.pf.uni-lj.si/media/dopis.za.studente.pdf), Izpitni pravilnik EF (16. 6. 2025, 34. člen) in ZASP (5., 9., 50., 51. in 101. člen). Pregled je bil narejen 20. 11. 2026. Cilj: do januarja 2027 je vsa vsebina lastna, ker je možna plačljiva verzija od 2. semestra.
 
 ## Dovoljeno
-- **Lastni zapiski:** povzetki, razlage in primeri z lastnimi besedami. Navedba vira (»prosojnica 24«, »vir: SURS«) je zaželena.
+- **Lastni zapiski:** povzetki, razlage in primeri z lastnimi besedami, urejeni po temah (ne po prosojnicah ali številkah predavanj). Javni viri (»vir: SURS«, Eurostat, zakon, avtor teorije) se navajajo.
+- **Brez pripisov internih virov v vsebini appa:** nobenih sklicev na prosojnice, strani PDF, imena datotek, številke predavanj in vaj (»P04«, »V04«, »Vaje 3, naloga 1«), Canvas, učbenik po straneh ali osebe (»profesor je rekel«, »asistent«, imena pedagogov). Velja za zapiske, kartice, vprašanja, razlage, slike (tudi besedilo v SVG in imena datotek), naslove epizod in besedila vmesnika. Zasebni `ZAPISKI.md` v mapi School lahko vire obdržijo; pretvorba jih odstrani (`letnik2-src/notes-sources.js`, `notes-fixes.js`), gradnja pa pade ob novem pripisu (`sources-lint.js`).
+- **Naloge z vaj in zgledi iz učbenika** so tuje delo, enako kot izpitna vprašanja: v kvizih, zapiskih in slikah jih nadomesti z lastnim primerom (nov scenarij, nove številke, na novo izračunana rešitev).
 - **Dejstva, ideje, načela, formule in letnice** (npr. EFTA 1960, Rimska pogodba 1957). Ti po 9. členu ZASP niso varovani, zato jih smeš uporabiti tudi, če so bili na izpitu.
 - **Lastni grafi in slike** (SVG iz `figures/`, lastne risbe). Javni podatki (SURS, Eurostat) z navedbo vira.
 - **Podcasti (NotebookLM)**, če so viri SAMO naši zapiski (`docs/podcast-src/*.md`) in ne prosojnice, PDF-ji predavanj ali izpiti.
