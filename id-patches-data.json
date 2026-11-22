@@ -1639,5 +1639,149 @@
   "id": "q1mftqvj",
   "explanation": "Fiskalni pakt omejuje strukturni primanjkljaj na 0,5 % BDP (1 % pri nizkem dolgu); 3 % je meja dejanskega primanjkljaja. Pravilo 1/20 izhaja iz fiskalnega pakta in šesterčka; reforma Pakta o stabilnosti in rasti leta 2024 ga je v pravilih EU nadomestila z minimalnim letnim zniževanjem dolga (1 o. t. nad 90 % BDP, 0,5 o. t. med 60 in 90 % BDP).",
   "why": "dopolnilo o reformi 2024"
+ },
+ {
+  "id": "q118xos9",
+  "options": [
+   "samo če je hkrati finančno in z vidika učinkov pomembna",
+   "samo če vpliva na denarne tokove podjetja",
+   "samo če je povezana z varstvom okolja",
+   "finančno ali z vidika učinkov na ljudi in okolje"
+  ],
+  "correct": 3,
+  "why": "napačna možnost je pomenila isto kot pravilna"
+ },
+ {
+  "id": "q12ahp6t",
+  "options": [
+   "Ker banka v drugem osemletju uporabi višjo obrestno mero za zveste vlagatelje",
+   "Ker se v prvih osmih letih obresti še ne pripisujejo h glavnici",
+   "Ker se obrestujejo tudi že pripisane obresti, rast je eksponentna",
+   "Ker je inflacija v drugem osemletju višja in jo banka upošteva"
+  ],
+  "correct": 2,
+  "why": "napačne možnosti so bile iz starega scenarija (5/10 let)"
+ },
+ {
+  "id": "q1ldcm03",
+  "explanation": "Operativni NOK = zaloge + terjatve do kupcev − poslovne obveznosti = 644,1 + 609,3 − 124,7 = 1.128,8 (razlika 0,1 nastane zaradi zaokroževanja postavk). (NOK = KS − KO = 1.482,6 vključuje tudi denar.)",
+  "why": "zaokroževanje"
+ },
+ {
+  "id": "q1cbmw8c",
+  "explanation": "NOPAT = 465,1 · (1 − 0,1861) = 378,5; 378,5 + 93,5 − 98,3 − 85,7 = 288,0.",
+  "why": "neskladje 378,6"
+ },
+ {
+  "id": "q1nvvzhh",
+  "explanation": "A/E = sredstva/LK pade (2,50 → 2,30), ker LK zraste za 576 (zadržani dobiček), obveznosti skupaj pa celo malo padejo (7.416 → 7.180).",
+  "why": "D = vse obveznosti"
+ },
+ {
+  "id": "q1hyzhwz",
+  "explanation": "A/E = (E + D)/E = <b>1 + D/E</b>, kjer je D = vse obveznosti.",
+  "why": "D = vse obveznosti"
+ },
+ {
+  "id": "q1s15nou",
+  "explanation": "Primer: posojilo vozila 20.000 €, 6 %, stroški 600 €, 5 let → 6,00 % navedena → 6,17 % mesečno → 7,52 % EOM. (Pri predmetu EOM = običajno samo učinek obrestovanja.)",
+  "why": "ročnost"
+ },
+ {
+  "id": "q19e58g4",
+  "explanation": "FV ne gre sama \"en korak naprej\": za stanje eno obdobje po zadnjem plačilu FV (ob zadnjem plačilu) pomnožimo z (1 + r). Vedno nariši časovnico.",
+  "why": "FV₁₅ ni v vprašanju"
+ },
+ {
+  "id": "q99usjj",
+  "explanation": "r = 3 + 0,82 · 5,5 = 7,51 %. Napaka 9,97 % = beta, pomnožena s celotno tržno donosnostjo rm = 8,5 % namesto s premijo (3 + 0,82 · 8,5).",
+  "why": "opis napake"
+ },
+ {
+  "id": "q1sdsbyw",
+  "explanation": "b = 1 − 0,69 = 0,31; g = 0,31 · 17,5 % ≈ 5,4 %.",
+  "why": "neskladje 0,311"
+ },
+ {
+  "id": "qujin6v",
+  "explanation": "Hitri koeficient = (gibljiva sredstva − zaloge)/kratkoročne obveznosti. Terjatev → denar pusti števec enak; nakup zalog z denarjem ga zniža. Plačilo dobavitelja z denarjem zmanjša števec in imenovalec za isti znesek, zato se koeficient spremeni (razen če je točno 1).",
+  "why": "dopolnilo"
+ },
+ {
+  "id": "q13bz7dd",
+  "options": [
+   "Neposredna (pražarna → porabnik), posredna ene ravni (pražarna → trgovina → porabnik) in dveh ravni (pražarna → veletrgovec → trgovina → porabnik)",
+   "Ekskluzivna (en posrednik na območju), selektivna (nekaj izbranih posrednikov) in intenzivna (čim več posrednikov) distribucija kave",
+   "Ustaljena tržna pot, navpični tržni sistem (korporacijski, pogodbeni, administrativni), vodoravni tržni sistem in kombinirana tržna pot",
+   "Fizična pot (prevoz in skladiščenje kave), informacijska pot (naročila in podatki o prodaji) in finančna pot (plačila pražarni)"
+  ],
+  "correct": 0,
+  "why": "ostanek scenarija s knjigami"
+ },
+ {
+  "id": "qgo3np2",
+  "explanation": "Družina je primarna članska skupina: posameznik ji pripada in je z njo v pogostem, neformalnem stiku. Želene referenčne skupine so tiste, ki jim posameznik šele želi pripadati.",
+  "why": "razlaga za obrnjeno trditev"
+ },
+ {
+  "id": "q7xp3z6",
+  "explanation": "Začne se s poslanstvom → strateške analize → trženjski cilji → strategije (STP + splet) → programi → finančne projekcije → spremljanje in nadzor.",
+  "why": "vrstni red"
+ },
+ {
+  "id": "qwblfny",
+  "explanation": "Jedro je korist - doživetje filma; dvorana in sedeži so del pričakovanega izdelka.",
+  "why": "ravni izdelka po predmetu"
+ },
+ {
+  "id": "q16yuv3",
+  "explanation": "40/4.000 = 1 % → P(Y > 36) = 0,01 → z = 2,33. σ = (36 − 30)/2,33 = 2,575 ≈ 2,58 minute (točni z = 2,3263: 2,579). (3,65 = z za 5 %, 0,39 = obrnjen ulomek.)",
+  "why": "sklic na drugo vprašanje"
+ },
+ {
+  "id": "qsk6hjx",
+  "explanation": "„4 odstotne točke“ bi bila absolutna natančnost - pri isti vrednosti je razlika v potrebnem n zelo velika (pri majhnem Π je relativna zahteva mnogo strožja).",
+  "why": "primer ni v vprašanju"
+ },
+ {
+  "id": "qkppoa7",
+  "explanation": "z = (45.000 − 50.000)/2.880 = −1,736; F_Z(−1,736) = 0,0413 → 4,13 % (iz tabele pri z = −1,74 ≈ 0,0409).",
+  "why": "zaokroževanje z"
+ },
+ {
+  "id": "q186o5of",
+  "explanation": "Absolutno: 0,1236 − 0,0413 = 0,0823 = 8,23 odstotne točke. Relativno: 0,0823/0,0413 ≈ +199 %. (0,1236 = F_Z(−1,157), z = −5.000/4.320; iz tabele pri z = −1,16 ≈ 0,1230.)",
+  "why": "zaokroževanje z"
+ },
+ {
+  "id": "qmcens4",
+  "explanation": "se = 320/√160 · √(1 − 160/2.400) = 25,30 · 0,9661 = 24,44; 1.250 ± 1,96 · 24,44 = 1.250 ± 47,903 → 1.202,097 do 1.297,903; meje zaokrožimo navzven. (Drugi intervali: brez popravka za končno populacijo, z = 2,58, z = 1,645.)",
+  "why": "natančnost"
+ },
+ {
+  "id": "q1q317mt",
+  "options": [
+   "Da: χ² = 11·20,99/25 = 9,24 < 19,68 (m = 11), H₀: σ ≤ 5 ne zavrnemo",
+   "Ne: χ² = 9,24 > 4,57, H₀ zavrnemo",
+   "Da: z = (500,4 − 500)/5 = 0,08 < 1,645",
+   "Ne moremo odločiti brez podatka o populacijski sredini"
+  ],
+  "correct": 0,
+  "why": "povprečje 6005/12 = 500,42"
+ },
+ {
+  "id": "q1bcyi47",
+  "explanation": "z = 36/15 = 2,4 > 1,96; p = 2 · P(Z > 2,4) = 0,0164. Povprečni čas nalaganja se značilno razlikuje od 800 ms. (z = 36/120 = 0,3 bi dobili z deljenjem s σ = 120 ms namesto s se.)",
+  "why": "σ"
+ },
+ {
+  "id": "q18zuyho",
+  "explanation": "ȳ_str = (600 · 6,5 + 400 · 9,0)/1.000 = 7.500/1.000 = 7,50. (7,75 je navadno povprečje stratumov, 8,00 zamenjane uteži, 1,50 = uteži iz vzorca n₁ = 120, n₂ = 80 namesto N_j.)",
+  "why": "n_j"
+ },
+ {
+  "id": "q1n12pc9",
+  "explanation": "Teza je enostranska (H₁: μ_d > 0), zato P = 0,061/2 = 0,031 < 0,05 → H₀ zavrnemo. Dvostranski 95 % interval vsebuje 0, enostranski preizkus pa ima ves α v enem repu, zato v pričakovani smeri H₀ zavrne.",
+  "why": "napačna utemeljitev"
  }
 ]

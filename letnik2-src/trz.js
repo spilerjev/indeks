@@ -211,7 +211,7 @@ const izpitPN = [
   withId('qzhtjs5', PN('Kultura in subkultura sodita med osebne dejavnike nakupnega vedenja.', false, 'Sodita med kulturne dejavnike; osebni so npr. starost, poklic, življenjski slog, osebnost.')),
   withId('q1lilaxv', PN('Strategija počasnega prodora pomeni nizko ceno in skromno komuniciranje.', true, 'Strategije uvajanja: hiter/počasen prodor (nizka cena), hitro/počasno posnemanje smetane (visoka cena).')),
   withId('q1tv2nzr', PN('Cena 49,90 € namesto 50 € je primer psihološkega določanja cen.', true, 'Cena tik pod okroglo številko deluje nižja, kot je.')),
-  withId('q1ncsr99', PN('Oglaševanje na družbenih omrežjih je primer interaktivnega trženja.', true, 'Interaktivno (digitalno) trženje vključuje splet, družbena omrežja in mobilno trženje.')),
+  withId('q1ncsr99', PN('Spletna stran, profili na družbenih omrežjih in mobilna aplikacija podjetja so orodja interaktivnega trženja.', true, 'Interaktivno (digitalno) trženje vključuje splet, družbena omrežja in mobilno trženje.')),
   withId('q1jf36ma', PN('Vsak član družine ima v nakupnem procesu natanko eno vlogo.', false, 'Ena oseba ima lahko več vlog (pobudnik, vplivnež, odločevalec, kupec, porabnik).')),
   withId('q1b72zga', PN('Minljivost storitev pomeni, da neizkoriščenega termina ni mogoče shraniti za pozneje.', true, 'Storitev ne moremo skladiščiti; prazen termin pri frizerju je izgubljen.')),
   withId('q12lu7py', PN('Proces nakupnega odločanja se konča s ponakupnim vedenjem.', true, 'Zadnja faza so ponakupni občutki (zadovoljstvo ali kognitivna disonanca), ne sam nakup.')),

@@ -259,7 +259,7 @@ const kartP04 = [
   ['Stratificirano vs. v skupinicah', 'Stratumi: homogeni znotraj → manjša se. Skupinice: raznolike znotraj, podobne med seboj; opazujemo vse enote izbranih skupinic.'],
   ['H₀ in H₁', 'Enačaj vedno v H₀; trditev, ki jo želimo dokazati, v H₁. H₀ ne sprejmemo, le ne zavrnemo.'],
   ['Napaki 1. in 2. vrste', '1. vrsta: zavrnemo pravo H₀ (α). 2. vrsta: ne zavrnemo napačne H₀ (β). Moč = 1 − β.'],
-  ['p-vrednost', 'Najmanjša α, pri kateri še zavrnemo H₀; p ≤ α → zavrnemo. Enostranski p = dvostranski p / 2.'],
+  ['p-vrednost', 'Najmanjša α, pri kateri še zavrnemo H₀; p ≤ α → zavrnemo. Enostranski p = dvostranski p / 2 (če je ocena na strani, ki jo napoveduje H₁; sicer p = 1 − dvostranski p / 2).'],
 ];
 
 // Zvočne razlage (NotebookLM iz lastnih zapiskov; docs/podcast/stana). sec = dolžina v sekundah.

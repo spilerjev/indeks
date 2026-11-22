@@ -587,4 +587,9 @@ module.exports = [
   {"part": "eeu/k1", "find": "(<em>EEA</em>)", "replace": "(angl. <em>EEA</em>)"},
   {"part": "eeu/k1", "find": "EGP (EEA),", "replace": "EGP (angl. EEA),"},
   {"part":"eeu/k1","find":"(Artis &amp; Lee 1997)","replace":"(Artis in Lee 1997)"},
+  // 23. 11. 2026: StAn po neodvisnem pregledu
+  {"part": "stana/k1", "find": "</li><li>\n<em>(dopolni)</em>\n</li></ul>\n<h2>Uvod", "replace": "</li></ul>\n<h2>Uvod"},
+  {"part": "stana/k1", "find": "Cobb–Douglas Q = cKᵃLᵇ (3 parametri): m = n − (št. parametrov) 🔎 (preveri).", "replace": "Cobb–Douglas Q = cKᵃLᵇ (3 ocenjeni parametri c, a, b): m = n − 3."},
+  {"part": "stana/k1", "find": "<h2>Delo v R: Posit Cloud</h2>", "replace": "<h2>Delo v R: Posit Cloud</h2>\n<p><em>(Ponazoritev z lastnimi podatki; ime datoteke in spremenljivke prilagodi svoji datoteki.)</em></p>"},
+  {"part":"stana/k1","find":"<h2>⚠️ Roki</h2>\n<ul><li>\n<b>1. preizkušnja: petek 13. 11. 2026 ob 15:00, priimki S–Ž pišejo v VELIKI DVORANI (VD)</b>. S seboj osebni dokument s sliko, Statistični priročnik, kalkulator, pisalo in korekturno sredstvo.\n</li><li>\n<b>1. preizkušnja: petek 13. 11. 2026 ob 15:00.</b> Prijava obvezna do <b>srede 11. 11. 2026 do 23:59</b>.\n</li><li>\nOblika: 15 vprašanj, 60 min, dovoljen Statistični priročnik + kalkulator (pregled tem spodaj).\n</li></ul>\n","replace":""},
 ];

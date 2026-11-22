@@ -8,10 +8,12 @@ function inline(s) {
   s = esc(s);
   s = s.replace(/`([^`]+)`/g, '<i>$1</i>');
   s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  s = s.replace(/\\\*/g, '\u0001');   // ubežna zvezdica \* (npr. p\*) ni oznaka poudarka
   s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
   s = s.replace(/(^|[^*\w])\*([^*\s][^*]*?)\*(?!\w)/g, '$1<em>$2</em>');
-  s = s.replace(/(^|\W)_([^_]+)_(?=\W|$)/g, '$1<em>$2</em>');
-  return s;
+  // _poudarek_ samo med besedami (ȳ_str, z_{α/2} so indeksi, ne poudarek): pred in za podčrtajem ni črke ali števke (tudi šumnikov)
+  s = s.replace(/(^|[^\p{L}\p{N}_\\])_([^_]+)_(?=[^\p{L}\p{N}_]|$)/gu, '$1<em>$2</em>');
+  return s.replace(/\u0001/g, '*');
 }
 
 /* Zasebnost: ZAPISKI.md so osebni zapiski, app pa berejo vsi. Pred pretvorbo:

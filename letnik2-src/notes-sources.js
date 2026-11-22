@@ -90,6 +90,7 @@ function scrubLabel(t) {
   let x = t;
   x = x.replace(/^\s*(?:(?:[PV]\d{1,2}|[Vv]aje\s*\d+)(?:\s*[+,]\s*(?:[PV]\d{1,2}|[Vv]aje\s*\d+))*)(?:\s*[,:]\s*|\s+(?=\S)|\s*$)/, '');
   x = x.replace(/,?\s*\b(?:izpitn\w*\s+)?(?:slik[ae]|prosojnic\w*|primer\w*|nalog[ae]|tabel[aei])\s+\d+(?:\.\d+)?(?:\s*[–-]\s*\d+)?\b/gi, '');
+  x = x.replace(/\s*\(\s*=?\s*na tabli\s*\)|,?\s*na tabli\b/gi, '');   // »(= na tabli)«
   x = x.replace(/\(\s*\)/g, '').replace(/\s+([:,;)])/g, '$1').replace(/^\s*[:,;]\s*/, '').trim();
   const m = /^\(([^()]*)\)$/.exec(x); if (m) x = m[1].trim();
   return x;
