@@ -9,4 +9,5 @@ const subj = data.flatMap((s) => s.subjects).find((x) => x.id === 'pravo');
 const qs = subj.parts.flatMap((p) => (p.decks || []).flatMap((d) => d.questions));
 const dir = path.join(__dirname, 'harden-pravo');
 for (const f of fs.readdirSync(dir).filter((f) => f.endsWith('.js')).sort()) applyHarden(qs, require(path.join(dir, f)), f);
+require('./id-patches').applyIdPatches(data);   // popravki po stalnem id (id-patches-data.json)
 fs.writeFileSync(DATA, JSON.stringify(data));

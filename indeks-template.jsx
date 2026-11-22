@@ -5828,9 +5828,14 @@ function processQuestion(q) {
     const _pool = shuffle(blanks.map((b) => b.val).concat((q.distractors || []).map(String)).map((val, idx) => ({ id: idx, val })));
     return { ...q, _blanks: blanks, _pool };
   }
-  // možnosti, ki se sklicujejo na druge možnosti (A in B, nič od naštetega, ...), obdržijo vrstni red
-  const refsOptions = q.fixedOrder || q.options.some((o) => /(\bvse\s+(od\s+)?(zgoraj|naštet\w*)|\bnič\s+od\s+naštet\w*|\b(nobeden|nobena|nobeno)\s+od\s+naštet\w*|\bvsi\s+našteti|\b[A-D]\s+in\s+[A-D]\b|\b[A-D]\s*,\s*[A-D]\b|odgovor\w*\s+[A-D]\b)/i.test(o));
+  // možnosti, ki se sklicujejo na druge možnosti z oznako (A in B, odgovor C), obdržijo ves vrstni red
+  const refsOptions = q.fixedOrder || q.options.some((o) => /(\b[A-D]\s+in\s+[A-D]\b|\b[A-D]\s*,\s*[A-D]\b|odgovor\w*\s+[A-D]\b)/.test(o));
   if (refsOptions) return { ...q };
-  const order = shuffle(q.options.map((_, idx) => idx));
+  // »nič/noben/vsi od naštetega/navedenih«, »pravilna rešitev ni navedena«: ostanejo na svojem mestu (običajno zadnje), ostale se premešajo
+  const META = /(\bvse\s+(od\s+)?(zgoraj|naštet\w*|navede\w*)|\bnič\s+od\s+(naštet|navede)\w*|\b(nobeden|noben|nobena|nobeno)\s+od\s+(naštet|navede)\w*|\bvsi\s+(našteti|navedeni)|pravilna\s+rešitev\s+ni\s+navedena)/i;
+  const fixed = q.options.map((o) => META.test(o));
+  const free = q.options.map((_, i) => i).filter((i) => !fixed[i]);
+  const mixed = shuffle(free.slice());
+  const order = q.options.map((_, i) => (fixed[i] ? i : mixed[free.indexOf(i)]));
   return { ...q, options: order.map((idx) => q.options[idx]), correct: order.indexOf(q.correct) };
 }

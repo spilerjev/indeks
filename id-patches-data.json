@@ -1,0 +1,1526 @@
+[
+ {
+  "id": "q1lce495",
+  "options": [
+   "Nastala je brez mednarodne pogodbe, s političnim dogovorom",
+   "Njene institucije sprejemajo zakonodajo z neposrednim učinkom",
+   "Njeno pravo velja šele po potrditvi v vsakem nacionalnem parlamentu",
+   "Odloča izključno s soglasjem vseh držav članic"
+  ],
+  "correct": 1,
+  "why": "Uravnotežena dolžina: napačna možnost »Njeno pravo velja šele po potrditvi v nacionalnem parlamentu« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qft0hat",
+  "options": [
+   "Neposredno ga izvolijo državljani EU na evropskih volitvah",
+   "Imenuje ga Svet (EU) s soglasjem vseh držav članic, potrdi pa ga še Evropski svet",
+   "Evropski svet ga s kvalificirano večino predlaga, potrdi ga Evropski parlament",
+   "Komisarji ga izvolijo med seboj z navadno večino, potrdi ga Sodišče EU"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »Imenuje ga Svet (EU) s soglasjem vseh držav članic, potrdi ga Evropski svet« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1wlm4j0",
+  "options": [
+   "Računsko sodišče izdaja zavezujoče sodbe, ECB pa samostojno vodi fiskalno politiko EU",
+   "Obe instituciji sta podrejeni Evropski komisiji",
+   "Člane Računskega sodišča imenuje vsaka država dosmrtno",
+   "Računsko sodišče nima sodnih pristojnosti; ECB vodi monetarno politiko"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Računsko sodišče izdaja zavezujoče sodbe, ECB vodi fiskalno politiko« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q188j3i7",
+  "options": [
+   "Prednost prava EU pred nacionalnim pravom držav članic",
+   "Odgovornost države za škodo, ki nastane zaradi neprenesene ali slabo prenesene direktive",
+   "Hierarhijo med primarnimi in sekundarnimi pravnimi viri",
+   "Ukrepanje EU na deljenih področjih le, če cilja ne dosežejo države"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Odgovornost države za škodo zaradi neprenesene direktive« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q5w3tee",
+  "options": [
+   "Lastnina, posest, imetništvo, najem, zakup in leasing",
+   "Lastnina, zastava, služnost, najem, zakup in posodba",
+   "Lastnina, zastava, služnost, stavbna pravica, stvarno breme",
+   "Lastnina, zastava, hipoteka, poroštvo, ara in pogodbena kazen"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »Lastnina, zastava, hipoteka, poroštvo, ara in kazen« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qapdwgn",
+  "options": [
+   "Samo s pravnim poslom, ki ga sklenejo pravno sposobne osebe",
+   "Samo z vpisom v zemljiško knjigo ali drug javni register",
+   "S pravnim poslom, dedovanjem, zakonom ali odločbo državnega organa",
+   "S posestjo, ki neprekinjeno in pošteno traja vsaj eno leto od pridobitve"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »S posestjo, ki neprekinjeno traja vsaj eno leto« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q219udn",
+  "options": [
+   "Sodna odločba o vpisu lastninske pravice, ki jo po uradni dolžnosti izda zemljiškoknjižno sodišče",
+   "Izrecna in nepogojna izjava prenosnika, da dovoljuje vpis; podpis mora biti notarsko overjen",
+   "Potrdilo davčnega organa, da je bil plačan davek na promet nepremičnin",
+   "Dovoljenje upravne enote, ki je pogoj za vpis stavbe v zemljiško knjigo"
+  ],
+  "correct": 1,
+  "why": "Uravnotežena dolžina: napačna možnost »Sodna odločba o vpisu lastninske pravice, ki jo izda zemljiškoknjižno sodišče« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qiecb68",
+  "options": [
+   "takoj, ko stvar najde in jo prijavi",
+   "nikoli, najdena stvar po roku pripade državi",
+   "po treh letih dobroverne posesti stvari, če jo najditelj uporablja",
+   "po letu dni od prijave, če nihče ne zahteva stvari"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »po treh letih dobroverne posesti stvari« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1ylqa5s",
+  "options": [
+   "Samo s prodajo ali podaritvijo stvari drugi osebi",
+   "Z opustitvijo, uničenjem stvari ali pridobitvijo drugega",
+   "Z desetletno neuporabo stvari s strani lastnika, ne glede na vrsto stvari",
+   "Samo s smrtjo lastnika, ki nima zakonitih dedičev"
+  ],
+  "correct": 1,
+  "why": "Uravnotežena dolžina: napačna možnost »Z desetletno neuporabo stvari s strani lastnika« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qozrp38",
+  "options": [
+   "Pri skupni lastnini so deleži računsko določeni, pri solastnini pa niso in lastniki odgovarjajo solidarno",
+   "Pri solastnini so deleži računsko določeni, pri skupni lastnini pa ne in lastniki odgovarjajo solidarno",
+   "Solastnina je mogoča samo na nepremičninah, skupna lastnina samo na premičninah",
+   "Obe sta enak institut, razlikujeta se le po tem, kdo ju uveljavlja pred sodiščem"
+  ],
+  "correct": 1,
+  "why": "Uravnotežena dolžina: napačna možnost »Pri skupni lastnini so deleži računsko določeni, pri solastnini pa lastniki odgovarjajo solidarno« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q199lyyg",
+  "options": [
+   "Dispozitivna velja samo v gospodarskem pravu, kogentna v civilnem",
+   "Kogentne norme zavezujejo samo državne organe, dispozitivne pa le zasebne pravne subjekte",
+   "Pri dispozitivni se stranke lahko dogovorijo drugače; kogentna velja prisilno",
+   "Razlike ni - obe veljata, dokler stranki ne sprejmeta drugačnega dogovora"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »Kogentne norme zavezujejo samo državne organe, dispozitivne zasebnike« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q17orsck",
+  "options": [
+   "Pogodba, enostranski posel, škoda, neupravičena pridobitev",
+   "Pogodba, dedovanje, priposestvovanje, najdba stvari ali vpis v register",
+   "Samo pogodba ali sodna odločba, ki jo nadomešča",
+   "Pogodba, zakon, priposestvovanje in vpis v register"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Pogodba, dedovanje, priposestvovanje, najdba stvari« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1t4ms9e",
+  "options": [
+   "Razpolagalni posel mora biti vedno v pisni obliki, zavezovalni pa je lahko tudi ustni",
+   "Zavezovalni posel sklene prodajalec, razpolagalnega pa kupec",
+   "Gre za dva izraza za isti posel, ki se razlikujeta le po zakonu",
+   "Zavezovalni ustvari obveznost, razpolagalni prenese pravico na upravičenca"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Razpolagalni mora biti vedno pisen, zavezovalni je lahko tudi ustni« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qy305z7",
+  "options": [
+   "Da, stranka pogajanj ne sme prekiniti brez soglasja druge",
+   "Da, če trajajo več kot mesec dni ali so bili stroški večji od 1.000 €",
+   "Ne, in odškodninska odgovornost zaradi odstopa od pogajanj ne nastane niti ob neupravičenem odstopu",
+   "Ne - vsaka stranka jih lahko prekine; odgovarja pa za škodo, če odstopi neupravičeno"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Ne, in odškodninska odgovornost zaradi odstopa od pogajanj nikoli ne nastane« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qn1nogl",
+  "options": [
+   "Ponudnik jo lahko brez posledic kadarkoli prekliče, tudi po prejemu sprejema",
+   "Ponudba brez roka veljavnosti je nična",
+   "Molk naslovnika vedno pomeni sprejem ponudbe",
+   "Zavezuje ponudnika; preklic mora priti pred ponudbo"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Ponudnik jo lahko kadarkoli prekliče do sprejema« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1gcfhlm",
+  "options": [
+   "Podpis obeh strank, notarska overitev in plačan davek",
+   "Pisna oblika, dve priči in podpis na isti listini",
+   "Sposobnost, soglasje volj, dopusten predmet, (predpisana) oblika",
+   "Sposobnost strank, pisna oblika in overitev podpisov pri notarju ali na sodišču"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »Sposobnost strank, pisna oblika in overitev pri notarju« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1u0r70h",
+  "options": [
+   "Zmota je zavestna obojestranska napaka, nesporazum enostranska, simulacija nezavedna",
+   "Vsi trije pojmi pomenijo prevaro, ki jo povzroči ena stranka",
+   "Zmota in nesporazum sta kaznivi dejanji, simulacija pa civilni delikt",
+   "Zmota: enostranska; nesporazum: obojestranski; simulacija: zavestno neskladje"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Zmota je zavestna napaka, nesporazum enostranska, simulacija obojestranska« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1v2jhpy",
+  "options": [
+   "Pogodba, zamuda, opomin in zamudne obresti",
+   "Nastanek škode, ne glede na vzrok, vzročno zvezo in morebitnega odgovornega",
+   "Naklep, pravnomočna obsodba in izrečena kazen",
+   "Škodljivo dejanje, škoda, vzročna zveza in odgovornost"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Nastanek škode, ne glede na vzrok in odgovornega« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qs3sxn6",
+  "options": [
+   "Upnik jo lahko zahteva samo do višine dejansko nastale in dokazane škode",
+   "Njeno višino po prostem preudarku določi sodišče",
+   "Dovoljena je samo v gospodarskih pogodbah med podjetji",
+   "Dogovorjen znesek za neizpolnitev ali zamudo; lahko presega škodo"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Upnik jo lahko zahteva samo do višine dejansko nastale škode« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q5k2ywe",
+  "options": [
+   "Patronatska izjava je strožja od poroštva, ker jo poda matična družba za hčerinsko",
+   "Poroštvo je lahko ustno, patronatska izjava mora biti pisna",
+   "Gre za isti institut z dvema imenoma, ki se razlikuje le po poroku",
+   "Poroštvo je pravna zaveza poroka, patronatska izjava je moralna zaveza"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Patronatska izjava je strožja od poroštva, ker jo poda matična družba« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q17td9m5",
+  "options": [
+   "Nemožnost izpolnitve vedno pomeni odškodninsko odgovornost dolžnika",
+   "Višja sila je vsaka sprememba tržnih cen, ki otežuje izpolnitev",
+   "Pri višji sili mora dolžnik pogodbo vseeno izpolniti, upnik pa mu mora dati primeren dodatni rok",
+   "Nemožnost ob sklenitvi: nična pogodba; zaradi višje sile obveznost preneha"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Pri višji sili mora dolžnik pogodbo vseeno izpolniti z dodatnim rokom« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qs1twai",
+  "options": [
+   "Splošnost na tipski dejanski stan, abstraktnost na krog naslovnikov",
+   "Obe se nanašata na sankcijo, ki jo pravilo določa za kršitev",
+   "Splošnost na subjekte (kdorkoli), abstraktnost na tipski dejanski stan",
+   "Splošnost na časovno veljavnost pravila, abstraktnost na njegovo krajevno veljavnost"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »Splošnost na časovno veljavnost, abstraktnost na krajevno veljavnost« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1i5xirw",
+  "options": [
+   "Če jo za ves zakon predvidi vlada in jo potrdi ustavno sodišče",
+   "Če jo terja javna korist, tudi kadar posega v pridobljene pravice naslovljencev",
+   "Če se z njo strinja večina naslovljencev zakona na referendumu",
+   "Za posamezne določbe, ob javni koristi in brez posega v pridobljene pravice"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Če jo terja javna korist, tudi kadar posega v pridobljene pravice« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qrc2fr6",
+  "options": [
+   "Državni zbor; z njimi lahko samostojno ureja pravice in dolžnosti pravnih subjektov",
+   "Posamezni minister; veljajo za področje njegovega ministrstva",
+   "Predsednik republike; potrdi jih Ustavno sodišče",
+   "Vlada; podrobneje izvaja zakon, ne sme posegati v pravice in dolžnosti"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Državni zbor; z njimi lahko ureja pravice in dolžnosti subjektov« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qkk6e0r",
+  "options": [
+   "Da, ustava je najvišji pravni akt v državi in ima vedno prednost pred uredbo",
+   "Da, a le če se z odločitvijo strinja vlada",
+   "Ne, uredba pa velja šele po potrditvi v Državnem zboru",
+   "Ne - primarnost prava EU; ob dvomu predhodno vprašanje Sodišču EU"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Da, ustava je najvišji akt in ima prednost pred uredbo« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1ekaern",
+  "options": [
+   "Ne, s prodajo nepremičnine hipoteka samodejno ugasne",
+   "Da, a le če novi lastnik Dragot pisno pristane na ohranitev hipoteke v korist banke",
+   "Da - hipoteka bremeni nepremičnino in sledi stvari tudi po prodaji",
+   "Ne, banka mora terjati Aleksa osebno, nepremičnine pa ne more"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »Da, a le če novi lastnik Dragot pisno pristane na ohranitev« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qo50mdb",
+  "options": [
+   "Ne - brez določene cene pogodba sploh ne nastane",
+   "Da, a le pri gospodarskih pogodbah med podjetji",
+   "Da - cena mora biti le določljiva, bistvena je določitev stvari",
+   "Ne - cena je vedno bistvena sestavina prodajne pogodbe in mora biti točno določena"
+  ],
+  "correct": 2,
+  "why": "Uravnotežena dolžina: napačna možnost »Ne - cena je vedno bistvena sestavina prodajne pogodbe« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q10iidy3",
+  "options": [
+   "Celoten znesek vseh vložkov vseh družbenikov",
+   "Vsaj polovica osnovnega kapitala, stvarni vložki pa šele po vpisu v register",
+   "Nič, vplača se šele po vpisu v sodni register",
+   "Vsaj 1/4 vložka vsakega, skupaj 7.500 EUR; stvarni v celoti"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Vsaj polovica osnovnega kapitala, stvarni vložki pozneje« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1bij66p",
+  "options": [
+   "Ne sme zaposlovati delavcev, dokler ne vplača celotnega OK",
+   "Osnovni kapital ni potreben, ker edini družbenik za obveznosti odgovarja neomejeno s svojim premoženjem",
+   "Družbenik ne more biti hkrati poslovodja družbe",
+   "Ustanovi se z aktom o ustanovitvi (enostranska izjava volje); OK 7.500 EUR"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Osnovni kapital ni potreben, ker ima družbenik neomejeno odgovornost« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qn1x2z7",
+  "options": [
+   "Družbeniki odgovarjajo deloma z vložkom, deloma pa osebno z vsem svojim premoženjem",
+   "Pogodbena svoboda osebnih družb in omejena odgovornost kot pri d.d.",
+   "Lahko izdaja delnice in obveznice na organiziranem trgu",
+   "Polovica družbenikov odgovarja, polovica ne, po dogovoru"
+  ],
+  "correct": 1,
+  "why": "Uravnotežena dolžina: napačna možnost »Družbeniki odgovarjajo deloma z vložkom, deloma osebno« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1wcfqb0",
+  "options": [
+   "7.500 EUR, ki mora biti vplačan v celoti pred vpisom",
+   "50.000 EUR, od tega mora biti vsaj polovica vplačana pred vpisom",
+   "25.000 EUR, pred vpisom pa ni treba vplačati ničesar",
+   "25.000 EUR; vsaj 25 % emisijskega zneska, stvarni v celoti"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »50.000 EUR, od tega vsaj polovica pred vpisom« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qwetjly",
+  "options": [
+   "Kosovne delnice so vedno vredne več kot nominalne delnice iste družbe",
+   "Nominalne delnice nimajo glasovalne pravice",
+   "Kosovne delnice se po vpisu ne smejo prodajati",
+   "Nominalne imajo znesek (vsaj 1 EUR), kosovne ga nimajo"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Kosovne delnice so vedno vredne več kot nominalne« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q58hfvx",
+  "options": [
+   "Da, če tako s sklepom odloči skupščina z navadno večino oddanih glasov",
+   "Da, po poteku petih let od vpisa družbe",
+   "Da, do višine 10 % osnovnega kapitala letno",
+   "Ne - trajnost kapitala; izplača se le bilančni dobiček"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Da, s sklepom skupščine z navadno večino glasov« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q5qu8ef",
+  "options": [
+   "Prednostne imajo več glasov na skupščini kot navadne, zato prevladajo pri odločanju",
+   "Navadne delnice ne dajejo pravice do dividende",
+   "Prednostne delnice lahko izdajajo samo državne družbe",
+   "Prednostne imajo dodatne prednosti, a brez glasovalne pravice"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Prednostne imajo več glasov na skupščini kot navadne« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qpa3ojf",
+  "options": [
+   "Holding je osebna družba, koncern pa je vedno kapitalska družba",
+   "Koncern je zaradi koncentracije prepovedan",
+   "Holding je vedno v državni lasti",
+   "Holding samo obvladuje; koncern ima še lastno dejavnost"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Holding je osebna družba, koncern pa kapitalska družba« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1mzx1mv",
+  "options": [
+   "Likvidacija razdeli premoženje družbenikom (upniki so poplačani), stečaj poplača upnike",
+   "Obe pomenita prenehanje družbe, razlika je le v tem, ali upravitelja imenuje sodišče ali skupščina",
+   "Stečaj vodi družba sama brez sodišča, likvidacijo pa vodi sodišče",
+   "Likvidacija je mogoča le pri osebnih družbah, stečaj le pri kapitalskih"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Obe pomenita prenehanje družbe, razlika je le v tem, kdo imenuje upravitelja« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qlfgoc4",
+  "options": [
+   "Sodišče na predlog družbe imenuje stečajnega upravitelja, ki proda premoženje in poplača upnike",
+   "AJPES po uradni dolžnosti izbriše družbo, upniki pa nato terjajo družbenike",
+   "Upniki skličejo zbor upnikov, ki prevzame vodenje družbe do poplačila",
+   "Sklep skupščine o prenehanju, firmi se doda \"v likvidaciji\", vodi jo likvidacijski upravitelj"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Sodišče imenuje stečajnega upravitelja, ki proda premoženje in poplača upnike« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qx2od60",
+  "options": [
+   "Na predlog katerega koli upnika, ki ima do družbe zapadlo in neplačano terjatev",
+   "Po desetih letih poslovanja, če ne spremeni statusa",
+   "Če ima družba več kot tri upnike z zapadlimi terjatvami",
+   "Če je prenehala poslovati, nima premoženja in je poravnala obveznosti"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Na predlog katerega koli upnika, ki ima zapadlo terjatev« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1opzh6j",
+  "options": [
+   "Verodostojna listina je močnejša in izvršbo omogoča brez sodišča, neposredno pri izvršitelju",
+   "Izvršilni naslov izda upnik sam, verodostojno listino pa sodišče",
+   "Razlike ni - obe listini imata enak pravni učinek in postopek",
+   "Izvršilni naslov je sodna odločba; verodostojna listina npr. račun ali menica"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Verodostojna listina je močnejša in izvršbo omogoča brez sodišča« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1fe3y7f",
+  "options": [
+   "Pravica avtorja, da prepove vsako nadaljnjo prodajo izvirnika",
+   "Pravica avtorja, da spremlja uporabo svojega dela na spletu",
+   "Pravica avtorja do brezplačnega vstopa na vse razstave in sejme, kjer so razstavljena njegova dela",
+   "Pravica do 3 % od cene ob nadaljnji prodaji izvirnika; je ni mogoče odpovedati"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Pravica avtorja do brezplačnega vstopa na razstave z njegovimi deli« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1l31hdo",
+  "options": [
+   "Vedno, kadar gre za študijske namene, v poljubnem številu",
+   "Do desetih primerkov, če jih uporablja podjetje v poslovne namene in navede ime avtorja",
+   "Nikoli brez dovoljenja avtorja in plačila nadomestila",
+   "V največ treh primerkih za zasebno ali lastno uporabo arhivov in knjižnic"
+  ],
+  "correct": 3,
+  "why": "Uravnotežena dolžina: napačna možnost »Do desetih primerkov, če jih uporablja podjetje v poslovne namene« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "ql7zivm",
+  "options": [
+   "Traja 20 let od prijave, brez možnosti podaljšanja",
+   "Traja 10 let, podaljšuje se; po 5 letih neuporabe lahko preneha",
+   "Nastane samodejno z uporabo znaka v gospodarskem prometu",
+   "Traja 10 let, podaljšati jo je mogoče le enkrat, in sicer za dodatnih 10 let"
+  ],
+  "correct": 1,
+  "why": "Uravnotežena dolžina: napačna možnost »Traja 10 let, podaljšati jo je mogoče le enkrat za 10 let« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1akuenw",
+  "options": [
+   "Nejasno določilo se razlaga v korist stranke, ki pogojev ni pripravila",
+   "Kupca zavezujejo tudi, če zanje ni vedel in jih ob sklenitvi pogodbe ni mogel poznati",
+   "Določilo, ki izniči namen pogodbe, velja, ker je del splošnih pogojev",
+   "Trgovec jih pripravi posebej za vsakega posameznega kupca"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Kupca zavezujejo tudi, če zanje ni vedel in jih ni mogel poznati« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1051igi",
+  "options": [
+   "Družba je lastnica svojega premoženja, ki je ločeno od premoženja delničarjev",
+   "Delniška družba sodi med osebne družbe, ker jo sestavljajo delničarji",
+   "Pridobivanje lastnih delnic je delniški družbi brez izjeme in v vsakem primeru prepovedano",
+   "V dvotirnem sistemu nadzorni svet skupaj z upravo vodi tekoče posle"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Pridobivanje lastnih delnic je delniški družbi brez izjeme prepovedano« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qnifaju",
+  "options": [
+   "Poravnavo lahko skleneta brez posebne oblike, pred notarjem ali pred sodiščem",
+   "Arbiter strankama le pomaga, da se sami dogovorita o rešitvi spora",
+   "Koncilator izda odločbo, ki je za obe stranki zavezujoča",
+   "Institucionalna arbitraža se ustanovi za en sam spor in po izdaji arbitražne odločbe preneha"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Institucionalna arbitraža se ustanovi za en spor in po njem preneha« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1lekyxi",
+  "options": [
+   "Evropski svet določa splošne politične usmeritve in prednostne cilje Unije",
+   "Evropski parlament je izvršilna in upravna institucija Unije",
+   "Evropsko sodišče za človekove pravice v Strasbourgu je osrednja sodna institucija EU",
+   "Evropska centralna banka revidira prihodke in odhodke Unije"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Evropsko sodišče za človekove pravice je sodna institucija EU« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qpfmpz7",
+  "options": [
+   "Na ničnost se je mogoče sklicevati kadar koli, ta pravica ne zastara",
+   "Postane veljavna, ko vzrok ničnosti pozneje odpade",
+   "Sodišče ničnost upošteva le, če jo v postopku pravočasno uveljavlja ena od pogodbenih strank",
+   "Pogodba v nasprotju s prisilnimi predpisi je le izpodbojna"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Sodišče ničnost upošteva le, če jo uveljavlja ena od strank« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1iwq6gb",
+  "options": [
+   "Družbenik d.n.o. ne more prenesti svojega deleža brez soglasja ostalih družbenikov",
+   "Nov družbenik d.n.o. odgovarja le za obveznosti družbe, ki so nastale po njegovem vstopu",
+   "V k.d. komanditist odgovarja neomejeno, komplementar pa do višine vložka",
+   "V dvojni družbi je komplementar fizična oseba, komanditist pa d.o.o."
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Nov družbenik d.n.o. odgovarja le za obveznosti, nastale po njegovem vstopu« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1l1bqir",
+  "options": [
+   "Delnicam s prednostjo pri dividendi je mogoče izključiti glasovalno pravico",
+   "Delnice ureja poseben Zakon o delnicah",
+   "Prednostne delnice lahko obsegajo največ 10 % osnovnega kapitala delniške družbe",
+   "Delnica je dolžniški vrednostni papir, ki prinaša obresti"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Prednostne delnice lahko obsegajo največ 10 % osnovnega kapitala« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1hszmd0",
+  "options": [
+   "Pravna oseba ne more biti avtor, lahko pa je imetnica materialnih avtorskih pravic",
+   "Pravica do prve objave je materialna avtorska pravica",
+   "Avtorska pravica traja, dokler se delo uporablja",
+   "Pri delu iz delovnega razmerja preidejo na delodajalca tudi vse moralne avtorske pravice"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Pri delu iz delovnega razmerja preidejo na delodajalca tudi moralne pravice« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qz2zf0z",
+  "options": [
+   "Za obveznosti družbe vedno odgovarja družba sama z vsem svojim premoženjem",
+   "Družbe se v Sloveniji ustanavljajo po koncesijskem sistemu",
+   "Ustanovitveni akt vseh družb je statut",
+   "Ustanovitelji lahko izberejo tudi poljubno obliko družbe, ki je zakon izrecno ne pozna"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Ustanovitelji lahko izberejo poljubno obliko družbe, ki je zakon ne pozna« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q105bnm9",
+  "options": [
+   "Odgovarja tudi za obveznosti družbe, ki so nastale pred njegovim vstopom",
+   "Odgovarja le za obveznosti, ki so nastale po vpisu njegovega vstopa v sodni register",
+   "Za obveznosti ne odgovarja, ker zanje odgovarja d.n.o. sama",
+   "Postane član obveznega nadzornega sveta d.n.o."
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Odgovarja le za obveznosti, nastale po vpisu njegovega vstopa« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1y746n1",
+  "options": [
+   "Je znamenje, da je pogodba sklenjena, in zagotovilo njene izpolnitve",
+   "Je cena za pravico odstopiti od pogodbe",
+   "Je le predujem na račun kupnine, ki nima nobenih drugih pravnih učinkov",
+   "Je pogoj, brez katerega pogodba ne nastane"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Je le predujem na račun kupnine, brez drugih učinkov« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qgikwjj",
+  "options": [
+   "Solidarno z glavnim dolžnikom, njegova obveznost je akcesorna",
+   "Subsidiarno - upnik mora najprej neuspešno terjati glavnega dolžnika",
+   "Samostojno in abstraktno, neodvisno od glavne obveznosti",
+   "Le, če to izrecno dovoli glavni dolžnik"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Subsidiarno - upnik mora najprej neuspešno terjati dolžnika« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q18xdhdp",
+  "options": [
+   "Ko je njegova lastninska pravica vpisana v zemljiško knjigo",
+   "Ko prevzame ključe in neposredno posest stanovanja od prodajalca",
+   "Ko notar overi podpise na pogodbi",
+   "Ko plača celotno kupnino"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Ko prevzame ključe in posest stanovanja« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q1ygwajp",
+  "options": [
+   "Plača, ne da bi presojala, ali je dolžnik temeljno pogodbo res kršil",
+   "Najprej preveri, ali je dolžnik temeljno pogodbo res kršil, in šele nato plača",
+   "Uveljavlja ugovore, ki jih ima dolžnik iz temeljnega posla",
+   "Plača šele, ko upravičenec dolžnika neuspešno izterja"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Najprej preveri, ali je dolžnik temeljno pogodbo res kršil« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qovs4re",
+  "options": [
+   "Dejanje nasprotuje dobrim poslovnim običajem in lahko škodi drugim na trgu",
+   "Dejanje nasprotuje osebni morali direktorja",
+   "Dejanje omejuje ustavno zagotovljeno svobodo gospodarske pobude drugih podjetij",
+   "Dejanje zmanjšuje uvoz blaga v državo"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Dejanje omejuje ustavno svobodo gospodarske pobude« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "q177ihbt",
+  "options": [
+   "Pogodba je razdrta po samem zakonu, razen če upnik takoj zahteva izpolnitev",
+   "Pogodba ostane v veljavi, slaščičar pa mora torto brez odlašanja dostaviti naslednji dan",
+   "Pogodba je nična od začetka",
+   "Upnik mora slaščičarju najprej dati dodatni rok"
+  ],
+  "correct": 0,
+  "why": "Uravnotežena dolžina: napačna možnost »Pogodba ostane v veljavi, torto je treba dostaviti naslednji dan« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
+ },
+ {
+  "id": "qscp9gr",
+  "options": [
+   "Kako podjetja in država določajo cene vseh dobrin na posameznih trgih",
+   "Kako posamezniki in družba razdeljujejo omejene dobrine med alternativne rabe",
+   "Kako družba razdeljuje dobrine, ki jih je v naravi na voljo neomejeno",
+   "Kako se denar in krediti razporejajo med banke, podjetja, gospodinjstva in državo"
+  ],
+  "correct": 1,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q1uqfby8",
+  "options": [
+   "So racionalni proizvajalci, ki maksimirajo dobiček iz najetih proizvodnih dejavnikov",
+   "So racionalni potrošniki in lastniki dejavnikov, ki maksimirajo koristnost",
+   "So pasivni porabniki, katerih odločitve določa država s cenami",
+   "So lastniki podjetij, ki minimirajo stroške proizvodnje dobrin"
+  ],
+  "correct": 1,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q2roi4s",
+  "options": [
+   "Mikro proučuje gospodarstvo kot celoto, makro pa posamezne trge, podjetja in osebke",
+   "Mikro proučuje le domača podjetja, makro pa mednarodno menjavo",
+   "Mikro proučuje kratki rok, makro pa dolgi rok iste ekonomske celote",
+   "Mikro proučuje posamezne osebke in dobrine, makro pa gospodarstvo kot celoto"
+  ],
+  "correct": 3,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "qy2kuzx",
+  "options": [
+   "Denarni izdatek, ki ga plačamo za nakup enote dobrine",
+   "Vsota vseh eksplicitnih in implicitnih stroškov proizvodnje",
+   "Količina dobrine, ki se ji moramo odpovedati za enoto druge dobrine",
+   "Strošek, ki nastane zaradi neizkoriščenih proizvodnih zmogljivosti podjetja"
+  ],
+  "correct": 2,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "qym6s01",
+  "options": [
+   "Malo velikih prodajalcev, homogeno blago, ovire za vstop v panogo",
+   "Veliko kupcev in prodajalcev, diferencirano blago, prost vstop in izstop iz panoge",
+   "Veliko kupcev in prodajalcev, homogeno blago, popolna mobilnost dejavnikov",
+   "En prodajalec, veliko kupcev, popolna informiranost o cenah"
+  ],
+  "correct": 2,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "qzjtlt3",
+  "options": [
+   "Višina cene, velikost podjetij in obseg državne regulacije",
+   "Število kupcev, cenovna elastičnost in dohodek potrošnikov",
+   "Število kupcev in prodajalcev, diferenciacija proizvodov, mobilnost",
+   "Proizvodna tehnologija, stroški dela in davčna obremenitev podjetij v panogi"
+  ],
+  "correct": 2,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "qn6bth8",
+  "options": [
+   "Vse kombinacije dobrin, ki potrošniku dajejo enako zadovoljstvo",
+   "Vse kombinacije dobrin, ki jih potrošnik lahko kupi z danim dohodkom",
+   "Vse kombinacije dobrin, ki jih podjetje lahko proizvede z danimi viri in tehnologijo",
+   "Kombinacijo dobrin, pri kateri je potrošnikova koristnost največja"
+  ],
+  "correct": 1,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q2wylvi",
+  "options": [
+   "Premica cene seka najvišjo indiferenčno krivuljo v dveh točkah: MRS > PH/PO",
+   "Potrošnik izbere kombinacijo z največ dobrine, ki je cenejša",
+   "Indiferenčna krivulja je vzporedna osi: MRS = 0 pri danih cenah",
+   "Premica cene je tangenta na najvišjo indiferenčno krivuljo: MRS = PH/PO"
+  ],
+  "correct": 3,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "qcj16ix",
+  "options": [
+   "Vsaka dodatna enota dobrine prinese več dodatnega zadovoljstva kot prejšnja",
+   "Z vsako dodatno enoto dobrine celotna koristnost pada",
+   "Vsaka dodatna enota dobrine prinese manj dodatnega zadovoljstva",
+   "Vsaka dodatna enota dobrine stane več kot prejšnja"
+  ],
+  "correct": 2,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q1ewe8rz",
+  "options": [
+   "Ekonomski dobiček je 0, cena pa je nad MC (mrtva izguba)",
+   "Ekonomski dobiček in mrtva izguba sta 0",
+   "Ekonomski dobiček je pozitiven, mrtve izgube in presežnih zmogljivosti ni",
+   "Ekonomski dobiček je pozitiven kot pri monopolu"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q16qdzkm",
+  "options": [
+   "Alfa ima dominantno strategijo N, Beta pa nima dominantne strategije.",
+   "Obe pivovarni imata dominantno strategijo O.",
+   "V ravnotežju nobena ne oglašuje.",
+   "Alfa nima dominantne strategije, Beta ima dominantno strategijo O."
+  ],
+  "correct": 3,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "qx9gvel",
+  "options": [
+   "Načrt, kako doseči cilj, z razporeditvijo virov, urnikom in nalogami",
+   "Želeno prihodnje stanje, ki ga organizacija poskuša doseči",
+   "Razlog, zaradi katerega organizacija sploh obstaja in deluje",
+   "Opis organizacije kot celote, kakršna naj bi postala v daljni prihodnosti"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q1ddsjdm",
+  "options": [
+   "Strateško planiranje - strateški (korporativni) cilji",
+   "Kratkoročno planiranje - strateški (korporativni) cilji",
+   "Srednjeročno planiranje - operativni cilji",
+   "Strateško planiranje - operativni cilji"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q15aa98h",
+  "options": [
+   "Motiviranje zaposlenih, da prostovoljno prevzemajo akcije k skupnim ciljem",
+   "Ustvarjalno, uspešno in učinkovito doseganje ciljev skozi štiri funkcije",
+   "Sistematični proces urejanja aktivnosti za doseganje planov, ciljev in standardov",
+   "Formalna in legitimna pravica managerja, da odloča in izdaja ukaze"
+  ],
+  "correct": 0,
+  "explanation": "Po Luthansu je vodenje motiviranje zaposlenih, da prostovoljno prevzemajo akcije za doseganje skupnih ciljev. Doseganje ciljev skozi štiri funkcije opisuje management, sistematično urejanje aktivnosti za doseganje planov in standardov organizacijsko kontrolo, formalna pravica odločanja in ukazovanja pa avtoriteto.",
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši; razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih); razlaga ne navaja več mesta odgovora, temveč njegovo vsebino; stara razlaga je napačno trdila, da je možnost o formalni pravici odločanja opredelitev kontrole - to je avtoriteta"
+ },
+ {
+  "id": "q1meeqb6",
+  "options": [
+   "Legitimno, prisilno in moč nagrajevanja",
+   "Ekspertno in referenčno moč",
+   "Referenčno moč, ekspertno moč in moč nagrajevanja",
+   "Ekspertno, legitimno in prisilno moč"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q123zoo",
+  "options": [
+   "Potrebe podrejenih in poslanstvo organizacije",
+   "Lastno napredovanje in ugled v organizaciji",
+   "Čim nižje stroške in strog nadzor dela",
+   "Interese lastnikov in čim višji kratkoročni dobiček podjetja"
+  ],
+  "correct": 0,
+  "explanation": "Uslužni vodja na prvo mesto postavlja potrebe podrejenih in poslanstvo organizacije, deli moč ter spodbuja participacijo in ustvarjalnost. Lastni ugled, strog nadzor ali kratkoročni dobiček lastnikov so nasprotje tega pristopa.",
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši; razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qdxdi94",
+  "options": [
+   "Vodenje v skladu z lastno osebnostjo, prepričanji in vrednotami",
+   "Vodenje po zgledu najuspešnejših in najbolj znanih vodij v svoji panogi",
+   "Vodenje, ki temelji predvsem na legitimni moči položaja",
+   "Vodenje, pri katerem vodja slepo služi skupini ljudi"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q8houbw",
+  "options": [
+   "Imamo fiksne in variabilne faktorje, zato ga imenujemo obdobje produkcije",
+   "Vsi faktorji so fiksni, zato se ponudba oblikuje le iz že obstoječih zalog proizvodov",
+   "Vsi faktorji so variabilni, zato ga imenujemo obdobje planiranja",
+   "Vsi faktorji so komplementarni, tehnični koeficienti so fiksni"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "qexxf9c",
+  "options": [
+   "Medsebojno se zamenjujejo, njihovi tehnični koeficienti so variabilni",
+   "Medsebojno se dopolnjujejo, zato so njihovi tehnični koeficienti fiksni",
+   "Medsebojno se zamenjujejo, njihovi tehnični koeficienti so fiksni",
+   "Vplivajo le na kakovost produkta, ne pa na njegovo velikost"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q52gk75",
+  "options": [
+   "Maksimalni možni produkt pri vsaki kombinaciji faktorjev z najboljšo tehnologijo",
+   "Povprečni produkt, ki ga podjetje doseže z obstoječo tehnologijo",
+   "Minimalne stroške, s katerimi podjetje proizvede dani obseg produkta",
+   "Vse kombinacije faktorjev, ki jih podjetje lahko kupi z danim proračunom pri danih cenah"
+  ],
+  "correct": 0,
+  "explanation": "Produkcijska funkcija = odnos med produktom in faktorji: največji možni produkt v enoti časa za vsako kombinacijo, ob najboljši razpoložljivi tehnologiji. Kombinacije faktorjev, ki jih podjetje lahko kupi z danim proračunom, opisuje izokosta, minimalni stroški za dani obseg pa so stroškovna funkcija.",
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši; razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q14g07k7",
+  "options": [
+   "Ob 1 % povečanju vseh faktorjev se produkt poveča za 1,3 % - naraščajoči donosi",
+   "Ob 1 % povečanju dela pri fiksnem kapitalu se produkt poveča za 1,3 %",
+   "Ob 1 % povečanju vseh faktorjev se produkt poveča le za 0,3 % - padajoči donosi",
+   "Ob povečanju vseh faktorjev za 1 enoto se produkt poveča za 1,3 enote"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q1whmhgl",
+  "options": [
+   "Stroški so višji od odhodkov, razlika se pokaže v zalogi proizvodov",
+   "Odhodki so višji od stroškov, ker vključujejo tudi zalogo",
+   "Stroški in odhodki so enaki, ker se oboji nanašajo na isto letošnjo proizvodnjo",
+   "Odhodki so enaki izdatkom za material, plačanim letos"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q17d9434",
+  "options": [
+   "Po prvini, ki jih povzroča: storitve, delo, material, delovna sredstva",
+   "Po odzivu na spremembo obsega proizvodnje: na fiksne in variabilne stroške",
+   "Po možnosti pripisa nosilcu: neposredni in posredni",
+   "Po mestu nastanka: proizvodnja, uprava, prodaja"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q125x2ce",
+  "options": [
+   "Stroški so večji od odhodkov, ker so odhodki le stroški prodanih izdelkov",
+   "Odhodki so večji od stroškov, ker vključujejo zaloge",
+   "Stroški in odhodki so enaki, ker gre za isto proizvodnjo v istem poslovnem letu",
+   "Izdatki so vedno enaki stroškom tega leta"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q1ssyoj3",
+  "options": [
+   "Rabat - odstotek od prodajne cene, ki jo določi proizvajalec",
+   "Marža - odstotek od nabavne cene, ki ga trgovina sama doda k nabavni ceni",
+   "Rabat - odstotek od nabavne cene",
+   "Čisti dobiček trgovine"
+  ],
+  "correct": 0,
+  "why": "podaljšan napačni odgovor (ostaja napačen), da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q3fva9q",
+  "options": [
+   "Letna amortizacija ostane enaka, amortizacija na enoto pa pade",
+   "Letna amortizacija se poveča sorazmerno z obsegom",
+   "Amortizacija na enoto ostane enaka, ker je metoda časovna",
+   "Amortizacija na enoto naraste, ker se stroj ob večjem obsegu hitreje obrablja"
+  ],
+  "correct": 0,
+  "why": "skrajšan pravilni odgovor (pomen enak) in podaljšan napačni, da pravilni ni več edini najdaljši"
+ },
+ {
+  "id": "q8oouh7",
+  "explanation": "Kulturni razkorak je razlika med kulturnimi normami, ki si jih podjetje želi, in tistimi, ki v njem dejansko veljajo. Simbolično vodenje pa pomeni, da vodja s simboli, zgodbami in obredi vpliva na kulturo, organizacijska klima pa opisuje trenutno vzdušje.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q8ht50v",
+  "explanation": "Kontingenčni plani vnaprej določijo, kako se odzvati na nepričakovane dogodke, kot sta upad prodaje ali odhod ključnih ljudi. Stalni plani usmerjajo redno ponavljajoče se naloge, taktični in strateški pa uresničevanje ciljev, ne odzivov na izredne razmere.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1d8cfyt",
+  "explanation": "Managerji običajno razvijejo od 2 do 5 scenarijev, od najbolj optimističnega do najbolj pesimističnega. En sam scenarij ne zajame negotovosti, deset ali več pa je preveč za smiselno pripravo odzivov.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q13gs100",
+  "explanation": "Subjektivni razlogi, kot sta slabo vodstvo in šibko trženje, izvirajo iz same organizacije, zato nanje lahko vpliva in naj vanje usmeri energijo. Objektivni, zunanji in makroekonomski razlogi, npr. recesija, naravne nesreče ali obrestne mere, so zunaj njenega nadzora.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1k8t9wr",
+  "explanation": "Organizacijska struktura določa, kako se razdelijo naloge in viri ter kako se oddelki med seboj usklajujejo - strategija pove, KAJ bomo delali, struktura pa, KAKO. Razlog obstoja organizacije je poslanstvo, deljene vrednote in norme pa so organizacijska kultura.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q4i0zya",
+  "explanation": "Vertikalna diferenciacija pove, koliko hierarhičnih ravni ima organizacija. Specializacija nalog je horizontalna diferenciacija, geografska razpršenost prostorska, število pisnih pravil pa formalizacija.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1y8x392",
+  "explanation": "Avtoriteta pripada položaju, ne osebi: kdor koli na istem položaju bi imel enako avtoriteto. Zato ni odvisna od značaja posameznika, sodelavci jo sprejemajo, ker jo priznavajo, in se širi z vrha hierarhije navzdol.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qvdr5li",
+  "explanation": "Pri opolnomočenju zaposleni dobijo znanje, informacije in veščine, da sami odločajo in za odločitve tudi odgovarjajo. Prenos naloge, ki ostane pod nadzorom šefa, je zgolj delegiranje, dodajanje podobnih nalog pa širjenje dela.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qxj08a9",
+  "explanation": "Reinženiring radikalno preoblikuje poslovne procese, da dosežemo večjo kakovost, nižje stroške in večjo hitrost, in običajno okrepi horizontalno koordinacijo. Benchmarking je le primerjava z najboljšimi, delegiranje pa prenos nalog na podrejene.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1fiqwmr",
+  "explanation": "Učinkovit sestanek potrebuje jasno agendo, vodjo, ki skrbi za vsebino in čas, ter obvladovanje konfliktov. Zapisnikar, projektor ali dolžina sestanka so postranski, sestanek brez vodje in z odprto temo pa je neučinkovit.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qwiyciv",
+  "explanation": "Po pravilu 8-18-1800 je skupina do 8 ljudi primerna za sprejemanje odločitev, do 18 za viharjenje možganov, 1800 in več pa za povezovanje in komuniciranje. Za končne odločitve je skupina 18 ljudi že prevelika.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qwriqqk",
+  "explanation": "Pri premortemu si udeleženci pred izvedbo predstavljajo, da je načrt že propadel, in opišejo, zakaj, s čimer odpravimo skupinsko razmišljanje in zatiranje dvomov. Analiza vzrokov po zaključku projekta je postmortem, ne premortem.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1si1opb",
+  "explanation": "Transakcijski vodja opravlja tradicionalno managersko funkcijo vodenja: pojasnjuje vloge, nagrajuje za opravljene naloge ter poudarja plane, urnike in predračune. Transformacijski in karizmatični vodja predvsem navdihujeta in spodbujata spremembe, uslužni pa služi podrejenim.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q9kq3ym",
+  "explanation": "Transformacijski vodja jasno definira vizijo, mobilizira zavezanost, institucionalizira kulturo sprememb in opolnomoči zaposlene. Centralizacija vseh odločitev je nasprotje opolnomočenja, zato ne sodi med njegova načela.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qeythl2",
+  "explanation": "Brocksmithov model vodje prihodnosti, razvit v sodelovanju s KPMG, opiše vodjo z 9 atributi, med njimi so vrednote, vizija, komunikacija in znanje. Goleman je znan po šestih stilih vodenja, ne po tem modelu.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q11rngfq",
+  "explanation": "Drucker poudarja, da je vodenje odgovornost, ne privilegij: vodja je zgled, ki ga drugi posnemajo. Vodenje zato ne izhaja zgolj iz položaja ali prirojene karizme.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q16j7yxp",
+  "explanation": "Sengeovih 5 disciplin učeče se organizacije so sistemsko mišljenje, osebno mojstrstvo, miselni modeli, skupna vizija in timsko učenje. Strateško planiranje je funkcija managementa, ne ena od teh disciplin.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q144xzz7",
+  "explanation": "Frustracija nastane, ko zadovoljitev motiva prepreči ovira zunaj človeka. Kadar je ovira v človeku samem, npr. v nasprotujočih si motivih, govorimo o konfliktu.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qpip4u2",
+  "explanation": "Po Herzbergu so motivatorji povezani z vsebino dela, npr. priznanje za dosežke, odgovornost in napredovanje, in povečujejo zadovoljstvo. Plača, delovni pogoji in odnosi z nadrejenim so higieniki: če manjkajo, povzročajo nezadovoljstvo, sami pa ne motivirajo.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q11qgri6",
+  "explanation": "McClellandova teorija pridobljenih potreb navaja potrebe po dosežkih, vključenosti (pripadnosti) in moči, ki se jih naučimo skozi izkušnje. Fiziološke potrebe in varnost so del Maslowove hierarhije, higieniki in motivatorji Herzbergove teorije, pričakovanje in valenca pa Vroomove.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1rx3uhr",
+  "explanation": "Valenca je vrednost oziroma privlačnost izida (nagrade) za posameznika. Verjetnost, da trud privede do dosežka, je pričakovanje, verjetnost, da dosežek prinese nagrado, instrumentalnost, primerjava vložkov in izidov z drugimi pa sodi v teorijo pravičnosti.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1gszffw",
+  "explanation": "Pet jedrnih dimenzij dela po Hackmanu in Oldhamu je raznovrstnost spretnosti, identiteta nalog, pomen nalog, avtonomnost in povratne informacije. Višina plače je zunanji dejavnik, ne značilnost samega dela.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1eoqz3r",
+  "explanation": "Organizacijska kontrola je sistematični proces urejanja aktivnosti, da so skladne s plani, cilji in standardi; sodobni trend je več zaupanja in samokontrole zaposlenih. Spremljanje posamezne aktivnosti je preozko, kaznovanje pa ni njen namen.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q8mj5ot",
+  "explanation": "Sprotna kontrola poteka med izvajanjem procesa, zato odstopanja popravimo takoj. Preliminarna kontrola poteka pred procesom, povratna pa po njem.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qvmig7s",
+  "explanation": "Demingov cikel PDCA pomeni plan, do, check, act (planiraj, izvedi, preveri, ukrepaj). Nenehno ponavljanje teh štirih korakov stalno izboljšuje proizvode in procese.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q8fgkox",
+  "explanation": "Slovensko Priznanje RS za poslovno odličnost temelji na evropskem modelu EFQM, ki uporablja logiko RADAR. Demingova nagrada je japonska, Malcolm Baldrige ameriška, ISO 9001 pa je standard sistema kakovosti, ne model odličnosti.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q15v8onr",
+  "explanation": "Uravnoteženi sistem kazalnikov sta leta 1992 razvila Kaplan in Norton kot odgovor na ozek, zgolj finančni pogled na uspešnost. Deming in Juran sta znana po managementu kakovosti, Miles in Snow pa po tipologiji strategij.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qb2cx9x",
+  "explanation": "Štirje vidiki BSC so finančna uspešnost, vidik odjemalcev (trženjski), interni poslovni procesi ter učenje in rast. Vidika konkurentov BSC kot samostojnega vidika ne vsebuje.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "q1lf4m9q",
+  "explanation": "Pri managementu odprtih knjig vsi zaposleni dobijo informacije o poslovanju celotne organizacije, zato razumejo, kako njihovo delo vpliva na rezultate, in se lahko kontrolirajo sami. Ne gre za javno objavo plač ali nadzor nad zaposlenimi.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qddegyz",
+  "explanation": "Negativna povratna informacija je psihološka grožnja, zato se ljudje pogosto ne izboljšajo, temveč poiščejo nove odnose z ljudmi, ki jih potrdijo. Takojšnje izboljšanje ali prošnja za še več kritike sta redka odziva.",
+  "why": "razširjena prekratka razlaga (zakaj je odgovor pravilen in v čem se loči od napačnih)"
+ },
+ {
+  "id": "qhjq199",
+  "explanation": "Zakon o padajočem donosu velja v kratkem roku, ko je en dejavnik stalen: po neki točki začne mejni proizvod spremenljivega dejavnika padati. Trditev o podvojitvi vseh dejavnikov opisuje padajoče DONOSE OBSEGA, ki veljajo v dolgem roku.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qy273u",
+  "explanation": "APL = Q/L = K^0,3 L^0,7 / L = K^0,3 L^−0,3 = (K/L)^0,3. Izraz 0,7 · (K/L)^0,3 je mejni proizvod dela MPL (0,7 · APL), izraz 0,3 · (L/K)^0,7 pa mejni proizvod kapitala MPK.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qe2i4lr",
+  "explanation": "Q = 81^0,25 · 16^0,75 = 3 · 8 = 24. APL = Q/L = 24/16 = 1,5. MPL = 0,75 · Q/L = 1,125. Rezultat MPL = 0,375 napačno uporabi eksponent kapitala (0,25), par 24 in 18 pozabi deliti z L, par APL = 1,125; MPL = 1,5 pa vrednosti zamenja.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q1n54zxb",
+  "explanation": "MPL = ∂Q/∂L = 3 · ½ · K^⅓ · L^−½ = 1,5 K^⅓ L^−½. Izraz K^−⅔ · L^½ je mejni proizvod kapitala MPK, ki ga dobimo z odvodom po K.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qoonrn3",
+  "explanation": "Pet dimenzij sodobnega okolja managementa: digitalizacija, ekologija, varnost, zdravje in individualnost (npr. GDPR in varstvo osebnih podatkov). Tehnološki, demografski in politični dejavniki ter kupci, dobavitelji in konkurenti so dejavniki splošnega oziroma delovnega okolja, planiranje, organiziranje in kontroliranje pa funkcije managementa.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q116ba4d",
+  "explanation": "q′(p) = −1/(2√p). E = (p/q)·q′ = p/(9 − √p) · (−1/(2√p)) = −√p/(2(9 − √p)). Izraz −1/(2√p) je le odvod q′ brez množenja s p/q, izraz −√p/(9 − √p) pa pozabi faktor ½.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qid843r",
+  "explanation": "Ničli: ln x = 0 → x = 1 in x − 4 = 0 → x = 4; med njima je f < 0. Per partes (u = ln x, dv = (x − 4) dx, v = x²/2 − 4x): ∫₁⁴ f dx = −8 ln 4 − [x²/4 − 4x]₁⁴ = 33/4 − 16 ln 2 ≈ −2,84, ploščina je absolutna vrednost. Rezultat 33/4 − 16·ln 2 ≈ −2,84 pozabi absolutno vrednost, 8·ln 4 pa upošteva le robni člen.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qaj7j3m",
+  "explanation": "det A = −1 ≠ 0, zato je matrika obrnljiva. Gauss-Jordan: [A | E] → [E | A⁻¹]. Preverba: A·A⁻¹ = E. Matrika [[10,−7,5],[−4,3,−2],[−1,1,−1]] je transponirani inverz, matrika [[−10,4,1],[7,−3,−1],[−5,2,1]] pa inverz z nasprotnim predznakom.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q1sfwshh",
+  "explanation": "Popolna verjetnost: P(X = k) = ½·P(k | 2 kroglici) + ½·P(k | 3 kroglice), hipergeometrijsko npr. P(X = 0) = ½·C(4,2)/C(6,2) + ½·C(4,3)/C(6,3) = 3/10. E = 5/6. Shema z E(X) = 2/3 upošteva le žrebanje 2 kroglic (cifra), shema z P(1) = 3/5 in E(X) = 1 pa le žrebanje 3 kroglic (grb).",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qrzaio7",
+  "explanation": "Iz teorije iger: vsak izbere najboljše glede na pričakovano izbiro drugega, oba pa končata slabše. Uživanje javne dobrine brez plačila je zastonjkarstvo, neučinkovitost vladnih ukrepov, ker jih ljudje vnaprej predvidijo, pa opisuje racionalna pričakovanja.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q1jirtyx",
+  "explanation": "Pri racionalnih pričakovanjih in prožnih cenah ljudje pričakovane ukrepe vlade vnaprej upoštevajo, zato ti ne vplivajo na realni BDP - \"vlada ne more vleči ljudi za nos\". Oblikovanje pričakovanj le na podlagi pretekle inflacije opisuje prilagodljiva (adaptivna) pričakovanja, ne racionalnih.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino; preverjeno: shranjeni pravilni odgovor (pričakovani ukrepi ne vplivajo na realni BDP) je vsebinsko pravilen, correct ostane nespremenjen"
+ },
+ {
+  "id": "q12p36xn",
+  "explanation": "Dolžniki vračajo realno manj vreden denar, zato nepričakovana inflacija prerazdeli premoženje od upnikov k dolžnikom. Anticipirana inflacija je vključena v obrestne mere in pogodbe, zato malo vpliva. Enakomerna rast vseh cen ob nespremenjenih relativnih cenah opisuje ravnovesno inflacijo.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q1kooxrt",
+  "explanation": "M → obrestna mera → naložbe → AD → BDP in cene. Samodejno uravnavanje plačilne bilance prek mednarodnih tokov zlata je Humov mehanizem, ne transmisijski mehanizem denarne politike.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qw4w4lj",
+  "explanation": "LAN pokriva eno ali nekaj stavb, lastnik omrežja je tudi lastnik medija, zato je hitro in poceni. Pokritost mesta ali regije z zakupljenimi povezavami opisuje WAN, omrežje omrežij po TCP/IP internet, šifrirana povezava prek javnega omrežja pa VPN.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q10p9k0z",
+  "explanation": "Trinivojska arhitektura ima ločene ravni: predstavitveno, poslovnih pravil in podatkovno. Kopija programa pri vsakem uporabniku in podatki na strežniku opisujejo dvonivojsko arhitekturo. Primer: prijava na izpit - vnos (predstavitev), preverjanje roka (poslovna pravila), zapis (podatki).",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q15qtmuj",
+  "explanation": "Analiza nakupne košarice išče povezave med prodajo različnih izdelkov (kaj se kupuje skupaj). Določanje skupin kupcev je segmentacija, spodbujanje ponovnih nakupov aktiviranje kupca, spremljanje poti po spletnem mestu pa spletno rudarjenje.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q1y1v2vr",
+  "explanation": "Skupinsko nakupovanje združi kupce enakih izdelkov, da zaradi večje količine kupijo ceneje. Iskanje najnižje cene na spletu je model \"poišči najboljšo ceno\", predlaganje lastne cene model \"imenuj svojo ceno\", prilagajanje izdelka posameznemu kupcu pa množično prilagajanje.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q1ksio0",
+  "explanation": "Stopnja zanesljivosti = število točnih / število vseh informacij. Nezanesljivost je posledica napačnega delovanja IS. Čas od spremembe v realnosti do zapisa v bazo podatkov meri pravočasnost, čas od zahteve do pridobitve informacije pa dostopnost (odzivnost).",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q1gonoq7",
+  "explanation": "se(ȳ) = 5,71/√80 = 0,638; t₀,₀₂₅(79) ≈ 1,99 → 12,19 ± 1,27. Interval 1,0 < μ < 23,4 uporabi standardni odklon namesto standardne napake, zato velja za posamezno trgovino, ne za povprečje.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "q8wd5kb",
+  "explanation": "Paradigme: trženje izdelkov, čustveno trženje, podatkovno usmerjeno trženje, digitalno in družabno trženje ter kvantno trženje (napredne tehnologije, ogromne količine podatkov, umetna inteligenca), v katero prehajamo. Zaporedje proizvodna, izdelčna, prodajna, trženjska, družbena našteva usmeritve podjetja na trg, ne paradigem trženja.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qnow7y",
+  "explanation": "Kakovost, stroški, fleksibilnost in dobava so konkurenčne prednostne naloge izdelavne funkcije. Zmogljivost, lokacija, tehnologija in organizacija so vzvodi, s katerimi jih dosežemo, cena, promocija, distribucija in izdelek pa so trženjski splet.",
+  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+ },
+ {
+  "id": "qmnohb5",
+  "explanation": "Bistveni sestavini prodajne pogodbe sta stvar in cena: cena mora biti vsaj določljiva (npr. po tržni ceni ali ceniku), ni pa nujno, da je vnaprej natančno določena. Prodajalec se zavezuje stvar izročiti tako, da kupec pridobi lastninsko pravico, kupec pa plačati kupnino. Če kupnine ni, je to darilna pogodba; če je namesto kupnine druga stvar, menjalna pogodba.",
+  "why": "razlaga je trdila, da cena ni bistvena sestavina, kar nasprotuje pravilnemu odgovoru"
+ },
+ {
+  "id": "q183hcto",
+  "options": [
+   "125 %",
+   "12,5 %",
+   "20 %",
+   "1,25 %",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Indeks 125 pomeni, da je vrednost v a enaka 125 % vrednosti v b, torej je v a 125 - 100 = 25 % več kot v b. Pravilnega rezultata 25 % ni med navedenimi. Vrednost 20 % dobimo, če razliko 25 napačno delimo s 125 namesto s 100 - to je odstotek, za koliko je v b manj kot v a.",
+  "why": "indeks 125: 25 % zamenjan z 20 % (napačna osnova)"
+ },
+ {
+  "id": "qhy111l",
+  "options": [
+   "80 %",
+   "8 %",
+   "25 %",
+   "0,80 %",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Indeks 80 pomeni, da je vrednost v a enaka 80 % vrednosti v b, torej je v a 100 - 80 = 20 % manj kot v b. Pravilnega rezultata 20 % ni med navedenimi. Vrednost 25 % dobimo, če razliko 20 napačno delimo z 80 namesto s 100 - to je odstotek, za koliko je v b več kot v a.",
+  "why": "indeks 80: 20 % zamenjan s 25 % (napačna osnova)"
+ },
+ {
+  "id": "qc4ohvx",
+  "options": [
+   "Sklenitve zakonskih zvez v letu 2024",
+   "Rojeni v SLO v prvem polletju 2024",
+   "Umrli za covidom v letu 2023",
+   "Priseljeni v SLO v letu 2024",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Trenutna (momentna) množica je opredeljena za točno določen trenutek, npr. stanje prebivalstva na izbrani dan. Vse štiri navedene množice (sklenitve zakonskih zvez, rojeni, umrli in priseljeni v določenem obdobju) pa so opredeljene z obdobjem, zato so razmične (intervalne). Trenutne množice med njimi ni.",
+  "why": "momentna množica zamenjana z razmično (priseljeni v letu)"
+ },
+ {
+  "id": "q1hmwx44",
+  "options": [
+   "Nevtralnost in objektivnost",
+   "Strokovna neodvisnost",
+   "Statistična zaupnost",
+   "Racionalnost in preglednost",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Vse štiri navedene postavke so načela slovenske državne statistike: nevtralnost in objektivnost, strokovna neodvisnost, statistična zaupnost ter racionalnost in preglednost. Postavke, ki NI načelo, zato med njimi ni. Načelo ni na primer pridobitnost oz. tržna usmerjenost.",
+  "why": "edino nenačelo zamenjano s pravim načelom"
+ },
+ {
+  "id": "q14rvs0u",
+  "options": [
+   "qt / qo × 100",
+   "Pt × qt / Po × qo × 100",
+   "po / pt × 100",
+   "(pt + po) / 2 × 100",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Enostavni indeks cen = pt / po × 100, kjer je pt cena v tekočem in po cena v baznem obdobju. Te formule ni med navedenimi. Zapis po / pt × 100 ima zamenjana števec in imenovalec, qt / qo × 100 je enostavni količinski indeks, izraz s produkti cen in količin pa je indeks vrednosti.",
+  "why": "pt/po zamenjan z obrnjenim ulomkom po/pt"
+ },
+ {
+  "id": "qoe8bi",
+  "options": [
+   "Z deljenjem zadnjega člena z baznim letom",
+   "S seštevanjem verižnih indeksov",
+   "Z računanjem aritmetične sredine vseh členov",
+   "Z deljenjem zadnjega člena z vsoto vseh členov",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Spremembo pojava v celotnem obdobju dobimo s kumulativnim (zaporednim) množenjem verižnih indeksov, npr. 110 × 105 / 100 = 115,5. Tega postopka ni med navedenimi. Seštevanje je tipična napaka: relativne spremembe se ne seštevajo (10 % + 5 % = 15 %), ampak množijo (skupaj 15,5 %).",
+  "why": "kumulativno množenje zamenjano s seštevanjem"
+ },
+ {
+  "id": "qudlyte",
+  "options": [
+   "IV = IᴾL × IQL / 100",
+   "IV = IᴾL × IᴾP / 100",
+   "IV = IᴾP × IQP / 100",
+   "IV = IᴾL + IQP − 100",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "Pravilni relaciji sta IV = IᴾL × IQP / 100 in IV = IᴾP × IQL / 100: cenovni in količinski indeks se vedno sparita navzkriž (Laspeyres s Paaschejem). Nobene od njiju ni med navedenimi. Zmnožek dveh cenovnih indeksov (IᴾL × IᴾP) je tipična napaka, saj v njem sploh ni količinske spremembe.",
+  "why": "IpL×IQP zamenjan z IpL×IpP"
+ },
+ {
+  "id": "q17n79kr",
+  "options": [
+   "Ko je IᴾL = IᴾP (enaka vrednost)",
+   "Ko je IᴾL < IᴾP (Paasche višji)",
+   "Ko je indeks vrednosti manjši od 100",
+   "Ko je indeks vrednosti večji od 100",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "Strukturni premiki so zavrli rast cen, ko je Laspeyresov indeks cen večji od Paaschejevega (IᴾL > IᴾP): v tekočem obdobju se je relativno povečal nakup cenejših vrst blaga, zato tekoče uteži dajo nižji rezultat. Tega pogoja ni med navedenimi. Indeks vrednosti, manjši ali večji od 100, o strukturnih premikih ne pove ničesar.",
+  "why": "IpL>IpP zamenjan z IV<100"
+ },
+ {
+  "id": "qz1rovj",
+  "options": [
+   "Skupna vrednost je narasla za 95 %",
+   "Količine so padle za 5 %",
+   "Skupna vrednost je narasla za 5 %",
+   "Cene so padle za 5 %",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "IV = 95 pomeni, da je tekoča skupna vrednost (Σq₁p₁) enaka 95 % bazne (Σq₀p₀), torej se je skupna vrednost zmanjšala za 5 %. Te razlage ni med navedenimi. Indeks vrednosti združuje vpliv cen in količin, zato iz njega ne moremo sklepati, da so padle samo cene ali samo količine.",
+  "why": "padec vrednosti za 5 % zamenjan s padcem količin"
+ },
+ {
+  "id": "qxt6ajh",
+  "options": [
+   "a + b",
+   "a + c",
+   "b + c + d",
+   "a + d",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "Realno 2023 = 4.769/122×100 = <b>3.909</b> (a ✓). Nominalno 3.840 (2022) < 4.766 (2021) → padec (b ✓). Realno 3.909 (2023) < 4.454 (2021) → <b>ni</b> presegel (c ✗). Bazni indeks 4.769/3.756×100 = <b>126,97 ≈ 127</b> (d ✓). Pravilna kombinacija je <b>a + b + d</b>, ki je ni med navedenimi. Kombinacija a + d izpusti trditev b, kar se zgodi, če leto 2022 primerjamo z 2020 (3.840 > 3.756) namesto z 2021.",
+  "why": "a+b+d zamenjana z a+d"
+ },
+ {
+  "id": "q1lsvir0",
+  "options": [
+   "a",
+   "a + b + d",
+   "a + b + c",
+   "b + c + d",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "Σ(q₀p₀)=6000+6000=<b>12000</b>; Σ(q₀p₁)=6600+6600=<b>13200</b>; Σ(q₁p₀)=7500+4000=<b>11500</b>; Σ(q₁p₁)=8250+4400=<b>12650</b>. IᴾL=13200/12000×100=<b>110</b> (a ✓). IQL=11500/12000×100=<b>95,8</b> (b ✓). IᴾP=12650/11500×100=<b>110</b> → ni večji od IᴾL (c ✗). IV=12650/12000×100=<b>105,4</b> > 100 → vrednost je zrasla (d ✗). Pravilna kombinacija je <b>a + b</b>, ki je ni med navedenimi. Kombinacija a + b + d nastane, če to, da je IV manjši od IᴾL, napačno razumemo kot padec vrednosti.",
+  "why": "a+b zamenjana z a+b+d"
+ },
+ {
+  "id": "q1r5dr40",
+  "options": [
+   "3",
+   "9",
+   "5",
+   "2",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "LEVED je vsaka dejansko obstoječa kombinacija lokacija-šifra dejavnosti: Brnik 62.10, Lesce 62.20, Portorož 62.20 in Portorož 63.30, torej 4 LEVED. Pravilnega rezultata 4 ni med navedenimi. Vrednost 9 dobimo, če napačno zmnožimo 3 lokacije s 3 šiframi, kot da bi se vsaka dejavnost izvajala na vsaki lokaciji.",
+  "why": "4 LEVED zamenjano z 9 (lokacije × šifre)"
+ },
+ {
+  "id": "qmf0h7x",
+  "options": [
+   "1 podjetje + 1 lokalna enota + 2 EED + 4 LEVED = 8 enot",
+   "1 podjetje + 1 lokalna enota + 2 EED + 2 LEVED = 5 enot",
+   "1 podjetje + 2 lokalni enoti + 2 EED + 2 LEVED = 7 enot",
+   "1 podjetje + 1 lokalna enota + 1 EED + 2 LEVED = 5 enot",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Na eni lokaciji z dvema dejavnostma določimo 1 podjetje, 1 lokalno enoto, 2 EED in 2 LEVED (1 lokacija × 2 dejavnosti), skupaj 6 enot. Te kombinacije ni med navedenimi: tista z enako sestavo ima napačno seštet rezultat 5, kombinacija s 4 LEVED pa nastane, če napačno zmnožimo število EED s številom dejavnosti (2 × 2) namesto števila lokacij s številom dejavnosti (1 × 2).",
+  "why": "6 enot zamenjano z 8 (4 LEVED)"
+ },
+ {
+  "id": "q1t2t4",
+  "options": [
+   "SP = živorojeni − umrli",
+   "SP = priseljeni − odseljeni",
+   "SP = (živorojeni + priseljeni) − umrli",
+   "SP = (živorojeni + odseljeni) − (umrli + priseljeni)",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "SP = NP + SS = (živorojeni - umrli) + (priseljeni - odseljeni). Te formule ni med navedenimi: živorojeni - umrli je le naravni prirastek, priseljeni - odseljeni le selitveni saldo, v izrazu (živorojeni + odseljeni) - (umrli + priseljeni) ima selitveni saldo obrnjen predznak, v izrazu (živorojeni + priseljeni) - umrli pa manjkajo odseljeni.",
+  "why": "NP+SS zamenjan s formulo brez odseljenih"
+ },
+ {
+  "id": "q1xeheo4",
+  "options": [
+   "N + M",
+   "M − N",
+   "(N − M) / P30.6 × 1000",
+   "N / M × 100",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Absolutni naravni prirastek = N - M (živorojeni minus umrli); relativna oblika v promilih je (N - M) / P30.6 × 1000. Absolutne formule ni med navedenimi. Zapis M - N ima zamenjan vrstni red in da nasprotni predznak: pri več rojenih kot umrlih bi kazal negativen prirastek.",
+  "why": "N−M zamenjan z M−N"
+ },
+ {
+  "id": "q1ha0i0y",
+  "options": [
+   "Vse enote uvrstimo v vsaj eno skupino",
+   "Vsako enoto lahko uvrstimo v več skupin hkrati",
+   "Skupin je vedno vsaj 5",
+   "Vsebinsko sorodne enote uvrstimo skupaj",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Načelo enoličnosti zahteva nedvoumno razvrščanje: vsako enoto uvrstimo v natanko eno skupino. Te zahteve ni med navedenimi. Uvrstitev v več skupin hkrati je ravno v nasprotju z enoličnostjo, zahteva, da vsako enoto uvrstimo vsaj v eno skupino, pa izhaja iz načela polnoštevilčnosti.",
+  "why": "\"natanko eno\" zamenjano z \"več skupin hkrati\""
+ },
+ {
+  "id": "qsvbo44",
+  "options": [
+   "Brezposelni / aktivno prebivalstvo × 100",
+   "Aktivno prebiv. / skupno prebiv. × 100",
+   "Delovno aktivno prebiv. / skupno prebiv. × 100",
+   "Zaposleni / aktivno prebiv. × 100",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Stopnja aktivnosti = aktivno prebivalstvo / delovno sposobno prebivalstvo × 100. Te formule ni med navedenimi. Deljenje s skupnim prebivalstvom je tipična napaka z napačnim imenovalcem, saj ta vključuje tudi otroke, mlajše od 15 let.",
+  "why": "imenovalec delovno sposobno zamenjan s skupnim prebivalstvom"
+ },
+ {
+  "id": "q14f0hz6",
+  "options": [
+   "0,050",
+   "1,250",
+   "1,700",
+   "0,143",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Tf = f × 35 = 0,050 × 35 = 1,750, saj rodna doba traja 35 let (od 15. do vključno 49. leta). Pravilnega rezultata 1,750 ni med navedenimi. Vrednost 1,700 dobimo, če trajanje rodne dobe napačno izračunamo kot 49 - 15 = 34 let. (f je tu splošna stopnja rodnosti v obliki koeficienta, ne v promilih.)",
+  "why": "1,750 zamenjano z 1,700 (34 namesto 35 let)"
+ },
+ {
+  "id": "q6a9ax4",
+  "options": [
+   "Delež dečkov med vsemi živoremi, izražen v %",
+   "Število živorojenih deklic na 1000 živorojenih dečkov",
+   "Razmerje med moškimi in ženskami v celotni populaciji",
+   "Število dečkov na 1000 vseh živorojenih",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "Koeficient maskulinitete ob rojstvu = živorojeni dečki / živorojene deklice × 1000; naravna vrednost je okrog 1050. Te opredelitve ni med navedenimi. Število deklic na 1000 dečkov je obratno razmerje, torej koeficient feminitete.",
+  "why": "maskuliniteta zamenjana s feminiteto"
+ },
+ {
+  "id": "q16gwyug",
+  "options": [
+   "Izseke nizamo v nasprotni smeri urinega kazalca",
+   "Izseke nizamo po velikosti od največjega do najmanjšega",
+   "Izhodišče prvega izseka je pri 0 stopinjah (ura 15, desno)",
+   "3D strukturni krog je manj informativen kot 2D",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Vse štiri navedene trditve so pravilne: izseke nizamo v nasprotni smeri urinega kazalca, po velikosti od največjega do najmanjšega, z izhodiščem pri 0 stopinjah (ura 15, desno), 3D strukturni krog pa je manj informativen kot 2D. Napačne trditve zato med njimi ni. Napačna bi bila trditev, da izseke nizamo v smeri urinega kazalca.",
+  "why": "edina napačna trditev zamenjana s pravilno"
+ },
+ {
+  "id": "q1txyuwl",
+  "options": [
+   "Delež vsake celice glede na skupni seštevek celotne tabele",
+   "Delež vsake celice glede na vsoto njene vrstice",
+   "Vsota absolutnih vrednosti v posameznem stolpcu",
+   "Razmerje med vrsticami tabele",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "Stolpčna pogojna struktura vsako celico deli z vsoto njenega stolpca (× 100), zato je vsota v vsakem stolpcu 100 %. Te opredelitve ni med navedenimi. Deljenje z vsoto vrstice da vrstično pogojno strukturo, deljenje s skupnim seštevkom pa strukturo glede na celotno tabelo.",
+  "why": "stolpec zamenjan z vrstico"
+ },
+ {
+  "id": "qxzv55e",
+  "options": [
+   "Splošna rast plač v določenem obdobju",
+   "Splošno padanje cen proizvodov in storitev",
+   "Splošno zmanjševanje brezposelnosti",
+   "Splošno zmanjševanje BDP v recesiji",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Inflacija je splošna rast cen proizvodov in storitev; v Sloveniji jo merimo z indeksom cen življenjskih potrebščin. Te opredelitve ni med navedenimi. Splošno padanje cen je deflacija, rast plač, zmanjševanje brezposelnosti in upad BDP pa so drugi pojavi.",
+  "why": "inflacija zamenjana z deflacijo"
+ },
+ {
+  "id": "q113vutv",
+  "options": [
+   "Opredeljena glede na šifro dejavnosti",
+   "Geografsko opredeljena, z vsaj 10 zaposlenimi",
+   "Opredeljena po pravnem statusu podjetja",
+   "Določena s finančno odvisnostjo od matičnega podjetja",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 4,
+  "explanation": "Lokalna enota je geografsko opredeljena enota, ne glede na pravni status ali vrsto dejavnosti, z vsaj eno zaposleno osebo. Te opredelitve ni med navedenimi. Meja 10 zaposlenih je napačna, za lokalno enoto zadošča že en zaposleni.",
+  "why": "meja 1 zaposleni zamenjana z 10"
+ },
+ {
+  "id": "qn8sf3x",
+  "options": [
+   "a + b",
+   "a + c",
+   "a + b + c + d",
+   "b + c + d",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "NP = 18.700 - 21.200 = <b>-2.500</b> (a ✓). SS = 28.000 - 10.500 = <b>+17.500</b> (b ✓). SP = -2.500 + 17.500 = <b>+15.000</b> (c ✓). d ✗: NP je negativen. Pravilna kombinacija je <b>a + b + c</b>, ki je ni med navedenimi. Kombinacija a + c izpusti pravilno trditev b o selitvenem saldu (priseljeni - odseljeni).",
+  "why": "a+b+c zamenjana z a+c"
+ },
+ {
+  "id": "qcm3o1y",
+  "options": [
+   "a + b",
+   "a + c + d",
+   "b + c + d",
+   "a + b + c + d",
+   "Pravilna rešitev ni navedena"
+  ],
+  "correct": 4,
+  "explanation": "Produktivnost = 8/25 = <b>0,32</b> mio/zap (a ✓). Rentabilnost prihodkov = 5/8×100 = <b>62,5 %</b> (b ✓). c ✗: rentabilnost sredstev = 5/400×100 = <b>1,25 %</b>, ne 62,5 % (drug imenovalec). AUM na zaposlenega = 400/25 = <b>16</b> mio/zap (d ✓). Pravilna kombinacija je <b>a + b + d</b>, ki je ni med navedenimi. Kombinacija a + b izpusti pravilno trditev d.",
+  "why": "a+b+d zamenjana z a+b"
+ },
+ {
+  "id": "q1ti0mnl",
+  "options": [
+   "Število prebiv. / površina km²",
+   "Površina km² / število prebiv.",
+   "Število prebiv. / BDP",
+   "Število prebiv. / površina ha × 10",
+   "Noben od navedenih odgovorov ni pravilen"
+  ],
+  "correct": 0,
+  "why": "možnost »/ površina ha × 100« je bila številsko enaka gostoti na km² (dve pravilni)"
+ }
+]

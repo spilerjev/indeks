@@ -73,4 +73,5 @@ for (const subj of sem.subjects) {
   for (const f of files) applyHarden(qs, require(path.join(dir, f)), f);
 }
 
+require('./id-patches').applyIdPatches(data);   // popravki po stalnem id (id-patches-data.json)
 fs.writeFileSync(DATA_PATH, JSON.stringify(data));

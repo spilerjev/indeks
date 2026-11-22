@@ -15,9 +15,17 @@ const RULES = [
   [/učbenik|\bskript[aieou]\b|\bskriptah\b/i, 'učbenik ali skripta'],
   [/na tabli|s table\b|handoff|rečeno na glas|na seminarju/i, 'razlaga v razredu'],
   [/Lotrič|Dolinar/i, 'ime pedagoga'],
+  [/\bpoglavj\w*\s+\d|\d+\.\s*poglavj|\(tem[ae]\s+\d|\bteme?\s+\d+\s*[–-]\s*\d/i, 'številka poglavja ali teme'],
+  [/\.docx?\b|\.xlsx?\b|\.pptx?\b/i, 'ime datoteke'],
 ];
 // Dovoljeno: [pot, točen izsek besedila (podniz), razlog]
 const ALLOW = [
+  ["eeu/k1:notes", "korupciji (poglavji 23 in 24 se odpreta prva", "pristopna poglavja EU (pogajanja), ne sklic na gradivo"],
+  ["trz/kvizi:notes", "Za seminarsko (1. poglavje): na kratko", "poglavje lastne seminarske naloge"],
+  ["trz/kvizi:notes", "uporabno za poglavje 5 seminarske!", "poglavje lastne seminarske naloge"],
+  ["trz/kvizi:notes", "(tudi poglavje 2 seminarske!)", "poglavje lastne seminarske naloge"],
+  ["trz/kvizi:notes", "(tudi 3. poglavje seminarske, 1,5 t)", "poglavje lastne seminarske naloge"],
+  ["trz/kvizi:notes", "Osnutek (poglavja 1–5, ~8 strani", "poglavja lastne seminarske naloge"],
   ["pravo/k2:notes", "Omejitve: zakonita licenca (odplačno: učbeniki, pregledi tiska), prosta uporaba", "snov: zakonita licenca po ZASP (učbeniki kot vrsta dela)"],
   ["pravo/izpit:notes", "Omejitve: zakonita licenca (odplačno: učbeniki, pregledi tiska), prosta uporaba", "snov: zakonita licenca po ZASP (kopija zapiskov k2)"],
   ["pravo/k2/pk2-pren#13.explanation", "uporaba po zakonu (čitanke in učbeniki, pregledi tiska) - posega le", "snov: zakonita licenca po ZASP"],
@@ -26,8 +34,8 @@ const ALLOW = [
   ["inf/k1:notes", "poteka predmet Izpit 75 točk + vaje 25 točk , za oceno 6 skupaj vsaj", "organizacija ocene (sestavni del ocene)"],
   ["inf/izpit:notes", "poteka predmet Izpit 75 točk + vaje 25 točk , za oceno 6 skupaj vsaj", "organizacija ocene (kopija zapiskov k1)"],
   ["inf/izpit:notes", "Pisni izpit, 75 točk (+ do 25 točk z vaj), skupaj vsaj 55 za pozitivno", "organizacija ocene"],
-  ["inf/k3:notes", "Pozor: digitaliziran ročni podpis (na tablici) NI elektronski podpis! Poglavje", "tablica = tablični zaslon"],
-  ["inf/izpit:notes", "Pozor: digitaliziran ročni podpis (na tablici) NI elektronski podpis! Poglavje", "tablica = tablični zaslon (kopija zapiskov k3)"],
+  ["inf/k3:notes", "Pozor: digitaliziran ročni podpis (na tablici) NI elektronski podpis!", "tablica = tablični zaslon"],
+  ["inf/izpit:notes", "Pozor: digitaliziran ročni podpis (na tablici) NI elektronski podpis!", "tablica = tablični zaslon (kopija zapiskov k3)"],
   ["inf/k3/varnost#12.q", "Digitaliziran ročni podpis (na tablici) je veljaven elektronski podpis.", "tablica = tablični zaslon"],
   ["inf/izpit/inf-iz-vprasanja#13.options[3]", "dobavitelj račun lastnoročno podpisal na tablici", "tablica = tablični zaslon"],
   ["inf/k3/blockchain#3.options[2]", "elektronsko podpisane pogodbe v PDF obliki", "PDF kot oblika dokumenta"],

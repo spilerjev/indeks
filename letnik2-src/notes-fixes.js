@@ -564,4 +564,6 @@ module.exports = [
   {"part":"trz/kvizi","find":" → isti načini kot pri merjenju zadovoljstva (2. predavanje)","replace":" → isti načini kot pri merjenju zadovoljstva"},
   {"part":"trz/kvizi","find":"<em>Knjiga: 12. pogl. (str. 178–214). Snov za kviz 6","replace":"<em>Snov za kviz 6"},
   {"part":"stana/k1","find":"<p>Rešitve, ki jih lahko določim brez računalniškega izpisa (vpr. 3–4 imata izpis v prilogi, ki ga v PDF ni):</p>","replace":"<p>Rešitve (vprašanji 3–4 zahtevata računalniški izpis, zato tu nista rešeni):</p>"},
+  // 22. 11. 2026: brez imena datoteke seminarske
+  {"part":"trz/kvizi","find":"Datoteka: <i>Seminarska/FREYWILLE_vmesna_oddaja_osnutek.docx</i> (poglavja 1–5,","replace":"Osnutek (poglavja 1–5,"},
 ];

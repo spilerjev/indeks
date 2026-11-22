@@ -65,4 +65,5 @@ for (const subj of data.filter((s) => s.year === 1).flatMap((s) => s.subjects)) 
   for (const f of files) applyHarden(qs, require(path.join(HDIR, f)), f);
 }
 
+require('./id-patches').applyIdPatches(data);   // popravki po stalnem id (id-patches-data.json)
 fs.writeFileSync(DATA_PATH, JSON.stringify(data));

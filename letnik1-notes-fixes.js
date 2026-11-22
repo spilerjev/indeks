@@ -14,4 +14,11 @@ module.exports = [
   {"part":"inf/k2","find":"25 točk (vsaj 10), snov druge štirih predavanj: <b>poslovni","replace":"25 točk (vsaj 10), snov: <b>poslovni"},
   {"part":"inf/izpit","find":" Snov vseh predavanj in učbenik.","replace":" Snov vseh poglavij."},
   {"part":"inf/izpit","find":", etična dilema, vprašanje o gostu na predavanjih.","replace":", etična dilema."},
+  // 22. 11. 2026: naslovi brez številk poglavij in lanskih datumov
+  {"part":"inf/k3","find":"<h2>Poglavje 6 — Digitalizacija poslovanja: Razvoj IS</h2>","replace":"<h2>Digitalizacija poslovanja: Razvoj IS</h2>"},
+  {"part":"inf/k3","find":"<h2>Poglavje 5 — Varnost in zaščita informacijskih virov</h2>","replace":"<h2>Varnost in zaščita informacijskih virov</h2>"},
+  {"part":"inf/k3","find":"<h2>Poglavje 7 — Umetna inteligenca (AI)</h2>","replace":"<h2>Umetna inteligenca (AI)</h2>"},
+  {"part":"inf/k3","find":"<h2>Poglavje 8 — Tehnologija veriženja blokov (Blockchain)</h2>","replace":"<h2>Tehnologija veriženja blokov (Blockchain)</h2>"},
+  {"part":"mikro/k2","find":"<b>2. kolokvij</b> (12. 12.): poglavja 5, 6 in 7 - proizvodnja","replace":"<b>2. kolokvij</b>: proizvodnja"},
+  {"part":"rac/izpit","find":"<b>ZGD</b> (8. poglavje) ureja","replace":"<b>ZGD</b> ureja"},
 ];

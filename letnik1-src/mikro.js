@@ -10,7 +10,7 @@ const cards = (arr) => arr.map(([front, back]) => ({ front, back }));
 
 const NOTES_K2 = `
 ## Kako poteka kolokvij
-- **2. kolokvij** (12. 12.): poglavja 5, 6 in 7 - proizvodnja, stroški, popolna konkurenca. 33 % ocene, opravljen pri 50 % točk.
+- **2. kolokvij**: proizvodnja, stroški, popolna konkurenca. 33 % ocene, opravljen pri 50 % točk.
 - Format: 40 min, 33 točk. Vprašanja 1-4 obkrožiš (3 točke, z izračunom), 5-7 so daljše naloge s sliko (7 točk).
 > Točke dobiš samo za v celoti pravilno rešitev - izračun **in** skica, kjer je zahtevana.
 
