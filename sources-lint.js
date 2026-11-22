@@ -17,6 +17,7 @@ const RULES = [
   [/Lotrič|Dolinar/i, 'ime pedagoga'],
   [/\bpoglavj\w*\s+\d|\d+\.\s*poglavj|\(tem[aei]\s+\d|\btem[aei]?\s+\d+\s*[–-]\s*\d/i, 'številka poglavja ali teme'],
   [/\.docx?\b|\.xlsx?\b|\.pptx?\b/i, 'ime datoteke'],
+  [/\btabel[aei]\s+\d+\.\d+/i, 'številka tabele iz gradiva'],
 ];
 // Dovoljeno: [pot, točen izsek besedila (podniz), razlog]
 const ALLOW = [

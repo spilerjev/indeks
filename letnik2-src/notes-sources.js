@@ -41,7 +41,7 @@ function scrubParens(html) {
   // Če je v oklepaju stavek s sklicem, ostane cel (ročni prepis v notes-fixes.js).
   return html.replace(/\s?\(((?:[^()<]|<[^>]*>)*)\)/g, (m, inner) => {
     if (!SRC.test(strip(inner))) return m;
-    const segs = inner.split(/\s*(?:[;,]|\s\/)\s*(?![^<]*>)/);
+    const segs = inner.split(/\s*(?:(?<!&#?\w+);|,|\s\/)\s*(?![^<]*>)/);   // podpičje entitete (&amp;) ni ločilo
     if (segs.some((s) => SRC.test(strip(s)) && !PURE.test(strip(s).trim()))) return m;
     const keep = segs.filter((s) => !PURE.test(strip(s).trim()) && strip(s).trim());
     if (!keep.length) return '';
@@ -89,7 +89,7 @@ function mechanical(html) {
 function scrubLabel(t) {
   let x = t;
   x = x.replace(/^\s*(?:(?:[PV]\d{1,2}|[Vv]aje\s*\d+)(?:\s*[+,]\s*(?:[PV]\d{1,2}|[Vv]aje\s*\d+))*)(?:\s*[,:]\s*|\s+(?=\S)|\s*$)/, '');
-  x = x.replace(/,?\s*\b(?:izpitn\w*\s+)?(?:slik[ae]|prosojnic\w*|primer\w*|nalog[ae])\s+\d+(?:\.\d+)?(?:\s*[–-]\s*\d+)?\b/gi, '');
+  x = x.replace(/,?\s*\b(?:izpitn\w*\s+)?(?:slik[ae]|prosojnic\w*|primer\w*|nalog[ae]|tabel[aei])\s+\d+(?:\.\d+)?(?:\s*[–-]\s*\d+)?\b/gi, '');
   x = x.replace(/\(\s*\)/g, '').replace(/\s+([:,;)])/g, '$1').replace(/^\s*[:,;]\s*/, '').trim();
   const m = /^\(([^()]*)\)$/.exec(x); if (m) x = m[1].trim();
   return x;
