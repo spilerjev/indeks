@@ -264,11 +264,11 @@ const kartP04 = [
 
 // Zvočne razlage (NotebookLM iz lastnih zapiskov; docs/podcast/stana). sec = dolžina v sekundah.
 const AUDIO = [
-  { id: 'stana-ep1', n: 1, title: 'Osnovni pojmi in opisna statistika', sub: 'Zakaj povprečna plača v novicah zavaja', file: 'podcast/stana/01-opisna-statistika.m4a', sec: 1732 },
-  { id: 'stana-ep2', n: 2, title: 'Verjetnostne porazdelitve in normalna porazdelitev', sub: 'Pasti in skrivnosti normalne porazdelitve', file: 'podcast/stana/02-porazdelitve.m4a', sec: 1204 },
-  { id: 'stana-ep3', n: 3, title: 'Teoretične osnove vzorčenja', sub: 'Kako iz vzorca oceniti celotno populacijo', file: 'podcast/stana/03-vzorcenje.m4a', sec: 1179 },
+  { id: 'stana-ep1b', n: 1, title: 'Osnovni pojmi in opisna statistika', sub: 'Kaj se skriva za statističnim povprečjem', file: 'podcast/stana/01b-opisna-statistika-lastni-primeri.m4a', sec: 986 },
+  { id: 'stana-ep2b', n: 2, title: 'Verjetnostne porazdelitve in normalna porazdelitev', sub: 'Zakaj povprečje ne pove celotne zgodbe', file: 'podcast/stana/02b-porazdelitve-lastni-primeri.m4a', sec: 1079 },
+  { id: 'stana-ep3b', n: 3, title: 'Teoretične osnove vzorčenja', sub: 'Kako zvonasta krivulja določi garancijo', file: 'podcast/stana/03b-vzorcenje-lastni-primeri.m4a', sec: 1845 },
   { id: 'stana-ep4', n: 4, title: 'Točkovna in intervalna ocena', sub: 'Iluzija natančnosti in statistični intervali zaupanja', file: 'podcast/stana/04-intervalna-ocena.m4a', sec: 1418 },
-  { id: 'stana-ep6', n: 6, title: 'Osnove preizkušanja domnev', sub: 'Logika statističnega preizkušanja domnev', file: 'podcast/stana/06-preizkusanje-domnev.m4a', sec: 927 },
+  { id: 'stana-ep6b', n: 6, title: 'Osnove preizkušanja domnev', sub: 'Resnica o p-vrednosti in preizkušanju domnev', file: 'podcast/stana/06b-preizkusanje-domnev-lastni-primeri.m4a', sec: 1155 },
 ];
 
 module.exports = {
