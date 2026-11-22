@@ -197,7 +197,7 @@ module.exports = {
       // Zvočne razlage (NotebookLM iz očiščenih zapiskov; datoteke v docs/podcast/eeu-k1). sec = dolžina v sekundah.
       audio: [
         { id: 'eeu-ep1', n: 1, title: 'Zgodovina evropskega povezovanja', sub: 'Od povojnih ruševin do evropske integracije', file: 'podcast/eeu-k1/01-zgodovina-EU.m4a', sec: 971 },
-        { id: 'eeu-ep2', n: 2, title: 'Nastanek EU, pogodbe, širitve', sub: 'Kako je steklenica likerja spremenila Evropsko unijo', file: 'podcast/eeu-k1/02-vaje1-nastanek-EU.m4a', sec: 1799 },
+        { id: 'eeu-ep2b', n: 2, title: 'Nastanek EU, pogodbe, širitve', sub: 'Od EGS in EFTE do Evropske unije', file: 'podcast/eeu-k1/02b-od-EGS-do-EU27.m4a', sec: 1191 },
         { id: 'eeu-ep3b', n: 3, title: 'Teorija primerjalnih prednosti', sub: 'Zakaj v trgovini zmagata obe državi', file: 'podcast/eeu-k1/03b-primerjalne-prednosti-lastni-primeri.m4a', sec: 1167 },
         { id: 'eeu-ep4b', n: 4, title: 'Učinki proste mednarodne trgovine', sub: 'Zmagovalci in poraženci proste trgovine', file: 'podcast/eeu-k1/04b-prosta-trgovina-lastni-primeri.m4a', sec: 1374 },
         { id: 'eeu-ep5b', n: 5, title: 'Učinki uvedbe carin in carinska reforma EU', sub: 'Kdo v resnici plača carine', file: 'podcast/eeu-k1/05b-carine-lastni-primeri.m4a', sec: 1052 },
