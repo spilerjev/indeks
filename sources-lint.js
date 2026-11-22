@@ -15,7 +15,7 @@ const RULES = [
   [/učbenik|\bskript[aieou]\b|\bskriptah\b/i, 'učbenik ali skripta'],
   [/na tabli|s table\b|handoff|rečeno na glas|na seminarju/i, 'razlaga v razredu'],
   [/Lotrič|Dolinar/i, 'ime pedagoga'],
-  [/\bpoglavj\w*\s+\d|\d+\.\s*poglavj|\(tem[ae]\s+\d|\bteme?\s+\d+\s*[–-]\s*\d/i, 'številka poglavja ali teme'],
+  [/\bpoglavj\w*\s+\d|\d+\.\s*poglavj|\(tem[aei]\s+\d|\btem[aei]?\s+\d+\s*[–-]\s*\d/i, 'številka poglavja ali teme'],
   [/\.docx?\b|\.xlsx?\b|\.pptx?\b/i, 'ime datoteke'],
 ];
 // Dovoljeno: [pot, točen izsek besedila (podniz), razlog]

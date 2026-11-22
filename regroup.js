@@ -54,12 +54,12 @@ const CFG = {
   ],
   's2/stat/k2': [
     'st-t5-1', 'st-t5-2', 'st-t6',
-    { id: 'st-t78', name: 'Skupinski indeksi: Laspeyres, Paasche, Fisher, strukturni premiki (temi 7–8)', from: ['st-t7', 'st-t8'] },
+    { id: 'st-t78', name: 'Skupinski indeksi: Laspeyres, Paasche, Fisher, strukturni premiki', from: ['st-t7', 'st-t8'] },
     'st-nal58',
   ],
   's2/stat/izpit': [
     'st-t12', 'st-t34-1', 'st-t34-2', 'st-t5-1', 'st-t5-2', 'st-t6',
-    { id: 'st-t78', name: 'Skupinski indeksi: Laspeyres, Paasche, Fisher, strukturni premiki (temi 7–8)', from: ['st-t7', 'st-t8'] },
+    { id: 'st-t78', name: 'Skupinski indeksi: Laspeyres, Paasche, Fisher, strukturni premiki', from: ['st-t7', 'st-t8'] },
     'st-t9-1', 'st-t9-2', 'st-t9-3', 'st-t10', 'st-t11', 'st-t12b',
     { id: 'st-nal', name: 'Računske naloge: strukture, indeksi in prebivalstvo', from: ['st-nal58', 'st-nal912'], calc: true },
     'st-stari',
