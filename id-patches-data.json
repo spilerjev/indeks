@@ -1783,5 +1783,15 @@
   "id": "q1n12pc9",
   "explanation": "Teza je enostranska (H₁: μ_d > 0), zato P = 0,061/2 = 0,031 < 0,05 → H₀ zavrnemo. Dvostranski 95 % interval vsebuje 0, enostranski preizkus pa ima ves α v enem repu, zato v pričakovani smeri H₀ zavrne.",
   "why": "napačna utemeljitev"
+ },
+ {
+  "id": "qkxb84s",
+  "explanation": "Primer: Tina, 34, persona aplikacije Akord.",
+  "why": "primer usklajen z zapiski"
+ },
+ {
+  "id": "qdgdgzc",
+  "explanation": "Vsak tok diskontiramo posebej: 30 v letih 1-3, 60 v letih 4-6, 90 v 7. letu in 90 + 1.000 v 8. letu. Ker tokovi niso enaki, anuitetne formule ne uporabimo za vse hkrati. S stalnim kuponom 6 % (60 € na leto) bi dobili 833,96 € - napaka: tak kupon ima večjo vsoto kuponov (480 € namesto 450 €), pri naraščajočem kuponu pa so visoki kuponi na koncu in jih diskontiramo močneje.",
+  "why": "primerjava s stalnim kuponom usklajena z zapiski"
  }
 ]
