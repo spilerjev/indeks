@@ -7,6 +7,7 @@ const path = require('path');
 const { render } = require('./letnik2-src/md-notes');
 const { applyFixes } = require('./letnik2-src/notes-sources');
 const NOTES_FIXES = require('./letnik1-notes-fixes');   // brez pripisov virov (predavanja, vaje, pedagogi) v zapiskih iz modulov
+const FIGS_ALL = require('./figures').load().figs;   // grafi za {{fig:ID}} v zapiskih
 
 const DATA_PATH = path.join(__dirname, 'data.json');
 const SRC = path.join(__dirname, 'letnik1-src');
@@ -50,6 +51,8 @@ for (const mod of MODULES) {
     else if (mp.notes) part.notes = mp.notes;
     if (mp.appendNotesMd) part.notes = (part.notes || '').split('<!--dodatek-->')[0] + '<!--dodatek-->' + render(mp.appendNotesMd);
     if ((mp.notesMd || mp.notes || mp.appendNotesMd) && part.notes) part.notes = applyFixes(part.notes, mod.id + '/' + mp.id, NOTES_FIXES, 'post', (m) => console.warn(m));
+    // {{fig:ID}} v zapiskih = graf iz figures/*.js (isti kot v razlagah kvizov), vstavljen kot SVG
+    if (part.notes && part.notes.includes('{{fig:')) part.notes = part.notes.replace(/(?:<p>\s*)?\{\{fig:([\w-]+)\}\}(?:\s*<\/p>)?/g, (m, id) => { const svg = FIGS_ALL[id]; if (!svg) { console.warn('  ! zapiski ' + mod.id + '/' + mp.id + ': ni grafa ' + id); return ''; } return '<div class="ix-fig">' + svg + '</div>'; });
   }
   const q = subj.parts.reduce((n, p) => n + p.decks.reduce((m, d) => m + d.questions.length, 0), 0);
   const c = subj.parts.reduce((n, p) => n + (p.flashcards || []).reduce((m, d) => m + d.cards.length, 0), 0);

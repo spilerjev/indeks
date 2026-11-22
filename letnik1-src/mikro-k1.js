@@ -190,6 +190,6 @@ module.exports = {
 - **Pogoste teme**: oportunitetni strošek (čas za naloge, cena s popustom nad določeno količino), hkratna sprememba ponudbe IN povpraševanja, cenovna elastičnost in prihodki, popolni komplementi (paket dobrin).
 - **Tudi**: MRS iz Cobb-Douglasove funkcije koristnosti, potrošnikovo ravnotežje (delež dohodka = eksponent / vsota eksponentov), strma ali položna indiferenčna krivulja glede na to, kaj je na kateri osi, učinek substitucije in dohodka pri inferiorni dobrini + Engelova krivulja.
 - **Pasti**: pri dveh hkratnih premikih je ena spremenljivka nedoločena. Potrošniški presežek in zadovoljstvo se ob podražitvi zmanjšata **oba**. Pri MRS vedno preveri, katera dobrina je na kateri osi.
-`,
+` + require('../letnik1-primeri').mikroK1,   // lastni rešeni primeri
   }],
 };

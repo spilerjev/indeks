@@ -149,6 +149,8 @@ module.exports = {
         { id: 'mat-iz-analiza', name: 'Potek funkcije, integrali, kompozitum in matrične enačbe', calc: true, questions: analiza },
       ],
       flashcards: [{ id: 'mat-c-izpit', name: 'Formule (izpit)', cards: kartice }],
+      appendNotesMd: require('../letnik1-primeri').matK2,   // lastni rešeni primeri (matrike, verjetnost)
     },
+    { id: 'k2', appendNotesMd: require('../letnik1-primeri').matK2 },
   ],
 };

@@ -56,7 +56,7 @@ const NOTES_K2 = `
 - **Kratkoročna ponudba podjetja** = MC nad AVCmin. Ponudba panoge = vodoravna vsota ponudb podjetij.
 - **Dolgi rok**: vstop in izstop → **P = LMC = LACmin**, ekonomski dobiček = 0 (podjetje dobi le normalen donos na kapital).
 - Število podjetij na dolgi rok = tržna količina pri P = LACmin / količina enega podjetja.
-`;
+` + require('../letnik1-primeri').mikroK2;   // lastni rešeni primeri
 
 const NOTES_K3 = `
 ## 9 · Monopol
