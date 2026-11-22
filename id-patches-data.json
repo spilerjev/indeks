@@ -1618,5 +1618,26 @@
   "id": "qh0tumh",
   "explanation": "Carinska unija 1968, notranji trg 1993 (Enotni evropski akt 1986), EMU 1999 (Maastricht), Ustavna pogodba ni bila ratificirana (nadomestila jo je Lizbonska).",
   "why": "EEA = Enotni evropski akt, izpisano"
+ },
+ {
+  "id": "q1kgwt2a",
+  "options": [
+   "Nadzoruje Komisijo ter skupaj s Svetom EU odloča o zakonodaji in proračunu",
+   "Izključna pravica zakonodajne pobude, s katero predlaga vse uredbe in direktive Unije",
+   "Izvajanje zakonodaje EU in zastopanje Unije v mednarodnih pogajanjih, na primer v WTO",
+   "Določanje obrestnih mer in vodenje denarne politike evroobmočja skupaj z ECB"
+  ],
+  "correct": 0,
+  "why": "pokvarjen konec možnosti (»podobno kot s Svetom«)"
+ },
+ {
+  "id": "q1ejf8um",
+  "explanation": "Razlike so velike: od okoli dveh tretjin povprečja EU (Bolgarija) do več kot 200 % (Luksemburg).",
+  "why": "zastarel podatek za Bolgarijo"
+ },
+ {
+  "id": "q1mftqvj",
+  "explanation": "Fiskalni pakt omejuje strukturni primanjkljaj na 0,5 % BDP (1 % pri nizkem dolgu); 3 % je meja dejanskega primanjkljaja. Pravilo 1/20 izhaja iz fiskalnega pakta in šesterčka; reforma Pakta o stabilnosti in rasti leta 2024 ga je v pravilih EU nadomestila z minimalnim letnim zniževanjem dolga (1 o. t. nad 90 % BDP, 0,5 o. t. med 60 in 90 % BDP).",
+  "why": "dopolnilo o reformi 2024"
  }
 ]
