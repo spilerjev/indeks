@@ -1910,7 +1910,7 @@ export default function App() {
         <Footer />
       </div>
       <ScrollTop />
-      <MiniPlayer go={setRoute} />
+      <MiniPlayer go={setRoute} block={(route.view === "quiz" && route.deck === "__ranked") || route.view === "duel"} />
       <DialogHost />
     </div>
   );
@@ -2300,7 +2300,7 @@ function pushAudioPos(user) {
 }
 function saveAudioPos(id, patch, user) { const all = store.get(AUDIO_KEY, {}); all[id] = { ...(all[id] || {}), ...patch, t: Date.now() }; store.set(AUDIO_KEY, all); pushAudioPos(user); }
 const SPEEDS = [1, 1.25, 1.5, 2];
-const PLAYER = { a: null, ep: null, list: [], ctx: null, user: null, seekTo: 0, lastSave: 0, subs: new Set() };
+const PLAYER = { a: null, ep: null, list: [], ctx: null, user: null, seekTo: 0, lastSave: 0, subs: new Set(), blocked: false };
 const playerNotify = () => PLAYER.subs.forEach((f) => f());
 function usePlayer() { const [, set] = useState(0); useEffect(() => { const f = () => set((x) => x + 1); PLAYER.subs.add(f); return () => { PLAYER.subs.delete(f); }; }, []); return PLAYER; }
 const playerSpeed = () => store.get("indeks.audio.speed", 1);
@@ -2343,6 +2343,7 @@ function playerEl() {
   PLAYER.a = a; return a;
 }
 function playerPlay(ep, list, ctx, fromStart) {
+  if (PLAYER.blocked) return;   // med rankedom in dvobojem podcasti niso dovoljeni
   const a = playerEl();
   if (!PLAYER.ep || PLAYER.ep.id !== ep.id) {
     if (PLAYER.ep && !a.paused) playerSave(false);
@@ -2355,7 +2356,7 @@ function playerPlay(ep, list, ctx, fromStart) {
   const p = a.play(); playerNotify();
   return p && p.catch ? p.catch(() => playerNotify()) : p;
 }
-function playerToggle() { const a = PLAYER.a; if (!a || !PLAYER.ep) return; if (a.paused) a.play().catch(() => {}); else a.pause(); }
+function playerToggle() { const a = PLAYER.a; if (!a || !PLAYER.ep || PLAYER.blocked) return; if (a.paused) a.play().catch(() => {}); else a.pause(); }
 function playerSeek(t) { const a = PLAYER.a; if (!a || !PLAYER.ep) return; const d = playerDur(); const v = Math.max(0, d ? Math.min(d - 1, t) : t); if (a.readyState >= 1) a.currentTime = v; else PLAYER.seekTo = v; playerSave(false); mediaPos(); playerNotify(); }
 function playerSkip(d) { playerSeek(playerCur() + d); }
 function playerCycleSpeed() { const sp = playerSpeed(); const n = SPEEDS[(SPEEDS.indexOf(sp) + 1) % SPEEDS.length]; store.set("indeks.audio.speed", n); if (PLAYER.a) { PLAYER.a.defaultPlaybackRate = n; PLAYER.a.playbackRate = n; } mediaPos(); playerNotify(); }
@@ -2426,12 +2427,21 @@ function AudioEp({ ep, saved, eps, ctx }) {
     </div>
   );
 }
-/* Mini predvajalnik na dnu zaslona: viden na vseh straneh, dokler poslušaš. */
-function MiniPlayer({ go }) {
+/* Mini predvajalnik na dnu zaslona: viden na vseh straneh, dokler poslušaš.
+   block = ranked ali dvoboj: predvajanje se ustavi (položaj ostane shranjen), predvajalnik se skrije,
+   gumbi na slušalkah in zaklenjenem zaslonu pa ga ne morejo znova zagnati. */
+function MiniPlayer({ go, block }) {
   usePlayer();
   const ep = PLAYER.ep;
+  useEffect(() => {
+    PLAYER.blocked = !!block;
+    if (!block) return;
+    if (PLAYER.ep) playerClose();
+    const ms = typeof navigator !== "undefined" && navigator.mediaSession;
+    if (ms) ["play", "pause", "seekbackward", "seekforward", "seekto", "previoustrack", "nexttrack"].forEach((k) => { try { ms.setActionHandler(k, null); } catch (e) {} });
+  }, [block]);
   useEffect(() => { const r = document.querySelector(".ix-root"); if (r) r.classList.toggle("has-player", !!ep); }, [ep && ep.id]); // eslint-disable-line
-  if (!ep) return null;
+  if (!ep || block) return null;
   const playing = playerPlaying(), dur = playerDur(), cur = playerCur(), c = PLAYER.ctx;
   return (
     <div className="ix-player" role="region" aria-label="Predvajalnik">

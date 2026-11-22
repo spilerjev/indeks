@@ -196,9 +196,9 @@ module.exports = {
       id: 'k1', name: 'Kolokvij (24. 11.)', type: 'kolokvij', date: '2026-11-24T17:00', signup: '2026-11-22T23:59',
       // Zvočne razlage (NotebookLM iz očiščenih zapiskov; datoteke v docs/podcast/eeu-k1). sec = dolžina v sekundah.
       audio: [
-        { id: 'eeu-ep1', n: 1, title: 'Zgodovina evropskega povezovanja', sub: 'Od povojnih ruševin do evropske integracije', file: 'podcast/eeu-k1/01-zgodovina-EU.m4a', sec: 971 },
-        { id: 'eeu-ep2b', n: 2, title: 'Nastanek EU, pogodbe, širitve', sub: 'Od EGS in EFTE do Evropske unije', file: 'podcast/eeu-k1/02b-od-EGS-do-EU27.m4a', sec: 1191 },
-        { id: 'eeu-ep3b', n: 3, title: 'Teorija primerjalnih prednosti', sub: 'Zakaj v trgovini zmagata obe državi', file: 'podcast/eeu-k1/03b-primerjalne-prednosti-lastni-primeri.m4a', sec: 1167 },
+        { id: 'eeu-ep1c', n: 1, title: 'Zgodovina evropskega povezovanja', sub: 'Kako je ekonomija zamenjala vojaško strategijo', file: 'podcast/eeu-k1/01c-zgodovina-EU.m4a', sec: 1274 },
+        { id: 'eeu-ep2c', n: 2, title: 'Nastanek EU, pogodbe, širitve', sub: 'Od ruševin do enotnega evropskega trga', file: 'podcast/eeu-k1/02c-od-EGS-do-EU27.m4a', sec: 909 },
+        { id: 'eeu-ep3c', n: 3, title: 'Teorija primerjalnih prednosti', sub: 'Kako primerjalne prednosti poganjajo mednarodno trgovino', file: 'podcast/eeu-k1/03c-primerjalne-prednosti.m4a', sec: 1618 },
         { id: 'eeu-ep4b', n: 4, title: 'Učinki proste mednarodne trgovine', sub: 'Zmagovalci in poraženci proste trgovine', file: 'podcast/eeu-k1/04b-prosta-trgovina-lastni-primeri.m4a', sec: 1374 },
         { id: 'eeu-ep5b', n: 5, title: 'Učinki uvedbe carin in carinska reforma EU', sub: 'Kdo v resnici plača carine', file: 'podcast/eeu-k1/05b-carine-lastni-primeri.m4a', sec: 1052 },
         { id: 'eeu-ep6b', n: 6, title: 'Preferencialna liberalizacija', sub: 'Kako sporazum o prosti trgovini uniči blaginjo', file: 'podcast/eeu-k1/06b-preferencialna-lastni-primeri.m4a', sec: 1038 },
