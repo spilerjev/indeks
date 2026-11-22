@@ -128,7 +128,24 @@ function napovedi() {
   return f.svg();
 }
 
+/* ---- Histogram simulacije: ROI 8 ponovitev v razredih po 10 o. t. (83,3; 45,5; 63,6; 70,0; 36,4; 91,7; 54,5; 66,7) ---- */
+function simHist() {
+  const roi = [83.3, 45.5, 63.6, 70.0, 36.4, 91.7, 54.5, 66.7];
+  const f = new Fig({ qmin: 30, qmax: 100, pmin: 0, pmax: 2.6, xl: 'ROI (%)', yl: 'frekvenca', title: 'Simulacija: porazdelitev donosnosti (8 ponovitev)', ml: 40, mr: 16 });
+  for (let a = 30; a < 100; a += 10) {
+    const n = roi.filter((x) => x >= a && x < a + 10).length;
+    if (n) f.rect(a + 0.6, 0, a + 9.4, n, 'a1', null);
+    f.xtick(a, String(a));
+  }
+  f.xtick(100, '100').ytick(1, '1').ytick(2, '2');
+  f.vline(64.0, 0, 2.45, 'gd');
+  f.legend(null, 'povprečje 64,0 % (navpična črta), σ ≈ 18,4 %');
+  f.legend(null, 'P(ROI ≥ 60 %) = 5/8 = 62,5 %');
+  return f.svg();
+}
+
 module.exports = {
+  'z-mpsp-simulacija-hist': simHist,
   'z-mpsp-besedica-spider': spider,
   'z-mpsp-mizarska-ozko-grlo': mizarska,
   'z-mpsp-servis-littlov': servis,

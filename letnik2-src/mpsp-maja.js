@@ -40,7 +40,7 @@ const rac = calc([
       correct: 0,
       explanation: "a = (Σx²Σy − ΣxΣxy)/(nΣx² − (Σx)²) = (24 405 300 − 24 366 750)/52 175 = 38 550/52 175 = 0,739. Enako: a = ȳ − b x̄ = 13,5 − 0,0770 · 165,625 = 0,739.",
       calc: true }),
-  withId('qu6wwej', { q: "Regresija ŷ = 0,739 + 0,0771x (prodaja toplotnih črpalk v sto kosih glede na izdana gradbena dovoljenja). Kolikšna je napoved prodaje za 9. četrtletje, če pričakujemo 250 dovoljenj?",
+  withId('qu6wwej', { q: "Regresija ŷ = 0,739 + 0,07705x (prodaja toplotnih črpalk v sto kosih glede na izdana gradbena dovoljenja). Kolikšna je napoved prodaje za 9. četrtletje, če pričakujemo 250 dovoljenj?",
       options: ["19,28 sto kosov","20,01 sto kosov","21,56 sto kosov","0,82 sto kosov"],
       correct: 1,
       explanation: "0,739 + 0,0771 · 250 = 20,01 sto kosov (10. četrtletje pri 270 dovoljenjih: 21,56; 11. pri 230: 18,47). Pozor: 250 je zunaj opazovanega razpona 120-210, zato gre za ekstrapolacijo.",

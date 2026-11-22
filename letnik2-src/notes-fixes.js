@@ -619,4 +619,6 @@ module.exports = [
   {"part": "pf1/k1", "find": "tržna kapitalizacija 7,8 mrd €;", "replace": "tržna kapitalizacija 7,8 mrd € (delnice v obtoku; na vse izdane 8,5 mrd €);"},
   {"part": "pf1/k1", "find": "</li><li>\n<em>(dopolni)</em>\n</li></ul>", "replace": "</li></ul>"},
   {"part": "pf1/k1", "find": "aritmetično bi napovedalo ~59.000 USD", "replace": "aritmetično bi napovedalo ~61.000 USD"},
+  // 23. 11. 2026: MPSP po neodvisnem pregledu
+  {"part": "mpsp/k1", "find": "<em>Predvidevanje povpraševanja</em> .", "replace": "<em>Predvidevanje povpraševanja</em>."},
 ];

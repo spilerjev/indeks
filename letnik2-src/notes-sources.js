@@ -237,7 +237,7 @@ function scrubSources(html, part, opts = {}) {
 /* Preglasitve razdelkov (notes-overrides.js): lasten rešen primer namesto naloge z vaj ali zgleda iz učbenika */
 const sha10 = (s) => require('crypto').createHash('sha1').update(s).digest('hex').slice(0, 10);
 function figHtml(id, warn, part) {
-  const svg = (require('../figures/zapiski').notes[id] || (() => null))();
+  const svg = (require('../figures/zapiski').notes[id] || (() => require('../figures').load().figs[id] || null))();   // lasten graf zapiskov ali graf iz kvizov
   if (!svg) { warn(`  ! notes-overrides ${part}: ni grafa ${id}`); return ''; }
   return `<div class="ix-fig">${svg}</div>`;
 }
