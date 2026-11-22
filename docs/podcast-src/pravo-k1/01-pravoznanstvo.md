@@ -1,6 +1,6 @@
 # Epizoda 1 — Uvod v pravoznanstvo
 
-Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski in povzetek snovi, pripravljeni za zvočno razlago.
+Tema: Pravo družb in poslovno pravo. Lastna razlaga snovi z lastnimi primeri.
 
 ## Povzetek snovi
 
@@ -20,7 +20,7 @@ Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski in po
 
 - **Pravna sredstva**: redna (pritožba, ugovor) → pravnomočnost; izredna (revizija; kazensko: zahteva za varstvo zakonitosti, obnova). Pritožbeni razlogi: dejansko stanje, kršitev postopka, napačna uporaba materialnega predpisa. **Arbitraža** izključuje sodišče (ZArbit); še mediacija, konciliacija.
 
-## Zapiski z vaj
+## Primeri in pojasnila
 
 ### Osnovni pojmi
 - **Novela** = zakon o spremembah (in dopolnitvah) zakona.

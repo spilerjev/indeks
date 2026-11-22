@@ -1,6 +1,6 @@
 # Epizoda 3 — Stvarno pravo
 
-Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski in povzetek snovi z lastnimi primeri, pripravljeni za zvočno razlago.
+Tema: Pravo družb in poslovno pravo. Lastna razlaga snovi z lastnimi primeri.
 
 ## Povzetek snovi
 
@@ -31,7 +31,7 @@ Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski in po
 - **Povezanost zemljišča in objekta** (*superficies solo cedit*): vse, kar je **trajno spojeno** z zemljiščem, je njegov sestavni del in pripada lastniku zemljišča. Izjema je **stavbna pravica**.
   - **Primer:** Nejc na Tejinem vrtu postavi lesen kiosk na kolesih za poletno sezono. Ker ni trajno spojen z zemljiščem, je **premičnina in ostane Nejčev**. Če bi ga zabetoniral v temelje, bi postal del zemljišča in bi pripadal Teji.
 - **Načelo zaupanja v zemljiško knjigo:** kdor v **dobri veri** zaupa podatkom v zemljiški knjigi, ne sme trpeti škode.
-  - **Primer:** V zemljiški knjigi je kot edini lastnik hiše vpisan Boris, čeprav je hiša skupno premoženje z ženo Majo. Boris hišo proda Lini. Če Lina ni vedela in ni mogla vedeti za Majin delež, je v dobri veri in postane lastnica, Maja pa ima zahtevek proti Borisu. Če je Lina vedela, da je Boris poročen in je hišo kupil med zakonsko zvezo, ali če je Maja ob ogledu še živela v hiši, bi morala Lina poizvedeti. Takrat **ni v dobri veri** in Maja uspe.
+  - **Primer:** V zemljiški knjigi je kot edini lastnik hiše vpisan Boris, čeprav je hiša skupno premoženje z ženo Nino. Boris hišo proda Lini. Če Lina ni vedela in ni mogla vedeti za Ninin delež, je v dobri veri in postane lastnica, Nina pa ima zahtevek proti Borisu. Če je Lina vedela, da je Boris poročen in je hišo kupil med zakonsko zvezo, ali če je Nina ob ogledu še živela v hiši, bi morala Lina poizvedeti. Takrat **ni v dobri veri** in Nina uspe.
 
 ### Posest
 - **Posest je dejanska oblast nad stvarjo.** Ni pravica, ampak dejstvo, a je pravno varovana. **Imetništvo** je oblast za nekoga drugega (natakar, ki drži krožnik).

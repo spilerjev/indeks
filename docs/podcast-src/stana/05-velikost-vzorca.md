@@ -1,109 +1,115 @@
 # Epizoda 5 — Velikost vzorca in vzorčenja z omejitvami
 
-Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Statistična analiza. Lastna razlaga snovi z lastnimi primeri.
 
-## P05 — Velikost vzorca, vzorčenja z omejitvami
+## Ponovitev
 
-### Ponovitev
 - α = delež vzorcev iste velikosti, pri katerih intervalna ocena **ne zajame** prave vrednosti. Za konkreten vzorec ne vemo, ali jo zajame.
-- **Točnost** ocene: g − Γ = (g − E(g)) + (E(g) − Γ) = **natančnost** + **pristranskost**. Viri pristranskosti: cenilka, vzorčni postopek, **nevzorčni viri** (slabi podatki, nejasna navodila, napačni izračuni). Če pristranskost zanemarimo (E(g) = Γ), točnost = natančnost.
-- Natančnost ocene vplivajo: **α, velikost vzorca, (za povprečje) variabilnost spremenljivke, (za delež) vzorčna ocena p**, pri nekaterih vzorčenjih tudi način vzorčenja.
+- **Točnost** ocene: g − Γ = (g − E(g)) + (E(g) − Γ) = **natančnost** + **pristranskost**. Viri pristranskosti: cenilka, vzorčni postopek in **nevzorčni viri** (slabi podatki, nejasna vprašanja, napačni izračuni). Če pristranskost zanemarimo, je točnost enaka natančnosti.
+- Predstavljaj si tarčo: zadetki tesno skupaj, a mimo središča = natančno, a pristransko; razpršeni okoli središča = nepristransko, a nenatančno; tesno v središču = točno.
+- **Natančnost = širina intervala** (ožji je natančnejši). Vplivajo: **α, velikost vzorca, variabilnost spremenljivke** (pri povprečju) in **ocena p** (pri deležu, prek p(1 − p)), pri nekaterih vzorčenjih tudi način vzorčenja.
+- Na α in velikost vzorca **lahko vplivamo**; na velikost populacije in variabilnost spremenljivke ne.
 - Premajhen vzorec → preširok interval. Prevelik → nepotrebni stroški.
+- **Točkovna ocena** je ena številka; pri **intervalni** gremo od nje »malo gor in malo dol« za odklon zaupanja D_g (polovica širine intervala).
+- **SE ima za vsak parameter drugačno formulo** — zato so obrazci pomembni.
 
-### Določanje velikosti vzorca ⭐
-Vhodni podatki: α (→ z), vrsta parametra, **zahtevana natančnost** (absolutno D_g ali relativno D°_g = D_g/Γ, tudi v %), predpostavljena se(g) (iz izkušenj ali **pilotnega vzorca**).
-Formule veljajo za vzorec **s ponavljanjem (nₛ)**; preračun na vzorec **brez ponavljanja**: **n = nₛ / (1 + nₛ/N)**, zaokroži **navzgor**.
+## Določanje velikosti vzorca ⭐
+
+Vhodni podatki: α (→ z), vrsta parametra, **zahtevana natančnost** (absolutna D_g ali relativna D°_g = D_g/Γ, tudi v %) in predpostavljena variabilnost (iz izkušenj ali **pilotnega vzorca**).
+
+Formule dajo velikost vzorca **s ponavljanjem (nₛ)**; preračun na vzorec **brez ponavljanja**: **n = nₛ / (1 + nₛ/N)**.
+- nₛ **ne zaokrožujemo**; šele n zaokrožimo **navzgor** — vzorec je lahko večji, manjši pa ne sme biti (»vsaj n«).
 
 | Parameter | Absolutna natančnost | Relativna natančnost |
 |---|---|---|
 | **Povprečje** | nₛ = (z_{α/2} · σ / D_ȳ)² | nₛ = (z_{α/2} · KV / D°_ȳ)²  (KV = σ/μ) |
 | **Delež** | nₛ = z² · Π(1−Π) / D_p² | nₛ = (z_{α/2} / D°_p)² · (1−Π)/Π |
 
-**Primer 5.1 (teža izdelkov):** N = 1000, D = 1,5 dag, σ² = 225 (σ = 15), α = 5 % → nₛ = (1,96 · 15 / 1,5)² = **384,16** → n = 384,16/(1 + 384,16/1000) = 277,5 → **278 izdelkov**.
-**Primer 5.2 (potres, poškodovane zgradbe):** N = 400 000; »oceniti **spodnjo mejo**« → **enostranski interval → cela α = 1 % → z_α = z_0,01 = 2,3263** (na tabli zaokroženo 2,33); relativna natančnost D°_p = 5 % = 0,05 (v formulo gre v decimalni obliki); **Π = 20 %** → nₛ = (2,3263/0,05)² · 0,8/0,2 = 8 659 → n = 8 659/(1 + 8 659/400 000) = 8 475,6 → **vsaj 8 476 stavb**. R: `sample.size.prop(e=0.05*0.2, P=0.2, N=400000, level=0.98)` → 8476 (**level = 1 − 2α**, ker R α avtomatsko razpolovi). Z z = 2,33 s table: nₛ = 8 686,24 → n = 8 501,6 → 8 502 (zapis s predavanja).
-> ✅ Popravek 12. 11. 2026 (po zapiskih s predavanja): na prosojnici NI napake — prejšnji zapis je napačno navajal Π = 8 % in 28 443. Ključ je **cela α pri enostranski oceni (spodnja meja)**, zato z = 2,3263, ne 2,58. ENOTA: zgradba; SPR: poškodovanost (da/ne); PAR: delež poškodovanih zgradb π.
+- **Absolutna in relativna natančnost:** brezposelnost se dvigne z 8 % na 10 % → **absolutno 2 odstotni točki, relativno 25 %**. »4 % predpostavljene vrednosti« (relativno) in »4 odstotne točke« (absolutno) dasta zelo različen n.
+- Pri vsaki nalogi najprej zapiši **ENOTA / SPREMENLJIVKA / PARAMETER**.
+- Če ni izrecno enostransko, delamo **dvostransko**. Pri »spodnji meji« ali »zgornji meji« gre v formulo **cela α** (z_α), ne α/2. V R funkcija `sample.size.prop` α sama razpolovi, zato pri enostranski oceni nastaviš `level = 1 − 2α`.
 
-### Vzorčenja z omejitvami
-**Enostavno slučajno vzorčenje (ESV):** vsaka kombinacija n enot ima enako verjetnost. **Vzorčenja z omejitvami:** slučajna izbira pod pogoji — razlogi: **boljša natančnost** (manjša se) in **enostavnejša/cenejša izvedba**.
-- **Enota vzorčenja** = kar izbiramo s slučajnimi števili z oštevilčenega seznama; **vzorčna enota** = kar dejansko opazujemo. Pri ESV sta enaki.
-- ESV prednosti: vzorec dobro predstavlja populacijo, preprosto, ne rabi predznanja o populaciji, lahko ugotovimo natančnost. Slabosti: težko dobiti seznam vseh enot, redke enote slabo zastopane, natančnost povečamo samo z večjim vzorcem, velika variabilnost, geografsko oddaljene enote = dragi stroški.
+**Rešen primer: masa paketov kave.** N = 2 500 paketov, zahtevana natančnost D = 2 g, σ = 12 g (iz izkušenj), α = 5 %.
+- Enota: paket. Spremenljivka: masa paketa (v g). Parameter: μ.
+- nₛ = (1,96 · 12 / 2)² = **138,30** → n = 138,30/(1 + 138,30/2 500) = 131,05 → **vsaj 132 paketov**.
+
+**Rešen primer: zamude pri plačilih (spodnja meja).** N = 150 000 podjetij; oceniti želimo **spodnjo mejo** deleža podjetij z zamudo pri plačilih → **enostranska ocena, cela α = 1 % → z = 2,33**; relativna natančnost D°_p = 5 % = 0,05 (v formulo v decimalni obliki); iz lanske raziskave Π = 25 %.
+- Enota: podjetje. Spremenljivka: zamuja s plačili (da / ne). Parameter: delež Π.
+- nₛ = (2,33/0,05)² · 0,75/0,25 = **6 514,68** → n = 6 514,68/(1 + 6 514,68/150 000) = 6 243,5 → **vsaj 6 244 podjetij**.
+- Pogosta napaka: vzeti z = 2,58 (dvostransko), čeprav naloga sprašuje samo po spodnji meji.
+
+**Rešen primer: zaskrbljenost zaradi cen elektrike.** N = 600 000 gospodinjstev; pilotni vzorec: 36 od 240 zaskrbljenih → **Π = 0,15**; α = 5 %.
+- a) **relativna** natančnost D°_p = 5 % = 0,05: nₛ = (1,96/0,05)² · 0,85/0,15 = **8 707,63** → n = 8 707,63/(1 + 8 707,63/600 000) = 8 583,1 → **8 584 gospodinjstev**.
+- b) **absolutna** natančnost D_p = 3 odstotne točke = 0,03: nₛ = 1,96² · 0,15 · 0,85/0,03² = **544,23** → n = 543,7 → **544 gospodinjstev**.
+- Razlika je ogromna: relativna natančnost 5 % od 15 % je le 0,75 odstotne točke, zato potrebuje veliko večji vzorec.
+
+## Vzorčenja z omejitvami
+
+**Enostavno slučajno vzorčenje (ESV):** vsaka kombinacija n enot ima enako verjetnost. **Vzorčenja z omejitvami** so slučajna izbira pod pogoji; razloga sta **boljša natančnost** (manjša se) in **enostavnejša ali cenejša izvedba**.
+- **Enota vzorčenja** = kar izbiramo s slučajnimi števili s seznama; **vzorčna enota** = kar dejansko opazujemo. Pri ESV sta enaki.
+- Prednosti ESV: vzorec dobro predstavlja populacijo, preprosto, ne rabi predznanja o populaciji, lahko ugotovimo natančnost. Slabosti: težko dobiti seznam vseh enot, redke enote so slabo zastopane, natančnost povečamo le z večjim vzorcem, oddaljene enote pomenijo visoke stroške.
 
 | Vrsta | Postopek | Prednosti | Slabosti / opombe |
 |---|---|---|---|
-| **Stratificirano** | heterogeno populacijo razdelimo na k **bolj homogenih, izključujočih se stratumov** (po faktorialni spremenljivki, ki vpliva na proučevano); v vsakem ESV (vzorčni delež ni nujno enak); ocene ločeno, nato združimo | **bolj učinkovito od ESV** (manjša se pri isti n, α in N → ožji interval), ker je variabilnost znotraj stratumov manjša | potrebno strokovno znanje in dodatne informacije za oblikovanje stratumov |
-| **V skupinicah (cluster)** | populacijo razdelimo na M skupinic (primarnih enot, pogosto naravnih), izberemo m skupinic, **opazujemo VSE enote v izbranih** | okvir samo za skupinice, ni seznama vseh enot; enostavna logistika; poceni | učinkovito le, če je **raznolikost znotraj skupinic velika in med skupinicami majhna**; se lahko večja kot pri ESV |
-| **V več stopnjah** | hierarhične populacije (država → regija → občina → naselje → gospodinjstvo); na vsaki stopnji slučajno izberemo enote; pri 2 stopnjah: izberemo primarne enote, v njih **slučajno izberemo (ne vseh)** elementarne | nižji stroški, poenostavljen okvir | pri isti n **manj natančno** kot prejšnja; primer: **TIMSS** |
-| **Sistematično** | korak **s = N/n = 1/f**, izberemo vsako s-to enoto (npr. f = 20 % → vsako 5.) | lažji, hitrejši, manj napak, enakomerna zastopanost | **pristranskost, če se korak ujema s periodo** v populaciji (npr. vsaka 24. ura, vsak 7. dan) |
-| **Kvotno** | populacijo razdelimo na podskupine po izbranih lastnostih; **kvota** = št. enot iz podskupine; vzorec ima enako strukturo kot populacija | poceni, enostavno, ni okvira | **neslučajno (namerna izbira)** → ne poznamo porazdelitve ocen → **ne moremo sklepati o parametrih** |
+| **Stratificirano** | heterogeno populacijo razdelimo na k **bolj homogenih, izključujočih se stratumov** (po spremenljivki, ki vpliva na proučevano); v vsakem ESV (vzorčni delež ni nujno enak); ocene izračunamo ločeno in združimo | **bolj učinkovito od ESV** (manjša se pri istem n, α in N → ožji interval), ker je variabilnost znotraj stratumov manjša | potrebni so strokovno znanje in dodatni podatki za oblikovanje stratumov |
+| **V skupinicah** | populacijo razdelimo na M skupinic (pogosto naravnih), izberemo m skupinic in **opazujemo VSE enote v izbranih** | potrebujemo samo seznam skupinic; enostavna logistika; poceni | učinkovito le, če je **raznolikost znotraj skupinic velika, med skupinicami pa majhna**; se je lahko večja kot pri ESV |
+| **V več stopnjah** | hierarhične populacije (država → regija → občina → naselje → gospodinjstvo); na vsaki stopnji slučajno izberemo enote; pri dveh stopnjah v izbranih primarnih enotah **slučajno izberemo le del** elementarnih | nižji stroški, poenostavljen okvir | pri istem n **manj natančno**; tako delajo velike mednarodne raziskave znanja učencev |
+| **Sistematično** | korak **s = N/n = 1/f**, izberemo vsako s-to enoto (f = 20 % → vsaka 5.) | lažje, hitrejše, manj napak, enakomerna zastopanost | **pristranskost, če se korak ujema s periodo** v populaciji (npr. vsak 7. dan je vedno nedelja) |
+| **Kvotno** | populacijo razdelimo na podskupine po izbranih lastnostih; **kvota** = število enot iz podskupine; vzorec ima enako strukturo kot populacija | poceni, enostavno, ni okvira | **neslučajno (namerna izbira)** → ne poznamo porazdelitve ocen → **ne moremo sklepati o parametrih** |
 
-### Stratificirano vzorčenje — formule za povprečje ⭐
-- ȳ_str = (1/N) · Σ N_j · ȳ_j
-- var(ȳ_str) = (1/N²) · Σ N_j² · (s_j²/n_j) · (N_j − n_j)/N_j = (1/N²) Σ N_j (N_j − n_j) s_j²/n_j ; se = √var
+- **Stratificirano vzorčenje naredimo vedno, ko je mogoče** (npr. po spolu, starosti, regiji). Stratumi morajo biti **med seboj čim bolj različni, znotraj pa čim bolj homogeni**.
+- **Skupinice so ravno obratno:** skupinice so si med seboj podobne, znotraj vsake pa je velika raznolikost — vsaka skupinica je »mini populacija«.
+
+## Stratificirano vzorčenje — formule za povprečje ⭐
+
+- ȳ_str = (1/N) · Σ N_j · ȳ_j — povprečje je **tehtano z velikostjo stratuma N_j**, ne z n_j. To je glavna razlika od navadnega povprečja vzorca.
+- var(ȳ_str) = (1/N²) · Σ N_j (N_j − n_j) s_j²/n_j ; se = √var.
 - Interval: ȳ_str ± z_{α/2} · se(ȳ_str); za **vsoto** pomnožimo meje z N (ista α).
+- s_j² je že nepristranska ocena variance — če je podana varianca, je ne kvadriraš še enkrat.
 
-**Primer 4.1 (varianta) — mleko v 3 stratumih** (N = 60 000, n = 200, α = 5 %):
-| Stratum | N_j | n_j | ȳ_j | s_j |
+**Rešen primer: stroški mobilne telefonije po starostnih skupinah** (N = 40 000, n = 250, α = 5 %):
+
+| Stratum | N_j | n_j | ȳ_j (€) | s_j (€) |
 |---|---|---|---|---|
-| mestni | 13 100 | 46 | 27 | 5 |
-| ravninski | 24 450 | 82 | 15 | 3 |
-| planinski | 22 450 | 72 | 8 | 2 |
+| do 30 let | 9 000 | 60 | 33 | 8 |
+| 30–60 let | 19 000 | 115 | 24 | 6 |
+| nad 60 let | 12 000 | 75 | 17 | 5 |
 
-ȳ_str = (13 100 · 27 + 24 450 · 15 + 22 450 · 8)/60 000 = **15,0008 l**; var = 0,05173 → se = **0,2275**; interval **14,56 < μ < 15,45 l ; α = 0,05**; vsota (×60 000): **≈ 873 302 < Y_tot < 926 798 l ; α = 0,05**. (Prosojnica je izračun pustila prazen — lasten izračun, preveri z R.)
+- ȳ_str = (9 000 · 33 + 19 000 · 24 + 12 000 · 17)/40 000 = **23,93 €**
+- var = 0,1537 → se = **0,392 €** (pri ESV z istim n je bila se 0,567 €)
+- interval **23,15 < μ < 24,70 € ; α = 0,05** — ožji kot pri ESV (22,88–25,12 €), ker so stratumi znotraj bolj homogeni;
+- vsota (× 40 000): **926 268 < Y_tot < 987 732 € ; α = 0,05**.
 
-### Zgled vprašanj — MOL, cena m² zemljišč v 3 skupinah
-a) **stratificirano vzorčenje** (stratumi: mestna, primestna, podeželska; v vsakem ESV).
-b) okvir vzorčenja = **seznam vseh zazidljivih zemljišč na območju MOL** (po stratumih: trije seznami zemljišč).
-c) natančnost izražamo z **odklonom zaupanja D_ȳ = z · se(ȳ_str)** (parameter: aritmetična sredina cene m²).
-d) (profesorica: »zato se sploh pogovarjamo o stratificiranju«; **učinkovitost = čim manjša standardna napaka** → bolj natančno »cilja«) **Da, bolj učinkovito** — cene se razlikujejo po lokaciji, torej so stratumi bolj homogeni od cele populacije → manjša variabilnost znotraj stratumov → manjša se → ožji interval pri isti n in α.
+**Rešen primer: dnevi bolniške odsotnosti** — podjetje ima ločena seznama zaposlenih: 600 v proizvodnji in 240 v pisarni. Iz vsakega seznama slučajno izberemo 40 zaposlenih → **stratificirano vzorčenje** (vzorčna deleža nista enaka).
 
----
-
-## V05 — 5. vaje (velikost vzorca, vzorčenja)
-
-**Naloga 1** — energetska kriza, N = 860 000 gospodinjstev, pilot: 42/200 zaskrbljenih → **Π = 0,21**, α = 5 %.
-a) **relativna** natančnost D°_p = 4 % = 0,04: nₛ = (1,96/0,04)² · 0,79/0,21 = **9 032,3** → n = 9 032,3/(1 + 9 032,3/860 000) = **8 938,5 → 8 939 gospodinjstev**.
-b) **absolutna** natančnost D_p = 4 odstotne točke = 0,04: nₛ = 1,96² · 0,21 · 0,79/0,04² = **398,3** → n = **398,1 → 399 gospodinjstev**.
-*Pazi:* »4 % predpostavljene vrednosti« (relativno) ≠ »4 odstotne točke« (absolutno) → zelo različna n.
-
-**Naloga 2** — študentske zabave, ločena seznama po spolu, ESV z 20 % vzorčnim deležem → **stratificirano vzorčenje**.
-| Spol | N_j | n_j (20 %) | ȳ_j | s_j² |
+| Stratum | N_j | n_j | ȳ_j (dni) | s_j² |
 |---|---|---|---|---|
-| študentke | 450 | 90 | 7,0 | 5,29 |
-| študenti | 280 | 56 | 11,8 | 15,21 |
+| proizvodnja | 600 | 40 | 3,2 | 4,00 |
+| pisarna | 240 | 40 | 5,5 | 6,25 |
 
-N = 730; ȳ_str = (450 · 7 + 280 · 11,8)/730 = **8,841**; var = [450 · 360 · 5,29/90 + 280 · 224 · 15,21/56]/730² = 26 557/532 900 = 0,04984 → se = **0,2232**; 1,96 · 0,2232 = 0,438 → **8,40 < μ < 9,28 obiskov ; α = 0,05**. (lasten izračun, ker je vaja prazna; preveri.)
+- N = 840; ȳ_str = (600 · 3,2 + 240 · 5,5)/840 = **3,86 dneva**
+- var = [600 · 560 · 4,00/40 + 240 · 200 · 6,25/40]/840² = 41 100/705 600 = 0,0583 → se = **0,241**
+- 1,96 · 0,241 = 0,47 → **3,38 < μ < 4,34 dneva ; α = 0,05** (dvostransko, ker ni drugače zahtevano).
+- Navadno povprečje vseh 80 zaposlenih v vzorcu bi bilo (40 · 3,2 + 40 · 5,5)/80 = **4,35 dneva** — previsoko, ker je pisarna v vzorcu prekomerno zastopana. Zato tehtamo z N_j.
 
-**Naloga 3** — prostovoljni gasilci: 30 društev, vsi člani izbranih društev.
-a) vrsta: **vzorčenje v skupinicah**; enota vzorčenja (primarna) = **gasilsko društvo**; vzorčna (elementarna) enota = **posamezen gasilec (član društva)**.
-b) dobra učinkovitost, če je **raznolikost med gasilci znotraj društev velika, med društvi pa majhna** (društva so si med seboj podobna, vsako je »mini populacija«).
-c) prednosti pred ESV: **seznam samo društev** (seznama vseh gasilcev ni mogoče sestaviti), podatke dobimo na istem mestu (enostavna logistika), **poceni in hitro**.
-d) pri **dvostopenjskem** vzorčenju v izbranih društvih slučajno izberemo **le del** članov; pri vzorčenju v skupinicah opazujemo **vse člane** izbranih društev.
+## Rešen primer: vzorčenje v skupinicah — dijaki v oddelkih
 
-**Naloga 4** — kripto trgovanje, **kvotno** vzorčenje n = 120; razmerje letnikov 3 : 2 : 1, v vsakem letniku M : Ž = 4 : 6.
-a) **Kvota** = število enot, ki jih moramo vključiti v vzorec iz posamezne podskupine; določena mora biti tako, da je **struktura vzorca enaka strukturi populacije** po relevantnih lastnostih.
-b) Lastnosti: **letnik in spol**. 1. letnik 60 (24 M, 36 Ž); 2. letnik 40 (16 M, 24 Ž); 3. letnik 20 (8 M, 12 Ž). Izračunamo lahko le **vzorčni delež p** (opisno) — sklepati o populaciji **ne moremo**.
-c) 1) **populacije**; 2) **neslučajen** (namerno izbran).
+Raziskujemo, koliko časa dijaki v regiji preživijo na družbenih omrežjih. Seznama vseh dijakov ni, imamo pa seznam vseh oddelkov. Slučajno izberemo 12 oddelkov in anketiramo **vse** dijake v njih.
+- a) Vrsta: **vzorčenje v skupinicah**; enota vzorčenja (primarna) = **oddelek**; vzorčna (elementarna) enota = **dijak**.
+- b) Učinkovito je, če so si **oddelki med seboj podobni**, dijaki znotraj oddelka pa **čim bolj različni**.
+- c) Prednosti pred ESV: potrebujemo **samo seznam oddelkov**, podatke dobimo na istem mestu, **poceni in hitro**.
+- d) Pri **dvostopenjskem** vzorčenju bi v izbranih oddelkih slučajno izbrali **le del** dijakov; pri skupinicah opazujemo **vse**. Oboje je **verjetnostno** vzorčenje — znamo povedati, s kakšno verjetnostjo je enota izbrana.
 
----
+## Rešen primer: kvotno vzorčenje — anketa o e-skirojih
 
-## 📒 Dopolnilni zapiski — P05 in V05
+n = 150; starostne skupine v razmerju 1 : 2 : 2 (do 25, 25–45, nad 45 let), v vsaki skupini M : Ž = 2 : 3.
+- a) **Kvota** je število enot, ki jih moramo vključiti iz posamezne podskupine, tako da je **struktura vzorca enaka strukturi populacije** po izbranih lastnostih.
+- b) Lastnosti: **starost in spol**. Do 25 let: 30 (12 M, 18 Ž); 25–45 let: 60 (24 M, 36 Ž); nad 45 let: 60 (24 M, 36 Ž). Skupaj 60 M in 90 Ž.
+- c) Struktura vzorca posnema strukturo **populacije**, izbira enot pa je **neslučajna** (namerna). Zato lahko izračunamo le opisne deleže v vzorcu, sklepati o populaciji pa ne moremo, ker ne vemo, s kakšno verjetnostjo je bila posamezna enota izbrana.
 
-### P05 — poudarki s predavanja
-- **Točkovna ocena** = na vzorcu izračunamo eno številko; **intervalna** = od točkovne gremo »malo gor, malo dol« (D_g = odklon zaupanja = polovica širine intervala). **α** = delež vzorcev, s katerimi zgrešimo; z_{α/2}, ker gledamo na obe strani in α razpolovimo.
-- **SE ima za vsak parameter drugačno formulo → obrazci!** Ožji kot je interval, bolj natančna je ocena.
-- Na natančnost **lahko vplivamo** z α in z velikostjo vzorca; na velikost populacije in variabilnost spremenljivke **ne moremo**.
-- Absolutna vs. relativna natančnost — primer obrestne mere 2 % → 3 %: **absolutno 1 odstotna točka, relativno 50 %**.
-- nₛ (s ponavljanjem) **ne zaokrožujemo**; šele n (brez ponavljanja) zaokrožimo **navzgor** — vzorec je lahko večji, manjši pa ne sme biti (»vsaj n«).
-- Pri vsaki nalogi najprej zapiši **ENOTA / SPREMENLJIVKA / PARAMETER** (5.1: proizvod / teža y / μ_y; 5.2: zgradba / poškodovanost da-ne / delež π).
-- Če ni izrecno enostransko, delamo **dvostransko**. Pri »spodnji meji« ali »zgornji meji« (enostransko) gre v formulo **cela α** (z_α), ne α/2. V R-ju: `level = 1 − 2α`, ker R α avtomatsko razpolovi.
-- **Stratificirano vzorčenje naredimo VEDNO, ko je mogoče** (npr. po spolu, starosti). Stratumi morajo biti **med seboj čim bolj različni (heterogenost med stratumi), znotraj pa čim bolj homogeni**. ⭐ IZPIT: kako se pri stratificiranem vzorčenju izračuna povprečje (tehtano z **N_j**, ne z n_j) in v čem se razlikuje od navadnega povprečja.
-- Primer 4.1 varianta (mleko) — profesoričin rezultat na tabli: ȳ_str = 15, se = 0,228 → **14,55 < μ < 15,45 (α = 5 %)**; vsota: **873 243 < Y_tot < 926 877** (meje × N, ista α) — iz vzorca sklepamo na populacijo.
-- **Skupinice**: ravno obratno kot stratumi — **homogenost na primarni ravni (skupinice si podobne), heterogenost na elementarni ravni**. Okvir vzorčenja = seznam M skupinic (ne N osnovnih enot). Primer 5.3c: izberemo par gimnazij in znotraj njih opazujemo **vse** dijake.
+## Natančnost in učinkovitost — kako odgovoriti
 
-### V05 — kar je bilo rečeno na vajah
-- Nal. 1: a) **8 939** (R: `sample.size.prop(e=0.04*0.21, P=0.21, N=860000, level=0.95)`), b) **399** (`e=0.04`) → »toliko ali več«. Delež iz pilota = 42/200 = 0,21; z = 1,96 (α/2 = 0,025).
-- Nal. 2: ȳ_str = (450 · 7 + 280 · 11,8)/730 = **8,84**; se = 0,223; »če ni napisano → DVOSTRANSKI interval« → **8,40 < μ < 9,28 (α = 0,05)**. Vzorčni delež 20 %: n₁ = 90, n₂ = 56. Ocena variance s² je že nepristranska — je ne kvadriramo še enkrat.
-- Nal. 3 (gasilci): **vzorčenje v skupinicah**; primarna enota = gasilsko društvo, elementarna = prostovoljni gasilec. Učinkovito, če so si **društva čim bolj podobna**, gasilci znotraj društva pa **čim bolj različni**. Prednosti pred ESV: enostavnejše, hitrejše, cenejše, logistično manj zahtevno. d) v skupinicah: ESV **samo na primarni ravni** (nato vsi člani); v dveh stopnjah: slučajno vzorčenje **na primarni IN elementarni ravni**. Vsa ta vzorčenja so **verjetnostna** — znamo povedati, kakšna je verjetnost, da je posamezna enota izbrana v vzorec.
-- Nal. 4 (kvotno): **neverjetnostno** vzorčenje — ne vemo, s kakšno verjetnostjo je enota vključena v vzorec. Kvota = število enot z določenimi lastnostmi, ki jih zajamemo v vzorec; določimo jih tako, da čim bolje opišejo strukturo populacije. Lastnosti: letnik in spol → 48 M / 72 Ž: 1. letnik 24/36, 2. letnik 16/24, 3. letnik 8/12. c) populacija; neverjetnosten.
-
----
+- Pri ocenjevanju povprečne cene stanovanj v mestu, kjer se cene močno razlikujejo po soseskah, je smiselno **stratificirano vzorčenje** po soseskah (v vsaki ESV).
+- Okvir vzorčenja so **seznami vseh stanovanj** po stratumih.
+- Natančnost izražamo z **odklonom zaupanja D_ȳ = z · se(ȳ_str)**.
+- **Učinkovitost** = čim manjša standardna napaka. Stratificirano je bolj učinkovito od ESV, ker so stratumi bolj homogeni od cele populacije → manjša variabilnost znotraj stratumov → manjša se → ožji interval pri istem n in α.

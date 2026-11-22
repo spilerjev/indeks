@@ -1,8 +1,8 @@
 # Epizoda 3 — Teorija primerjalnih prednosti
 
-Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
-## P02 — Teorija primerjalnih prednosti
+## Teorija primerjalnih prednosti
 
 
 ### Mednarodna menjava (MM)
@@ -65,7 +65,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **Za kakšno MM se je treba zavzemati?** Za **prosto (liberalizirano) mednarodno menjavo**. Od tod teoretična utemeljitev trgovinske liberalizacije, ekonomskih integracij (EU) in WTO.
 - *Opomba:* koristi so na ravni **države kot celote**. Znotraj države so dobitniki in poraženci (izvozne proti uvozno-konkurenčnim panogam), kar je tema P3.
 
-**Dopolnilo s predavanja:**
+**Dopolnilo:**
 - **Protekcionizem** = vse oblike **omejevanja** mednarodne menjave (carine, kvote, subvencije, necarinske ovire). Ne želimo si ga.
 - **Dampinške cene (damping)** = prodaja v tujini po ceni, **nižji od cene na domačem trgu** (ali pod stroški), da bi izrinili konkurenco. Gre za **nelojalno konkurenco**, ki si je ne želimo. WTO in EU dovolita **protidampinške dajatve** kot izjemo od proste menjave.
 - Sklep: zavzemamo se za **prosto mednarodno menjavo**.

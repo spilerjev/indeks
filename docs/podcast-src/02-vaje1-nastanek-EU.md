@@ -1,6 +1,6 @@
 # Epizoda 2 — Od EGS in EFTA do EU-27: evropesimizem, enotni trg, pogodbe in širitve
 
-Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
 ## Od EGS do EU-27
 

@@ -1,8 +1,8 @@
 # Epizoda 5 — Učinki uvedbe carin in carinska reforma EU
 
-Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
-## P04 — Učinki uvedbe carin
+## Učinki uvedbe carin
 
 
 ### Učinki uvedbe MFN carine, majhna država
@@ -82,7 +82,7 @@ Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)*
 | Kdo plača carino | le domači potrošniki | delno tudi tuji izvozniki (E) |
 | Δ W | −(B + D), vedno izguba | E − (B + D), lahko pozitivna |
 
-**Dopolnilo s predavanja:**
+**Dopolnilo:**
 - **WTO = STO** (Svetovna trgovinska organizacija).
 - **Pravilo MFN (največje ugodnosti) in nediskriminacije:** če članica WTO eni državi prizna ugodnejšo carinsko stopnjo, jo mora **enako ponuditi vsem ostalim članicam WTO**. Izjeme so carinske unije in območja proste trgovine (npr. EU), kar je osnova za temo preferencialne liberalizacije (P5).
 - **P_W = P_FT**: svetovna cena = cena pri **prosti trgovini** (FT = *free trade*), ne »prostotrgovinski sporazum«.
@@ -92,11 +92,11 @@ Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)*
   - **nimajo razloga prodajati ceneje**, ker se kupci lahko oskrbijo samo še pri dražjem uvozu → cena se dvigne na P_FT + T.
   - Carina torej podraži **ves** proizvod na domačem trgu, ne le uvoženega. Prav zato proizvajalci pridobijo ploskev A.
 
-**Dopolnilo s predavanja (P4, novo ravnotežje):**
+**Dopolnilo (novo ravnotežje):**
 - Uvoz pred carino: **M1 = D_H − S_H = q4 − q1** (pri P_FT). Uvoz po carini: **M2 = q3 − q2** (pri P_FT + T).
 - **Zmanjšanje uvoza = M1 − M2 = (q4 − q3) + (q2 − q1)** = potrošni učinek (manjša potrošnja) + proizvodni učinek (večja domača proizvodnja).
 
-**Dopolnilo s predavanja (P4, blaginja majhne države):**
+**Dopolnilo (blaginja majhne države):**
 - **Javnofinančni učinek:** država dobi prihodke od carine = **carina na enoto × količina uvoženega blaga** = +C.
 - Seštevek: −(A + B + C + D) + A + C → A in C se izničita (sta le **prerazdelitev**: A od potrošnikov k proizvajalcem, C od potrošnikov k državi) → **ΔW = −(B + D) = −B − D**. **Carina zmanjša blaginjo.**
 - Uradna imena:
@@ -106,7 +106,7 @@ Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)*
 
 ---
 
-## P4 dodatno — Carinska reforma EU, dogovora z ZDA in Kitajsko
+## Dodatno — Carinska reforma EU, dogovora z ZDA in Kitajsko
 **Carinska reforma EU** (začetek veljavnosti 20. 9. 2026; pravna ustanovitev **EUCA** in postopno uvajanje):
 | Področje | Glavne spremembe |
 |---|---|
@@ -119,10 +119,10 @@ Učinki: Δ PP = −(A + B + C + D), Δ PRP = A, Δ JF = C, **Δ W = −(B + D)*
 | Varnost | strožji nadzor nevarnih izdelkov, goljufij, neskladnosti s standardi EU |
 
 **Trgovinski sporazum EU–ZDA** (Turnberry, Škotska, **27. 7. 2025**; v veljavi od **1. 7. 2026**, 2 uredbi) — ozadje: Trumpova napoved trgovinske vojne.
-- ameriške carine na večino blaga iz EU: **zgornja meja 15 %** (prosojnica: »revidirana 10 %«);
+- ameriške carine na večino blaga iz EU: **zgornja meja 15 %**;
 - **EU odpravi preostale carine na industrijske izdelke iz ZDA** (1. 7. 2026); določeni kmetijski/prehrambeni izdelki iz ZDA: **preferencialni dostop** do trga EU;
 - jeklo, aluminij in izdelki iz njiju: ameriške **sektorske carine do 50 %**; EU lahko ob kršitvah začasno odpravi carinske ugodnosti (npr. jeklo);
-- zaveze: dodatne **naložbe EU podjetij v ZDA do 2028** (znesek na prosojnici prazen;po dogovoru ~600 mrd USD), **nakupi energentov v ZDA do 2028** (LNG, nafta, jedrsko gorivo;~750 mrd USD), nakupi čipov za umetno inteligenco, druge zaveze.
+- zaveze: dodatne **naložbe EU podjetij v ZDA do 2028** (po dogovoru ~600 mrd USD), **nakupi energentov v ZDA do 2028** (LNG, nafta, jedrsko gorivo;~750 mrd USD), nakupi čipov za umetno inteligenco, druge zaveze.
 - Teoretična povezava: gre za **preferencialno (diskriminacijsko) liberalizacijo** — EU z ZDA dogovori nižje carine kot z ostalimi (poveži z P5: ustvarjanje/preusmerjanje trgovine).
 
 **Dogovor EU–Kitajska, 9. 10. 2026** (konkretni ukrepi in nadaljnja pogajanja): zmanjševanje trgovinskih napetosti, tehnično sodelovanje; **nadaljnje proučevanje znižanja/odprave carin** na nekatere izdelke v skladu s pravili WTO; **omejitev izvoza hibridnih vozil**; hitrejše izdajanje izvoznih dovoljenj za **redke zemlje** za dobave v EU; odpravljanje regulativnih ovir za dostop do trga … (druge določbe: priporočena obravnava na seminarjih).

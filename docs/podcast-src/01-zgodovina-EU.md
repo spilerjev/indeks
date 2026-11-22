@@ -1,17 +1,17 @@
 # Epizoda 1 — Zgodovina evropskega povezovanja
 
-Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
-## P01 — Zgodovina EU
+## Zgodovina EU
 
 ### Razrušena Evropa
 
 **Kaj prikazujeta:** fotografije uničenja v 2. svetovni vojni.
 - **Berlin 1945:** Reichstag, Frankfurter Allee, Unter der Linden, Brandenburška vrata, Berlinska katedrala (posnetek iz 1945 ob posnetku iz 1997 → obnova).
 - **Ortona (Italija) 1943, Verona 1945, Rotterdam 1940** (center mesta zbombardiran v nemškem napadu).
-- **London 1940:** »Blitz«, nemško bombardiranje (na prosojnici je povezava `bombardiranje-Londona.pdf`).
+- **London 1940:** »Blitz«, nemško bombardiranje.
 
-**Zakaj je to na začetku predavanja o EU (bistvo):**
+**Zakaj je to na začetku zgodbe o EU (bistvo):**
 - Evropa je bila leta 1945 fizično in gospodarsko porušena: uničena infrastruktura, industrija in stanovanja ter milijoni mrtvih in razseljenih.
 - Uničenje je prizadelo **zmagovalce in poražence** (London in Rotterdam tako kot Berlin) → vojna se ni izplačala nikomur.
 - Iz tega izhaja **temeljni motiv evropskega povezovanja: trajni mir**. Ideja je bila, da se države gospodarsko tako povežejo (najprej premog in jeklo, tj. vojna industrija), da nova vojna med njimi, predvsem med Francijo in Nemčijo, postane »ne le nepredstavljiva, ampak materialno nemogoča« (Schumanova deklaracija, 1950).
@@ -77,9 +77,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 **Za izpit:** Marshallov načrt → OEEC (1948, → OECD 1961) + EPU (1950–58, kliring neto saldov, zlato + krediti, konvertibilnost). To sta integraciji **izven EU**.
 
-### Dodatno: Versajska pogodba (1919), ozadje k prosojnici 5 (»okriviti poraženca«)
-
-*Na prosojnicah ni posebej omenjena, je pa ozadje za točko »Kaj je povzročilo vojno? → okriviti poraženca«.*
+### Dodatno: Versajska pogodba (1919) — ozadje k vprašanju »okriviti poraženca«
 
 - **Kaj:** mirovna pogodba po **1. svetovni vojni**, podpisana 28. 6. 1919 v Versaillesu. Pogodbo so **diktirali zmagovalci** (Francija, VB, ZDA), Nemčija se o njej ni mogla pogajati.
 - **Ključne določbe:**
@@ -91,7 +89,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
   - Nemčija je bila gospodarsko izčrpana in ponižana. Sledili so hiperinflacija (1923), nato velika depresija (1929) in množična brezposelnost.
   - Rodila sta se zamera in revanšizem, ki ju je izkoristil **Hitler**. Pogodba je tako en od vzrokov za 2. svetovno vojno.
   - Keynes je v delu *The Economic Consequences of the Peace* (1919) to napovedal: kaznovati poraženca je ekonomsko škodljivo za vso Evropo.
-- **Lekcija za leto 1945 (povezava s predavanjem):** po 1. sv. vojni so poraženca **kaznovali**, kar se ni obneslo. Po 2. sv. vojni so najprej razmišljali podobno (**Morgenthaujev plan 1944**, ki je predvideval deindustrializacijo Nemčije in njeno spremembo v kmetijsko državo). Zaradi hladne vojne so ga opustili in izbrali nasprotno pot: **močna Zahodna Nemčija, vključena v evropsko integracijo** (Marshallov načrt, ESPJ). Poraženca so torej **vključili** namesto da bi ga kaznovali.
+- **Lekcija za leto 1945:** po 1. sv. vojni so poraženca **kaznovali**, kar se ni obneslo. Po 2. sv. vojni so najprej razmišljali podobno (**Morgenthaujev plan 1944**, ki je predvideval deindustrializacijo Nemčije in njeno spremembo v kmetijsko državo). Zaradi hladne vojne so ga opustili in izbrali nasprotno pot: **močna Zahodna Nemčija, vključena v evropsko integracijo** (Marshallov načrt, ESPJ). Poraženca so torej **vključili** namesto da bi ga kaznovali.
 
 | | Po 1. sv. vojni (Versailles 1919) | Po 2. sv. vojni |
 |---|---|---|

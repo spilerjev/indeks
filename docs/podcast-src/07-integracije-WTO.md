@@ -1,8 +1,8 @@
 # Epizoda 7 — Ekonomske integracije in WTO
 
-Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
-## P06 — Ekonomske integracije in Svetovna trgovinska organizacija
+## Ekonomske integracije in Svetovna trgovinska organizacija
 
 ### Ekonomske integracije: opredelitev
 
@@ -48,7 +48,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 - **spremljanje izvajanja sporazumov**,
 - **reševanje sporov**,
 - pomoč državam, da se usposobijo za mednarodno trgovino,
-- pomoč državam, ki prosijo za **članstvo (pristop) v WTO**. *(Na predavanju slišano »mednarodni trg«, a smiselno gre za pristop k WTO.)*
+- pomoč državam, ki prosijo za **članstvo (pristop) v WTO**.
 - **Doha runda** (2001, Doha, Katar; 4. ministrska konferenca, MM4): 20 trgovinskih področij, 3 najpomembnejša:
   - reforma **kmetijskih subvencij**,
   - zagotoviti, da liberalizacija spoštuje **trajnostni razvoj (varstvo okolja)**.

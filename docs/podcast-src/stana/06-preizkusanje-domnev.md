@@ -1,174 +1,124 @@
 # Epizoda 6 — Osnove preizkušanja domnev
 
-Predmet: Statistična analiza (2. letnik). Vir: lastni zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Statistična analiza. Lastna razlaga snovi z lastnimi primeri.
 
-## P06 — Osnove statističnega preizkušanja domnev
+## Ponovitev: natančnost in vzorčenje
 
-### Ponovitev P05 (predavanje 10. 11. 2026, zapisi s table)
-- **Točnost vs. natančnost** (tarče na tabli):
-  - natančno + **pristransko** → **netočno** (zadetki skupaj, a mimo centra)
-  - **nenatančno** + nepristransko → **netočno** (zadetki okoli centra, a razpršeni)
-  - natančno + nepristransko → **točno** (zadetki skupaj v centru)
-  → točnost = natančnost + nepristranskost.
-- **Natančnost = ŠIRINA intervala** (ožji = natančnejši). Vplivajo: **α**, **n**, **variabilnost Y** (pri aritm. sredini — s), **točkovna ocena p** (pri deležu — p(1−p)).
-- Zahteve po natančnosti podamo **absolutno D_ȳ / D_p** ali **relativno D°_ȳ / D°_p**.
-- **Stratificirano vs. ESV:** ESV ločeno po stratumih → manjša variabilnost znotraj stratumov → manjša varianca cenilke → manjša SE → **ožja (natančnejša) intervalna ocena pri isti α in istem n**.
-- Bistvena pomanjkljivost **kvotnega** vzorčenja: **ni verjetnostno (slučajno)** → ne moremo sklepati na populacijo.
+- **Točnost = natančnost + nepristranskost.** Tarča: zadetki tesno skupaj, a mimo središča = natančno, a pristransko (netočno); razpršeni okoli središča = nepristransko, a nenatančno (netočno); tesno v središču = točno.
+- **Natančnost = širina intervala.** Vplivajo α, n, variabilnost Y (pri povprečju) in ocena p (pri deležu).
+- **Stratificirano vzorčenje** da pri isti α in istem n manjšo se in ožji interval kot ESV.
+- Bistvena pomanjkljivost **kvotnega** vzorčenja: ni slučajno, zato ne moremo sklepati na populacijo.
 
-### Profesorica (10. 11.)
-- Preizkušanje domnev = **osrednji del semestra**.
-- Dva pogosta načina sklepanja: **intervalna ocena** ali **preizkušanje domnev**. Intervalna ocena je uporabna predvsem pri **velikih vzorcih** — pri majhnih je se velika (širok, neuporaben interval) in ne velja predpostavka normalnosti (n ≥ 100).
-- **Razlika v logiki:** pri intervalni oceni nič ne predpostavimo — iz vzorca ocenimo, kje je parameter. Pri preizkusu domneve **najprej nekaj predpostavimo** (H₀, npr. μ = 2 kg) in nato preverimo, ali vzorec tej predpostavki preveč nasprotuje.
-- Domneve = trditve, ki povedo nekaj o parametru (ali obliki porazdelitve).
-- **Skici s table** (prečiščeno): 
-  - levo **intervalna ocena**: zvon in interval ȳ ± z·SE sta centrirana pri **naši vzorčni oceni ȳ** → sprašujemo, ali je prava μ znotraj (»?« na tabli).
-  - desno **preizkus domnev**: zvon in območje μ₀ ± z·SE sta centrirana pri **predpostavljeni vrednosti μ₀** (H₀) → pogledamo, ali naša ȳ pade znotraj (H₀ ne zavrnemo) ali zunaj (zavrnemo).
-  - »=« na tabli: širini sta enaki (2·z·SE) → ista matematika, druga perspektiva.
-  - Preizkušanje domnev: za male **+ velike** vzorce (dopis na tabli).
+## Dva načina sklepanja
 
-### Osnovni pojmi
-- **Statistična domneva** = trditev o parametru ali obliki porazdelitve. Sklepanje o parametru: preizkušanje domnev (mali vzorci), intervalna ocena (veliki vzorci).
-- **H₀ (ničelna)** = trditev, ki jo preverjamo (**ne moremo je dokazati**). **H₁ (alternativna, raziskovalna)** = logično nasprotje. Če vzorec preveč odstopa od H₀ → H₀ zavrnemo in sklepamo v skladu s H₁.
-- Primeri: H₀: μ = 2 kg, H₁: μ ≠ 2 kg; H₀: μ ≥ 2, H₁: μ < 2; H₀: μ₁ ≤ μ₂, H₁: μ₁ > μ₂; H₀: σ₁ = σ₂, H₁: σ₁ ≠ σ₂; H₀: f_j = f′_j (skladnost porazdelitve).
-- **Nesestavljene** domneve (po ena vrednost v H₀ in H₁: Γ = Γ₀ proti Γ = Γ₁) — v praksi redke. **Sestavljene** (v praksi običajne): H₁ ima **več možnih vrednosti** (≠, <, >).
+- Preizkušanje domnev je osrednji del sklepne statistike.
+- **Intervalna ocena** je uporabna predvsem pri **velikih vzorcih**; pri majhnih je se velika (interval je preširok) in ne velja predpostavka normalnosti. **Preizkušanje domnev** uporabljamo pri majhnih in velikih vzorcih.
+- **Razlika v logiki:** pri intervalni oceni nič ne predpostavimo — iz vzorca ocenimo, kje je parameter. Pri preizkusu **najprej nekaj predpostavimo** (H₀, npr. μ = 330 ml) in preverimo, ali vzorec tej predpostavki preveč nasprotuje.
+- **Slika:** pri intervalni oceni je zvon centriran pri **naši oceni ȳ** in sprašujemo, ali je prava μ znotraj intervala. Pri preizkusu je zvon centriran pri **predpostavljeni vrednosti μ₀** in pogledamo, ali naša ȳ pade znotraj območja μ₀ ± z·SE (H₀ ne zavrnemo) ali zunaj (zavrnemo). Širini sta enaki (2·z·SE): ista matematika, druga perspektiva.
 
-**Profesorica (10. 11.):** H₀ = domneva, ki jo želimo preveriti; vanjo **praviloma dvomimo** (ne vedno). Če ji na podlagi vzorca ne moremo verjeti → zavrnemo in sklepamo v skladu s H₁. Domneve vedno **v parih** (H₀ + H₁ = logično nasprotje).
+## Osnovni pojmi
+
+- **Statistična domneva** = trditev o parametru ali obliki porazdelitve.
+- **H₀ (ničelna)** = trditev, ki jo preverjamo na podlagi vzorca; vanjo praviloma dvomimo. **Ne moremo je dokazati.**
+- **H₁ (alternativna, raziskovalna)** = logično nasprotje H₀. Vanjo zapišemo trditev, ki jo želimo **dokazati**. Če vzorec preveč odstopa od H₀, H₀ zavrnemo in sklepamo v skladu s H₁.
+- Domneve so vedno **v parih**; H₀ in H₁ se izključujeta in skupaj pokrijeta vse možnosti.
 - **Pravilo: enačaj (=, ≥, ≤) je VEDNO v H₀**; H₁ ima ≠, < ali >.
-- Tri variante (hlebec 2 kg):
-  | Kaj želimo dokazati | H₀ | H₁ | preizkus |
-  |---|---|---|---|
-  | teža ni 2 kg (karkoli drugega) | μ = 2 | μ ≠ 2 | dvostranski |
-  | hlebci so **prelahki** | μ ≥ 2 | μ < 2 | enostranski levi |
-  | hlebci so **pretežki** | μ ≤ 2 | μ > 2 | enostranski desni |
+- Domneve so vedno o **parametru** (μ, σ, Π), nikoli o vzorčni oceni (ȳ, s, p).
+- Primeri: H₀: μ = 330, H₁: μ ≠ 330; H₀: μ₁ ≤ μ₂, H₁: μ₁ > μ₂; H₀: σ₁ = σ₂, H₁: σ₁ ≠ σ₂; skladnost porazdelitve H₀: f_j = f′_j.
 
-**Profesorica:** nesestavljena = v domnevi **ena sama točka na premici** (H₀ in H₁ = dve konkretni, različni vrednosti) → redko v praksi. Sestavljena = **več vrednosti** → običajno.
-- Preverjeno (⚠️ delno): »v H₁ so vse vrednosti razen ničelne« drži le pri **dvostranskem** (H₁: μ ≠ μ₀). Pri enostranskem je v H₁ samo **ena stran** (μ < μ₀), druga stran (μ > μ₀) pa spada v H₀ → takrat je sestavljena tudi H₀ (μ ≥ μ₀). Skupaj H₀ ∪ H₁ vedno pokrijeta vse možnosti.
+**Lasten primer — pločevinka napitka, ki naj bi imela 330 ml:**
 
-### Pravilni in nepravilni sklepi ⭐
+| Kaj želimo dokazati | H₀ | H₁ | preizkus |
+|---|---|---|---|
+| polnjenje ni 330 ml (karkoli drugega) | μ = 330 | μ ≠ 330 | dvostranski |
+| pločevinke so **premalo napolnjene** | μ ≥ 330 | μ < 330 | enostranski levi |
+| pločevinke so **preveč napolnjene** | μ ≤ 330 | μ > 330 | enostranski desni |
+
+- **Nesestavljena domneva:** H₁ ima **eno samo** vrednost parametra (npr. H₀: μ = 330 proti H₁: μ = 325). Takrat lahko izračunamo β. V praksi redko.
+- **Sestavljena domneva:** H₁ ima **več (neskončno mnogo)** vrednosti (≠, <, >). V praksi običajno. Pri ≠ so v H₁ vse vrednosti razen ničelne; pri enostranskem je v H₁ samo ena stran, druga pa spada v H₀ (takrat je sestavljena tudi H₀, npr. μ ≥ 330).
+
+**Kam postaviti trditev, ki jo želimo dokazati** — lasten primer: proizvajalec koles trdi, da nova veriga zdrži v povprečju 12 000 km namesto dosedanjih 10 000 km (σ = 1 500 km je znan, n = 30). Trditev, ki jo želi dokazati, gre v H₁, dosedanje stanje v H₀: **H₀: μ = 10 000 km, H₁: μ = 12 000 km** (nesestavljeni domnevi). Napačno bi bilo dati trditev v H₀ ali v domnevo vpisati vzorčno oceno ȳ ali s namesto parametra.
+
+## Pravilni in nepravilni sklepi ⭐
+
 | Sklep \ Dejansko stanje | **H₀ velja** | **H₀ ne velja** |
 |---|---|---|
 | **H₀ ne zavrnemo** | pravilen, verjetnost **1 − α** | **napaka 2. vrste**, verjetnost **β** |
 | **H₀ zavrnemo** | **napaka 1. vrste**, verjetnost **α** | pravilen, verjetnost **1 − β** (**moč preizkusa**) |
 
-- **α = stopnja značilnosti** = tveganje, da zavrnemo H₀, ki dejansko velja.
-- **S** = območje nezavračanja (»sprejema«), **K** = kritično območje (zavrnemo), **kritična meja g_k** loči S in K, določena z α. **β je vedno odvisna od kritične meje (α)** in od tega, katera vrednost iz H₁ velja. Pri sestavljeni H₁ β **ne moremo izračunati** (ne vemo, katera vrednost velja) → zato ne sprejemamo H₀, ampak jo »ne zavrnemo«.
-
-**Prosojnica »Verjetnost nepravilnih sklepov pri nesestavljenih domnevah« (10. 11., zapisi s table)**
-- Primer s table: H₀: Γ = Γ₀ = 16, H₁: Γ = Γ₁ = 20 (vsaka ena sama vrednost; Γ₀ < Γ₁ → kritično območje desno).
-- **Zgornji graf (porazdelitev ocen, če velja H₀, center Γ₀):** α izberemo **VNAPREJ** → določi **kritično mejo g_k**. Levo od g_k = S (»sprejem«/nezavračanje, ploščina 1 − α), desno = K (kritično območje, ploščina α = napaka 1. vrste).
-- **Srednji graf (če velja H₁, center Γ₁):** ploščina levo od g_k = **β** (ocena pade v S, čeprav velja H₁ → napačno ne zavrnemo); desno = **1 − β** (moč).
-- **Spodnji graf (oba skupaj):** α in β sta »repa« dveh zvonov ob isti g_k. Premik g_k desno → α ↓, β ↑ (in obratno) → **β je vedno odvisna od kritične meje oz. α**. Oba hkrati zmanjšamo samo z večjim n (ožja zvonova).
-- S = »sprejem« v narekovajih: H₀ ne sprejmemo, le **ne zavrnemo** (»najbrž velja, ker ni razloga, da ne bi«).
-
-### Primer 6.1 — stroj za pakiranje čajnih vrečk
-σ = 180, n = 81 → se = 180/√81 = **20 vrečk/uro**; H₀: μ = 4000.
-**a) nesestavljena:** H₁: μ = 3950; α = 5 % → kritična meja (levi rep) g_k = 4000 − 1,645 · 20 = **3967,1**.
-- H₀ ne zavrnemo, če H₀ velja: **0,95 (1 − α)**; zavrnemo, če H₀ velja: **0,05 (α)**.
-- H₀ ne zavrnemo, če velja H₁ (μ = 3950): β = P(ȳ > 3967,1 | μ = 3950) = P(Z > 0,855) = **0,196** (profesorica na predavanju zaokroži z na **0,86** → F = 0,8051 → **β = 0,1949**, moč 0,8051); zavrnemo, če velja H₁: **1 − β = 0,804** (moč).
-**b) sestavljena:** H₁: μ ≠ 4000 (prosojnica ima tipkarsko napako »40«) → dvostranski, α/2 = 2,5 % na vsaki strani: **3960,8 < ȳ < 4039,2** = območje nezavračanja. Verjetnost nezavrnitve, če H₀ velja: 0,95; zavrnitve: 0,05; **β ni izračunljiv** (ni ene vrednosti v H₁).
-
-**Profesorica (10. 11.) – zakaj ne trdimo »H₀ velja«:**
-- V splošnem (sestavljena H₁) **β ne moremo določiti**, razumeti pa moramo idejo.
-- Če rečemo »H₀ velja«, naročniku sporočimo, da smo o tem prepričani — a verjetnosti te napake (β) **ne poznamo**.
-- Poznamo samo verjetnost napake v nasprotni smeri: **α** (da zavrnemo H₀, ki velja).
-- Zato: zavrnitev H₀ → sklep z znano verjetnostjo napake (≤ α) ✔; nezavrnitev → »na podlagi vzorca H₀ ne moremo zavrniti« (ne »H₀ velja«).
-- Isti razlog, zakaj **trditev, ki jo želimo dokazati, damo v H₁**.
-
-### Porazdelitve vzorčnih ocen (mali vzorci)
-- **Z** (povprečje pri normalni spr. in znanem σ; delež pri velikih n), **t** (Gosset), **χ²** (Helmert/Pearson), **F** (Fisher–Snedecor). t, χ², F imajo **stopinje prostosti (m)**; pri velikem m so podobne normalni.
-- **Stopinje prostosti** = število neodvisnih informacij oz. število vrednosti, ki se lahko »prosto« spreminjajo (število podatkov − število neodvisnih zvez/ocenjenih parametrov).
-  - 6.2 a) varianca iz vzorca: **m = n − 1** (ker je ȳ ocenjen); b) 4 kategorije bivališč: **m = 4 − 1 = 3**; c) Cobb–Douglas Q = cKᵃLᵇ (3 parametri): m = n − (št. parametrov) 🔎 (prosojnica ne da rešitve).
-- **t:** simetrična, E(t) = 0, bolj sploščena od Z, Var = m/(m−2) > 1 (m > 2); uporaba: povprečje, primerjava dveh povprečij, regresijski koeficienti.
-- **χ²:** vsota kvadratov normalnih spr.; **E = m, Var = 2m, Mo = max(0, m−2)**; uporaba: varianca, skladnost porazdelitev.
-- **F:** razmerje (X/m₁)/(Y/m₂), X ~ χ²(m₁), Y ~ χ²(m₂); stopinje m₁ (števec), m₂ (imenovalec); **t² ~ F(1, m)**; uporaba: primerjava varianc, **ANOVA** (več povprečij), ustreznost regresijskega modela.
-
-### Osnovna ideja in 4 koraki ⭐
-Če vzorčna ocena pade v **K** → značilno odstopanje → zavrnemo H₀, sklepamo v skladu s H₁ pri α (oz. p). Če pade v **S** → preizkus **ni odkril značilnega odstopanja**, H₀ ne moremo zavrniti (možno: večji vzorec; izjemoma H₀ sprejmemo, a tvegamo napako 2. vrste — temu se izogibamo). **Tudi pri nezavrnitvi navedemo α.**
-1. **Domnevi H₀ in H₁** (izključujoči se). **Trditev, ki jo želimo dokazati, damo v H₁** (ker takrat vemo verjetnost napake).
-2. Izberemo **preizkus** glede na parameter in porazdelitev ocen.
-3. **Ugotovimo značilnost** odstopanja pri izbrani (čim nižji) α — ali je ocena v kritičnem območju (dvo- ali enostransko).
-4. **Sklep:** zavrnemo H₀ ali ne moremo zavrniti → **vsebinski sklep**.
-
-### Dvostranski in enostranski preizkus
-- **Dvostranski:** H₀: Γ = Γ₀, H₁: Γ ≠ Γ₀; kritično območje na obeh straneh, **α/2 + α/2**. Primer 6.3 a): hlebec res tehta 2 kg?
-- **Enostranski:** H₁: Γ < Γ₀ (levi rep) ali Γ > Γ₀ (desni rep); K samo na eni strani, celotna α na eni strani. Primer 6.3 b): hlebci so **prelahki** (H₀: μ ≥ 2 kg, H₁: μ < 2 kg). Smer izberemo **vnaprej** (ne po videnih podatkih). Pri enostranskem lažje najdemo značilno odstopanje.
-- ANOVA, χ² preizkusi skladnosti: K samo na desni → ne govorimo o eno-/dvostranskosti.
-
-### Stopnja značilnosti α in p-vrednost ⭐
-- **α** = delež vzorčnih ocen v kritičnem območju; običajno **0,05** (tudi 0,01, 0,001). Če zavrnemo H₀, je verjetnost napake **največ α**.
-- **p-vrednost** (Prob., Sig.) = **najmanjša α, pri kateri bi še lahko zavrnili H₀** (»točna stopnja značilnosti«); je natanko verjetnost napake 1. vrste, če na podlagi konkretnega vzorca H₀ zavrnemo.
-- **Pravilo: p ≤ α → H₀ zavrnemo; p > α → H₀ ne zavrnemo.**
-- **p enostranskega = p dvostranskega / 2** (če je ocena na »pravi« strani).
-- **ASA 2016:** p = 0,05 se uporablja, ker je pač navada. **Nizka p ≠ nujno vsebinska pomembnost** (statistična vs. praktična značilnost). Zlorabe: objavljanje samo značilnih rezultatov, manipulacija vzorca, naknadno postavljanje domnev po poznavanju rezultatov.
-
-### Zgled vprašanj
-**1. Plašči:** proizvajalec želi **dokazati** porast trajnosti s 45 000 na 50 000 km (σ = 8000 znan, n = 25) → dokazovana trditev gre v H₁, trenutno stanje v H₀ → **B: H₀: μ = 45 000 ; H₁: μ = 50 000** (nesestavljeni domnevi, kot pri primeru 6.1 a). Ostali odgovori so napačni: A in D mešata σ² oz. ȳ (ocene) v domnevi — domneve so vedno o **parametru**, ne o vzorčni oceni; C in E dajo dokazovano trditev v H₀.
-**2.** Slika z oznakami (porazdelitvi H₀ in H₁, α, β) je slika — razlaga: α = ploščina H₀-porazdelitve v K, β = ploščina H₁-porazdelitve v S, 1 − β = ploščina H₁ v K.
-
----
-
-## V06 — 6. vaje (preizkušanje domnev)
-
-**Naloga 1 (manjkajoče besede)**, besede v pravem sklonu (»… ki bi jo radi ___«):
-1) **zavrnili**; 2) **dokazali**; 3) (Za) **sestavljene**; 4) **več (neskončno mnogo)**; 5) (o) **dvostranskem**; 6) (o) **enostranskem**; 7) (na) **levi** (strani); 8) (napako) **2.** (vrste); 9) **nesestavljena**.
-
-**Naloga 1, razlaga na vajah:**
-- **Nesestavljena domneva:** H₁ ima **eno samo** vrednost parametra, npr. H₁: μ = 4100. Takrat lahko izračunamo β.
-- **Sestavljena domneva:** H₁ ima **več (neskončno mnogo)** možnih vrednosti, npr. H₁: μ ≠ 4000, μ < 4000 ali μ > 4000. Uporablja se v praksi.
-  - Pri ≠ so to **vse vrednosti razen tiste iz H₀**.
-  - Pri < so to vse vrednosti pod njo, pri > vse nad njo.
-- **Dvostranski preizkus:** H₁ z znakom **≠**. Odstopanje je lahko navzgor ali navzdol, zato je kritično območje na **obeh** straneh porazdelitve (α/2 levo in α/2 desno).
-- **Enostranski preizkus:** H₁ z znakom **<** ali **>**. Kritično območje je samo na **eni** strani: pri < na **levi**, pri > na **desni**.
-- **Beseda 8:** profesor je v besedilu »in je zato ne bi zavrnili« zamenjal z »**in jo zato sprejmemo**«. Sklep »H₀ velja«, ko v resnici velja H₁, je **napaka 2. vrste**.
-
-**Pojmi:**
-- **Statistična domneva** je trditev o vrednosti nekega parametra v populaciji.
-- **Ničelna domneva H₀** je domneva, ki jo **preverjamo** na podlagi vzorčnih podatkov. Vedno vsebuje enačaj (=, ≤, ≥).
-- **Alternativna domneva H₁** je trditev, ki **nasprotuje ničelni domnevi**: H₀ in H₁ se izključujeta in skupaj pokrijeta vse možnosti. Vanjo zapišemo trditev, ki jo želimo **dokazati**. Sprejmemo jo, če H₀ zavrnemo.
-
-**Pravilni in nepravilni sklepi** (priročnik str. 29, pogl. 12; risali na tablo) ⭐
-| Sklep na podlagi vzorca \ Dejansko stanje | **H₀ velja** | **H₀ ne velja** |
-|---|---|---|
-| **H₀ velja** (ne zavrnemo) | ✅ sklep je pravilen, verjetnost **1 − α** | ❌ **napaka 2. vrste**, verjetnost **β** |
-| **H₀ ne velja** (zavrnemo) | ❌ **napaka 1. vrste**, verjetnost **α** | ✅ sklep je pravilen, verjetnost **1 − β** = **moč preizkusa** |
-
-- **α** (stopnja značilnosti) si izberemo sami, npr. 5 %.
-- **β** lahko izračunamo samo, če je H₁ **nesestavljena** (Naloga 1, beseda 9).
+- **α = stopnja značilnosti** = tveganje, da zavrnemo H₀, ki dejansko velja. Izberemo jo sami **vnaprej**, npr. 5 %.
+- **S** = območje nezavračanja (»sprejema«), **K** = kritično območje, **kritična meja g_k** ju loči in je določena z α.
+- **β** je vedno odvisna od kritične meje (torej od α) in od tega, katera vrednost iz H₁ velja. Izračunamo jo lahko **samo pri nesestavljeni H₁**.
 - **Moč preizkusa** (1 − β) je verjetnost, da H₀ pravilno zavrnemo, ko res ne velja.
-- ⚠️ **Izpit:** nikoli ne reci »**sprejmemo H₀**«, ampak »**H₀ ne moremo zavrniti**«.
-  - Analogija s sodiščem: sodnik razsodi »**not guilty**« (ni dokazov za krivdo), ne pa »innocent« (nedolžen).
-  - Ne zavrnjena H₀ pomeni le, da podatki ne nasprotujejo H₀, ne pa, da je dokazana.
-- **Zakaj nikoli ne »sprejmemo« H₀**:
-  - Če je ocena na vzorcu blizu H₀ in bi H₀ sprejeli, lahko naredimo **napako 2. vrste (β)**. Njene verjetnosti ne poznamo, ker je H₁ sestavljena.
-  - Zato H₀ ne sprejmemo, ampak rečemo **»H₀ ne moremo zavrniti«**. Odločitev zadržimo: podatki ne zadoščajo za sklep.
-  - β lahko zmanjšamo z **večjim vzorcem** (manjša standardna napaka), ne pa z izbiro, kot jo imamo pri α.
-- **Najvišja še dopustna stopnja značilnosti je α = 0,05**.
-  - Če je **p-vrednost > 0,05**, smo v območju, ko **H₀ ne moremo zavrniti**.
-  - Če je **p ≤ 0,05**, H₀ zavrnemo.
-  - Pri 2a je p = 0,0124 ≤ 0,05, zato zavrnemo; pri 2b je p = 0,9938 > 0,05, zato ne moremo zavrniti.
+- **Slika z dvema zvonovoma:** zgornji zvon (če velja H₀, center Γ₀) — desno od g_k je α; spodnji zvon (če velja H₁, center Γ₁) — levo od g_k je β, desno 1 − β. Lasten primer: H₀: Γ = 50, H₁: Γ = 54, kritično območje je desno. Če g_k premaknemo desno, se α zmanjša, β pa poveča (in obratno). Obe hkrati zmanjšamo samo z **večjim vzorcem** (ožja zvonova).
 
-**Naloga 2, 2. korak (risba na tabli):**
-- ⚠️ **Klasična napaka študentov:** na os nanašajo **standardni odklon σ = 180** namesto **standardne napake**.
-- Rišemo porazdelitev **cenilke ȳ** (ne posameznih ur!), zato je razmik **SE(ȳ) = σ/√n = 180/√81 = 180/9 = 20 vrečk na uro**.
-  - Popravka (N − n)/(N − 1) ni, ker je populacija ur neskončna.
-- Os ȳ: 3940, 3960, 3980, **4000**, 4020, 4040, 4060 (= 4000 ± 1, 2, 3 SE).
-- Os z pod njo: −3, −2, −1, **0**, 1, 2, 3. **Na sredini je ȳ = 4000, z pa je 0** (ne 4000).
-- Naš ȳ = 4050 leži pri **z = (4050 − 4000)/20 = 2,5**.
+### Zakaj nikoli ne »sprejmemo« H₀
 
-**Naloga 2** (nadaljevanje 6.1): σ = 180, n = 81 → se = 20; ȳ = 4050 → **z = (4050 − 4000)/20 = 2,5**.
-a) **H₀: μ = 4000; H₁: μ ≠ 4000** (dvostranski). Z-preizkus (Y normalna, σ znan). Kritična z = ±1,96; 2,5 > 1,96 → **zavrnemo H₀**; p = 2 · P(Z > 2,5) = **0,0124**. Sklep: pri α = 5 % je zmogljivost stroja značilno drugačna od 4000 vrečk/uro.
-b) **H₀: μ ≥ 4000; H₁: μ < 4000** (enostranski levi). Kritična z = −1,645; z = +2,5 je v območju sprejema → **H₀ ne zavrnemo**; p = P(Z < 2,5) = **0,9938**. Ni dokaza, da je stroj počasnejši (vzorec je celo višji od 4000).
-c) **H₀: μ ≤ 4000; H₁: μ > 4000** (enostranski desni). Kritična z = +1,645; 2,5 > 1,645 → **zavrnemo H₀**; p = P(Z > 2,5) = **0,0062** (= 0,0124/2). Stroj ima značilno **večjo** zmogljivost od pogodbene.
+- Če rečemo »H₀ velja«, sporočimo, da smo o tem prepričani — a verjetnosti te napake (β) pri sestavljeni H₁ **ne poznamo**.
+- Poznamo samo verjetnost napake v drugi smeri: **α**.
+- Zato: zavrnitev H₀ → sklep z znano verjetnostjo napake (največ α) ✔; nezavrnitev → »**na podlagi vzorca H₀ ne moremo zavrniti**«, ne »H₀ velja«.
+- Analogija s sodiščem: razsodba »ni dokazov za krivdo« še ne pomeni »nedolžen«.
+- Iz istega razloga **trditev, ki jo želimo dokazati, damo v H₁**.
+- β lahko zmanjšamo z **večjim vzorcem** (manjša standardna napaka).
 
-**4. korak: sklep ima dva dela**:
-- **Statistični sklep:** pri α = 0,05 **zavrnemo H₀** (μ = 4000) in **sprejmemo H₁**: aritmetična sredina **ni enaka** 4000.
-  - ⚠️ **Ne** sprejmemo, da je μ = 4050. 4050 je samo vzorčna ocena, prave vrednosti μ ne poznamo. Sprejmemo le trditev iz H₁ (μ ≠ 4000).
-- **Vsebinski sklep:** »Povprečna zmogljivost stroja **ni enaka** predvideni s kupoprodajno pogodbo.«
+## Rešen primer: polnilna linija za steklenice
 
-**Naloga 3:**
-a) **α** = verjetnost napake 1. vrste = tveganje, da zavrnemo H₀, ki dejansko velja (delež vzorcev, ki padejo v kritično območje).
-b) **p-vrednost** = najmanjša α, pri kateri še lahko zavrnemo H₀ (točna stopnja značilnosti). Za nalogo 2: **a) 0,0124, b) 0,9938, c) 0,0062**.
-c) H₀ zavrnemo, ko je **p ≤ α** (ocena v kritičnem območju) → vsebinski sklep po H₁: odstopanje je **statistično značilno**, »na podlagi vzorčnih podatkov pri α = 5 % sklepamo, da …«.
-d) H₀ ne moremo zavrniti (p > α): **preizkus ni odkril značilnega odstopanja** od H₀; **ne dokažemo, da H₀ velja** — podatki ne nasprotujejo H₀ pri izbrani α.
+Linija naj bi po pogodbi napolnila **2 400 steklenic na uro**. σ = 150 steklenic/uro (znan), opazujemo n = 36 ur → **SE = 150/√36 = 25 steklenic/uro**. H₀: μ = 2 400.
+- Popravka (N − n)/(N − 1) ni, ker je populacija ur neskončna.
 
----
+**a) Nesestavljena domneva:** H₁: μ = 2 340; α = 5 %; kritično območje je levo.
+- kritična meja g_k = 2 400 − 1,645 · 25 = **2 358,9**;
+- H₀ ne zavrnemo, če H₀ velja: **0,95** (1 − α); zavrnemo, če H₀ velja: **0,05** (α);
+- H₀ ne zavrnemo, čeprav velja H₁ (μ = 2 340): β = P(ȳ > 2 358,9 | μ = 2 340) = P(Z > 0,76) = 1 − 0,7764 = **0,2236**;
+- zavrnemo, ko velja H₁: **1 − β = 0,7764** (moč).
+
+**b) Sestavljena domneva:** H₁: μ ≠ 2 400 → dvostranski preizkus, α/2 = 2,5 % na vsaki strani:
+- območje nezavračanja **2 351 < ȳ < 2 449**;
+- verjetnost nezavrnitve, če H₀ velja, je 0,95, zavrnitve 0,05; **β ni izračunljiv**, ker v H₁ ni ene same vrednosti.
+
+**Risanje porazdelitve:** rišemo porazdelitev **cenilke ȳ**, ne posameznih ur, zato je razmik na osi **SE = 25**, ne σ = 150 (to je klasična napaka).
+- os ȳ: 2 325, 2 350, 2 375, **2 400**, 2 425, 2 450, 2 475 (= 2 400 ± 1, 2, 3 SE);
+- os z pod njo: −3, −2, −1, **0**, 1, 2, 3. Na sredini je ȳ = 2 400 in z = 0.
+
+**c) Vzorec 36 ur da ȳ = 2 455 steklenic/uro** → z = (2 455 − 2 400)/25 = **2,2**.
+- **Dvostransko** (H₀: μ = 2 400; H₁: μ ≠ 2 400): kritični z = ±1,96; 2,2 > 1,96 → **zavrnemo H₀**; p = 2 · (1 − 0,9861) = **0,0278**. Pri α = 5 % je zmogljivost linije značilno drugačna od pogodbene.
+- **Enostransko levo** (H₀: μ ≥ 2 400; H₁: μ < 2 400): kritični z = −1,645; z = +2,2 je v območju nezavračanja → **H₀ ne moremo zavrniti**; p = **0,9861**. Ni dokaza, da je linija počasnejša — vzorec je celo nad 2 400.
+- **Enostransko desno** (H₀: μ ≤ 2 400; H₁: μ > 2 400): kritični z = +1,645; 2,2 > 1,645 → **zavrnemo H₀**; p = **0,0139** (= 0,0278/2). Linija ima značilno **večjo** zmogljivost od pogodbene.
+
+**Sklep ima dva dela:**
+- **statistični:** pri α = 0,05 zavrnemo H₀ (μ = 2 400) in sprejmemo H₁: povprečna zmogljivost ni enaka 2 400. Ne trdimo, da je μ = 2 455 — to je samo vzorčna ocena;
+- **vsebinski:** »Povprečna zmogljivost linije ni enaka zmogljivosti iz pogodbe.«
+
+## Porazdelitve vzorčnih ocen pri majhnih vzorcih
+
+- **Z** (povprečje pri normalni spremenljivki in znanem σ; delež pri velikem n), **t** (Gosset), **χ²** (Helmert, Pearson), **F** (Fisher, Snedecor). t, χ² in F imajo **stopinje prostosti (m)**; pri velikem m so podobne normalni.
+- **Stopinje prostosti** = število vrednosti, ki se lahko prosto spreminjajo (število podatkov − število ocenjenih parametrov oz. neodvisnih zvez). Lastni primeri:
+  - varianca iz vzorca 20 meritev: m = 20 − 1 = **19** (ȳ smo že ocenili);
+  - skladnost porazdelitve s 5 kategorijami prevoza (avto, avtobus, kolo, peš, vlak): m = 5 − 1 = **4**;
+  - premica y = a + bx iz 30 točk (dva parametra): m = 30 − 2 = **28**.
+- **t:** simetrična, E(t) = 0, bolj sploščena od Z, Var = m/(m−2) > 1 (za m > 2); uporaba: povprečje, primerjava dveh povprečij, regresijski koeficienti.
+- **χ²:** vsota kvadratov standardiziranih normalnih spremenljivk; **E = m, Var = 2m, Mo = max(0, m − 2)**; uporaba: varianca, skladnost porazdelitev.
+- **F:** razmerje (X/m₁)/(Y/m₂), kjer sta X ~ χ²(m₁) in Y ~ χ²(m₂); **t² ~ F(1, m)**; uporaba: primerjava varianc, **ANOVA** (več povprečij), ustreznost regresijskega modela.
+
+## Osnovna ideja in 4 koraki ⭐
+
+Če vzorčna ocena pade v **K**, je odstopanje značilno → zavrnemo H₀ in sklepamo v skladu s H₁ pri α (oz. p). Če pade v **S**, preizkus **ni odkril značilnega odstopanja** in H₀ ne moremo zavrniti. **Tudi pri nezavrnitvi navedemo α.**
+1. **Domnevi H₀ in H₁.** Trditev, ki jo želimo dokazati, gre v H₁.
+2. **Izberemo preizkus** glede na parameter in porazdelitev ocen.
+3. **Ugotovimo značilnost** odstopanja pri izbrani α — ali je ocena v kritičnem območju (dvo- ali enostransko).
+4. **Sklep:** zavrnemo H₀ ali je ne moremo zavrniti → **vsebinski sklep**.
+
+## Dvostranski in enostranski preizkus
+
+- **Dvostranski:** H₀: Γ = Γ₀, H₁: Γ ≠ Γ₀; kritično območje na obeh straneh, **α/2 + α/2**. Odstopanje je lahko navzgor ali navzdol.
+- **Enostranski:** H₁: Γ < Γ₀ (kritično območje na **levi**) ali Γ > Γ₀ (na **desni**); cela α je na eni strani. Smer izberemo **vnaprej**, ne po tem, ko vidimo podatke. Pri enostranskem lažje najdemo značilno odstopanje.
+- ANOVA in χ²-preizkusi skladnosti imajo kritično območje samo na desni, zato tam ne govorimo o eno- ali dvostranskosti.
+
+## Stopnja značilnosti α in p-vrednost ⭐
+
+- **α** = delež vzorčnih ocen v kritičnem območju; običajno **0,05** (tudi 0,01, 0,001). Najvišja še sprejemljiva vrednost je praviloma 0,05. Če zavrnemo H₀, je verjetnost napake **največ α**.
+- **p-vrednost** (v izpisih Prob. ali Sig.) = **najmanjša α, pri kateri bi še zavrnili H₀** (»točna stopnja značilnosti«); je verjetnost napake 1. vrste, če na podlagi tega vzorca H₀ zavrnemo.
+- **Pravilo: p ≤ α → H₀ zavrnemo; p > α → H₀ ne moremo zavrniti.**
+- **p enostranskega = p dvostranskega / 2** (če je ocena na »pravi« strani).
+- Ko H₀ zavrnemo, je odstopanje **statistično značilno**: »na podlagi vzorčnih podatkov pri α = 5 % sklepamo, da …«. Ko je ne zavrnemo, **ne dokažemo, da H₀ velja** — podatki ji le ne nasprotujejo dovolj.
+- **Ameriško statistično združenje (ASA, 2016):** meja 0,05 je stvar navade. **Nizka p ne pomeni nujno vsebinske pomembnosti** (statistična proti praktični značilnosti). Zlorabe: objavljanje samo značilnih rezultatov, prirejanje vzorca, postavljanje domnev šele po ogledu rezultatov.

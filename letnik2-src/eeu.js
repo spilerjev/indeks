@@ -247,3 +247,6 @@ module.exports = {
     ] },
   ],
 };
+
+// Celotni izpit vključuje snov kolokvija, zato so iste zvočne razlage tudi pod Izpitom (enako kot pri Statistični analizi).
+module.exports.parts.find((p) => p.id === 'izpit').audio = module.exports.parts.find((p) => p.id === 'k1').audio;

@@ -1,6 +1,6 @@
 # Epizoda 4 — Obligacijsko pravo: pogodbe, napake volje, utrditev in odškodnina
 
-Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski in povzetek snovi z lastnimi primeri, pripravljeni za zvočno razlago. OZ = Obligacijski zakonik.
+Tema: Pravo družb in poslovno pravo. Lastna razlaga snovi z lastnimi primeri.
 
 ## Temeljna načela obligacijskega prava
 - **Dispozitivnost:** večina določb OZ so »rezervna« pravila, ki veljajo le, če se stranki nista dogovorili drugače.

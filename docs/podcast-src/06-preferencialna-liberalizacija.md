@@ -1,8 +1,8 @@
 # Epizoda 6 — Preferencialna liberalizacija
 
-Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
-## P05 — Učinki preferencialne liberalizacije
+## Učinki preferencialne liberalizacije
 
 ### 1. del — Teorija preferencialne liberalizacije
 **Razvoj teorije carinske unije:** Viner (1950, *The Customs Union Issue*), Meade (1955), Lipsey (1957); novejši: Krugman (1991), Baldwin (2014). Pred 1950 so CU obravnavali kot korak k prosti trgovini (torej pozitivno). **Ekonomska integracija = prosta trgovina znotraj + diskriminacija nasproti tretjim** (preferencialna obravnava med državami članicami).
@@ -48,16 +48,16 @@ Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in
 
 ---
 
-## Dopolnitve k P04 in P05
+## Dopolnitve k carinam in preferencialni liberalizaciji
 
-### P04 — carine, dopolnitve
+### carine, dopolnitve
 - **MFN = pravilo največje ugodnosti (STO):** če članica eni drugi članici ponudi ugodnejšo carinsko stopnjo, jo mora ponuditi **vsem** članicam.
 - Majhna država **ne more** vplivati na svetovno ceno (cene sprejemnica). Cene ob carini: na svetovnem trgu **P_W = P_FT**; uvoženi proizvod na domačem trgu **P_FT + T = P_FT (1 + t)** (t = ad valorem stopnja); doma proizvedeni proizvod **P_FT + T** (homogeni proizvodi → enaka cena).
 - Novo ravnotežje: potrošnja ↓ (q₄ → q₃), proizvodnja ↑ (q₁ → q₂), uvoz ↓: M₁ = q₄ − q₁ → M₂ = q₃ − q₂; **ΔM = (q₄ − q₃) + (q₂ − q₁)** = potrošni + proizvodni učinek.
 - Blaginja: ΔPP = −(A + B + C + D), ΔPRP = +A, ΔJF = +C → **ΔW = −(B + D)**. **B = proizvodni učinek** (izguba, ker dražja domača proizvodnja nadomesti cenejši uvoz), **D = potrošni učinek** (izguba, ker potrošniki kupijo manj).
 - Velika država (lahko vpliva na svetovno ceno): cena na meji **pade** P_FT → P′, domača cena P′ + T; **TOT = I_EX / I_IM ↑** (izboljšanje pogojev menjave = za enoto izvoza uvozi več). ΔJF = C + E (**E plačajo tuji izvozniki**), **ΔW = E − (B + D)**: E > B + D ⊕ (blaginja raste), E < B + D ⊖. »Pomembno: velika država si z uvedbo carine lahko izboljša položaj.«
 
-### P05 — preferencialna liberalizacija, dopolnitve
+### preferencialna liberalizacija, dopolnitve
 - Odnos do CU pred 1950: **pozitiven** (korak k prosti trgovini); Viner (1950) pokaže, da vpliv CU na blaginjo **ni jasen**. Meade (1955) je kasneje dobil Nobelovo nagrado.
 - Ekonomska integracija zagotavlja **prosto trgovino (znotraj)** in **diskriminacijo (navzven, do tretjih)**; integracijski procesi = diskriminacijsko odpravljanje ovir = preferencialna obravnava med članicami.
 - Predpostavke: **3 države** (H domača, P partnerica, ROW ostali svet); domača država **majhna**; proizvodi vseh treh **popolni substituti (homogeni)**; krivulji uvozne ponudbe iz P in ROW **horizontalni (popolnoma elastični)** — majhna država ne vpliva na ceno.

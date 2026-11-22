@@ -1,8 +1,8 @@
 # Epizoda 4 — Učinki proste mednarodne trgovine
 
-Predmet: Ekonomika EU in Slovenija (2. letnik, UPEŠ). Vir: zapiski predavanj in vaj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
-## P03 — Učinki proste mednarodne trgovine
+## Učinki proste mednarodne trgovine
 
 ### Analitični okvir za proučevanje učinkov ekonomskih integracij
 

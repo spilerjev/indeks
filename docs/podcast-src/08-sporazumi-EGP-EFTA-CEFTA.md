@@ -1,6 +1,6 @@
 # Epizoda 8 — Sporazumi pri WTO, GSP, EGP, EFTA, CEFTA (2. del)
 
-Predmet: Ekonomika EU in Slovenija (2. letnik). Vir: lastni zapiski predavanj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
 ### Vrste sporazumov pri WTO (RTA) in splošna shema preferencialov (GSP)
 
@@ -20,7 +20,7 @@ Predmet: Ekonomika EU in Slovenija (2. letnik). Vir: lastni zapiski predavanj, p
     1. **splošni aranžmaji (standardni GSP):** delno ali popolno znižanje carin za del tarifnih postavk,
     2. **posebni aranžmaji za najmanj razvite države – EBA** (*Everything But Arms*, »vse razen orožja«): **brez carin in kvot** za vse izdelke razen orožja in streliva,
     3. **posebna shema GSP+** za ranljive države, ki ratificirajo in izvajajo mednarodne konvencije o **človekovih in delavskih pravicah, okolju in dobrem upravljanju**: carina 0 za večino postavk.
-  - **Od leta 2027 prenovljena shema GSP** (Uredba (EU) 2026/1395). Novosti so bile vpisane na predavanju, ni jih v zapiskih.
+  - **Od leta 2027 prenovljena shema GSP** (Uredba (EU) 2026/1395).
 
 ### Spletni viri in načela WTO (člen 24)
 - Spletni viri: **RTA-IS** (informacijski sistem WTO o regionalnih sporazumih) in baza **preferencialnih sporazumov (PTA database)**.

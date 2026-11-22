@@ -1,12 +1,12 @@
 # Epizoda 9 — Velikost trga in prihranki obsega: model BE-COMP
 
-Predmet: Ekonomika EU in Slovenija (2. letnik). Vir: lastni zapiski predavanj, pripravljeni za zvočno razlago.
+Tema: Ekonomika EU in Slovenija. Lastna razlaga snovi z lastnimi primeri.
 
 ## Učinki integracije: velikost trga in prihranki obsega
 
 ### Razvoj teorije ekonomskih integracij
 - **Začetna teorija (statični učinki):**
-  - **Jacob Viner:** učinek **ustvarjanja trgovine** (*trade creation*) in **preusmerjanja trgovine** (*trade diversion*) → P05,
+  - **Jacob Viner:** učinek **ustvarjanja trgovine** (*trade creation*) in **preusmerjanja trgovine** (*trade diversion*),
   - **James Meade:** učinek **obsega trgovanja** (*trade volume effect*) in učinek **cene na meji** (*border price effect*),
   - **Richard Lipsey:** **teorija druge najboljše možnosti** (*second best*): odprava le dela ovir ni nujno izboljšanje.
 - **80. in 90. leta (Krugman 1991, Frankel, Bhagwati):** naravni trgovinski partnerji, transportni stroški, optimalno število trgovinskih blokov, odnos regionalizem–multilateralizem; prevladuje **pozitiven pogled** (ustvarjanje trgovine).

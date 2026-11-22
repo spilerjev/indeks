@@ -1,6 +1,6 @@
 # Epizoda 2 — Pravo Evropske unije
 
-Predmet: Pravo družb in poslovno pravo (1. kolokvij). Vir: lastni zapiski in povzetek snovi, pripravljeni za zvočno razlago.
+Tema: Pravo družb in poslovno pravo. Lastna razlaga snovi z lastnimi primeri.
 
 ## Povzetek snovi
 
