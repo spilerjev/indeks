@@ -114,6 +114,9 @@ function imgFigure(rel, cap, img) {
   const { neutralName, scrubSvg } = require('./notes-sources');
   const name = neutralName(rel.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9.]+/g, '_').replace(/^_+/, ''));
   fs.mkdirSync(img.outDir, { recursive: true });
+  // slike razdelkov, ki jih preglasi lasten primer (notes-overrides.js, drop), se ne kopirajo več (HTML ostane do preglasitve)
+  const DROP = new Set(require('./notes-overrides').flatMap((o) => o.drop || []));
+  if (DROP.has(name)) { const u = img.url + name; return `<figure class="nimg"><a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="${esc(cap || '')}" loading="lazy"></a>${cap ? '<figcaption>' + inline(cap) + '</figcaption>' : ''}</figure>`; }
   if (/\.svg$/i.test(name)) fs.writeFileSync(path.join(img.outDir, name), scrubSvg(fs.readFileSync(src, 'utf8')));
   else fs.copyFileSync(src, path.join(img.outDir, name));
   const url = img.url + name, alt = esc(cap || '');

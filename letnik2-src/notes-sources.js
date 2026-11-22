@@ -230,6 +230,36 @@ function scrubSources(html, part, opts = {}) {
   for (const [re, to] of PHRASES) h = h.replace(re, to);
   h = scrubFigures(h);
   h = applyFixes(h, part, fixes, 'post', warn);
-  return renderLinks(h, part, warn);
+  h = renderLinks(h, part, warn);
+  return applyOverrides(h, part, opts.overrides || require('./notes-overrides'), warn);
 }
-module.exports = { applyFixes, scrubSources, mechanical, autoLinks, renderLinks, scrubLabel, scrubSvg, neutralName, scrubFigures, SRC };
+/* Preglasitve razdelkov (notes-overrides.js): lasten rešen primer namesto naloge z vaj ali zgleda iz učbenika */
+const sha10 = (s) => require('crypto').createHash('sha1').update(s).digest('hex').slice(0, 10);
+function figHtml(id, warn, part) {
+  const svg = (require('../figures/zapiski').notes[id] || (() => null))();
+  if (!svg) { warn(`  ! notes-overrides ${part}: ni grafa ${id}`); return ''; }
+  return `<div class="ix-fig">${svg}</div>`;
+}
+function applyOverrides(html, part, overrides, warn) {
+  // najprej poišči vse razdelke v izvirniku, nato zamenjaj od konca (nadomestno besedilo ne vpliva na iskanje drugih)
+  const spans = [];
+  for (const o of overrides) {
+    if (o.part !== part) continue;
+    const i = html.indexOf(o.start), j = i < 0 ? -1 : o.end ? html.indexOf(o.end, i + o.start.length) : i + o.start.length;   // end '' = razdelek je ves start
+    if (i < 0 || j < 0) {
+      const head = o.replace.split('{{fig:')[0].slice(0, 80);
+      if (!(head && html.includes(head))) warn(`  ! notes-overrides ${part}: ni izvornega razdelka »${o.start.replace(/<[^>]+>/g, '').slice(0, 60)}« (preglasitev ni uporabljena)`);
+      continue;   // sicer že preglašeno (ponoven render na objavljenih zapiskih)
+    }
+    const k = j + o.end.length;
+    if (sha10(html.slice(i, k)) !== o.sha) warn(`  ! notes-overrides ${part}: izvorni razdelek »${o.start.replace(/<[^>]+>/g, '').slice(0, 60)}« se je spremenil (preveri preglasitev)`);
+    if (spans.some((x) => i < x.k && x.i < k)) { warn(`  ! notes-overrides ${part}: preglasitvi se prekrivata pri »${o.start.replace(/<[^>]+>/g, '').slice(0, 60)}«`); continue; }
+    spans.push({ i, k, o });
+  }
+  spans.sort((x, y) => y.i - x.i);
+  for (const { i, k, o } of spans) html = html.slice(0, i) + o.replace.replace(/\{\{fig:([\w-]+)\}\}/g, (m, id) => figHtml(id, warn, part)) + html.slice(k);
+  // preimenovan naslov (renamed: [[staro, novo]]): povezave data-goto v vsem delu kažejo na novi naslov
+  for (const { o } of spans) for (const [a, b] of o.renamed || []) html = html.split(`data-goto="${esc(a)}"`).join(`data-goto="${esc(b)}"`);
+  return html;
+}
+module.exports = { applyFixes, applyOverrides, sha10, scrubSources, mechanical, autoLinks, renderLinks, scrubLabel, scrubSvg, neutralName, scrubFigures, SRC };

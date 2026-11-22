@@ -32,7 +32,7 @@ const ALLOW = [
   ["inf/izpit/inf-iz-vprasanja#13.options[3]", "dobavitelj račun lastnoročno podpisal na tablici", "tablica = tablični zaslon"],
   ["inf/k3/blockchain#3.options[2]", "elektronsko podpisane pogodbe v PDF obliki", "PDF kot oblika dokumenta"],
   ["stana/k1:notes", "statistiki. Gostota verjetnosti f(y) (PDF): definirana za vse realne y;", "PDF = funkcija gostote verjetnosti"],
-  ["stana/k1:notes", "Varianca σ² = σ·σ, σ = √σ². Nekateri učbeniki pišejo N(μ, σ²) → N(150, 900)", "splošno o zapisu, ne pripis vira"],
+  ["stana/k1:notes", "Varianca σ² = σ·σ, σ = √σ². Nekateri učbeniki pišejo N(μ, σ²) → N(140, 400)", "splošno o zapisu, ne pripis vira"],
   ["trz/kvizi:notes", "min na začetku predavanj, 6–8 prosojnic; poslati do srede zvečer + prinesti", "organizacija: naloga »novica iz prakse«"],
   ["trz/kvizi:notes", "do 5 v paru, 5 min na začetku predavanj Pozitivno od 60 točk: 60–66 (6),", "organizacija: naloga »novica iz prakse«"],
   ["trz/kvizi:notes", "izpitu Kvizi + delovni listi na vajah 13,5 9 kvizov × 1,5 t (3 vprašanja", "organizacija ocene"],
