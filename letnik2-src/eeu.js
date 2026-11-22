@@ -144,7 +144,7 @@ const racCarine = [
     'Ploščina med P = 5 in 8 levo od ponudbe: (14 + 8)/2 · 3 = 33.')),
   withId('q1tttiiy', Q('Poljska, jabolka: S = 2P − 2, D = 22 − P; cena pade z 8 (avtarkija) na 5 (prosta trgovina). Kolikšen je neto učinek proste trgovine na blaginjo Poljske?', ['+13,5', '+46,5', '−33', '0'], 0,
     'Potrošniki +(14 + 17)/2 · 3 = +46,5, ponudniki −33 → neto +13,5 (= ½ · 9 · 3).')),
-  withId('q1uo85xd', Q('Poljska uvede 20 % carino na jabolka (cena 5 → 6). Koliko carinskega prihodka pobere država?', ['6', '9', '1,5', '18'], 0,
+  withId('q1uo85xd', Q('Poljska, jabolka: S = 2P − 2, D = 22 − P, svetovna cena 5; 20 % carina dvigne ceno na 6. Koliko carinskega prihodka pobere država?', ['6', '9', '1,5', '18'], 0,
     'Pri P = 6: S = 10, D = 16, uvoz 6; carina 1 na enoto → 6.')),
   withId('q1t3f1qm', Q('Poljska, jabolka: S = 2P − 2, D = 22 − P, svetovna cena 5; 20 % carina dvigne ceno na 6. Kolikšna je mrtva izguba?', ['1,5', '3', '6', '0'], 0,
     'Proizvodni del: ½ · 1 · (10 − 8) = 1; potrošni del: ½ · 1 · (17 − 16) = 0,5 → 1,5.')),

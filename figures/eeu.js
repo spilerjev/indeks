@@ -78,7 +78,7 @@ const attach = [
   ['Poljska, jabolka: S = 2P − 2, D = 22 − P; avtarkična cena 8, svetovna ', 'eeu-poljska-mt'],
   ['Poljska, jabolka: S = 2P − 2, D = 22 − P; cena pade z 8 (avtarkija) na', 'eeu-poljska-mt'],
   ['Slovaška, koruza: S = 3P − 4, D = −P + 20, svetovna cena 4, prosta men', 'eeu-slovaska-mt'],
-  ['Poljska uvede 20 % carino na jabolka (cena 5 → 6)', 'eeu-poljska-car'],
+  ['Poljska, jabolka: S = 2P − 2, D = 22 − P, svetovna cena 5; 20 % carina dvigne ceno na 6. Koliko carinskega', 'eeu-poljska-car'],
   ['Poljska, jabolka: S = 2P − 2, D = 22 − P, svetovna cena 5; 20 % carina', 'eeu-poljska-car'],
   ['Slovaška, koruza (S = 3P − 4, D = −P + 20, svetovna cena 4, majhna drž', 'eeu-slovaska-car', { expl: 'S carino je domača cena 5: S = 11, D = 15, uvoz 4 → carinski prihodek C = 1 · 4 = 4. Mrtva izguba B + D = ½ · 1 · (11 − 8) + ½ · 1 · (16 − 15) = 1,5 + 0,5 = 2. Potrošniki izgubijo (16 + 15)/2 · 1 = 15,5 (A + B + C + D), ponudniki pridobijo (8 + 11)/2 · 1 = 9,5 (A). Svetovna cena ostane 4, ker majhna država nanjo ne vpliva.' }],
   ['EU, kolesarske čelade: S = 5 + 2P, D = 100 − 3P, MFN carina 40 %', 'eeu-celade'],

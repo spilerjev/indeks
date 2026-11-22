@@ -1522,5 +1522,101 @@
   ],
   "correct": 0,
   "why": "možnost »/ površina ha × 100« je bila številsko enaka gostoti na km² (dve pravilni)"
+ },
+ {
+  "id": "q1ris9k7",
+  "options": [
+   "Iz Norveške (70 €)",
+   "Ne uvaža (60 €)",
+   "Iz Norveške (50 €)",
+   "Iz Kitajske (56 €)"
+  ],
+  "correct": 3,
+  "why": "»Iz Kitajske (40 €)« ni bila nedvoumno napačna (cena na meji)"
+ },
+ {
+  "id": "qcmqwbk",
+  "explanation": "NAFTA je prostotrgovinski sporazum. MERCOSUR je južnoameriški skupni trg (Brazilija, Argentina, Paragvaj, Urugvaj, od 2024 Bolivija), ASEAN jugovzhodnoazijsko združenje.",
+  "why": "ASEAN jugovzhodnoazijsko, Bolivija v MERCOSUR od 2024"
+ },
+ {
+  "id": "qg7v2ww",
+  "explanation": "CEFTA (1992, Višegrajska skupina) in BAFTA (1993, baltske države) sta prostotrgovinska sporazuma za pripravo na EU. Danes CEFTA vključuje države Zahodnega Balkana, Moldavijo in Kosovo.",
+  "why": "BAFTA podpisana 1993 (veljavnost 1994), ne 1999"
+ },
+ {
+  "id": "q1x1alrx",
+  "explanation": "Uvozno povpraševanje MD = Q_D − Q_S pri cenah pod avtarkično; pri svetovni ceni je enako uvozu (na grafu q₂ − q₁) in sovpada z izvozno ponudbo tuje države.",
+  "why": "razlaga je navajala številke, ki jih na grafu ni"
+ },
+ {
+  "id": "qc3ho94",
+  "options": [
+   "Vedno negativen (izguba carin)",
+   "Nejasen (odvisen od cen)",
+   "Vedno pozitiven (izvozi več po višji ceni)",
+   "Ničen (le prerazporeditev)"
+  ],
+  "correct": 2,
+  "explanation": "Cena v partnerski državi zraste na P_CU: potrošniki izgubijo, proizvajalci pridobijo več, neto učinek je pozitiven. Analizo je razširil Meade (1955).",
+  "why": "oznaka ploskve J, ki je v vprašanju ni"
+ },
+ {
+  "id": "q15g13cb",
+  "explanation": "Tretje države izgubijo: izvozijo manj in po nižji ceni (P_MFN → P_CU − T).",
+  "why": "razlaga se je sklicevala na ploskev L, ki je ni"
+ },
+ {
+  "id": "q1260kcg",
+  "options": [
+   "Bilateralne FTA z EGS za industrijske izdelke",
+   "Carinsko unijo z EGS kot celoto in skupno tarifo",
+   "Pridružitvene sporazume z vsako članico posebej",
+   "Sporazum o Evropskem gospodarskem prostoru (EGP)"
+  ],
+  "correct": 0,
+  "why": "EEA v pomenu Evropskega gospodarskega prostora → EGP (kot v zapiskih)"
+ },
+ {
+  "id": "q18w830",
+  "explanation": "Danes EU-27 + Norveška, Islandija, Lihtenštajn. Prevzemajo pravo enotnega trga, a o njem ne glasujejo. Švica je EGP zavrnila 1992.",
+  "why": "EEA v pomenu Evropskega gospodarskega prostora → EGP (kot v zapiskih)"
+ },
+ {
+  "id": "qbidstx",
+  "options": [
+   "Od ustanovitve ESPJ do Maastrichta",
+   "Od nastanka EFTA do podpisa EGP",
+   "Od ustanovitve SEV do vstopa v NATO",
+   "Od junija 1993 do decembra 2002"
+  ],
+  "correct": 3,
+  "why": "EEA v pomenu Evropskega gospodarskega prostora → EGP (kot v zapiskih)"
+ },
+ {
+  "id": "qg6f1v0",
+  "options": [
+   "52,8 % za takojšnji vstop v EU",
+   "52,8 % za izstop iz EGP in EFTA",
+   "52,8 % za uvedbo evra kot valute",
+   "52,8 % proti nadaljevanju pogajanj"
+  ],
+  "correct": 3,
+  "why": "EEA v pomenu Evropskega gospodarskega prostora → EGP (kot v zapiskih)"
+ },
+ {
+  "id": "q2sz5ob",
+  "explanation": "Domino 1: EGS → EFTA → prošnja VB 1961 → širitev 1973. Domino 2: EC92 → EGP 1994 → širitev 1995. Sproži ga tudi poglabljanje, ne samo širjenje.",
+  "why": "EEA v pomenu Evropskega gospodarskega prostora → EGP (kot v zapiskih)"
+ },
+ {
+  "id": "qo9r0f5",
+  "explanation": "EGP omogoča državam EFTA sodelovanje na notranjem trgu brez članstva v EU. Ni carinska unija in nima evra.",
+  "why": "EEA v pomenu Evropskega gospodarskega prostora → EGP (kot v zapiskih)"
+ },
+ {
+  "id": "qh0tumh",
+  "explanation": "Carinska unija 1968, notranji trg 1993 (Enotni evropski akt 1986), EMU 1999 (Maastricht), Ustavna pogodba ni bila ratificirana (nadomestila jo je Lizbonska).",
+  "why": "EEA = Enotni evropski akt, izpisano"
  }
 ]

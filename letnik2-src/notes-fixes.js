@@ -569,7 +569,7 @@ module.exports = [
   // 23. 11. 2026: popravki zapiskov EEU po neodvisnem pregledu (dejstva, EGP/EEA, izgubljena vsebina)
   {"part": "eeu/k1", "find": "(≈ 1,8-krat).", "replace": "(≈ 1,8-krat). Pogosto navedeno zaokroženo: EGS ≈ +150 %, EFTA ≈ +50 %."},
   {"part": "eeu/k1", "find": "in <b>začetek poglavja o velikosti trga</b>.", "replace": "in <b>poglavje o velikosti trga</b> (model BE-COMP, politika konkurence); večino predelaj samostojno."},
-  {"part": "eeu/k1", "find": "<b>Air France + KLM (2005)</b>", "replace": "<b>Air France + KLM (2004)</b>"},
+  {"part": "eeu/k1", "find": "<b>Air France + KLM (2005)</b>", "replace": "<b>Air France + KLM (2004/05)</b>"},
   {"part": "eeu/k1", "find": "Absolutno pa je uvoz iz RoW kljub temu zrasel (≈ 15 → 45 mrd $)", "replace": "Absolutno pa je uvoz od nečlanic kljub temu zrasel (≈ 15 → 45 mrd $; od tega ostali svet ≈ 14 → 40)"},
   {"part": "eeu/k1", "find": "<b>Enotni evropski akt (EEA)</b>", "replace": "<b>Enotni evropski akt (EEA, angl. SEA)</b>"},
   {"part": "eeu/k1", "find": "Delorsova pobuda za EEA (1989)", "replace": "Delorsova pobuda za EGP (1989)"},
