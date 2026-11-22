@@ -100,14 +100,16 @@ const rankNext = (rating, pct, sec) => {
   if (t[3] != null && (sec == null || sec > t[3])) need.push(`povprečen čas ≤ ${fmtTime(t[3])}`);
   return [t[0], need.join(", ") || "izpolnjeno"];
 };
-/* Ranked: izbira je enakomerno naključna in NE upošteva znanja (kot na izpitu). Edina utež: vprašanja iz zadnjih
-   RANKED_RECENT ranked testov tega dela (shranjeno v brskalniku) imajo manjšo možnost ponovitve. */
+/* Ranked: izbira je enakomerno naključna in NE upošteva znanja (kot na izpitu). Edina utež: že videna vprašanja tega dela
+   (shranjeno v brskalniku) skoraj ne pridejo ponovno, dokler je dovolj nevidenih. Zgodovina obsega vsa vprašanja razen
+   rezerve za RANKED_RESERVE iger, da izbira ostane naključna (ne vrtijo se isti kompleti), vsaj pa zadnjih RANKED_RECENT iger. */
 const RANKED_RECENT = 3;
+const RANKED_RESERVE = 4;
 const RANKED_SEEN_KEY = "indeks.rankedseen.v1";
 function rankedSample(pool, n, partKey) {
   const seen = new Set((store.get(RANKED_SEEN_KEY, {})[partKey]) || []);
   const pick = (from, k) => {
-    const items = from.map((q) => ({ q, w: seen.has(qid(q)) ? 0.3 : 1 }));
+    const items = from.map((q) => ({ q, w: seen.has(qid(q)) ? 0.05 : 1 }));
     const res = [];
     k = Math.min(k, items.length);
     for (let j = 0; j < k; j++) {
@@ -122,7 +124,7 @@ function rankedSample(pool, n, partKey) {
   };
   const out = withOneMatch(pool, Math.min(n, pool.length), pick);
   const all = store.get(RANKED_SEEN_KEY, {});
-  all[partKey] = out.map(qid).concat(all[partKey] || []).slice(0, n * RANKED_RECENT);
+  all[partKey] = out.map(qid).concat(all[partKey] || []).slice(0, Math.max(n * RANKED_RECENT, pool.length - n * RANKED_RESERVE));
   store.set(RANKED_SEEN_KEY, all);
   return out;
 }
