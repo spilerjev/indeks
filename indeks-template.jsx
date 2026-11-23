@@ -270,6 +270,70 @@ function useCloudStats(userId) {
   return { stats, record };
 }
 
+/* ---- Čas učenja po predmetu ----
+   Meri AKTIVNI čas: kviz, zapiski ali kartice predmeta na vidnem zavihku z interakcijo v zadnjih 60 s, ali predvajanje
+   zvočne razlage predmeta. Korak je omejen (TIME_MAX_STEP), da spanje računalnika ali zamrznjen zavihek ne doda ur.
+   Dva zavihka hkrati ne štejeta dvakrat (TIME_LOCK: šteje samo zavihek, ki je zadnji tiktaknil).
+   Shranjeno samo lokalno v brskalniku po uporabniku: { "sem/predmet": { "LLLL-MM-DD": sekunde } }.
+   TIME_CLOUD = false: sinhronizacija v oblak čaka na dopolnitev politike zasebnosti (čas učenja ni naveden med učnimi podatki). */
+const TIME_ON = true, TIME_CLOUD = false;
+const TIME_IDLE = 60e3, TIME_TICK = 5e3, TIME_MAX_STEP = 10e3, TIME_MAX_STEP_AUDIO = 65e3, TIME_LOCK = "indeks.time.tab";
+const TIME_TAB = Math.random().toString(36).slice(2);
+const timeStoreKey = (uid) => "indeks.time." + (uid || "anon");
+const dayKey = (t) => { const d = new Date(t); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+function timeAdd(uid, subjKey, sec, now) {
+  const all = store.get(timeStoreKey(uid), {});
+  const s = all[subjKey] || (all[subjKey] = {});
+  const k = dayKey(now);
+  s[k] = Math.round(((s[k] || 0) + sec) * 10) / 10;
+  store.set(timeStoreKey(uid), all);
+}
+/* skupaj, zadnjih 7 dni (danes in 6 dni nazaj) in prvi izmerjeni dan za predmet */
+function timeOf(uid, subjKey, now = Date.now()) {
+  const days = store.get(timeStoreKey(uid), {})[subjKey] || {};
+  const from = dayKey(now - 6 * 864e5);
+  let total = 0, week = 0, first = null;
+  Object.keys(days).forEach((d) => { total += days[d]; if (d >= from) week += days[d]; if (!first || d < first) first = d; });
+  return { total, week, first };
+}
+/* Ocena časa kvizov iz poskusov (od začetka do zadnjega odgovora, največ 20 min na poskus) PRED začetkom merjenja */
+function quizTimeEstimate(stats, prefix, beforeDay) {
+  let sec = 0;
+  Object.keys(stats || {}).forEach((k) => {
+    if (k.indexOf(prefix) !== 0) return;
+    ((stats[k] && stats[k].attempts) || []).forEach((a) => {
+      if (!a || !a.t || !a.u || a.u <= a.t) return;
+      if (beforeDay && dayKey(a.t) >= beforeDay) return;
+      sec += Math.min(a.u - a.t, 20 * 60e3) / 1000;
+    });
+  });
+  return sec;
+}
+const fmtDur = (sec) => { sec = Math.round(sec || 0); const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60); return h ? h + " h" + (m ? " " + m + " min" : "") : (m || (sec ? "<1" : "0")) + " min"; };
+function useStudyTime(routeRef, userId) {
+  useEffect(() => {
+    if (!TIME_ON) return;
+    let last = Date.now(), lastAct = Date.now();
+    const act = () => { lastAct = Date.now(); };
+    const evs = ["pointerdown", "keydown", "wheel", "touchstart", "scroll"];
+    evs.forEach((e) => window.addEventListener(e, act, { passive: true, capture: true }));
+    const id = setInterval(() => {
+      const now = Date.now(), dt = now - last; last = now;
+      const r = routeRef.current || {};
+      const playing = !!(PLAYER.ep && PLAYER.a && !PLAYER.a.paused && PLAYER.ctx && PLAYER.ctx.sem);
+      let key = null, max = TIME_MAX_STEP;
+      if (["quiz", "notes", "cards"].indexOf(r.view) >= 0 && r.sem && r.subj && document.visibilityState === "visible" && now - lastAct < TIME_IDLE) key = r.sem + "/" + r.subj;
+      else if (playing) { key = PLAYER.ctx.sem + "/" + PLAYER.ctx.subj; max = TIME_MAX_STEP_AUDIO; }
+      if (!key) return;
+      const lock = store.get(TIME_LOCK, null);
+      if (lock && lock.id !== TIME_TAB && now - lock.t < 2 * TIME_TICK) return;   // drug zavihek že šteje
+      store.set(TIME_LOCK, { id: TIME_TAB, t: now });
+      timeAdd(userId, key, Math.min(dt, max) / 1000, now);
+    }, TIME_TICK);
+    return () => { clearInterval(id); evs.forEach((e) => window.removeEventListener(e, act, { capture: true })); };
+  }, [routeRef, userId]);
+}
+
 /* Nova različica: GitHub Pages drži index.html do 10 min v predpomnilniku, zato uporabnik lahko ure dolgo
    uporablja star bundle. Ob fokusu in vsakih 15 min preverimo v=hash v svežem index.html in ponudimo osvežitev. */
 function useUpdateCheck() {
@@ -1832,6 +1896,7 @@ export default function App() {
   }, [userId]); // eslint-disable-line
   const { stats, record } = useCloudStats(userId || null);
   const comm = useCommunity(userId || null);
+  useStudyTime(routeRef, userId || null);   // aktivni čas učenja po predmetu (lokalno)
   const { soc, socErr, reload: reloadSocial } = useSocial(userId || null);
   // ko nasprotnik sprejme moj izziv (pending -> accepted v tej seji), skoči v match
   const seenCh = useRef(null);
@@ -1898,14 +1963,14 @@ export default function App() {
           <>
             {route.view === "home" && <Home go={setRoute} stats={stats} year={year} setYear={setYear} comm={comm} userId={userId || null} />}
             {route.view === "allstats" && <OverallStatsView stats={stats} go={setRoute} year={year} comm={comm} userId={userId || null} />}
-            {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} />}
+            {route.view === "subject" && <SubjectView route={route} stats={stats} go={setRoute} comm={comm} userId={userId || null} />}
             {route.view === "part" && <PartView route={route} stats={stats} go={setRoute} soc={soc} user={session && session.user} />}
             {route.view === "profile" && <ProfileView user={session.user} soc={soc} socErr={socErr} reload={reloadSocial} go={setRoute} />}
             {route.view === "duel" && <GlossCtx.Provider value={false}><DuelView route={route} go={setRoute} userId={userId} formulas={formulas} soc={soc} setNavGuard={setNavGuard} /></GlossCtx.Provider>}
             {route.view === "notes" && <NotesView key={route.sem + "/" + route.subj + "/" + route.part} route={route} go={setRoute} user={session && session.user} />}
             {route.view === "quiz" && <GlossCtx.Provider value={gloss}><QuizView key={[route.sem, route.subj, route.part, route.deck].join("/")} route={route} go={setRoute} record={record} userId={userId || null} /></GlossCtx.Provider>}
             {route.view === "cards" && <FlashcardsView route={route} go={setRoute} record={record} />}
-            {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} />}
+            {route.view === "stats" && <StatsView route={route} stats={stats} go={setRoute} comm={comm} userId={userId || null} />}
             {formulas && route.subj && ["quiz", "cards", "notes", "part", "subject"].indexOf(route.view) >= 0 && !(route.view === "quiz" && route.deck === "__ranked" && RANKED_FORMULAS.indexOf(route.subj) < 0) && <FormulaDock key={route.subj} subjId={route.subj} />}
           </>
         )}
@@ -2219,16 +2284,13 @@ function Home({ go, stats, year, setYear, comm, userId }) {
 }
 
 /* ---- PREDMET: seznam kolokvijev/izpita ---- */
-function SubjectView({ route, stats, go }) {
+function SubjectView({ route, stats, go, comm, userId }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
   const groups = [
     { type: "kolokvij", label: "Kolokviji", parts: subj.parts.filter((p) => p.type === "kolokvij") },
     { type: "izpit", label: "Izpit", parts: subj.parts.filter((p) => p.type === "izpit") },
   ];
-  const hasStats = subj.parts.some((p) =>
-    p.decks.some((d) => deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`)) ||
-    (p.flashcards || []).some((d) => deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`)));
 
   return (
     <div className="ix-fade">
@@ -2245,12 +2307,7 @@ function SubjectView({ route, stats, go }) {
         </div>
       </div>
 
-      <button className="ix-card" onClick={() => go({ view: "stats", sem: sem.id, subj: subj.id })}
-        style={{ width: "100%", textAlign: "left", padding: "12px 15px", cursor: "pointer", display: "flex", alignItems: "center", gap: 11, marginBottom: 22, borderLeft: "3px solid var(--teal)" }}>
-        <BarChart3 size={17} color="var(--teal)" />
-        <div style={{ flex: 1 }}><div style={{ fontWeight: 600, fontSize: 14 }}>Statistika</div><div className="ix-chip" style={{ marginTop: 2 }}>{hasStats ? "Tvoj napredek" : "Še ni poskusov"}</div></div>
-        <ChevronRight size={17} color="var(--ink2)" />
-      </button>
+      <SubjectStats sem={sem} subj={subj} stats={stats} comm={comm} userId={userId} compact />
 
       {groups.map((g) => g.parts.length > 0 && (
         <div key={g.type} style={{ marginBottom: 22 }}>
@@ -4834,19 +4891,9 @@ function FlashcardsView({ route, go, record }) {
   );
 }
 
-function StatsView({ route, stats, go, comm }) {
+function StatsView({ route, stats, go, comm, userId }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
-
-  const rows = [];
-  subj.parts.forEach((p) => {
-    p.decks.forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kviz", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
-    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: d.id === "__ranked" ? "Ranked" : "Mešani", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
-    (p.flashcards || []).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kartice", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
-  });
-  const totalAttempts = rows.reduce((n, r) => n + r.ds.n, 0);
-  const overallAvg = rows.length ? Math.round(rows.reduce((s, r) => s + r.ds.avg, 0) / rows.length) : 0;
-
   return (
     <div className="ix-fade">
       <button onClick={() => go({ view: "subject", sem: sem.id, subj: subj.id })} className="ix-chip"
@@ -4857,40 +4904,91 @@ function StatsView({ route, stats, go, comm }) {
         <BarChart3 size={22} color="var(--teal)" />
         <h1 className="ix-serif" style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: "-.02em" }}>Statistika · {subj.name}</h1>
       </div>
+      <SubjectStats sem={sem} subj={subj} stats={stats} comm={comm} userId={userId} />
+    </div>
+  );
+}
 
-      <div style={{ display: "flex", gap: 10, marginBottom: 22, flexWrap: "wrap" }}>
-        <Stat big={totalAttempts} label="poskusov" />
-        <Stat big={overallAvg + "%"} label="povprečje" />
-        <Stat big={rows.length} label="kvizov/kompletov" />
-      </div>
-
-      {rows.length === 0 ? (
-        <div className="ix-card" style={{ padding: 16 }}><span className="ix-chip">Še ni poskusov.</span></div>
-      ) : (
-        <div style={{ display: "grid", gap: 10 }}>
-          {rows.map((r, k) => (
-            <div key={k} className="ix-card" style={{ padding: "14px 16px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
-                <div>
-                  <div style={{ fontWeight: 600, fontSize: 15 }}>{r.name}</div>
-                  <div className="ix-chip" style={{ marginTop: 2 }}>{r.kind} · {r.part} · {r.ds.n}×</div>
-                </div>
-                <div className="ix-serif" style={{ fontSize: 26, fontWeight: 900, color: "var(--teal)" }}>{r.ds.best}%</div>
-              </div>
-              <div style={{ display: "flex", alignItems: "flex-end", gap: 14 }}>
-                <div className="ix-spark" style={{ flex: 1 }}>
-                  {r.ds.recent.map((v, j) => (<i key={j} style={{ height: `${Math.max(8, v)}%`, opacity: 0.4 + 0.6 * (j + 1) / r.ds.recent.length }} title={v + "%"} />))}
-                </div>
-                <div className="ix-chip">povp. {r.ds.avg}% · zadnji {r.ds.last}%{r.c ? ` · vsi ${r.c.avg}% (${r.c.users})` : ""}</div>
-              </div>
+/* Statistika predmeta (ista komponenta na strani predmeta, strnjeno, in na strani »Statistika«, v celoti):
+   poskusi, povprečje, kompleti, čas učenja (skupaj in zadnjih 7 dni) ter seznam kvizov in kompletov s trendom. */
+function subjStatRows(sem, subj, stats, comm) {
+  const rows = [];
+  subj.parts.forEach((p) => {
+    p.decks.forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kviz", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
+    mixDecksOf(p).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: d.id === "__ranked" ? "Ranked" : "Mešani", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
+    (p.flashcards || []).forEach((d) => { const ds = deckStats(stats, `${sem.id}/${subj.id}/${p.id}/${d.id}`); if (ds) rows.push({ part: p.name, name: d.name, kind: "Kartice", ds, c: commDeck(comm, `${sem.id}/${subj.id}/${p.id}/${d.id}`) }); });
+  });
+  return rows;
+}
+function SubjectStats({ sem, subj, stats, comm, userId, compact }) {
+  const [open, setOpen] = useState(!compact);
+  const rows = subjStatRows(sem, subj, stats, comm);
+  const totalAttempts = rows.reduce((n, r) => n + r.ds.n, 0);
+  const overallAvg = rows.length ? Math.round(rows.reduce((s, r) => s + r.ds.avg, 0) / rows.length) : 0;
+  const tm = TIME_ON ? timeOf(userId, `${sem.id}/${subj.id}`) : null;
+  const est = TIME_ON ? quizTimeEstimate(stats, `${sem.id}/${subj.id}/`, tm && tm.first) : 0;
+  const T = compact ? MiniStat : Stat;
+  const tiles = (
+    <div style={compact ? { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(130px,1fr))", gap: 8, marginBottom: 12 } : { display: "flex", gap: 10, marginBottom: 22, flexWrap: "wrap" }}>
+      <T big={totalAttempts} label="poskusov" />
+      <T big={rows.length ? overallAvg + "%" : "–"} label="povprečje" />
+      <T big={rows.length} label="kvizov/kompletov" />
+      {tm && <T big={fmtDur(tm.total)} label={"čas učenja · 7 dni: " + fmtDur(tm.week)} />}
+    </div>
+  );
+  const timeNote = tm && (est >= 60 || tm.first) ? (
+    <div className="ix-chip" style={{ marginBottom: 12, lineHeight: 1.5 }}>
+      <Clock size={12} style={{ verticalAlign: -2 }} /> Čas učenja se meri na tej napravi{tm.first ? ` od ${tm.first.split("-").reverse().join(". ").replace(/^0/, "")}` : ""} (kvizi, zapiski, kartice, poslušanje; samo aktivno).
+      {est >= 60 ? ` Ocena časa kvizov pred tem: ${fmtDur(est)}.` : ""}
+    </div>
+  ) : null;
+  const list = rows.length === 0 ? (
+    <div className="ix-card" style={{ padding: 16 }}><span className="ix-chip">Še ni poskusov.</span></div>
+  ) : (
+    <div style={{ display: "grid", gap: 10 }}>
+      {rows.map((r, k) => (
+        <div key={k} className="ix-card" style={{ padding: "14px 16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
+            <div>
+              <div style={{ fontWeight: 600, fontSize: 15 }}>{r.name}</div>
+              <div className="ix-chip" style={{ marginTop: 2 }}>{r.kind} · {r.part} · {r.ds.n}×</div>
             </div>
-          ))}
+            <div className="ix-serif" style={{ fontSize: 26, fontWeight: 900, color: "var(--teal)" }}>{r.ds.best}%</div>
+          </div>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 14 }}>
+            <div className="ix-spark" style={{ flex: 1 }}>
+              {r.ds.recent.map((v, j) => (<i key={j} style={{ height: `${Math.max(8, v)}%`, opacity: 0.4 + 0.6 * (j + 1) / r.ds.recent.length }} title={v + "%"} />))}
+            </div>
+            <div className="ix-chip">povp. {r.ds.avg}% · zadnji {r.ds.last}%{r.c ? ` · vsi ${r.c.avg}% (${r.c.users})` : ""}</div>
+          </div>
         </div>
+      ))}
+    </div>
+  );
+  if (!compact) return (<>{tiles}{timeNote}{list}</>);
+  return (
+    <div className="ix-card" style={{ padding: "14px 15px 12px", marginBottom: 22, borderLeft: "3px solid var(--teal)" }}>
+      <div className="ix-sec" style={{ color: "var(--teal)", marginBottom: 10 }}><BarChart3 size={14} /> Statistika predmeta</div>
+      {tiles}
+      {open && timeNote}
+      {open && list}
+      {rows.length > 0 && (
+        <button onClick={() => setOpen((o) => !o)} className="ix-pill" style={{ marginTop: open ? 12 : 0 }} aria-expanded={open}>
+          <ChevronDown size={13} style={{ verticalAlign: -2, transform: open ? "rotate(180deg)" : "none" }} /> {open ? "Skrij podrobnosti" : `Podrobno po kvizih (${rows.length})`}
+        </button>
       )}
     </div>
   );
 }
 
+function MiniStat({ big, label }) {
+  return (
+    <div style={{ padding: "8px 10px", textAlign: "center", background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 12 }}>
+      <div className="ix-serif" style={{ fontSize: 20, fontWeight: 900, lineHeight: 1.15 }}>{big}</div>
+      <div className="ix-chip" style={{ marginTop: 2, fontSize: 10.5 }}>{label}</div>
+    </div>
+  );
+}
 function Stat({ big, label }) {
   return (
     <div className="ix-card" style={{ padding: "14px 18px", flex: "1 1 120px", textAlign: "center" }}>
@@ -5141,6 +5239,35 @@ function CommunityCard({ comm, year, mine, mineAll, practiced, myAttempts }) {
   );
 }
 
+/* Čas učenja po predmetih letnika (razvrščeno), skupaj in zadnjih 7 dni; samo predmeti z izmerjenim časom */
+function TimeBySubject({ year, userId, go }) {
+  const list = yearSems(year).flatMap((sem) => sem.subjects.map((subj) => ({ sem, subj, ...timeOf(userId, `${sem.id}/${subj.id}`) })))
+    .filter((x) => x.total >= 30).sort((a, b) => b.total - a.total);
+  if (!list.length) return null;
+  const max = list[0].total || 1;
+  const sum = list.reduce((n, x) => n + x.total, 0), week = list.reduce((n, x) => n + x.week, 0);
+  return (
+    <div className="ix-card" style={{ padding: "16px 16px 12px", marginBottom: 18 }}>
+      <div className="ix-sec" style={{ color: "var(--teal)" }}><Clock size={14} /> Čas učenja po predmetih</div>
+      <div className="ix-chip" style={{ marginBottom: 10 }}>Skupaj {fmtDur(sum)} · zadnjih 7 dni {fmtDur(week)} · merjeno na tej napravi, samo aktivno učenje</div>
+      <div style={{ display: "grid", gap: 8 }}>
+        {list.map((x) => (
+          <button key={x.sem.id + x.subj.id} onClick={() => go({ view: "subject", sem: x.sem.id, subj: x.subj.id })}
+            style={{ textAlign: "left", background: "none", border: 0, padding: 0, cursor: "pointer", color: "inherit" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: 13.5 }}>
+              <span style={{ fontWeight: 600, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{x.subj.name}</span>
+              <span className="ix-chip" style={{ flexShrink: 0 }}>{fmtDur(x.total)} · 7 dni {fmtDur(x.week)}</span>
+            </div>
+            <div style={{ height: 6, borderRadius: 3, background: "var(--line)", marginTop: 4, overflow: "hidden" }}>
+              <div style={{ width: `${Math.max(3, Math.round(100 * x.total / max))}%`, height: "100%", background: "var(--teal)" }} />
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function OverallStatsView({ stats, go, year, comm, userId }) {
   const agg = aggregate(stats, year);
   const aggAll = aggregate(stats, 0);
@@ -5180,6 +5307,7 @@ function OverallStatsView({ stats, go, year, comm, userId }) {
       </div>
 
       <CommunityCard comm={comm} year={year} mine={agg.overallAvg} mineAll={aggAll.overallAvg} practiced={aggAll.practiced} myAttempts={aggAll.totalAttempts} />
+      {TIME_ON && <TimeBySubject year={year} userId={userId} go={go} />}
 
       {agg.items.length === 0 ? (
         <div className="ix-card" style={{ padding: 16 }}><span className="ix-chip">Še ni poskusov. Reši kak kviz ali komplet kartic, pa se bo tukaj prikazal napredek.</span></div>
