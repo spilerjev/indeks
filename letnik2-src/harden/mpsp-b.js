@@ -1,7 +1,5 @@
 // MPSP: težji napačni odgovori, 2. serija (november 2026).
 module.exports = [
-  [ "Kakšna je poslovna strategija YG (povezani fitnes)?", [ "Stroškovno vodstvo z najnižjo ceno med vsemi fitnesi", "Nišna strategija za profesionalne in vrhunske športnike", "Diferenciacija z vrhunsko opremo po premijski ceni" ], 3, "Diferenciacija s priročnostjo in prilagodljivostjo po dostopni ceni" ],
-  [ "Katera je nevarnost iz okolja za YG?", [ "Razmah hibridnega dela, ki zmanjšuje obisk fitnesov", "Napredek umetne inteligence v osebnem treniranju", "Staranje prebivalstva in manjši delež mladih vadečih" ], 3, "Vrnitev ljudi v fitnese in lahko posnemljiva konkurenca" ],
   [ "Kaj je ozko grlo procesa?", [ "Aktivnost z najdaljšim časom v procesnem diagramu", "Resurs z največjo zmogljivostjo, ki je najbolj obremenjen", "Aktivnost na kritični poti, ki traja najdlje" ], 3, "Resurs z najmanjšo zmogljivostjo, ki določa zmogljivost" ],
   [ "Kako zaokrožimo cikel, ki ni celo število", [ "Navzgor - da ne preobremenimo mest", "Na najbližje celo število", "Ga ne zaokrožujemo, ostane decimalen" ], 1, "Navzdol - da dosežemo količino" ],
   [ "Kako izračunamo minimalno število delovnih mest?", [ "c / Σt, zaokroženo navzgor", "Σt · c, zaokroženo navzdol", "Σt / c, zaokroženo navzdol" ], 0, "Σt / c, zaokroženo navzgor" ],

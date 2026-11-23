@@ -1,32 +1,32 @@
-/* Management proizvodnih in storitvenih procesov - vir: School/.../MPSP/Vaje/ZAPISKI.md (Vaje 1, študija primera YG)
+/* Management proizvodnih in storitvenih procesov - vir: School/.../MPSP/Vaje/ZAPISKI.md (lasten primer spletne jezikovne šole Besedica)
    + vaje v slogu izpita (napisane na novo, pogoste izpitne teme). */
 const { withId } = require('../ids-lib');   // stalni id vprašanja (CLAUDE.md): ne spreminjaj in ne briši
 const Q = (q, options, correct, explanation) => ({ q, options, correct, explanation });
 const PN = (q, drzi, explanation) => ({ q, options: ['Drži', 'Ne drži'], correct: drzi ? 0 : 1, explanation });
 
 const strategija = [
-  withId('q1f1m1pr', Q('Kje se po sliki "izdelavna strategija" začne oblikovanje strategije?', ['Pri odločitvah o procesih', 'Pri zahtevah trga (stranke) in značilnostih storitve', 'Pri financah', 'Pri tehnologiji'], 1,
-    'Zahteve trga ↔ značilnosti storitve → poslovna strategija ↔ odločitve o procesih.')),
-  withId('q12ezmm2', Q('Kaj so dejavniki zmagovanja?', ['Lastnosti, ki morajo biti "dovolj dobre"', 'Konkurenčne prednostne naloge, s katerimi podjetje pridobi stranke', 'Stroški proizvodnje', 'Slabosti podjetja'], 1,
-    'Pri YG: časovna fleksibilnost in lokacijska priročnost (+ cena naročnine).')),
-  withId('q1465vyc', Q('Kaj so dejavniki kvalificiranja?', ['Morajo biti najboljši na trgu', 'Morajo biti "dovolj dobri", da stranka sploh razmisli o nakupu', 'Lastnosti konkurentov', 'Kvalifikacije zaposlenih'], 1,
-    'Pri YG: dovolj dobra možnost za napredek in sprejemljiva začetna investicija.')),
-  withId('qj978gv', Q('Kakšna je poslovna strategija YG (povezani fitnes)?', ['Stroškovno vodstvo z najnižjo ceno', 'Diferenciacija s priročnostjo in prilagodljivostjo po dostopni ceni', 'Nišna strategija za profesionalne športnike', 'Vertikalna integracija'], 1,
-    'Vadba kadarkoli in kjerkoli, prilagojena posamezniku.')),
-  withId('qeyuism', Q('Pri spider diagramu je rob lestvice "najugodneje za stranko". Kaj pomeni ocena 5 pri ceni?', ['Visoka cena', 'Nizka cena', 'Povprečna cena', 'Cena ni pomembna'], 1,
-    'Zato pri ceni in investiciji 5 pomeni NIZKO.')),
-  withId('q86627n', Q('Kje je ozko grlo zmogljivosti pri YG?', ['Strežniki', 'Trenerji v živo', 'Prostor', 'Naprave v dvorani'], 1,
-    'Program teče za poljubno število strank, trenerji pa so omejeni (6 trenerjev, 2 izmeni).')),
-  withId('qix3r1w', Q('Kakšen je stik s stranko pri YG v primerjavi z običajnim fitnesom?', ['Visok, osebni', 'Nizek, digitalen → standardizirano in ceneje', 'Enak', 'Ga ni'], 1,
-    'Običajni fitnes: visok osebni stik → prilagojeno, dražje.')),
-  withId('q1h8jizv', Q('Kaj je ključna razlika med izdelkom in storitvijo pri usklajevanju ponudbe in povpraševanja?', ['Storitev je dražja', 'Izdelek lahko daš na zalogo (blažilnik), storitev nastaja hkrati s porabo in je ni mogoče skladiščiti', 'Izdelek je vedno standardiziran', 'Ni razlike'], 1,
-    'Neporabljena ura trenerja je izgubljena; zmogljivost je treba prilagajati sproti ali usmerjati povpraševanje (cene, rezervacije).')),
-  withId('qvwv11i', Q('Povpraševanje po treningih v živo presega ponudbo. Kateri ukrep je primeren?', ['Zmanjšati število trenerjev', 'Različne cene za bolj in manj popularne ure, skupinski treningi, novi trenerji', 'Več marketinga', 'Povečati zalogo'], 1,
-    'Ko ponudba presega povpraševanje (prosti termini): manj trenerjev, dodatne marketinške aktivnosti, komplementarne storitve.')),
-  withId('qrtdujv', Q('Kateri ukrep usklajevanja velja za PROIZVODNJO opreme, ne pa za storitev?', ['Rezervacijski sistem', 'Varnostna zaloga', 'Dinamične cene', 'Skupinski treningi'], 1,
-    'Izdelek lahko naredimo vnaprej; pri storitvi zaloge ni.')),
-  withId('q1nuuy8y', Q('Katera je nevarnost iz okolja za YG?', ['Hibridno delo', 'Vračanje ljudi v fitnese po epidemiji in lahko posnemljiva digitalna konkurenca', 'Napredek UI', 'Staranje prebivalstva'], 1,
-    'Tudi: GDPR (kamera doma), pomanjkanje trenerjev, motnje v dobavnih verigah, gospodarska negotovost.')),
+  withId("q1f1m1pr", Q("Kje se začne oblikovanje izdelavne strategije (zaporedje: trg → strategija → procesi)?", ["Pri odločitvah o procesih in izbiri tehnologije","Pri finančnih ciljih in zahtevani donosnosti","Pri analizi virov in zmožnosti podjetja","Pri tržnih zahtevah in značilnostih storitve"], 3,
+    "Zahteve trga ↔ značilnosti storitve → poslovna strategija ↔ odločitve o procesih.")),
+  withId("q12ezmm2", Q("Kaj so dejavniki zmagovanja?", ["Lastnosti, ki morajo biti dovolj dobre, da je stranka sploh upoštevana","Stroški proizvodnje, ki jih morajo doseči vsi tekmeci v panogi","Slabosti podjetja, ki jih mora odpraviti v določenem roku","Konkurenčne prednosti, s katerimi podjetje pridobi stranke"], 3,
+    "Pri Besedici: časovna fleksibilnost in lokacijska priročnost (+ cena naročnine).")),
+  withId("q1465vyc", Q("Kaj so dejavniki kvalificiranja?", ["Lastnosti, v katerih mora biti podjetje najboljše na trgu","Prednosti konkurentov, ki jih mora podjetje posnemati","Kvalifikacije zaposlenih, ki jih zahteva stranka","Lastnosti, ki morajo biti dovolj dobre za sploh upoštevanje"], 3,
+    "Pri Besedici: dovolj govorne prakse in sprejemljiv začetni strošek (učni paket).")),
+  withId("qj978gv", Q("Kakšna je poslovna strategija spletne jezikovne šole Besedica?", ["Stroškovno vodstvo z najnižjo ceno med vsemi jezikovnimi šolami","Nišna strategija za poklicne prevajalce in tolmače","Diferenciacija z vrhunskimi učitelji v živo po premijski ceni","Diferenciacija s priročnostjo in prilagodljivostjo po dostopni ceni"], 3,
+    "Učenje kadarkoli in kjerkoli, prilagojeno posamezniku.")),
+  withId("qeyuism", Q("Pri spider diagramu je rob lestvice \"najugodneje za stranko\". Kaj pomeni ocena 5 pri ceni?", ["Visoka cena","Nizka cena","Povprečna cena","Cena ni pomembna"], 1,
+    "Zato pri ceni in začetnem strošku 5 pomeni NIZKO.")),
+  withId("q86627n", Q("Kje je ozko grlo storitvene zmogljivosti pri Besedici?", ["Strežniki aplikacije","Tutorji v živo","Učilnice","Prepoznava govora v aplikaciji"], 1,
+    "Aplikacija deluje za poljubno število strank, tutorji pa so omejeni (8 tutorjev, 2 izmeni po 5 h).")),
+  withId("qix3r1w", Q("Kakšen je stik s stranko pri Besedici v primerjavi s klasično jezikovno šolo?", ["Visok in oseben, saj učitelj vodi vsako uro","Enak kot pri klasični šoli, le s sodobnejšo opremo","Stika ni, ker se stranka uči povsem sama","Večinoma digitalen - standardiziran in cenejši"], 3,
+    "Klasična šola: oseben stik → prilagojen, dražji.")),
+  withId("q1h8jizv", Q("Kaj je ključna razlika med izdelkom in storitvijo pri usklajevanju ponudbe in povpraševanja?", ["Storitev je vedno dražja in zato manj povpraševana","Izdelek je vedno standardiziran, storitev vedno po meri","Pri storitvi lahko zalogo kopičimo, pri izdelku ne","Izdelek lahko damo na zalogo, storitve ni mogoče skladiščiti"], 3,
+    "Neporabljena ura tutorja je izgubljena; zmogljivost je treba prilagajati sproti ali usmerjati povpraševanje (cene, rezervacije).")),
+  withId("qvwv11i", Q("Povpraševanje po urah s tutorji v živo presega ponudbo. Kateri ukrep je primeren?", ["Zmanjšati število tutorjev in dvigniti ceno","Okrepiti trženje, da se povpraševanje po urah s tutorji poveča še bolj","Povečati zalogo ur s tutorji za naslednja obdobja","Dražji termini ob konicah, skupinske ure, dodatni tutorji"], 3,
+    "Ko povpraševanje presega ponudbo: dodatni (tudi honorarni) tutorji, dražji termini ob konicah, skupinske ure. Ko ponudba presega povpraševanje (prosti termini): manj tutorjev, popusti in marketinške akcije, dodatne storitve tutorjev.")),
+  withId("qrtdujv", Q("Kateri ukrep usklajevanja velja za IZDELEK (učni paket), ne pa za storitev?", ["Rezervacijski sistem","Varnostna zaloga","Dinamične cene","Skupinske ure"], 1,
+    "Učni paket lahko natisnemo vnaprej in ga damo na zalogo; ure s tutorjem ni mogoče shraniti.")),
+  withId("q1nuuy8y", Q("Katera je nevarnost iz okolja za Besedico?", ["Delo v tujini, ki povečuje potrebo po jezikih","Boljša prepoznava govora v aplikacijah","Povpraševanje podjetij po izobraževanju zaposlenih","Brezplačne aplikacije in lahko posnemljiva digitalna storitev"], 3,
+    "Tudi: vse boljše strojno prevajanje, GDPR (posnetki glasu, videoklici), premalo usposobljenih tutorjev, dražji papir za učne pakete.")),
 ];
 
 const izpit = [
@@ -79,9 +79,9 @@ const rac = [
 rac.forEach((q) => { q.calc = true; });
 
 const kartice = [
-  ['Izdelavna strategija (slika 1)', 'Zahteve trga ↔ značilnosti storitve → poslovna strategija ↔ odločitve o procesih.'],
-  ['Dejavniki zmagovanja', 'Konkurenčne naloge, s katerimi pridobimo stranke (YG: časovna fleksibilnost, lokacijska priročnost).'],
-  ['Dejavniki kvalificiranja', 'Morajo biti "dovolj dobri", ne najboljši (YG: napredek, začetna investicija).'],
+  ['Izdelavna strategija', 'Zahteve trga ↔ značilnosti storitve → poslovna strategija ↔ odločitve o procesih.'],
+  ['Dejavniki zmagovanja', 'Konkurenčne naloge, s katerimi pridobimo stranke (Besedica: časovna fleksibilnost, lokacijska priročnost).'],
+  ['Dejavniki kvalificiranja', 'Morajo biti "dovolj dobri", ne najboljši (Besedica: govorna praksa, začetni strošek).'],
   ['Konkurenčne prednostne naloge', 'Kakovost, stroški, fleksibilnost, hitrost (in zanesljivost) dobave.'],
   ['Alternativne koristi', 'Odločitev, ki izboljša eno nalogo, praviloma poslabša drugo → treba je izbrati dejavnike zmagovanja.'],
   ['Odločitve o storitvenem procesu', 'Lokacija, zmogljivost, razmestitev, tehnologija, stik s stranko, kadri, terminiranje, kakovost, usklajevanje ponudbe in povpraševanja.'],
