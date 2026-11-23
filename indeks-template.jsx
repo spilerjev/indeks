@@ -2977,6 +2977,7 @@ function QuizView({ route, go, record, userId, duel }) {
   const [done, setDone] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [openGloss, setOpenGloss] = useState({});
+  const [figHintQ, setFigHintQ] = useState(null);   // indeks vprašanja, pri katerem je odprt graf kot namig
   const [mSel, setMSel] = useState(null);
   const [mMap, setMMap] = useState({});
   const [gSel, setGSel] = useState(null);
@@ -3365,6 +3366,12 @@ function QuizView({ route, go, record, userId, duel }) {
       {q.givenFig && FIGS[q.givenFig] && (
         <div className="ix-card" style={{ padding: "12px 12px 6px", marginBottom: 18 }}><FigView id={q.givenFig} bare /></div>
       )}
+      {/* Graf iz razlage je pogosto narisan z rešitvijo, zato je pred odgovorom le na zahtevo (namig), v rankedu in dvoboju pa ga ni. */}
+      {!exam && !q.givenFig && q.fig && FIGS[q.fig] && picked === null && (
+        figHintQ === i
+          ? <div className="ix-card" style={{ padding: "12px 12px 6px", marginBottom: 18 }}><FigView id={q.fig} bare /></div>
+          : <button onClick={() => setFigHintQ(i)} className="ix-pill" style={{ marginBottom: 16 }} title="Graf iz razlage; lahko že kaže del rešitve">Pokaži graf (namig)</button>
+      )}
 
       {q.type === "match" ? (
         <div>
@@ -3715,9 +3722,19 @@ function useSocial(userId) {
     let dead = false;
     const ping = async () => {
       if (ONLINE.off || document.visibilityState !== "visible") return;
-      const { data, error } = await supabase.rpc("online_ping");
+      const { data: sd } = await supabase.auth.getSession();
+      const sid = sessionIdOf(sd && sd.session);
+      let claimedSid = null; try { claimedSid = localStorage.getItem(CLAIM_KEY); } catch (e) {}
+      const claim = !!sid && claimedSid !== sid;     // nova seja na tej napravi prevzame račun
+      const { data, error } = await supabase.rpc("online_ping", { p_device: deviceId(), p_claim: claim });
       if (dead) return;
       if (error) { if (error.code === "PGRST202") ONLINE.off = true; return; }
+      if (claim) { try { localStorage.setItem(CLAIM_KEY, sid); } catch (e) {} supabase.auth.signOut({ scope: "others" }).catch(() => {}); }
+      if (data && data.kicked) {
+        try { await supabase.auth.signOut({ scope: "local" }); } catch (e) {}
+        ixAlert({ title: "Odjavljen si", text: "Tvoj račun je bil prijavljen na drugi napravi. Hkrati si lahko prijavljen samo na eni napravi, zato si bil tukaj odjavljen. Če se prijaviš znova, se odjavi druga naprava." });
+        return;
+      }
       setOnline({ ids: new Set((data && data.online) || []), hidden: !!(data && data.hidden) });
     };
     ONLINE.ping = ping;
@@ -3730,7 +3747,19 @@ function useSocial(userId) {
   const socOut = useMemo(() => (soc && online ? { ...soc, online: online.ids, onlineHidden: online.hidden } : soc), [soc, online]);
   return { soc: socOut, socErr: err, reload };
 }
-const ONLINE = { off: false, ping: null };
+const ONLINE = { off: false, ping: null, mem: null };
+/* Ena prijava na račun: vsaka nova seja (session_id iz žetona) ob prvem pingu prevzame račun - odjavi druge seje
+   (signOut scope »others« prekliče njihove žetone za podaljšanje) in na strežniku zapiše naključno oznako te naprave.
+   Druga naprava ob naslednjem pingu dobi kicked in se odjavi. IP-naslova ne uporabljamo (na telefonu se menja). */
+const DEVICE_KEY = "indeks.device.v1", CLAIM_KEY = "indeks.claimed.v1";
+function deviceId() {
+  try { let d = localStorage.getItem(DEVICE_KEY); if (!d) { d = (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)); localStorage.setItem(DEVICE_KEY, d); } return d; }
+  catch (e) { return ONLINE.mem || (ONLINE.mem = Math.random().toString(36).slice(2) + Date.now().toString(36)); }
+}
+function sessionIdOf(session) {
+  try { const s = session.access_token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"); return JSON.parse(atob(s + "===".slice((s.length + 3) % 4))).session_id || null; }
+  catch (e) { return null; }
+}
 const isOnline = (soc, uid) => !!(soc && soc.online && soc.online.has(uid));
 const byOnline = (soc, list) => (soc && soc.online ? list.slice().sort((a, b) => (isOnline(soc, b.user_id) ? 1 : 0) - (isOnline(soc, a.user_id) ? 1 : 0)) : list);
 async function setOnlineHidden(v) { const { error } = await supabase.rpc("set_online_hidden", { p_hidden: !!v }); if (!error && ONLINE.ping) await ONLINE.ping(); return error; }

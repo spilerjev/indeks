@@ -1,6 +1,6 @@
 # Politika zasebnosti
 
-Različica z dne 21. 11. 2026.
+Različica z dne 23. 11. 2026.
 
 ## 1. Upravljavec
 
@@ -18,7 +18,7 @@ indeks. ni povezan z Ekonomsko fakulteto ali Univerzo v Ljubljani. Fakulteta tvo
 | Profil: letnik, smer, kratek opis | prilagojena domača stran, profil v areni | izvajanje pogodbe (b) |
 | Učni podatki: rezultati kvizov in kartic, rangirani testi, matchi v areni, XP in nivo, seznam prijateljev in prošenj | statistika, priporočila, sinhronizacija med napravami, lestvice in arena | izvajanje pogodbe (b) |
 | Podatki na računu: zaznamek branja zapiskov, položaj poslušanja zvočnih razlag, osebni seznam opravil | nadaljevanje tam, kjer si ostal, na vseh napravah | izvajanje pogodbe (b) |
-| Prisotnost: čas zadnje aktivnosti v aplikaciji (prijatelji vidijo le, ali si trenutno na spletu, ne časa) | prikaz prijateljev na spletu, da se lahko izzovete na match | zakoniti interes (f); prikaz lahko kadar koli izklopiš v profilu |
+| Prisotnost: čas zadnje aktivnosti v aplikaciji (prijatelji vidijo le, ali si trenutno na spletu, ne časa) in naključna oznaka naprave, na kateri si prijavljen | prikaz prijateljev na spletu, da se lahko izzovete na match; ena hkratna prijava na račun | zakoniti interes (f); prikaz »na spletu« lahko kadar koli izklopiš v profilu |
 | Zapis o sprejemu pogojev (različica in čas) | dokaz, da si pogoje sprejel | zakoniti interes (f) |
 | Soglasje za obvestila | pošiljanje novosti in ponudb indeks. na tvoj e-naslov | privolitev (a), samo če jo ob registraciji označiš |
 | Tehnični podatki: IP-naslov, vrsta brskalnika, čas dostopa (dnevniki strežnikov) | varnost, preprečevanje zlorab, odpravljanje napak | zakoniti interes (f) |
