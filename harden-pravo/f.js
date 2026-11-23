@@ -1,21 +1,5 @@
 // Pravo: drugi krog - pravilni odgovori skrajšani, napačni primerljive dolžine (korporacijsko pravo)
 module.exports = [
-  ['Janez leta uporablja pot', [
-    'Metod - zemljiška knjiga velja za zaupanje vedno, tudi če je kupec vedel za pot',
-    'Nihče - potrebna je nova pogodba o služnosti med vsemi udeleženimi',
-    'Občina - nepremičnina brez vpisane služnosti pripade občini'], 3, 'Janez - Metod ni bil dobroveren; Janez ima priposestvovano služnost'],
-  ['Jože z izročilno pogodbo', [
-    'Ne - zavezan ostane Andrej kot prvotni zavezanec za oskrbo',
-    'Da, a le če Marko izrecno pristane na prevzem obveznosti',
-    'Ne - obveznosti oskrbe ugasnejo s prodajo kmetije'], 3, 'Da - stvarno breme bremeni vsakokratnega lastnika nepremičnine'],
-  ['Kaja (štipendistka)', [
-    'Ne - bolezen ni izgovor za neizpolnitev pogodbene obveznosti',
-    'Da, a le če je bila v bolnišnici vsaj leto dni',
-    'Ne - diplomirala je, čeprav z zamudo, zato je obveznost izpolnjena'], 1, 'Da - višja sila: zunanji, nepričakovan in nepremagljiv dogodek'],
-  ['Prodajalec Luka Niki potrdi', [
-    'Ne - brez določene cene pogodba sploh ne nastane',
-    'Da, a le pri gospodarskih pogodbah med podjetji',
-    'Ne - cena je vedno bistvena sestavina prodajne pogodbe'], 2, 'Da - cena mora biti le določljiva, bistvena je določitev stvari'],
   ['Kaj določa Ustava RS kot temeljni pravni vir korporacijskega', [
     'Gospodarsko pobudo lahko izvajajo le pravne osebe, vpisane pri sodišču',
     'Gospodarske družbe morajo biti vsaj delno v državni lasti',

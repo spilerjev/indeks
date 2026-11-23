@@ -192,48 +192,4 @@ module.exports = [
     'Pravica prvega kupca izdelka do popusta',
     'Pravica do znižane prijavne takse za prve prijavitelje',
     'Prednost domačih prijaviteljev pred tujimi'], 3, 'Prednost pred poznejšimi prijavitelji; 12 mesecev za izum'],
-  ['Direktor družbe EkoPark sklene posel', [
-    'Pogodba je nična, ker družba nima registrirane dejavnosti',
-    'Pogodba je izpodbojna v roku enega leta od sklenitve',
-    'Posel mora naknadno potrditi sodišče'], 3, 'Pogodba velja; družba stori prekršek'],
-  ['Prokuristka Klara', [
-    'Peč ne velja, hipoteka velja',
-    'Oboje velja, ker je prokurist zakoniti zastopnik',
-    'Oboje je nično brez soglasja skupščine'], 3, 'Peč velja; hipoteka ne (brez posebnega pooblastila)'],
-  ['Družbenik Kovač v imenu d.n.o.', [
-    'Samo od družbe, družbeniki ne odgovarjajo osebno',
-    'Od vsakega družbenika sorazmerni del dolga',
-    'Samo od Kovača, ker je posel sklenil sam'], 3, 'Od družbe, nato solidarno od družbenika za celoten dolg'],
-  ['Družbenik Oliver od družbe kupi', [
-    'Dopusten posel med družbo in družbenikom',
-    'Posojilo družbenika družbi',
-    'Spregled pravne osebnosti'], 3, 'Prikrito izplačilo dobička, kršitev ohranitve OK'],
-  ['Mitja ima družbo s firmo', [
-    'Ne, vedno mora uporabljati celotno firmo',
-    'Da, kakršnokoli skrajšavo brez omejitev',
-    'Da, a le s soglasjem AJPES pri vsaki uporabi'], 3, 'Da - skrajšana firma z oznako oblike, če je registrirana'],
-  ['Družba z OK 7.500 EUR zaradi izgub', [
-    'Da, OK mora biti ves čas ohranjen z doplačili družbenikov',
-    'Da, doplačati morata do polovice razlike',
-    'Da, sicer takoj sledi stečaj'], 3, 'Ne - OK prepoveduje izplačila družbenikom, ne doplačil'],
-  ['Matej je zgolj družbenik', [
-    'Veljaven, ker je družbenik pooblaščen za nujne posle',
-    'Vedno veljaven, če je material dostavljen družbi',
-    'Izpodbojen v enem letu od sklenitve posla'], 3, 'Za družbo neveljaven, razen če ga naknadno odobri poslovodja'],
-  ['Družbeniki d.o.o. se v pogodbi dogovorijo, da bo družbenik z 1/3', [
-    'Ne, delitev mora biti strogo sorazmerna deležu',
-    'Da, vendar le za eno poslovno leto',
-    'Da, vendar le s sklepom sodišča'], 3, 'Da - delitev ni nujno sorazmerna, če se tako dogovorijo'],
-  ['Kako se davčno razlikujeta s.p. in enoosebna d.o.o.?', [
-    'Enako se obdavčita, razlika je le v knjigovodstvu',
-    's.p. plačuje samo DDV in prispevke',
-    'd.o.o. ne plačuje davkov, če je enoosebna'], 3, 's.p.: dohodnina; d.o.o.: davek pravnih oseb in dividenda'],
-  ['Družba (OK 50.000 EUR) želi od izstopajočega družbenika', [
-    'Odkup je vedno prost, če se družbenik strinja',
-    'Družba sme odkupiti vse deleže naenkrat',
-    'Odkup mora odobriti AJPES'], 3, 'Sklep skupščine, prosta sredstva, brez insolventnosti'],
-  ['Poslovodja Tilen predlaga', [
-    'Posel je za družbo prepovedan',
-    'Posel sklene brez omejitev, ker je sestra zunanja oseba',
-    'Potrebno je soglasje sodišča za vsak tak posel'], 3, 'Nasprotje interesov: razkritje, soglasje skupščine, tržni pogoji'],
 ];

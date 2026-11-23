@@ -120,18 +120,6 @@ module.exports = [
     'V 30 dneh od izročitve v vseh primerih',
     'V šestih mesecih od izročitve stvari',
     'Rok ni predpisan, določita ga stranki'], 3, 'V 8 dneh od pregleda, pri gospodarskih pogodbah nemudoma'],
-  ['Madžarska nasprotuje sprejetju direktive', [
-    'Da, vsaka država članica ima pravico veta',
-    'Ne, zadošča navadna večina držav članic',
-    'Da, če nasprotovanje podpre vsaj ena velika država'], 3, 'Ne - kvalificirana večina jo lahko preglasuje'],
-  ['Upravni organ Marku prepove', [
-    'Takoj ustavna pritožba na Ustavno sodišče',
-    'Revizija na Vrhovno sodišče RS',
-    'Tožba na Upravno sodišče'], 3, 'Pritožba na drugostopenjski organ'],
-  ['Uredba EU daje letalskim potnikom', [
-    'Ne, ker velja strožji estonski zakon za potnike',
-    'Da, a le s tožbo pred Sodiščem EU',
-    'Ne, ker Miha ni estonski državljan'], 3, 'Da - uredba je neposredno uporabna, tožba doma'],
   ['Kaj je firma in katere so njene obvezne sestavine?', [
     'Poslovni prostor družbe; obvezna sestavina je naslov sedeža',
     'Logotip družbe, ki nima predpisanih sestavin',
@@ -188,32 +176,4 @@ module.exports = [
     'Domišljijski znak Zvezdolet za kolesa',
     'Kombinacija dveh barv za športna oblačila',
     'Beseda iz mrtvega jezika za pivo'], 3, 'Znak mleko za mleko ali podoben zavarovanemu'],
-  ['Prokuristka Klara', [
-    'Peč ne velja, hipoteka velja',
-    'Oboje velja, ker je prokurist zakoniti zastopnik',
-    'Oboje je nično brez soglasja skupščine'], 3, 'Peč velja; hipoteka brez pooblastila ne'],
-  ['Družbenik Oliver od družbe kupi', [
-    'Dopusten posel med družbo in družbenikom',
-    'Posojilo družbenika družbi z obrestmi',
-    'Spregled pravne osebnosti družbe'], 3, 'Prikrito izplačilo dobička in kršitev OK'],
-  ['Mitja ima družbo s firmo', [
-    'Ne, vedno mora uporabljati celotno firmo',
-    'Da, kakršnokoli skrajšavo brez omejitev',
-    'Da, a le s soglasjem AJPES pri vsaki uporabi'], 3, 'Da - skrajšana firma z oznako oblike, če je registrirana'],
-  ['Družbeniki d.o.o. se v pogodbi dogovorijo, da bo družbenik z 1/3', [
-    'Ne, delitev mora biti strogo sorazmerna deležu',
-    'Da, vendar le za eno poslovno leto',
-    'Da, vendar le s sklepom sodišča'], 3, 'Da - delitev ni nujno sorazmerna, če se tako dogovorijo'],
-  ['Kako se davčno razlikujeta s.p. in enoosebna d.o.o.?', [
-    'Enako se obdavčita, razlika je le v knjigovodstvu',
-    's.p. plačuje samo DDV in prispevke',
-    'd.o.o. ne plačuje davkov, če je enoosebna'], 3, 's.p.: dohodnina; d.o.o.: davek pravnih oseb in dividenda'],
-  ['Družba (OK 50.000 EUR) želi od izstopajočega družbenika', [
-    'Odkup je vedno prost, če se družbenik strinja',
-    'Družba sme odkupiti vse deleže hkrati',
-    'Odkup mora vnaprej odobriti AJPES'], 3, 'Sklep skupščine, prosta sredstva, brez insolventnosti'],
-  ['Poslovodja Tilen predlaga', [
-    'Posel je za družbo prepovedan',
-    'Posel sklene brez omejitev, ker je sestra zunanja oseba',
-    'Potrebno je soglasje sodišča za vsak tak posel'], 3, 'Nasprotje interesov: razkritje, soglasje, tržni pogoji'],
 ];

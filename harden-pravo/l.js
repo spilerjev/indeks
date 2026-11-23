@@ -86,24 +86,4 @@ module.exports = [
     'Nastane samodejno z uporabo znaka v gospodarskem prometu',
     'Traja 10 let, podaljšati jo je mogoče le enkrat za 10 let'], 1,
     'Traja 10 let, podaljšuje se; po 5 letih neuporabe lahko preneha'],
-  ['Mitja ima družbo s firmo "Jepi hiške, gradnja hiš, d.o.o."', [
-    'Ne, v prometu mora vedno uporabljati celotno firmo',
-    'Da, kakršnokoli skrajšavo, tudi brez oznake oblike',
-    'Da, a le s soglasjem AJPES za vsako posamezno uporabo'], 3,
-    'Da, skrajšano firmo z oznako oblike, če je vpisana'],
-  ['Družbeniki d.o.o. se v pogodbi dogovorijo, da bo družbenik z 1/3', [
-    'Ne, delitev dobička mora biti strogo sorazmerna deležu',
-    'Da, vendar le za eno poslovno leto in s soglasjem vseh',
-    'Da, vendar le na podlagi sklepa registrskega sodišča'], 0,
-    'Da, delitev ni nujno sorazmerna, če se tako dogovorijo'],
-  ['Kako se davčno razlikujeta s.p. in enoosebna d.o.o.?', [
-    'Enako se obdavčita, razlika je le v vodenju knjig',
-    's.p.: davek pravnih oseb; d.o.o.: dohodnina lastnika',
-    's.p. plačuje samo DDV in prispevke, d.o.o. vse davke'], 2,
-    's.p.: dohodnina; d.o.o.: DDPO in davek na dividende'],
-  ['Družba (OK 50.000 EUR) želi od izstopajočega družbenika Maksa', [
-    'Odkup je vedno prost, če se Maks s tem strinja',
-    'Sklep uprave in odobritev AJPES pred odkupom',
-    'Sklep skupščine, a ne glede na prosta sredstva'], 1,
-    'Sklep skupščine, prosta sredstva, ni insolventnosti'],
 ];
