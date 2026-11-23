@@ -5563,6 +5563,12 @@ function saveReadPos(key, pos, user) { const all = store.get(READ_KEY, {}); if (
 function scrollToEl(idOrEl) { const el = typeof idOrEl === "string" ? document.getElementById(idOrEl) : idOrEl; if (!el) return; const y = el.getBoundingClientRect().top + window.scrollY - 14; window.scrollTo({ top: y, behavior: "smooth" }); }
 const isNarrow = () => window.innerWidth <= 760;
 
+/* HTML zapiskov izrišemo memoizirano: React 19 vsebino z dangerouslySetInnerHTML ob vsakem izrisu zapiše na novo
+   (nov objekt { __html }), zato bi se odprti <details> (npr. časovnica pogodb) ob vsakem izrisu NotesView zaprli –
+   ob premiku zaznamka »Nadaljuj branje« ali merjenju časa učenja. Z memo se DOM posodobi le, ko se besedilo spremeni. */
+const HtmlBlock = React.memo(function HtmlBlock({ as = "div", className, html }) {
+  return React.createElement(as, { className, dangerouslySetInnerHTML: { __html: html } });
+});
 function NotesView({ route, go, user }) {
   const sem = DATA.find((s) => s.id === route.sem);
   const subj = sem.subjects.find((s) => s.id === route.subj);
@@ -5783,7 +5789,7 @@ function NotesView({ route, go, user }) {
             <div key={sec.id} id={"hd-" + sec.id} className="ix-card" style={{ padding: 0, overflow: "hidden", borderLeft: isBm ? "3px solid var(--teal)" : undefined }}>
               <button className="ix-sec-head" onClick={() => toggle(sec.id)} aria-expanded={isOpen}>
                 <span className="ix-toc-n" style={{ marginTop: 2 }}>{i + 1}</span>
-                <span className="ix-sec-title" dangerouslySetInnerHTML={{ __html: sec.title }} />
+                <HtmlBlock as="span" className="ix-sec-title" html={sec.title} />
                 <span style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0, marginTop: 2 }}>
                   {hits && hits[i] > 0 && <span className="ix-chip" style={{ color: "var(--terra)" }}>{hits[i]}×</span>}
                   {!hits && sec.subs.length > 0 && <span className="ix-chip">{sec.subs.length} tem</span>}
@@ -5807,7 +5813,7 @@ function NotesView({ route, go, user }) {
                       );
                     })()}
                   </div>
-                  <div className="ix-notes" dangerouslySetInnerHTML={{ __html: ql ? highlightHtml(sec.body, ql) : hl ? highlightStems(sec.body, hl) : sec.body }} />
+                  <HtmlBlock className="ix-notes" html={ql ? highlightHtml(sec.body, ql) : hl ? highlightStems(sec.body, hl) : sec.body} />
                   {i + 1 < secs.length && (
                     <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 14 }}>
                       <button onClick={() => jumpTo(secs[i + 1].id)} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "9px 14px", display: "flex", alignItems: "center", gap: 6 }}>
