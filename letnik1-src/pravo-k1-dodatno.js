@@ -261,12 +261,12 @@ const eu = [
     'Komisijo samo, ne pa držav članic',
     'Nikogar, ker sporočila nimajo nobenega učinka'], 2,
     'Sporočilo Komisije je soft law: po sodbi Kotnik (C-526/14) ne zavezuje držav članic, zavezuje pa Komisijo, ki ga je izdala.')),
-  withId('i1583edcd87', Q('Potovalna agencija pokvari počitnice. Ali po pravu EU škoda obsega tudi izgubljeno veselje do počitnic?', [
-    'Da, pojem škode avtonomno razlaga Sodišče EU in vključuje tudi to škodo',
-    'Ne, pojem škode vsaka članica razlaga po svojem odškodninskem pravu',
-    'Da, a le, če nacionalni zakon izrecno priznava tudi to vrsto škode',
-    'Ne, po pravu EU se potrošniku povrne samo premoženjska škoda'], 0,
-    'Po načelu avtonomnosti pojme prava EU razlaga Sodišče EU enotno za vse DČ. V sodbi Leitner (C-168/00) je škoda vključevala tudi nepremoženjsko škodo.')),
+  withId('i1583edcd87', Q('Država v zakonu določi, da pripravnik s plačano prakso ni »delavec«, zato zanj ne veljajo pravila o prostem gibanju delavcev. Kdo dokončno pove, kaj pomeni »delavec« po pravu EU?', [
+    'Sodišče EU, ker so pojmi prava EU avtonomni in enotni za vse članice',
+    'Vsaka članica sama, ker je zaposlovanje njena izključna pristojnost',
+    'Evropska komisija, ker je varuhinja pogodb in jih tudi razlaga',
+    'Nacionalno ustavno sodišče, ker gre za pravice posameznikov'], 0,
+    'Po načelu avtonomnosti pojme prava EU razlaga Sodišče EU enotno za vse članice (prek predhodnega vprašanja, 267. člen PDEU). Država jih ne more zožiti s svojim zakonom, sicer bi pravo EU v vsaki članici pomenilo kaj drugega.')),
   withId('i294292b77e', Q('Katero sodišče lahko razglasi akt EU za neveljaven?', [
     'Ustavno sodišče članice, če akt krši ustavo',
     'Vrhovno sodišče članice v zadnji stopnji',
@@ -518,12 +518,12 @@ const oblig = [
     'Skrbnost povprečnega laika',
     'Skrbnost, ki si jo stranki dogovorita, sicer nobeno'], 1,
     'Med podjetji velja skrbnost dobrega gospodarstvenika, pri poklicni dejavnosti skrbnost dobrega strokovnjaka, sicer skrbnost dobrega gospodarja.')),
-  withId('iaaf7d0899f', Q('Stranka v frizerskem salonu odloži plašč na obešalnik ob vhodu, kjer piše »Za garderobo ne odgovarjamo«. Plašč izgine. Kaj velja?', [
-    'Salon ne odgovarja, ker je opozorilo jasno izobešeno ob vhodu v salon',
-    'Salon odgovarja za čustveno vrednost plašča, ki jo dokaže stranka',
-    'Odgovarja le tat, salon pa za tujo kraljo v nobenem primeru ne',
-    'Salon odgovarja za tržno vrednost, izključitev je v nasprotju z vestnostjo'], 3,
-    'Izključitev odgovornosti za običajne stvari, ki jih stranka mora odložiti, nasprotuje vestnosti in poštenju. Povrne se tržna vrednost, posebna (čustvena) vrednost pa le od storilca naklepnega kaznivega dejanja.')),
+  withId('iaaf7d0899f', Q('Avtopralnica na vhodu izobesi: »Za poškodbe vozil ne odgovarjamo.« Zaposleni iz hude malomarnosti pusti dvignjene ščetke in razbije ogledalo. Ali se pralnica lahko sklicuje na napis?', [
+    'Da, ker je stranka napis videla in z vstopom v pralnico sprejela pogoje',
+    'Da, a le, če stranka škode ne prijavi pisno še isti dan ob prevzemu vozila',
+    'Ne, ker za škodo pri pranju vedno odgovarja le zaposleni osebno',
+    'Ne, odgovornosti za hudo malomarnost ni mogoče vnaprej izključiti'], 3,
+    'Vnaprejšnja izključitev odgovornosti za naklep ali hudo malomarnost je nična. Za škodo, ki jo zaposleni povzroči pri delu, odgovarja delodajalec (pralnica), ki ima lahko regres do zaposlenega.')),
   withId('i0986238141', Q('Kdaj sodišče prizna posebno (čustveno) vrednost uničene stvari?', [
     'Vedno, ko lastnik dokaže, da mu je bila stvar posebej draga',
     'Ko je bila stvar uničena z naklepnim kaznivim dejanjem',
