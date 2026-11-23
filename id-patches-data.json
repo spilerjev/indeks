@@ -264,39 +264,6 @@
   "why": "Uravnotežena dolžina: napačna možnost »Državni zbor; z njimi lahko ureja pravice in dolžnosti subjektov« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
  },
  {
-  "id": "qkk6e0r",
-  "options": [
-   "Da, ustava je najvišji pravni akt v državi in ima vedno prednost pred uredbo",
-   "Da, a le če se z odločitvijo strinja vlada",
-   "Ne, uredba pa velja šele po potrditvi v Državnem zboru",
-   "Ne - primarnost prava EU; ob dvomu predhodno vprašanje Sodišču EU"
-  ],
-  "correct": 3,
-  "why": "Uravnotežena dolžina: napačna možnost »Da, ustava je najvišji akt in ima prednost pred uredbo« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
- },
- {
-  "id": "q1ekaern",
-  "options": [
-   "Ne, s prodajo nepremičnine hipoteka samodejno ugasne",
-   "Da, a le če novi lastnik Dragot pisno pristane na ohranitev hipoteke v korist banke",
-   "Da - hipoteka bremeni nepremičnino in sledi stvari tudi po prodaji",
-   "Ne, banka mora terjati Aleksa osebno, nepremičnine pa ne more"
-  ],
-  "correct": 2,
-  "why": "Uravnotežena dolžina: napačna možnost »Da, a le če novi lastnik Dragot pisno pristane na ohranitev« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
- },
- {
-  "id": "qo50mdb",
-  "options": [
-   "Ne - brez določene cene pogodba sploh ne nastane",
-   "Da, a le pri gospodarskih pogodbah med podjetji",
-   "Da - cena mora biti le določljiva, bistvena je določitev stvari",
-   "Ne - cena je vedno bistvena sestavina prodajne pogodbe in mora biti točno določena"
-  ],
-  "correct": 2,
-  "why": "Uravnotežena dolžina: napačna možnost »Ne - cena je vedno bistvena sestavina prodajne pogodbe« podaljšana z napačnim dopolnilom, da pravilni odgovor ni več edini najdaljši."
- },
- {
   "id": "q10iidy3",
   "options": [
    "Celoten znesek vseh vložkov vseh družbenikov",
