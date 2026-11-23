@@ -18,6 +18,8 @@ const RULES = [
   [/\bpoglavj\w*\s+\d|\d+\.\s*poglavj|\(tem[aei]\s+\d|\btem[aei]?\s+\d+\s*[–-]\s*\d/i, 'številka poglavja ali teme'],
   [/\.docx?\b|\.xlsx?\b|\.pptx?\b/i, 'ime datoteke'],
   [/\btabel[aei]\s+\d+\.\d+/i, 'številka tabele iz gradiva'],
+  // študijski primeri z vaj (tudi resnična podjetja) ne sodijo v app (Leon, 23. 11. 2026)
+  [/Starbucks|Google Glass|\bArget[aeiou]\b|Duolingo|Študijski primer \d+/i, 'študijski primer z vaj', 'trz/'],
 ];
 // Dovoljeno: [pot, točen izsek besedila (podniz), razlog]
 const ALLOW = [
@@ -79,7 +81,8 @@ function covers(t, at, i, len) { for (let k = t.indexOf(at); k >= 0; k = t.index
 function sourceLint(data) {
   const bad = [], used = new Set();
   texts(data, (p, t) => {
-    for (const [re, what] of RULES) {
+    for (const [re, what, only] of RULES) {
+      if (only && !p.startsWith(only)) continue;   // pravilo samo za en predmet
       const g = new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'); let m;
       while ((m = g.exec(t))) {
         const ctx = t.slice(Math.max(0, m.index - 60), m.index + m[0].length + 60);

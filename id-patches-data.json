@@ -1140,8 +1140,15 @@
  },
  {
   "id": "q8wd5kb",
-  "explanation": "Paradigme: trženje izdelkov, čustveno trženje, podatkovno usmerjeno trženje, digitalno in družabno trženje ter kvantno trženje (napredne tehnologije, ogromne količine podatkov, umetna inteligenca), v katero prehajamo. Zaporedje proizvodna, izdelčna, prodajna, trženjska, družbena našteva usmeritve podjetja na trg, ne paradigem trženja.",
-  "why": "razlaga ne navaja več mesta odgovora, temveč njegovo vsebino"
+  "explanation": "Paradigme: trženje izdelkov, čustveno trženje, podatkovno usmerjeno trženje, digitalno in družabno trženje ter kvantno trženje (napredne tehnologije, ogromne količine podatkov, umetna inteligenca), v katero prehajamo. Zaporedje proizvodna, izdelčna, prodajna, trženjska, družbeno odgovorna našteva usmeritve podjetja na trg, ne paradigem trženja.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)",
+  "options": [
+   "Proizvodna, izdelčna, prodajna, trženjska, družbeno odgovorna; zdaj v družbeno odgovorno",
+   "Izdelki, čustva, podatki, digitalno in družabno, kvantno; zdaj v kvantno",
+   "Množično, ciljno, nišno, osebno, kvantno; zdaj v osebno",
+   "Izdelki, čustva, podatki, digitalno, kvantno; zdaj v podatkovno"
+  ],
+  "correct": 1
  },
  {
   "id": "qnow7y",
@@ -1816,5 +1823,238 @@
   ],
   "correct": 1,
   "why": "distraktor delno resničen"
+ },
+ {
+  "id": "qd99i57",
+  "options": [
+   "Proizvodni: cilj sta nizka cena in široka dosegljivost",
+   "Prodajni: kupce je treba prepričati z intenzivno prodajo",
+   "Izdelčni: podjetje stavi na tehnično dovršen izdelek",
+   "Trženjski: izdelek nastane na podlagi raziskanih potreb kupcev"
+  ],
+  "correct": 2,
+  "explanation": "Izdelčna usmeritev: najprej izdelek, kupci pozneje. Podjetje verjame, da bodo kupci uporabo našli sami, potreb ciljnega trga pa ne razišče.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q59fsgm",
+  "options": [
+   "Ni raziskala, kdo bi čelado uporabljal in katero potrebo rešuje",
+   "Ni postavila dovolj visoke cene, da bi čelada delovala prestižno",
+   "Ni zakupila dovolj oglasnega prostora v klasičnih medijih",
+   "Ni zagotovila prodaje v vseh večjih športnih trgovinah"
+  ],
+  "correct": 0,
+  "explanation": "Trženjska raziskava bi morala odgovoriti, komu je izdelek namenjen in katere potrebe zadovoljuje. Vizorka je zaporedje obrnila: najprej je razvila čelado, nato iskala kupce.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qt4r8og",
+  "options": [
+   "Prodajna kratkovidnost",
+   "Trženjska kratkovidnost",
+   "Kanibalizacija ponudbe",
+   "Prednost prvega na trgu"
+  ],
+  "correct": 1,
+  "explanation": "Trženjska kratkovidnost: podjetje se osredotoči na izdelek namesto na potrebo. Pri kolesarski čeladi Vizorka so rekreativci menili, da telefon na krmilu zadošča (substitut), motili pa so jih teža, cena in polnjenje.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qiolc2i",
+  "options": [
+   "Ker je bila skupina prevelika za natančno analizo",
+   "Ker so čelado kupovala predvsem velika podjetja",
+   "Ker so bili prvi kupci premalo zahtevni glede cene",
+   "Ker niso reprezentativni za povprečnega kolesarja"
+  ],
+  "correct": 3,
+  "explanation": "Ljubitelji tehnologije so navdušeni nad novostmi in niso reprezentativni za običajnega kupca, zato njihov odziv ne napove odziva širšega trga.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qsqo9fh",
+  "options": [
+   "Previsoka cena glede na koristi",
+   "Slaba dosegljivost v trgovinah",
+   "Družbena sprejemljivost izdelka",
+   "Prekratko delovanje baterije"
+  ],
+  "correct": 2,
+  "explanation": "Gre za družbeno sprejemljivost: kupca skrbi, kako ga vidijo drugi. Izdelčno usmerjeno podjetje takšne zadržke (poleg cene in zasebnosti) pogosto spregleda.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qx5qs3j",
+  "options": [
+   "Na dostavne službe (kurirji), z najemom po 29 € na mesec",
+   "Na profesionalne cestne kolesarje z dražjo različico",
+   "Na turistične agencije, ki čelade vključijo v pakete izletov",
+   "Na družine z otroki z nižjo ceno in pisanimi barvami"
+  ],
+  "correct": 0,
+  "explanation": "Z intervjuji in anketo je Vizorka našla kurirje (B2B), ki potrebujejo navigacijo brez rok. Čelado je olajšala, baterijo podaljšala na celo izmeno in jo ponudila v najem. To je premik k trženjski usmeritvi.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1j7kes3",
+  "options": [
+   "Dovršen izdelek uspe sam, le na pravi trenutek mora počakati",
+   "Poslovni kupci so vedno donosnejši od potrošnikov",
+   "Pri prelomnih izdelkih raziskava trga ni potrebna",
+   "Izdelek lahko uspe pri drugi ciljni skupini"
+  ],
+  "correct": 3,
+  "explanation": "Neuspeh na enem trgu ni nujno neuspeh izdelka. Vizorka je spremenila ciljno skupino (kurirji), pozicioniranje (delovno orodje) in poslovni model (najem) ter našla kupce z jasno, merljivo koristjo.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1lnbwz4",
+  "options": [
+   "S čustvenim trženjem",
+   "S trženjem izdelkov",
+   "S kvantnim trženjem",
+   "S podatkovno usmerjenim trženjem"
+  ],
+  "correct": 0,
+  "explanation": "Negativna čustva in nelagodje sodijo k čustveni paradigmi. Podatkovna se pri Vizorki kaže v podatkih o vožnjah za načrtovanje dostav, kvantna pa v umetni inteligenci, ki sproti predlaga najhitrejšo pot.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q41lh9x",
+  "options": [
+   "Približno 1,32 €",
+   "Približno 29,00 €",
+   "Približno 5,27 €",
+   "Približno 52,73 €"
+  ],
+  "correct": 2,
+  "explanation": "Prihranek: 40 × 0,25 h × 22 = 220 ur na mesec. Strošek: 40 × 29 € = 1.160 € na mesec. 1.160 / 220 ≈ 5,27 € na prihranjeno uro, kar je manj od urne postavke kurirja. To je merljiva korist za poslovnega kupca.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q7pa7e5",
+  "options": [
+   "Ljudje, procesi, fizični dokazi in cena",
+   "Izdelek, cena, tržne poti, komuniciranje",
+   "Konkurenca, dobavitelji, posredniki in javnosti",
+   "Kultura, družba, osebnost in psihologija"
+  ],
+  "correct": 1,
+  "explanation": "Izdelek (kakovost, oblikovanje, BZ, embalaža), cena (popusti, plačilni rok), tržne poti (kanali, logistika), trženjsko komuniciranje (oglaševanje, osebna prodaja, PR, neposredno in digitalno trženje).",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qt8rhmh",
+  "options": [
+   "Embalaža in oblikovanje izdelka",
+   "Skladiščenje zalog in logistika",
+   "Plačilni rok in kreditni pogoji",
+   "Odnosi z javnostmi in oglaševanje"
+  ],
+  "correct": 2,
+  "explanation": "Cena: prodajna cena, popusti, ugodnosti, plačilni rok, kreditni pogoji. Embalaža je izdelek, zaloge so tržne poti, PR je komuniciranje.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qnl8kwe",
+  "options": [
+   "Nediferencirano trženje",
+   "Koncentrirano trženje",
+   "Mikro trženje",
+   "Diferencirano trženje"
+  ],
+  "correct": 3,
+  "explanation": "Primer: aplikacija za učenje kitare Akord (brezplačne lekcije z oglasi, naročnina za redne uporabnike, licenca za glasbene šole).",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q10ml3ek",
+  "options": [
+   "Diferencirano trženje",
+   "Nediferencirano (množično) trženje",
+   "Koncentrirano (nišno) trženje",
+   "Individualno (mikro) trženje"
+  ],
+  "correct": 0,
+  "explanation": "Diferencirano: več segmentov, za vsakega prilagojena ponudba. Čeprav Akord doseže širok trg, ni nediferenciran, ker vsem skupinam ne ponuja istega.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qtpjing",
+  "options": [
+   "Ugleden akademski tečaj s potrdilom glasbene šole",
+   "Najcelovitejša in najdražja glasbena šola na trgu",
+   "Specializirano orodje samo za profesionalne glasbenike",
+   "Kitara v 15 minutah na dan, z učiteljem v telefonu"
+  ],
+  "correct": 3,
+  "explanation": "Pozicijo podpirajo razlike: sprotna povratna informacija prek mikrofona (drugačna, pomembna), kratke lekcije (sporočljiva) in cena, nižja od zasebnih ur (dostopna po ceni). Izbirna možnost: dodatne koristi in cena.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qkiqufh",
+  "options": [
+   "Po demografski osnovi",
+   "Po geografski osnovi",
+   "Po psihografski osnovi",
+   "Po vedenjski osnovi"
+  ],
+  "correct": 2,
+  "explanation": "Gre za motivacijo in življenjski slog, torej psihografsko osnovo. Vedenjska bi upoštevala npr. pogostost igranja, pripravljenost za plačilo ali iskane koristi.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1c97r1v",
+  "options": [
+   "Neposredni izvoz",
+   "Posredni izvoz",
+   "Pogodbeni način (licenca)",
+   "Investicijski način"
+  ],
+  "correct": 1,
+  "explanation": "Pri posrednem izvozu tuji kupec kupi izdelke doma. Medvrt v Avstriji uporabi neposredni izvoz prek lastnega distributerja, v Nemčiji pa licenco lokalnemu polnilcu (pogodbeni način).",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1scr2hz",
+  "options": [
+   "Glokalno trženje",
+   "Popolnoma standardiziran splet",
+   "Popolnoma prilagojen splet",
+   "Nediferencirano trženje"
+  ],
+  "correct": 0,
+  "explanation": "Glokalno trženje (»think global, act local«): del spleta je standardiziran, del prilagojen posameznemu trgu. Gre za dimenzijo KAJ pri internacionalizaciji.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qvcje7q",
+  "options": [
+   "Globalno rojeno podjetje, delež izvoza 30 % že v 1. letu",
+   "Postopna internacionalizacija, delež izvoza pade s 30 % na 15 %",
+   "Globalno rojeno podjetje, delež izvoza se ne spremeni",
+   "Postopna internacionalizacija, delež izvoza zraste s 15 % na 30 %"
+  ],
+  "correct": 3,
+  "explanation": "120.000 / 800.000 = 15 %, 360.000 / 1.200.000 = 30 %. Medvrt najprej izbere bližnja trga (Hrvaška, Avstrija), šele nato Nemčijo: postopna internacionalizacija, ne globalno rojeno podjetje.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qebq7qy",
+  "options": [
+   "Najstnike 13–18, ki šele začenjajo igrati",
+   "Zaposlene 30–50, ki so igranje opustili",
+   "Glasbene šole, ki iščejo učne pripomočke",
+   "Profesionalne kitariste, ki vadijo za koncerte"
+  ],
+  "correct": 1,
+  "explanation": "Primarna: zaposleni 30–50, ki so igranje opustili in bi radi igrali za sprostitev (persona Tina, 34). Sekundarna: najstniki 13–18.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qnjrml8",
+  "explanation": "Kolesarska čelada Vizorka je ob prvem vstopu na trg sledila izdelčni usmeritvi, brez raziskave ciljne skupine; ob drugem vstopu (kurirji) je prešla na trženjsko.",
+  "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
  }
 ]

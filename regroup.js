@@ -106,7 +106,7 @@ const CFG = {
     { id: 'trz-usm2', name: 'Opredelitev trženja in usmeritve podjetja (+ povezovanje)', from: ['trz-usmeritve', 'trz-povezi'] },
     { id: 'trz-vred-povp', name: 'Vrednost, zadovoljstvo, merjenje povpraševanja in tržni delež', from: ['trz-vrednost', 'trz-povprasevanje'] },
     'trz-strategija', 'trz-okolje', 'trz-raziskave', 'trz-vedenje', 'trz-ciljno',
-    { id: 'trz-vaje', name: 'Vaje: Google Glass, Argeta in Duolingo', from: ['trz-glass', 'trz-vaje-argeta-duo'] },
+    { id: 'trz-vaje', name: 'Lastni primeri: Vizorka, Medvrt in Akord', from: ['trz-glass', 'trz-vaje-argeta-duo'] },
   ],
   'y2s1/eeu/k1': [
     'eeu-povojna', 'eeu-pristopi', 'eeu-krogi', 'eeu-vzhod', 'eeu-vaje1',

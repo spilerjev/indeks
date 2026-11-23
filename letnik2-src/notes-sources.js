@@ -232,7 +232,8 @@ function scrubSources(html, part, opts = {}) {
   h = scrubFigures(h);
   h = applyFixes(h, part, fixes, 'post', warn);
   h = renderLinks(h, part, warn);
-  return applyOverrides(h, part, opts.overrides || require('./notes-overrides'), warn);
+  h = applyOverrides(h, part, opts.overrides || require('./notes-overrides'), warn);
+  return applyFixes(h, part, fixes, 'final', warn);   // stage 'final': popravki čez mejo preglasitve (po preglasitvah)
 }
 /* Preglasitve razdelkov (notes-overrides.js): lasten rešen primer namesto naloge z vaj ali zgleda iz učbenika */
 const sha10 = (s) => require('crypto').createHash('sha1').update(s).digest('hex').slice(0, 10);
