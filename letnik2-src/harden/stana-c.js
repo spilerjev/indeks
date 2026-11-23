@@ -13,8 +13,6 @@ module.exports = [
   [ "Katera porazdelitev opisuje število uspehov v n poskusih BREZ vračanja?", [ "Binomska", "Poissonova", "Geometrijska" ], 1, "Hipergeometrična" ],
   [ "Katera trditev o normalni porazdelitvi NI pravilna?", [ "Določata jo μ in σ", "Je simetrična in unimodalna", "Ploščina levo od mediane je 0,5" ], 3, "Manjši σ pomeni bolj sploščen zvon" ],
   [ "Pri normalni porazdelitvi za vrednost a velja F_Y(a) = F_Z(z_a)", [ "Standardizacija spremeni ploščine pod krivuljo", "F_Y je pri normalni porazdelitvi vedno 0,5", "Z ima drugačno povprečje in enak σ kot Y" ], 3, "Ploščine ostanejo enake, zadošča ena tabela" ],
-  [ "Letni neto prejemki: standardni odklon s = 12,77 in aritmetična sredina ȳ = 30,47 (tisoč €). Kolikšen je koeficient variacije KV?", [ "2,39 (≈ 239 %)", "0,24 (≈ 24 %)", "12,77 %" ], 1, "0,419 (≈ 42 %)" ],
-  [ "Nogometaši (število reprezentančnih nastopov): v 3. razredu je f₃ = 18 igralcev s sredino razreda y₃ = 50 nastopov, povprečje vseh je ȳ = 40,2. Kolikšen je prispevek tega razreda k vsoti kvadratov odklonov f₃(y₃ − ȳ)²?", [ "176,4", "96,04", "1800" ], 3, "1728,72" ],
   [ "Kateri NI razlog za vzorčenje?", [ "Nižja cena raziskave kot pri popisu", "Krajši čas zbiranja in obdelave podatkov", "Popolno opazovanje lahko uniči enote" ], 1, "Vzorec je vedno natančnejši od popisa" ],
   [ "Pri vzorčenju brez ponavljanja iz končne populacije se Var(ȳ) popravi", [ "(N + n)/N", "(N − 1)/(N − n)", "n/(N − 1)" ], 3, "(N − n)/(N − 1)" ],
   [ "Kaj je stopnja tveganja α pri intervalni oceni?", [ "Verjetnost, da izračunani interval zajame parameter", "Delež enot populacije, ki leži zunaj intervala", "Delež vzorcev, pri katerih interval zajame parameter" ], 2, "Delež vzorcev, pri katerih interval NE zajame parametra" ],

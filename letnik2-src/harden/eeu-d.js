@@ -4,14 +4,6 @@ module.exports = [
     'Predpostavlja visoke transportne stroške med državami',
     'Zahteva carine za zaščito domače proizvodnje',
     'Velja samo za storitve in ne za blago'], 2, 'Ne razloži menjave, če je ena država boljša pri vsem'],
-  ['Kako izračunamo oportunitetni strošek proizvodnje dobrine A', [
-    'Kot razliko produktivnosti obeh dobrin (a_A − a_B)',
-    'Kot zmnožek produktivnosti obeh dobrin (a_A · a_B)',
-    'Kot vsoto produktivnosti obeh dobrin (a_A + a_B)'], 3, 'Kot razmerje a_B/a_A (koliko B opustimo za enoto A)'],
-  ['Kdaj mednarodna menjava med dvema državama NE poteka', [
-    'Ko je ena država absolutno boljša pri obeh dobrinah',
-    'Ko je ena država precej večja od druge',
-    'Ko imata državi različni valuti in tečaja'], 3, 'Ko imata državi enaka menjalna razmerja'],
   ['Kaj je avtarkija?', [
     'Prost pretok blaga brez carin med partnerji',
     'Gospodarstvo z enotno zunanjo carino do tretjih držav',

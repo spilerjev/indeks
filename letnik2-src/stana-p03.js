@@ -26,7 +26,7 @@ const vzorcenje = [
     'Vsaka enota je izbrana z enako verjetnostjo, zato je vsak vzorec iste velikosti enako verjeten.')),
   withId('q1agkw68', Q('Koliko je vseh možnih vzorcev velikosti n iz populacije N enot pri ESV brez ponavljanja (vrstni red ni pomemben)?', ['N^n', 'N!/n!', 'N!/(n!·(N − n)!)', 'N · n'], 2,
     'Binomski koeficient C(N, n) = N!/(n!(N−n)!). V R: choose(N, n).')),
-  withId('qu231l2', Q('Selektor iz 23 nogometašev izbira prvo enajsterico. Koliko je možnih enajsteric?', ['253', '1.352.078', '23 · 11', '2.002.000.000'], 1,
+  withId('qu231l2', Q('Trener rokometnega kluba izbira začetno sedmerico izmed 16 igralcev (ne glede na položaje). Koliko je možnih sedmeric?', ['253', '1.352.078', '23 · 11', '2.002.000.000'], 1,
     'C(23, 11) = 23!/(11!·12!) = 1.352.078. V R: choose(23, 11). Vsaka enajsterica je en vzorec, na njej izračunamo oceno ȳ.')),
   withId('q1yd4zhv', Q('Kaj je cenilka?', ['Ena fiksna, a nepoznana vrednost populacije', 'Funkcija vzorčnih vrednosti, ki je slučajna spremenljivka, ker je odvisna od izbranega vzorca', 'Vrednost, izračunana na enem vzorcu', 'Seznam vseh enot populacije'], 1,
     'Parameter = ena fiksna populacijska vrednost (Γ, npr. μ). Cenilka = funkcija vzorca (g, npr. ȳ), slučajna spremenljivka. Vzorčna ocena = vrednost cenilke na konkretnem vzorcu.')),

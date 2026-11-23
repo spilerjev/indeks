@@ -1719,13 +1719,27 @@
  },
  {
   "id": "qkppoa7",
-  "explanation": "z = (45.000 − 50.000)/2.880 = −1,736; F_Z(−1,736) = 0,0413 → 4,13 % (iz tabele pri z = −1,74 ≈ 0,0409).",
-  "why": "zaokroževanje z"
+  "explanation": "z = (1.050 − 1.200)/90 = −1,67; F_Z(−1,67) = 1 − 0,9525 = 0,0475 → 4,75 % (R brez zaokroževanja z: 0,0478).",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)",
+  "options": [
+   "0,1170",
+   "0,0228",
+   "0,0475",
+   "0,4525"
+  ],
+  "correct": 2
  },
  {
   "id": "q186o5of",
-  "explanation": "Absolutno: 0,1236 − 0,0413 = 0,0823 = 8,23 odstotne točke. Relativno: 0,0823/0,0413 ≈ +199 %. (0,1236 = F_Z(−1,157), z = −5.000/4.320; iz tabele pri z = −1,16 ≈ 0,1230.)",
-  "why": "zaokroževanje z"
+  "explanation": "Absolutno: 0,1170 − 0,0475 = 0,0695 = 6,95 odstotne točke. Relativno: 0,0695/0,0475 ≈ +146,3 %. (σ = 0,075 · 1,4 · 1.200 = 126; z = −150/126 = −1,19; F_Z(−1,19) = 0,1170.)",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)",
+  "options": [
+   "+6,95 % oz. +6,95 o. t.",
+   "+6,95 o. t. oz. +146,3 %",
+   "+146,3 o. t. oz. +6,95 %",
+   "+0,0695 % oz. +6,95 o. t."
+  ],
+  "correct": 1
  },
  {
   "id": "qmcens4",
@@ -2056,5 +2070,251 @@
   "id": "qnjrml8",
   "explanation": "Kolesarska čelada Vizorka je ob prvem vstopu na trg sledila izdelčni usmeritvi, brez raziskave ciljne skupine; ob drugem vstopu (kurirji) je prešla na trženjsko.",
   "why": "Trženje brez študijskih primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qc37umg",
+  "options": [
+   "Prodaja delnic na borzi po tržni ceni",
+   "Zahteva za dodatno točko dnevnega reda",
+   "Udeležba na skupščini in glasovanje o sklepih",
+   "Samostojna razrešitev članov uprave"
+  ],
+  "correct": 1,
+  "explanation": "Dodatno točko dnevnega reda lahko zahtevajo delničarji z vsaj <b>1/20 (5 %)</b> osnovnega kapitala: sklad (6 %) to zmore, Ana (0,01 %) ne. Prodaja delnic in glasovanje sta odprta obema; za Ano je prodaja (»glasovanje z nogami«) najcenejši odziv. Upravo v dvotirnem sistemu odpokliče nadzorni svet, ne posamezen delničar.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q11kc4in",
+  "options": [
+   "Številska, zvezna, intervalna",
+   "Opisna, urejenostna",
+   "Številska, diskretna, razmernostna",
+   "Številska, diskretna, intervalna"
+  ],
+  "correct": 2,
+  "explanation": "Nočitve štejemo (diskretna), 0 pomeni »ni prenočil« (naravna ničla) in 10 nočitev je 2× več kot 5 → razmernostna. Diskretnost in lestvica sta ločeni vprašanji.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q15mr09c",
+  "options": [
+   "Urejenostna",
+   "Imenska",
+   "Razmična",
+   "Razmernostna"
+  ],
+  "correct": 0,
+  "explanation": "Skupine lahko razvrstimo po vrstnem redu, razdalje med njimi pa niso številske, zato je lestvica urejenostna.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qydfxko",
+  "options": [
+   "Prevožene razdalje se med vozniki razlikujejo za 49 %",
+   "Standardni odklon je 49 % povprečja",
+   "49 % voznikov prevozi več od povprečja",
+   "Povprečje je 49 % standardnega odklona"
+  ],
+  "correct": 1,
+  "explanation": "Količnik pove, kolikšen del imenovalca predstavlja števec: kv = s/ȳ = 14,37/29,37 = 0,49, torej je s 49 % od ȳ.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1lhj4hj",
+  "options": [
+   "Ker je varianca vedno brezenotska količina",
+   "Enota »kilometer na kvadrat« nima pomena; zapišemo 206,62 · 10⁶",
+   "Ker je varianca delež populacije, ne vrednost spremenljivke",
+   "Ker je to ocena iz vzorca, enote pa pišemo samo pri parametrih"
+  ],
+  "correct": 1,
+  "explanation": "Varianca ima kvadratne enote. Faktor 10⁶ dobimo, ker (1000)² = 10⁶. Standardni odklon ima spet enoto (km), ker koren odpravi kvadrat.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q7fwycl",
+  "options": [
+   "48 voznikov na leto prevozi med 40.500 in 60.500 km",
+   "48 % voznikov na leto prevozi do 60.500 km",
+   "48 voznikov na leto prevozi do vključno 60.500 km",
+   "48 voznikov na leto prevozi več kot 60.500 km"
+  ],
+  "correct": 2,
+  "explanation": "Fₖ je kumulativna frekvenca: število enot do vključno zgornje meje k-tega razreda. Relativna kumulativa F₃° = 48/50 = 0,960.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qhiwpmu",
+  "options": [
+   "0,8413",
+   "0,8185",
+   "0,6827",
+   "0,1815"
+  ],
+  "correct": 1,
+  "explanation": "z = (21 − 24)/3 = −1 in z = (30 − 24)/3 = 2: F_Z(2) − F_Z(−1) = 0,9772 − 0,1587 = 0,8185 → 81,85 %.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qw7yfg2",
+  "options": [
+   "0,1587",
+   "0,5",
+   "0,8413",
+   "0,9772"
+  ],
+  "correct": 2,
+  "explanation": "z = (27 − 24)/3 = 1; F_Z(1) = 0,8413.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1ebbi12",
+  "options": [
+   "28,90 tisoč km",
+   "29,37 tisoč km",
+   "30,59 tisoč km",
+   "27,35 tisoč km"
+  ],
+  "correct": 1,
+  "explanation": "ȳ = Σyᵢ / n = 1.468,5 / 50 = 29,37 → v povprečju 29.370 km na leto.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1b3wrbk",
+  "options": [
+   "2,04 (≈ 204 %)",
+   "0,24 (≈ 24 %)",
+   "14,37 %",
+   "0,489 (≈ 49 %)"
+  ],
+  "correct": 3,
+  "explanation": "kv = s / ȳ = 14,37 / 29,37 = 0,489 → standardni odklon je 49 % ocenjenega povprečja.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1wx59l1",
+  "options": [
+   "727,92 ure",
+   "26,98 ure",
+   "44,4 ure",
+   "26,84 ure"
+  ],
+  "correct": 1,
+  "explanation": "ȳ = 4.440/100 = 44,4; s² = 72.064/99 = 727,92; s = √727,92 = 26,98. (Delimo z n − 1 = 99, ker je vzorec; z n = 100 bi dobili 26,84.)",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1fdmjcz",
+  "options": [
+   "123,2",
+   "689,92",
+   "31,36",
+   "1.100"
+  ],
+  "correct": 1,
+  "explanation": "22 · (50 − 44,4)² = 22 · 31,36 = 689,92.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qeo82sk",
+  "options": [
+   "V 2. razredu",
+   "V 3. razredu",
+   "V 4. razredu",
+   "Med 2. in 3."
+  ],
+  "correct": 1,
+  "explanation": "D₉ je vrednost, pod katero je 90 % enot. Ker F₂° = 0,840 < 0,90 ≤ F₃° = 0,960, leži D₉ v 3. razredu (41–60 tisoč km).",
+  "given": "<div style=\"font-size:13px;font-weight:700;margin:8px 0 2px\">Letno prevoženi kilometri (tisoč km), n = 50</div><div style=\"overflow-x:auto\"><table style=\"border-collapse:collapse;font-size:13px;margin:4px 0 4px\"><tr><th style=\"border:1px solid var(--line);padding:4px 9px;background:var(--paper2);font-weight:700;text-align:center;white-space:nowrap\">Razred</th><th style=\"border:1px solid var(--line);padding:4px 9px;background:var(--paper2);font-weight:700;text-align:center;white-space:nowrap\">fₖ</th><th style=\"border:1px solid var(--line);padding:4px 9px;background:var(--paper2);font-weight:700;text-align:center;white-space:nowrap\">Fₖ</th><th style=\"border:1px solid var(--line);padding:4px 9px;background:var(--paper2);font-weight:700;text-align:center;white-space:nowrap\">Fₖ°</th></tr><tr><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:left;white-space:nowrap\">1–20</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">14</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">14</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">0,280</td></tr><tr><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:left;white-space:nowrap\">21–40</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">28</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">42</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">0,840</td></tr><tr><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:left;white-space:nowrap\">41–60</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">6</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">48</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">0,960</td></tr><tr><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:left;white-space:nowrap\">61–80</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">2</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">50</td><td style=\"border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap\">1,000</td></tr></table></div>",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qu231l2",
+  "options": [
+   "11.440",
+   "16 · 7",
+   "57.657.600",
+   "120"
+  ],
+  "correct": 0,
+  "explanation": "C(16, 7) = 16!/(7!·9!) = 11.440. V R: choose(16, 7). Vsaka sedmerica je en vzorec, na njej izračunamo oceno ȳ. (57.657.600 bi upoštevalo vrstni red izbire.)",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qrk2y1k",
+  "options": [
+   "V skupinicah",
+   "Stratificirano",
+   "V dveh stopnjah",
+   "Sistematično"
+  ],
+  "correct": 0,
+  "explanation": "Enota vzorčenja = pevski zbor, vzorčna enota = pevec. Pri dvostopenjskem bi v izbranih zborih slučajno izbrali le del pevcev.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q503ep0",
+  "options": [
+   "Skupinice: izbiramo elementarne enote neposredno; dve stopnji: izbiramo samo skupinice in opazujemo vse enote",
+   "Skupinice: slučajno izberemo le skupinice in opazujemo vse enote; dve stopnji: slučajno tudi enote v njih",
+   "Dvostopenjsko je neverjetnostno (kvote na vsaki stopnji), v skupinicah pa verjetnostno s slučajnimi števili",
+   "Razlike ni: pri obeh na vsaki stopnji opazujemo vse enote izbranih primarnih enot"
+  ],
+  "correct": 1,
+  "explanation": "Pevski zbori: v skupinicah izberemo zbore in anketiramo VSE pevce; v dveh stopnjah v izbranih zborih slučajno izberemo še del pevcev. Obe sta verjetnostni.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q1hl9ytj",
+  "options": [
+   "0,4 kg kruha",
+   "6 kg kruha",
+   "40 kg kruha",
+   "2,5 kg kruha"
+  ],
+  "correct": 3,
+  "explanation": "Oportunitetni strošek dobrine A = a_B/a_A (koliko B opustimo za enoto A): 10/4 = 2,5 kg kruha. Obratno je 1 kg kruha = 0,4 kg masla. Oportunitetne stroške nato primerjamo med državama.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q3ild0a",
+  "options": [
+   "Menjava poteka: Portugalska izvaža obe dobrini, ker je absolutno boljša",
+   "Menjave ni: menjalni razmerji sta enaki (1 l olja = 2 kg riža)",
+   "Menjava poteka: Portugalska izvaža olje, Ciper pa riž",
+   "Menjava poteka: Ciper izvaža olje, ker je manjša država"
+  ],
+  "correct": 1,
+  "explanation": "Portugalska: 6/3 = 2 kg riža za 1 l olja; Ciper: 4/2 = 2 kg riža. Oportunitetna stroška sta enaka, zato nobena država s specializacijo ne pridobi. Absolutna prednost Portugalske pri obeh dobrinah za menjavo ne zadošča.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q6sqgz0",
+  "options": [
+   "TPČ ostane enak, zmogljivost se poveča",
+   "Oboje ostane enako",
+   "Oboje se skrajša zaradi daljše aktivnosti",
+   "TPČ se podaljša, za zmogljivost ne vemo"
+  ],
+  "correct": 3,
+  "explanation": "Sestavljanje je kritično, zato se TPČ zagotovo podaljša. Zmogljivost se zmanjša le, če sestavljanje preseže 40 min in postane novo ozko grlo; tega ne vemo.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "q9rsczq",
+  "options": [
+   "Zmogljivost in TPČ se izboljšata",
+   "Zmogljivost naraste, TPČ ostane enak",
+   "TPČ se skrajša, zmogljivost ostane enaka",
+   "Oboje ostane enako"
+  ],
+  "correct": 3,
+  "explanation": "Pakiranje ostane ozko grlo, zato zmogljivost ostane 480/40 = 12 omaric na dan: če je ozkih grl več, moraš delovati na vsa. Dodaten delavec ne skrajša časa aktivnosti, zato TPČ ostane 125 min.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
+ },
+ {
+  "id": "qhlagcj",
+  "explanation": "Sredina razreda je le reprezentant vseh vrednosti v razredu, ne dejanska vrednost.",
+  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
  }
 ]

@@ -6,7 +6,5 @@ module.exports = [
   [ "Kaj je zmogljivost skupine resursov?", [ "Obremenitev · število enot", "Najmanjša zmogljivost med enotami skupine", "Skupni čas vseh aktivnosti skupine" ], 3, "Zmogljivost ene enote · število enot" ],
   [ "Kaj je tehnološki pretočni čas (TPČ)?", [ "Čas najkrajše poti v procesnem diagramu", "Seštevek časov vseh aktivnosti v procesu", "Čas aktivnosti, ki je ozko grlo" ], 3, "Čas najdaljše poti (kritična pot)" ],
   [ "Dodamo dodatnega delavca na aktivnost.", [ "Skrajša ga, ker delo opravita dva delavca", "Podaljša ga zaradi usklajevanja med delavcema", "Ne vemo, odvisno od ozkega grla" ], 3, "Ne spremeni ga, poveča lahko zmogljivost" ],
-  [ "Aktivnost Y je kritična, a ni ozko grlo.", [ "TPČ ostane enak, zmogljivost se poveča", "Oboje ostane enako", "Oboje se skrajša zaradi daljše aktivnosti" ], 3, "TPČ se podaljša, zmogljivost: ne vemo" ],
-  [ "Aktivnost X je ozko grlo, a ni kritična", [ "Zmogljivost in TPČ se izboljšata", "Zmogljivost naraste, TPČ ostane enak", "TPČ se skrajša, zmogljivost ostane enaka" ], 3, "Zmogljivost ostane, TPČ ostane" ],
   [ "Kaj pomeni oznaka \"O\"", [ "Odpade", "Ostane enako", "Optimalno" ], 3, "Ne vemo" ]
 ];

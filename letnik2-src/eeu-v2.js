@@ -22,13 +22,13 @@ const mm = [
     'najvišjo ceno na svetovnem trgu',
     'najmanjši delež v izvozu'], 1,
     'Relativna prednost = nižji oportunitetni strošek (koliko druge dobrine moramo opustiti). Tudi država, ki je slabša pri vsem, ima relativno prednost pri enem proizvodu.')),
-  withId('q1hl9ytj', Q('Kako izračunamo oportunitetni strošek proizvodnje dobrine A v državi, če ima produktivnosti a_A in a_B (enot na uro)?', [
+  withId('q1hl9ytj', Q('Na Danskem delavec v eni uri izdela 4 kg masla ali 10 kg rženega kruha. Kolikšen je oportunitetni strošek 1 kg masla?', [
     'a_A − a_B',
     'a_A · a_B',
     'a_B / a_A (koliko B opustimo za enoto A)',
     'a_A + a_B'], 2,
     'Če v eni uri naredimo 1 kopalke ali 5 brisač, je 1 kopalke = 5 brisač. Primerjamo oportunitetne stroške med državama.')),
-  withId('q3ild0a', Q('Kdaj mednarodna menjava med dvema državama NE poteka (po teoriji relativnih prednosti)?', [
+  withId('q3ild0a', Q('Na Portugalskem delavec v eni uri pridela 3 l oljčnega olja ali 6 kg riža, na Cipru 2 l olja ali 4 kg riža. Kaj velja po teoriji relativnih prednosti?', [
     'Ko je ena država absolutno boljša pri obeh dobrinah',
     'Ko imata državi enaka menjalna razmerja (oportunitetne stroške)',
     'Ko je ena država večja od druge',

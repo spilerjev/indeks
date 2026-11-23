@@ -1,7 +1,7 @@
 /* Popravki vprašanj po stalnem id (22. 11. 2026): možnosti, pravilni odgovor in razlaga, ki jih vsebinski moduli ali
    težji odgovori (harden) ob ponovnem zagonu ne smejo povrniti. Kličejo jih add-letnik1-vsebina.js, apply-harden-pravo.js
    in add-letnik2-vsebina.js na koncu. Popravek zadene VSE kopije vprašanja z istim id (k1/k2 in izpit).
-   Vnos: { id, options?, correct?, explanation?, why }. Besedila q in id se tu ne spreminjata (CLAUDE.md). */
+   Vnos: { id, options?, correct?, explanation?, given?, why }. Besedila q in id se tu ne spreminjata (CLAUDE.md). */
 const PATCHES = require('./id-patches-data.json');
 function applyIdPatches(data, label = 'id-patches') {
   const by = new Map(PATCHES.map((p) => [p.id, p]));
@@ -11,6 +11,7 @@ function applyIdPatches(data, label = 'id-patches') {
     if (p.options) q.options = p.options.slice();
     if (p.correct != null) q.correct = p.correct;
     if (p.explanation != null) q.explanation = p.explanation;
+    if (p.given != null) q.given = p.given;   // podatki naloge (tabela), npr. ob zamenjavi scenarija
     hit.add(q.id);
   }
   normalizeDashes(data);

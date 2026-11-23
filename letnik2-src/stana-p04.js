@@ -105,7 +105,7 @@ const vzorcenja = [
     'Učinkovitost = čim manjša standardna napaka. Slabost: potrebujemo strokovno znanje in dodatne informacije.')),
   withId('qpv7dqo', Q('Kdaj je vzorčenje v skupinicah učinkovito?', ['Ko so skupinice med seboj zelo različne', 'Ko je raznolikost znotraj skupinic velika in med skupinicami majhna', 'Ko so skupinice homogene', 'Nikoli'], 1,
     'Vsaka skupinica naj bo "mini populacija". To je ravno obratno kot pri stratumih.')),
-  withId('qrk2y1k', Q('Gasilci: izberemo 30 društev in opazujemo VSE člane izbranih društev. Vrsta vzorčenja?', ['Stratificirano', 'V skupinicah', 'V dveh stopnjah', 'Sistematično'], 1,
+  withId('qrk2y1k', Q('Pevski zbori: iz seznama vseh zborov v regiji izberemo 25 zborov in anketiramo VSE pevce izbranih zborov. Vrsta vzorčenja?', ['Stratificirano', 'V skupinicah', 'V dveh stopnjah', 'Sistematično'], 1,
     'Enota vzorčenja = društvo, vzorčna enota = gasilec. Pri dvostopenjskem bi v društvih slučajno izbrali le del članov.')),
   withId('qymf7mn', Q('Kaj je enota vzorčenja?', ['Kar dejansko opazujemo', 'Kar izbiramo s slučajnimi števili z oštevilčenega seznama', 'Vsaka enota populacije', 'Interval zaupanja'], 1,
     'Vzorčna enota = kar opazujemo. Pri ESV sta enaki, pri vzorčenju v skupinicah ne.')),
