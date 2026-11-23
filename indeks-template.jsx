@@ -3707,7 +3707,36 @@ function useSocial(userId) {
     return () => { cancelled = true; clearInterval(iv); document.removeEventListener("visibilitychange", onVis); supabase.removeChannel(ch); };
   }, [userId]);
   const reload = useCallback(() => { if (loadRef.current) loadRef.current(); }, []);
-  return { soc, socErr: err, reload };
+  // Prijatelji na spletu (supabase/online.sql): ping vsakih 45 s, samo ko je zavihek viden. Strežnik vrne le id-je
+  // prijateljev, aktivnih v zadnjih 2 minutah. Dokler SQL ni nameščen (PGRST202), funkcija molči do ponovnega nalaganja.
+  const [online, setOnline] = useState(null);
+  useEffect(() => {
+    if (!userId) { setOnline(null); return; }
+    let dead = false;
+    const ping = async () => {
+      if (ONLINE.off || document.visibilityState !== "visible") return;
+      const { data, error } = await supabase.rpc("online_ping");
+      if (dead) return;
+      if (error) { if (error.code === "PGRST202") ONLINE.off = true; return; }
+      setOnline({ ids: new Set((data && data.online) || []), hidden: !!(data && data.hidden) });
+    };
+    ONLINE.ping = ping;
+    ping();
+    const iv = setInterval(ping, 45000);
+    const onVis = () => { if (document.visibilityState === "visible") ping(); };
+    document.addEventListener("visibilitychange", onVis);
+    return () => { dead = true; clearInterval(iv); document.removeEventListener("visibilitychange", onVis); if (ONLINE.ping === ping) ONLINE.ping = null; };
+  }, [userId]);
+  const socOut = useMemo(() => (soc && online ? { ...soc, online: online.ids, onlineHidden: online.hidden } : soc), [soc, online]);
+  return { soc: socOut, socErr: err, reload };
+}
+const ONLINE = { off: false, ping: null };
+const isOnline = (soc, uid) => !!(soc && soc.online && soc.online.has(uid));
+const byOnline = (soc, list) => (soc && soc.online ? list.slice().sort((a, b) => (isOnline(soc, b.user_id) ? 1 : 0) - (isOnline(soc, a.user_id) ? 1 : 0)) : list);
+async function setOnlineHidden(v) { const { error } = await supabase.rpc("set_online_hidden", { p_hidden: !!v }); if (!error && ONLINE.ping) await ONLINE.ping(); return error; }
+function OnlineDot({ on, title = "Na spletu" }) {
+  if (!on) return null;
+  return <span title={title} aria-label={title} style={{ width: 9, height: 9, borderRadius: 9, background: "#2e9e5b", boxShadow: "0 0 0 2px var(--paper)", display: "inline-block", flexShrink: 0 }} />;
 }
 const socialBadge = (soc) => soc ? (soc.requests_in || []).length + (soc.challenges || []).filter((c) => c.status === "pending" && c.my_status === "invited").length : 0;
 const statPair = (s, k) => `${(s && s[k + "_w"]) || 0}–${(s && s[k + "_l"]) || 0}`;
@@ -3875,8 +3904,8 @@ function NewMatch({ soc, presetFriend, presetLoc, onClose, onPick, go }) {
           )}
           <div className="ix-chip" style={{ marginBottom: 6 }}>{(mode === "classic" ? 3 : 2) - (ONLY_CLASSIC ? 1 : 0)}. Nasprotniki ({isBattle(mode) ? "duel: 1" : "1–3"}) · {SIZE_LABEL[size] || "Duel"}</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
-            {friends.map((f) => { const on = sel.includes(f.user_id); return (
-              <button key={f.id} onClick={() => toggle(f.user_id)} className={"ix-pill" + (on ? " on" : "")} disabled={!on && maxOpp > 1 && sel.length >= maxOpp}>{f.username}</button>
+            {byOnline(soc, friends).map((f) => { const on = sel.includes(f.user_id); return (
+              <button key={f.id} onClick={() => toggle(f.user_id)} className={"ix-pill" + (on ? " on" : "")} disabled={!on && maxOpp > 1 && sel.length >= maxOpp} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><OnlineDot on={isOnline(soc, f.user_id)} />{f.username}</button>
             ); })}
           </div>
           <div className="ix-chip" style={{ marginBottom: 6 }}>{(mode === "classic" ? 4 : 3) - (ONLY_CLASSIC ? 1 : 0)}. Kviz</div>
@@ -4143,7 +4172,7 @@ function ProfileView({ user, soc, socErr, reload, go }) {
 
       {/* PRIJATELJI */}
       <div className="ix-card" style={{ padding: 22, marginBottom: 18 }}>
-        <div className="ix-sec" style={{ color: "var(--teal)" }}><Users size={14} /> Prijatelji {soc && soc.friends && soc.friends.length ? `(${soc.friends.length})` : ""}</div>
+        <div className="ix-sec" style={{ color: "var(--teal)" }}><Users size={14} /> Prijatelji {soc && soc.friends && soc.friends.length ? `(${soc.friends.length})` : ""}{soc && soc.online && soc.online.size ? <span style={{ color: "#2e9e5b", textTransform: "none", letterSpacing: 0 }}> · {soc.online.size} na spletu</span> : null}</div>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
           <input className="ix-input" value={fName} onChange={(e) => setFName(e.target.value)} placeholder="uporabniško ime prijatelja" maxLength={20} onKeyDown={(e) => { if (e.key === "Enter") addFriend(); }} style={{ flex: 1, minWidth: 180 }} />
           <button onClick={addFriend} disabled={busy === "add" || !fName.trim()} className="ix-btn" style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid var(--ink)", padding: "9px 14px", display: "flex", alignItems: "center", gap: 6 }}><UserPlus size={15} /> Pošlji prošnjo</button>
@@ -4175,10 +4204,10 @@ function ProfileView({ user, soc, socErr, reload, go }) {
           </div>
         )}
         <div style={{ marginTop: 14 }}>
-          {soc && soc.friends && soc.friends.length ? soc.friends.map((f) => (
+          {soc && soc.friends && soc.friends.length ? byOnline(soc, soc.friends).map((f) => (
             <div key={f.id} className="ix-row" style={{ alignItems: "flex-start" }}>
               <button onClick={() => setOpen((o) => ({ ...o, [f.id]: !o[f.id] }))} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", flex: 1, textAlign: "left", minWidth: 200 }}>
-                <div style={{ fontSize: 14.5, display: "flex", alignItems: "center", gap: 8 }}><Pic photo={f.photo} name={f.username} size={30} />{BATTLE_ON && f.character && <CharArt id={f.character} size={22} />}<b>{f.username}</b><ChevronDown size={14} color="var(--ink2)" style={{ transform: open[f.id] ? "rotate(180deg)" : "none", transition: "transform .18s" }} /></div>
+                <div style={{ fontSize: 14.5, display: "flex", alignItems: "center", gap: 8 }}><Pic photo={f.photo} name={f.username} size={30} />{BATTLE_ON && f.character && <CharArt id={f.character} size={22} />}<b>{f.username}</b>{isOnline(soc, f.user_id) && <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 12, color: "#2e9e5b", fontWeight: 600 }}><OnlineDot on /> na spletu</span>}<ChevronDown size={14} color="var(--ink2)" style={{ transform: open[f.id] ? "rotate(180deg)" : "none", transition: "transform .18s" }} /></div>
                 <div className="ix-chip" style={{ marginTop: 2 }}>{[LETNIK_LABELS[f.letnik], f.smer].filter(Boolean).join(" · ") || "brez podatkov o letniku"}</div>
                 <div style={{ marginTop: 4 }}><StatsLine s={f.stats} /></div>
                 {open[f.id] && <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{f.bio || "Brez opisa."}{BATTLE_ON && f.character ? ` · Lik: ${charById(f.character).name}${splitItems(f.perk).length ? " + " + splitItems(f.perk).map((x) => itemById(x).name).join(" + ") : ""}` : ""}</div>}
@@ -4188,6 +4217,12 @@ function ProfileView({ user, soc, socErr, reload, go }) {
             </div>
           )) : <div style={{ fontSize: 13.5, color: "var(--ink2)", marginTop: 4 }}>Še nimaš prijateljev. Vpiši uporabniško ime sošolca in mu pošlji prošnjo; ko jo sprejme, ga lahko izzoveš.</div>}
         </div>
+        {soc && soc.online && (
+          <label style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12, fontSize: 13, color: "var(--ink2)", cursor: "pointer" }}>
+            <input type="checkbox" checked={!soc.onlineHidden} onChange={(e) => setOnlineHidden(!e.target.checked)} />
+            Prijateljem pokaži, ko sem na spletu
+          </label>
+        )}
       </div>
 
       {/* MATCHI */}
