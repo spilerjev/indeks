@@ -1097,6 +1097,8 @@ html,body{overflow-x:hidden;overflow-x:clip;}
 .ix-root.has-player{padding-bottom:84px;}
 .ix-root.has-player .ix-formbtn,.ix-root.has-player .ix-tocbtn,.ix-root.has-player .ix-totop{bottom:calc(84px + env(safe-area-inset-bottom));}
 @media (max-width:560px){.ix-root .ix-pskip{display:none;}}
+.ix-root .ix-phint{display:none;font-size:11px;color:var(--ink2);white-space:nowrap;}
+@media (min-width:900px) and (hover:hover){.ix-root .ix-phint{display:inline;}}
 /* Glava na telefonu: brez napisa "indeks.", krajši vzdevek, manjše ikone, da so vsi gumbi vidni */
 @media (max-width:560px){.ix-root .ix-header{gap:7px;}.ix-root .ix-brandtext{display:none;}.ix-root .ix-userpill{max-width:118px!important;padding:6px 9px!important;}.ix-root .ix-hbtn{width:34px!important;height:34px!important;flex-shrink:0;}}
 @media (max-width:360px){.ix-root .ix-userpill{max-width:92px!important;}}
@@ -1977,7 +1979,7 @@ export default function App() {
         <Footer />
       </div>
       <ScrollTop />
-      <MiniPlayer go={setRoute} block={(route.view === "quiz" && route.deck === "__ranked") || route.view === "duel"} />
+      <MiniPlayer go={setRoute} view={route.view} block={(route.view === "quiz" && route.deck === "__ranked") || route.view === "duel"} />
       <DialogHost />
     </div>
   );
@@ -2486,12 +2488,43 @@ function AudioEp({ ep, saved, eps, ctx }) {
     </div>
   );
 }
+/* Bližnjice predvajalnika (ko je odprt): ← nazaj 15 s, → naprej 30 s (kot gumba), presledek predvaja/ustavi.
+   Ne sproži se med tipkanjem (vnosna polja, contenteditable), z modifikatorji, ob odprtem dialogu, na strani kartic
+   (tam presledek obrne kartico, ← → oceni) in ko je tipko že obdelal kdo drug (defaultPrevented).
+   Presledek na fokusiranem gumbu ali povezavi ostane gumbu (brez dvojnega dejanja). Vrne "back" | "fwd" | "toggle" | null. */
+function playerKeyAction(e, view, hasDialog) {
+  if (!e || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return null;
+  if (hasDialog || view === "cards") return null;
+  const t = e.target, tag = t && t.tagName ? String(t.tagName).toUpperCase() : "";
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return null;
+  if (e.key === "ArrowLeft") return "back";
+  if (e.key === "ArrowRight") return "fwd";
+  if (e.key === " " || e.key === "Spacebar") {
+    if (e.repeat) return null;
+    const role = t && t.getAttribute ? t.getAttribute("role") : null;
+    if (tag === "BUTTON" || tag === "A" || tag === "SUMMARY" || role === "button" || role === "link" || role === "checkbox" || role === "tab") return null;
+    return "toggle";
+  }
+  return null;
+}
 /* Mini predvajalnik na dnu zaslona: viden na vseh straneh, dokler poslušaš.
    block = ranked ali dvoboj: predvajanje se ustavi (položaj ostane shranjen), predvajalnik se skrije,
    gumbi na slušalkah in zaklenjenem zaslonu pa ga ne morejo znova zagnati. */
-function MiniPlayer({ go, block }) {
+function MiniPlayer({ go, block, view }) {
   usePlayer();
   const ep = PLAYER.ep;
+  const viewRef = useRef(view); viewRef.current = view;
+  useEffect(() => {
+    if (!ep || block) return;
+    const onKey = (e) => {
+      const a = playerKeyAction(e, viewRef.current, !!document.querySelector('[role="dialog"]'));
+      if (!a) return;
+      e.preventDefault();
+      if (a === "toggle") playerToggle(); else playerSkip(a === "back" ? -15 : 30);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [!!ep, block]); // eslint-disable-line
   useEffect(() => {
     PLAYER.blocked = !!block;
     if (!block) return;
@@ -2505,15 +2538,16 @@ function MiniPlayer({ go, block }) {
   return (
     <div className="ix-player" role="region" aria-label="Predvajalnik">
       <div className="ix-pbar" style={{ width: (dur ? Math.min(100, (cur / dur) * 100) : 0) + "%" }} />
-      <button onClick={playerToggle} aria-label={playing ? "Premor" : "Predvajaj"} className="ix-playbtn" style={{ width: 38, height: 38, background: playing ? "var(--ink)" : "var(--terra)" }}>
+      <button onClick={playerToggle} aria-label={playing ? "Premor" : "Predvajaj"} aria-keyshortcuts="Space" title={(playing ? "Premor" : "Predvajaj") + " (presledek)"} className="ix-playbtn" style={{ width: 38, height: 38, background: playing ? "var(--ink)" : "var(--terra)" }}>
         {playing ? <Pause size={16} /> : <Play size={16} style={{ marginLeft: 2 }} />}
       </button>
       <button className="ix-ptitle" onClick={() => c && go({ view: "part", sem: c.sem, subj: c.subj, part: c.part })} title="Odpri epizode">
         <span className="t">{ep.n}. {ep.title}</span>
         <span className="s">{fmtClock(cur)} / {fmtClock(dur)}{c && c.subjName ? " · " + c.subjName : ""}</span>
       </button>
-      <button onClick={() => playerSkip(-15)} className="ix-pill ix-pskip" aria-label="Nazaj 15 sekund">−15</button>
-      <button onClick={() => playerSkip(30)} className="ix-pill ix-pskip" aria-label="Naprej 30 sekund">+30</button>
+      <button onClick={() => playerSkip(-15)} className="ix-pill ix-pskip" aria-label="Nazaj 15 sekund" aria-keyshortcuts="ArrowLeft" title="Nazaj 15 s (←)">−15</button>
+      <button onClick={() => playerSkip(30)} className="ix-pill ix-pskip" aria-label="Naprej 30 sekund" aria-keyshortcuts="ArrowRight" title="Naprej 30 s (→)">+30</button>
+      {view !== "cards" && <span className="ix-phint" aria-hidden="true">← → premik · presledek pavza</span>}
       <button onClick={playerCycleSpeed} className="ix-pill" title="Hitrost predvajanja" style={{ minWidth: 44, justifyContent: "center" }}>{String(playerSpeed()).replace(".", ",")}×</button>
       <button onClick={playerClose} aria-label="Zapri predvajalnik" className="ix-pclose"><X size={16} /></button>
     </div>
@@ -2969,7 +3003,7 @@ function QuizView({ route, go, record, userId, duel }) {
   const [run, setRun] = useState(() => (duel ? buildRun(true) : []));
   const [i, setI] = useState(duel ? Math.min(duel.resumeAnswered || 0, Math.max(0, duel.questions.length - 1)) : 0);
   const [picked, setPicked] = useState(null);
-  const [cur, setCur] = useState(null);          // s puščicami označen odgovor (potrdi Enter/presledek)
+  const [cur, setCur] = useState(null);          // s puščicami označen odgovor (potrdi Enter)
   const [gTarget, setGTarget] = useState(null);   // najprej kliknjeno prazno polje (nato klik odgovora ga zapolni)
   useEffect(() => { setCur(null); }, [i, run, started]);
   const [correctCount, setCorrect] = useState(duel ? (duel.resumeCorrect || 0) : 0);
@@ -3005,7 +3039,8 @@ function QuizView({ route, go, record, userId, duel }) {
   }, [exam, started, done]); // eslint-disable-line
   useEffect(() => { if (exam && started && !done && left <= 0) finishRun(true); }, [left]); // eslint-disable-line
 
-  // Tipkovnica: 1-6 / A-F izbere odgovor, Enter / presledek / → naprej, Enter začne, R ponovi
+  // Tipkovnica: 1-6 / A-F izbere odgovor, ↑ ↓ označi, Enter potrdi in naprej, Enter začne, R ponovi.
+  // Presledek in ← → kviz ne uporablja (so za predvajalnik podcasta, glej playerKeyAction).
   const kb = useRef({});
   useEffect(() => {
     function onKey(e) {
@@ -3013,9 +3048,9 @@ function QuizView({ route, go, record, userId, duel }) {
       const t = e.target, tag = t && t.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
       const st = kb.current, k = e.key;
-      const isNext = k === "Enter" || k === " " || k === "ArrowRight";
+      const isNext = k === "Enter";
       if (!st.started) {
-        if (k === "Enter" || k === " ") { e.preventDefault(); st.begin(!!st.mixed); }
+        if (k === "Enter") { e.preventDefault(); st.begin(!!st.mixed); }
         else if (!st.mixed && (k === "m" || k === "M")) { e.preventDefault(); st.begin(true); }
         return;
       }
@@ -3024,7 +3059,7 @@ function QuizView({ route, go, record, userId, duel }) {
       if (!st.answered) {
         if (q.type === "match" || q.type === "grid" || q.type === "tree" || q.type === "figfill") { if (k === "Enter" && st.canSubmit) { e.preventDefault(); st.submit(); } return; }
         if (k === "ArrowDown" || k === "ArrowUp") { e.preventDefault(); st.move(k === "ArrowDown" ? 1 : -1); return; }
-        if ((k === "Enter" || k === " ") && st.cur != null) { e.preventDefault(); st.choose(st.cur); return; }
+        if (k === "Enter" && st.cur != null) { e.preventDefault(); st.choose(st.cur); return; }
         const n = parseInt(k, 10);
         if (n >= 1 && n <= q.options.length) { e.preventDefault(); st.choose(n - 1); return; }
         const li = k.length === 1 ? "abcdef".indexOf(k.toLowerCase()) : -1;
@@ -3501,7 +3536,7 @@ function QuizView({ route, go, record, userId, duel }) {
         <div className="ix-kbdhint">
           {q.type === "match" || q.type === "grid" || q.type === "tree" || q.type === "figfill"
             ? <span><kbd className="ix-kbd">Enter</kbd> preveri</span>
-            : <><span><kbd className="ix-kbd">1</kbd>–<kbd className="ix-kbd">{q.options.length}</kbd> izberi odgovor</span><span><kbd className="ix-kbd">↑</kbd> <kbd className="ix-kbd">↓</kbd> označi{cur != null ? <>, <kbd className="ix-kbd">Enter</kbd> potrdi</> : ""}</span></>}
+            : <><span><kbd className="ix-kbd">1</kbd>–<kbd className="ix-kbd">{q.options.length}</kbd> izberi odgovor</span><span><kbd className="ix-kbd">↑</kbd> <kbd className="ix-kbd">↓</kbd> označi</span><span><kbd className="ix-kbd">Enter</kbd> potrdi</span></>}
         </div>
       )}
 
@@ -3530,7 +3565,7 @@ function QuizView({ route, go, record, userId, duel }) {
           <button onClick={next} className="ix-btn" style={{ background: "var(--terra)", color: "#fff", border: "1px solid var(--terra)", padding: "12px 22px", display: "flex", alignItems: "center", gap: 8, marginLeft: "auto" }}>
             {i + 1 >= questions.length ? "Zaključi" : "Naprej"} <ChevronRight size={17} />
           </button>
-          <div className="ix-kbdhint" style={{ justifyContent: "flex-end" }}><span><kbd className="ix-kbd">Enter</kbd> / <kbd className="ix-kbd">presledek</kbd> {i + 1 >= questions.length ? "zaključi" : "naprej"}</span></div>
+          <div className="ix-kbdhint" style={{ justifyContent: "flex-end" }}><span><kbd className="ix-kbd">Enter</kbd> {i + 1 >= questions.length ? "zaključi" : "naprej"}</span></div>
         </div>
       )}
     </div>
