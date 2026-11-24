@@ -8,6 +8,9 @@ module.exports = [
   {"part":"stana/k1","stage":"pre","find":"Primer 4.1 varianta (mleko) - profesoričin rezultat na tabli: ȳ_str = 15, se = 0,228 → <b>14,55 &lt; μ &lt; 15,45 (α = 5 %)</b>; vsota: <b>873 243 &lt; Y_tot &lt; 926 877</b> (meje × N, ista α)","replace":"Primer 4.1 varianta (mleko): ȳ_str = 15, se = 0,228 → <b>14,55 &lt; μ &lt; 15,45 (α = 5 %)</b>; vsota: <b>≈ 873 200 &lt; Y_tot &lt; 926 800</b> (meje × N = 60 000, ista α)"},
   {"part":"pf1/k1","stage":"pre","find":"Na izpitu je ≈ 50 % študentov to rešilo narobe (prepisali formulo za anuiteto).","replace":"Pogosta napaka: prepisati formulo za anuiteto."},
   {"part":"pf1/k1","stage":"pre","find":"Na izpitu (izbirni odgovori): <b>17 let ✅, 16,3 ✅, 16,2 ❌</b>.","replace":"Pogosta napaka je zaokrožiti navzdol; pravilno: <b>17 let ✅, 16,3 ✅, 16,2 ❌</b>."},
+  // 24. 11. 2026: slovenska kratica EGS namesto angleške EEC (Leon)
+  {"part":"eeu/k1","find":"<b>EEC-6</b> (F, D, I, B, NL, L)","replace":"<b>EGS-6</b> (F, D, I, B, NL, L)"},
+  {"part":"eeu/k1","find":"delež uvoza EEC-6 iz EEC-6 narašča","replace":"delež uvoza EGS-6 iz EGS-6 narašča"},
   // 21. 11. 2026: sklici na prosojnice, PDF, datoteke in osebe, ki jih mehansko čiščenje (notes-sources.js) ne reši
   // Ekonomika EU (64)
   {"part":"eeu/k1","find":"Napoved prof. 10. 11.: <b>6 računskih nalog","replace":"Napoved za kolokvij: <b>6 računskih nalog"},
