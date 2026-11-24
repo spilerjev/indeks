@@ -196,7 +196,7 @@ module.exports = {
       id: 'k1', name: 'Kolokvij (24. 11.)', type: 'kolokvij', date: '2026-11-24T17:00', signup: '2026-11-22T23:59',
       // Zvočne razlage (NotebookLM iz očiščenih zapiskov; datoteke v docs/podcast/eeu-k1). sec = dolžina v sekundah.
       audio: [
-        { id: 'eeu-ep1c', n: 1, title: 'Zgodovina evropskega povezovanja', sub: 'Kako je ekonomija zamenjala vojaško strategijo', file: 'podcast/eeu-k1/01c-zgodovina-EU.m4a', sec: 1274 },
+        { id: 'eeu-ep1d', n: 1, title: 'Zgodovina evropskega povezovanja', sub: 'Premog in jeklo za evropski mir', file: 'podcast/eeu-k1/01d-zgodovina-EU.m4a', sec: 1691 },
         { id: 'eeu-ep2c', n: 2, title: 'Nastanek EU, pogodbe, širitve', sub: 'Od ruševin do enotnega evropskega trga', file: 'podcast/eeu-k1/02c-od-EGS-do-EU27.m4a', sec: 909 },
         { id: 'eeu-ep3c', n: 3, title: 'Teorija primerjalnih prednosti', sub: 'Kako primerjalne prednosti poganjajo mednarodno trgovino', file: 'podcast/eeu-k1/03c-primerjalne-prednosti.m4a', sec: 1618 },
         { id: 'eeu-ep4c', n: 4, title: 'Učinki proste mednarodne trgovine', sub: 'Kdo v resnici plača poceni uvoz', file: 'podcast/eeu-k1/04c-prosta-trgovina.m4a', sec: 1027 },

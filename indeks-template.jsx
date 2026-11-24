@@ -161,6 +161,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
 const RESET_REDIRECT = typeof window !== "undefined" ? window.location.origin + window.location.pathname : "https://indeksapp.com/";
 supabase.auth.onAuthStateChange((event) => {
   if (event === "PASSWORD_RECOVERY") setTimeout(() => { window.location.hash = "#/novo-geslo"; }, 0);
+  if (event === "SIGNED_OUT") setTimeout(() => playerClose(), 0);   // ob odjavi (ročni ali z druge naprave) ustavi podcast
 });
 
 function useAuth() {
@@ -3766,6 +3767,7 @@ function useSocial(userId) {
       if (error) { if (error.code === "PGRST202") ONLINE.off = true; return; }
       if (claim) { try { localStorage.setItem(CLAIM_KEY, sid); } catch (e) {} supabase.auth.signOut({ scope: "others" }).catch(() => {}); }
       if (data && data.kicked) {
+        playerClose();
         try { await supabase.auth.signOut({ scope: "local" }); } catch (e) {}
         ixAlert({ title: "Odjavljen si", text: "Tvoj račun je bil prijavljen na drugi napravi. Hkrati si lahko prijavljen samo na eni napravi, zato si bil tukaj odjavljen. Če se prijaviš znova, se odjavi druga naprava." });
         return;
