@@ -4,6 +4,32 @@
 const F = (n, f, d) => (d ? { n, f, d } : { n, f });
 
 module.exports = {
+  /* ------------------------------------------------ Mikroekonomija 2 ------------------------------------------------ */
+  mikro2: [
+    { g: 'Učinkovitost', items: [
+      F('Menjava', 'MSS(S) = Px/Py = MSS(J)'),
+      F('Proizvodnja', 'MSTN(X) = w/r = MSTN(Y);   MFR_L = w;   MPT(A) = Px/Py = MPT(B)'),
+      F('Menjava in proizvodnja', 'MSS = Px/Py = MPT'),
+    ]},
+    { g: 'Glasovanje', items: [
+      F('Bordovo točkovanje', 'k možnosti: 1. mesto k − 1 točk, …, zadnje 0'),
+      F('Condorcetov zmagovalec', 'premaga vse druge možnosti v primerjavi po parih'),
+    ]},
+    { g: 'Trg dela in kapitala', items: [
+      F('Dohodek ponudnika dela', 'D = w · L;   L = potencialni čas − prosti čas'),
+      F('Mejni faktorski prihodek dela', 'MFR_L = Px · MP_L;   zaposli, dokler MFR_L ≥ w (in w ≤ AFR_L)'),
+      F('Povprečni faktorski prihodek dela', 'AFR_L = TR / L = Px · AP_L'),
+      F('Medčasovna dohodkovna premica', 'Y0 = C0 + S;   C1 = S · (1 + i)'),
+      F('Sedanja vrednost premoženja', 'W = C0 + C1 / (1 + i)', 'izberi obseg investicij z največjim W; S < I → izposoja, S > I → posojanje'),
+      F('Križna elastičnost', 'E_K = %ΔQx / %ΔPy', '> 0 substituta, < 0 komplementa, = 0 neodvisni'),
+    ]},
+    { g: 'Splošno ravnotežje', items: [
+      F('Walrasov zakon', 'Σ P_i · ED_i = 0;   dva trga: Px · EDx + Py · EDy = 0'),
+      F('Numerer', 'Pn = 1;   denarna cena = relativna cena · denarna cena numererja'),
+      F('Fisherjeva enačba', 'M · V = P · T'),
+    ]},
+  ],
+
   /* ------------------------------------------------ Poslovne finance 1 ------------------------------------------------ */
   pf1: [
     { g: 'Izkazi in prosti denarni tok', items: [

@@ -8,7 +8,11 @@ const { scrubSources } = require('./letnik2-src/notes-sources');
 
 const DATA_PATH = path.join(__dirname, 'data.json');
 const SCHOOL = path.join(process.env.HOME, 'Documents/School');
-const MODULES = ['stana', 'pf1', 'trz', 'eeu', 'mpsp'].map((m) => require('./letnik2-src/' + m));
+const ALL = ['stana', 'pf1', 'trz', 'eeu', 'mpsp', 'mikro2'];
+// node add-letnik2-vsebina.js mikro2  → samo navedeni predmeti (brez brisanja docs/img in brez ponovne pretvorbe zapiskov drugih predmetov)
+const ONLY = process.argv.slice(2).filter((a) => !a.startsWith('-'));
+for (const m of ONLY) if (!ALL.includes(m)) throw new Error('Neznan predmet ' + m);
+const MODULES = (ONLY.length ? ONLY : ALL).map((m) => require('./letnik2-src/' + m));
 
 const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
 const bak = DATA_PATH + '.bak-prevsebina2';
@@ -27,9 +31,11 @@ const upsert = (list, items) => {
 };
 
 // slike v zapiskih se ob vsakem zagonu na novo prekopirajo (odstranjene/izključene ne ostanejo objavljene)
-fs.rmSync(path.join(__dirname, 'docs/img'), { recursive: true, force: true });
+if (!ONLY.length) fs.rmSync(path.join(__dirname, 'docs/img'), { recursive: true, force: true });
 for (const mod of MODULES) {
-  const subj = sem.subjects.find((s) => s.id === mod.id);
+  let subj = sem.subjects.find((s) => s.id === mod.id);
+  // nov predmet (npr. mikro2): modul nosi name in tier; dodan na konec semestra
+  if (!subj && mod.name && mod.tier) { subj = { id: mod.id, name: mod.name, tier: mod.tier, parts: [] }; sem.subjects.push(subj); console.log('  + nov predmet', mod.id); }
   if (!subj) throw new Error('Ni predmeta ' + mod.id);
   subj.parts = mod.parts.map((mp) => {
     const ex = subj.parts.find((p) => p.id === mp.id) || {};
@@ -54,7 +60,8 @@ for (const mod of MODULES) {
 }
 
 // Naloge povezovanja (letnik2-src/povezi.js): dodane k obstoječim delom, sklopi se zamenjajo po id
-for (const mod of require('./letnik2-src/povezi')) {
+const SEL = new Set(MODULES.map((m) => m.id));
+for (const mod of require('./letnik2-src/povezi').filter((m) => SEL.has(m.id))) {
   const subj = sem.subjects.find((s) => s.id === mod.id);
   if (!subj) throw new Error('Ni predmeta ' + mod.id);
   for (const mp of mod.parts) {
@@ -66,7 +73,7 @@ for (const mod of require('./letnik2-src/povezi')) {
 
 // Težji odgovori (letnik2-src/harden/<predmet>*.js, glej harden-lib.js)
 const { applyHarden } = require('./harden-lib');
-for (const subj of sem.subjects) {
+for (const subj of sem.subjects.filter((su) => SEL.has(su.id))) {
   const dir = path.join(__dirname, 'letnik2-src/harden');
   const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f === subj.id + '.js' || f.startsWith(subj.id + '-')) : [];
   const qs = subj.parts.flatMap((p) => (p.decks || []).flatMap((d) => d.questions));
