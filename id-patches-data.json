@@ -1783,35 +1783,6 @@
   "why": "primerjava s stalnim kuponom usklajena z zapiski"
  },
  {
-  "id": "qrqc8p2",
-  "options": [
-   "(225 975 · 108 − 1 325 · 18 390)/(8 · 225 975 − 1 325²) = 0,739",
-   "(8 · 18 390 − 1 325 · 108)/(8 · 225 975 − 1 325²) = 0,077",
-   "(225 975 · 108 − 1 325 · 18 390)/(8 · 225 975) = 0,021",
-   "108/8 + 0,077 · 1 325/8 = 26,25"
-  ],
-  "correct": 0,
-  "explanation": "a = (Σx²Σy − ΣxΣxy)/(nΣx² − (Σx)²) = (24 405 300 − 24 366 750)/52 175 = 38 550/52 175 = 0,739. Enako: a = ȳ − b x̄ = 13,5 − 0,07705 · 165,625 = 0,739.",
-  "why": "b = 0,07705"
- },
- {
-  "id": "q38posv",
-  "explanation": "0,739 + 0,07705 · 250 = 0,739 + 19,26 = 20,0 sto kosov (≈ 2.000 črpalk). Ker je opazovani razpon x 120-210, gre za ekstrapolacijo. 19,3 = brez odseka a; 16,9 = napoved za x = 210; 13,5 = povprečje ȳ.",
-  "why": "b = 0,07705"
- },
- {
-  "id": "qu6wwej",
-  "options": [
-   "19,26 sto kosov",
-   "20,00 sto kosov",
-   "21,54 sto kosov",
-   "0,82 sto kosov"
-  ],
-  "correct": 1,
-  "explanation": "0,739 + 0,07705 · 250 = 20,00 sto kosov (270 dovoljenj: 21,54; 230: 18,46). Pozor: 250 je zunaj opazovanega razpona 120-210, zato gre za ekstrapolacijo.",
-  "why": "b = 0,07705"
- },
- {
   "id": "qw6cirf",
   "options": [
    "Zamik investicije za leto prihrani ≈ 0,51 mio (4,8 mio · (1 − 1/1,12)), dražja proizvodnja v 1. letu pa stane le 3 € × 1.500 enot",
@@ -2286,30 +2257,6 @@
   ],
   "correct": 1,
   "explanation": "Portugalska: 6/3 = 2 kg riža za 1 l olja; Ciper: 4/2 = 2 kg riža. Oportunitetna stroška sta enaka, zato nobena država s specializacijo ne pridobi. Absolutna prednost Portugalske pri obeh dobrinah za menjavo ne zadošča.",
-  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
- },
- {
-  "id": "q6sqgz0",
-  "options": [
-   "TPČ ostane enak, zmogljivost se poveča",
-   "Oboje ostane enako",
-   "Oboje se skrajša zaradi daljše aktivnosti",
-   "TPČ se podaljša, za zmogljivost ne vemo"
-  ],
-  "correct": 3,
-  "explanation": "Sestavljanje je kritično, zato se TPČ zagotovo podaljša. Zmogljivost se zmanjša le, če sestavljanje preseže 40 min in postane novo ozko grlo; tega ne vemo.",
-  "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
- },
- {
-  "id": "q9rsczq",
-  "options": [
-   "Zmogljivost in TPČ se izboljšata",
-   "Zmogljivost naraste, TPČ ostane enak",
-   "TPČ se skrajša, zmogljivost ostane enaka",
-   "Oboje ostane enako"
-  ],
-  "correct": 3,
-  "explanation": "Pakiranje ostane ozko grlo, zato zmogljivost ostane 480/40 = 12 omaric na dan: če je ozkih grl več, moraš delovati na vsa. Dodaten delavec ne skrajša časa aktivnosti, zato TPČ ostane 125 min.",
   "why": "brez primerov z vaj (Leon, 23. 11. 2026)"
  },
  {
