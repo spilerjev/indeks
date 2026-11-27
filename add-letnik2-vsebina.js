@@ -37,6 +37,7 @@ for (const mod of MODULES) {
   // nov predmet (npr. mikro2): modul nosi name in tier; dodan na konec semestra
   if (!subj && mod.name && mod.tier) { subj = { id: mod.id, name: mod.name, tier: mod.tier, parts: [] }; sem.subjects.push(subj); console.log('  + nov predmet', mod.id); }
   if (!subj) throw new Error('Ni predmeta ' + mod.id);
+  if (mod.smer) subj.smer = mod.smer; else delete subj.smer;   // 'poslovna' | 'ekonomska' (glej subjVisible v predlogi)
   subj.parts = mod.parts.map((mp) => {
     const ex = subj.parts.find((p) => p.id === mp.id) || {};
     const part = { ...ex, id: mp.id, name: mp.name, type: mp.type, ...(mp.date ? { date: mp.date } : {}), ...(mp.signup ? { signup: mp.signup } : {}), ...(mp.audio ? { audio: mp.audio } : {}), decks: ex.decks ? [...ex.decks] : [] };

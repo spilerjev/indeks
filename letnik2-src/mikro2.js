@@ -504,6 +504,7 @@ const kartice = [
 
 module.exports = {
   id: 'mikro2',
+  smer: 'ekonomska',   // vidijo ga le študenti brez izbrane smeri in študenti te smeri (profil → smer)
   name: 'Mikroekonomija 2',
   tier: 'A',
   parts: [

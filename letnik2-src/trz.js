@@ -258,6 +258,7 @@ const p5 = require('./trz-p5');
 
 module.exports = {
   id: 'trz',
+  smer: 'poslovna',   // vidijo ga le študenti brez izbrane smeri in študenti te smeri (profil → smer)
   parts: [
     {
       id: 'kvizi', name: 'Kvizi in sprotna snov', type: 'kolokvij',

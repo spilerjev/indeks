@@ -2246,6 +2246,15 @@ function Home({ go, stats, year, setYear, comm, userId }) {
 
       {YEARS.length > 1 && <div className="ix-fade" style={{ marginBottom: 22 }}><YearSwitch year={year} setYear={setYear} /></div>}
 
+      {!mySmer() && DATA.some((s) => s.year === year && s.subjects.some((su) => su.smer)) && (
+        <section className="ix-card ix-fade" style={{ padding: "14px 18px", marginBottom: 18, borderLeft: "3px solid var(--terra)", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+          <div style={{ flex: "1 1 260px", fontSize: 14, color: "var(--ink2)" }}>
+            <b style={{ color: "var(--ink)" }}>Izberi smer.</b> Nekateri predmeti so samo za poslovno ali samo za ekonomsko smer. Ko v profilu nastaviš smer, vidiš le svoje predmete.
+          </div>
+          <button className="ix-pill" onClick={() => go({ view: "profile" })}>Nastavi smer v profilu</button>
+        </section>
+      )}
+
       <NextUp sems={sems} stats={stats} comm={comm} go={go} userId={userId} />
       <OverallBanner agg={agg} comm={comm} year={year} onOpen={() => go({ view: "allstats" })} />
 

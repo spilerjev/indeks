@@ -106,6 +106,7 @@ dod.rac.forEach((q) => { q.calc = true; });
 
 module.exports = {
   id: 'mpsp',
+  smer: 'poslovna',   // vidijo ga le študenti brez izbrane smeri in študenti te smeri (profil → smer)
   parts: [
     {
       id: 'k1', name: '1. kolokvij', type: 'kolokvij', date: '2026-12-01T17:30', audio: AUDIO,
