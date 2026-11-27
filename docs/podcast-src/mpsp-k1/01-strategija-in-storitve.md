@@ -56,30 +56,25 @@ Dve skupini ukrepov:
 - **PČ** = pretočni čas: koliko časa enota preživi v procesu;
 - **P** = pretok: koliko enot gre skozi proces na časovno enoto.
 
-Kadar poznamo dve količini, tretjo izračunamo: P = Z / PČ ali PČ = Z / P.
+Kadar poznamo dve količini, tretjo izračunamo: P = Z / PČ ali PČ = Z / P. Zakon velja za ljudi, izdelke, dokumente in denar.
 
-**Lasten primer — servis Gorski val:**
-- Mehanik ima naenkrat eno kolo (Z = 1), servis traja 0,4 ure (PČ).
-- Pretok enega mehanika: P = 1 / 0,4 = **2,5 kolesa na uro**.
-- V 6-urni izmeni: 2,5 · 6 = **15 koles** na mehanika.
-- Štirje mehaniki (vsak dela eno izmeno): 4 · 15 = **60 koles na dan**.
-- Če bi mehanik delal na dveh kolesih hkrati (Z = 2) in bi servis še vedno trajal 0,4 ure, bi se pretok podvojil na 5 koles na uro. Littlov zakon pove, da več hkratnih enot ob enakem času pomeni večji pretok.
+**Lasten primer — bistro ob kosilu:** bistro ima 60 sedežev, ki so med kosilom ves čas zasedeni (Z = 60), gost povprečno sedi 45 minut (PČ = 0,75 ure).
+- Pretok: P = 60 / 0,75 = **80 gostov na uro**.
+- Lastnik bi rad postregel 100 gostov na uro, a novih miz ne more postaviti. Kako dolgo sme gost sedeti? PČ = 60 / 100 = 0,6 ure = **36 minut**. Pomaga hitrejša postrežba (meni dneva je pripravljen vnaprej, plačilo pri mizi s kartico), ne več prostora.
 
-## Prispevek za kritje: kateri ukrep ima največji učinek
+**Lasten primer — skladišče rezervnih delov:** povprečna zaloga je 1.800 kosov, na dan prodajo 150 kosov.
+- Kos v skladišču leži povprečno PČ = 1.800 / 150 = **12 dni**.
+- Če zalogo ob enaki prodaji zmanjšajo na 1.200 kosov, kos leži le 8 dni: manj vezanega denarja in manj zastaranja.
 
-Lasten primer, kolesarnica (v €):
+## Prispevek za kritje: zakaj so prihranki tako močan vzvod
 
-| | Zdaj | Prodaja +30 % | Finančni stroški −50 % | Stroški proizvodnje −15 % |
-|---|---|---|---|---|
-| Prihodki od prodaje | 200.000 | 260.000 | 200.000 | 200.000 |
-| Stroški prodanih proizvodov | −150.000 | −195.000 | −150.000 | −127.500 |
-| Dobiček iz poslovanja | 50.000 | 65.000 | 50.000 | 72.500 |
-| Finančni stroški | −10.000 | −10.000 | −5.000 | −10.000 |
-| Dobiček pred davkom | 40.000 | 55.000 | 45.000 | 62.500 |
-| Davek (20 %) | −8.000 | −11.000 | −9.000 | −12.500 |
-| **Prispevek za kritje** | **32.000** | **44.000** | **36.000** | **50.000** |
+**Lasten primer — pekarna** (v €): prihodki 500.000, stroški prodanih proizvodov 440.000, finančni stroški 12.000, davek 20 %.
+- Dobiček iz poslovanja: 500.000 − 440.000 = 60.000, to je **12 % prihodkov**.
+- Dobiček pred davkom: 60.000 − 12.000 = 48.000; po davku (prispevek za kritje): **38.400**.
 
-- Prodaja +30 % poveča rezultat za 37,5 %, a zahteva 30 % več strank in več zmogljivosti.
-- Prepolovitev finančnih stroškov prinese le +12,5 %.
-- **Znižanje stroškov proizvodnje za 15 % prinese +56 %** in ne potrebuje niti dodatnih strank niti dodatne zmogljivosti.
-- Zato je izboljševanje procesov pogosto najmočnejši vzvod: vsak prihranjen evro stroškov gre neposredno v dobiček, pri prodaji pa le razlika nad stroški.
+**Prihranek 2 % pri stroških prodanih proizvodov:** 2 % od 440.000 = 8.800 € manj stroškov.
+- Dobiček pred davkom zraste na 56.800, po davku na 45.440: **+18,3 %**, čeprav so se stroški znižali le za 2 %.
+
+**Koliko več bi morali prodati za enak učinek?** Vsak dodatni evro prodaje prinese le 0,12 € dobička iz poslovanja (ostalo pojedo stroški prodanih proizvodov). Za 8.800 € več dobička je treba prodati 8.800 / 0,12 = **73.333 € več, kar je +14,7 % prodaje**. Za to potrebuje pekarna več strank in več zmogljivosti (peči, ljudi).
+
+Nauk: pri nizki marži ima že majhen prihranek pri procesu tak učinek kot velika rast prodaje. Zato je izboljševanje procesov pogosto najmočnejši vzvod za dobiček. Finančni stroški so pri tem manj pomembni, ker so majhni: tudi če bi jih znižali za četrtino, bi pridobili le 3.000 € pred davkom.

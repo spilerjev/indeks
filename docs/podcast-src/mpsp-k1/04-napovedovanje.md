@@ -27,22 +27,32 @@ Napoved povpraševanja je osnova za skoraj vse odločitve v procesih: koliko lju
 - **PANN** (povprečna absolutna napaka napovedi, angl. MAD) = Σ|e_t| / n, kjer je n število obdobij, za katera računamo napako. Za koliko se napoved v povprečju zmoti. **Nižja PANN = zanesljivejša metoda.**
 - **KNN** (kumulativna napaka) = Σe_t. Če je stalno pozitivna (ali negativna), napoved sistematično podcenjuje (ali precenjuje). KNN blizu 0 pomeni le, da so se napake izničile, ne pa, da so bile majhne.
 
-## Lasten primer: tedenska prodaja kolesarskih čelad
+## Lasten primer: drseča sredina zaostaja za trendom
 
-Povpraševanje v tednih 1–6: 200, 230, 210, 250, 240, 260. Primerjamo 3-tedensko drsečo sredino in eksponentno glajenje z α = 0,3 (začetna napoved F₂ = D₁ = 200).
+Tedenska prodaja kolesarskih čelad v tednih 1–6: 200, 230, 210, 250, 240, 260. Prodaja ima **trend** navzgor.
 
-| Teden | D | Drseča sredina (3) | e | Eksp. glajenje (0,3) | e |
-|---|---|---|---|---|---|
-| 2 | 230 | – | – | 200,0 | +30,0 |
-| 3 | 210 | – | – | 200 + 0,3 · 30 = 209,0 | +1,0 |
-| 4 | 250 | (200 + 230 + 210)/3 = 213,3 | +36,7 | 209 + 0,3 · 1 = 209,3 | +40,7 |
-| 5 | 240 | (230 + 210 + 250)/3 = 230,0 | +10,0 | 209,3 + 0,3 · 40,7 = 221,5 | +18,5 |
-| 6 | 260 | (210 + 250 + 240)/3 = 233,3 | +26,7 | 221,5 + 0,3 · 18,5 = 227,1 | +32,9 |
+3-tedenska drseča sredina:
+- 4. teden: (200 + 230 + 210)/3 = 213,3; dejansko 250 → napaka +36,7.
+- 5. teden: (230 + 210 + 250)/3 = 230,0; dejansko 240 → napaka +10,0.
+- 6. teden: (210 + 250 + 240)/3 = 233,3; dejansko 260 → napaka +26,7.
 
-- **PANN za tedne 4–6:** drseča sredina (36,7 + 10,0 + 26,7)/3 = **24,4**; eksponentno glajenje (40,7 + 18,5 + 32,9)/3 = **30,7**.
-- Izberemo **drsečo sredino**, ker ima nižjo PANN.
-- Vse napake so pozitivne (KNN drseče sredine 73,3, eksponentnega glajenja 92,1): obe metodi **sistematično podcenjujeta**, ker ima prodaja **trend** navzgor. Drseča sredina in eksponentno glajenje vedno zaostajata za trendom.
-- Napoved za 7. teden: drseča sredina (250 + 240 + 260)/3 = **250**; eksponentno glajenje 227,1 + 0,3 · 32,9 = **237**.
+- **PANN** = (36,7 + 10,0 + 26,7)/3 = **24,4**: napoved se v povprečju zmoti za 24 čelad.
+- **KNN** = 36,7 + 10,0 + 26,7 = **73,3**: vse napake so pozitivne, zato napoved **sistematično podcenjuje** prodajo. Vzrok je trend: povprečje preteklih tednov je vedno nižje od trenutne ravni.
+- Pri izrazitem trendu zato drseča sredina in eksponentno glajenje nista dobra izbira. Bolje je uporabiti metodo, ki trend upošteva, npr. regresijo s časom.
+
+## Lasten primer: kako α vpliva na odziv
+
+Povpraševanje po kavnih kapsulah v trgovini je bilo dolgo 100 škatel na teden, nato pa zaradi akcije sosednje trgovine skoči na **150 in tam ostane**. Začetna napoved je 100.
+
+| Teden po skoku | α = 0,2 | α = 0,6 |
+|---|---|---|
+| 1 | 100 + 0,2 · 50 = 110,0 | 100 + 0,6 · 50 = 130,0 |
+| 2 | 110 + 0,2 · 40 = 118,0 | 130 + 0,6 · 20 = 142,0 |
+| 3 | 118 + 0,2 · 32 = 124,4 | 142 + 0,6 · 8 = 146,8 |
+
+- Visoka α (0,6) se na trajno spremembo hitro odzove, nizka α (0,2) še po treh tednih zaostaja za 25 škatel.
+- Če pa bi bil skok le enkraten (naslednji teden spet 100), bi visoka α napoved po nepotrebnem dvignila. Nizka α je stabilnejša pri naključnih nihanjih.
+- Izbira α je torej kompromis med **odzivnostjo** in **stabilnostjo**. V praksi preizkusimo več vrednosti na preteklih podatkih in izberemo tisto z najnižjo PANN.
 
 ## Regresija za dolgoročno napovedovanje
 
@@ -53,13 +63,20 @@ Pri vzročni metodi povpraševanje (y) pojasnimo z drugo spremenljivko (x).
 - Regresija je primerna za **dolgoročno** napovedovanje (trend), za kratkoročno uporabimo drsečo sredino ali eksponentno glajenje.
 - Napoved zunaj opazovanega razpona x je **ekstrapolacija** in je manj zanesljiva.
 
-### Lasten primer: spletna trgovina
-x = obiski spletne strani v mesecu (v tisočih): 12, 15, 18, 20, 22, 25.
-y = naročila (v stotinah): 30, 36, 41, 48, 50, 57.
-- n = 6, Σx = 112, Σy = 262, Σx² = 2.202, Σxy = 5.123.
-- b = (6 · 5.123 − 112 · 262) / (6 · 2.202 − 112²) = (30.738 − 29.344) / (13.212 − 12.544) = 1.394 / 668 = **2,087**.
-- a = 262/6 − 2,087 · 112/6 = 43,67 − 38,96 = **4,71**.
-- ŷ = 4,71 + 2,087 · x: tisoč obiskov več prinese v povprečju 2,09 stotine (209) naročil več.
-- r = 0,995, r² = 0,991: obiski pojasnijo 99 % variabilnosti naročil.
-- Napoved za 21 tisoč obiskov: 4,71 + 2,087 · 21 = **48,5 stotine naročil** (znotraj razpona, zanesljivo).
-- Napoved za 30 tisoč obiskov: **67,3 stotine** je ekstrapolacija (opazovali smo do 25 tisoč), zato manj zanesljiva.
+### Lasten primer: avtošola in radijski oglasi
+x = ure radijskih oglasov na teden, y = poizvedbe za tečaj (v desetih), pet tednov:
+
+| x | y | x − x̄ | y − ȳ | (x − x̄)(y − ȳ) | (x − x̄)² |
+|---|---|---|---|---|---|
+| 2 | 5 | −4 | −6 | 24 | 16 |
+| 4 | 9 | −2 | −2 | 4 | 4 |
+| 6 | 10 | 0 | −1 | 0 | 0 |
+| 8 | 15 | 2 | 4 | 8 | 4 |
+| 10 | 16 | 4 | 5 | 20 | 16 |
+
+- x̄ = 6, ȳ = 11; Σ(x − x̄)(y − ȳ) = 56; Σ(x − x̄)² = 40.
+- b = 56 / 40 = **1,4**: ura oglasov več prinese v povprečju 14 poizvedb več.
+- a = ȳ − b · x̄ = 11 − 1,4 · 6 = **2,6**: brez oglasov okoli 26 poizvedb (ljudje pridejo tudi sami).
+- Σ(y − ȳ)² = 82, zato r = 56 / √(40 · 82) = **0,98** in r² = **0,96**: oglasi pojasnijo 96 % variabilnosti poizvedb.
+- Napoved za 7 ur oglasov: 2,6 + 1,4 · 7 = **12,4** (124 poizvedb), znotraj opazovanega razpona 2–10 ur.
+- Za 15 ur bi dobili 23,6, a to je **ekstrapolacija**: ne vemo, ali bi se poslušalci pri tolikšni količini oglasov še enako odzivali, zato je napoved manj zanesljiva.
