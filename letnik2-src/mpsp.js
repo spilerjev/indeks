@@ -94,12 +94,21 @@ const v2 = require('./mpsp-v2');
 const v3 = require('./mpsp-v3');
 const maja = require('./mpsp-maja');
 const v56 = require('./mpsp-v56');
+// Poslušaj: podcasti (Gemini Notebook, viri docs/podcast-src/mpsp-k1, lastni primeri); ista snov tudi za izpit
+const AUDIO = [
+  { id: 'mpsp-ep1', n: 1, title: 'Strategija, storitve in prispevek za kritje', sub: 'Večji dobiček brez novih strank', file: 'podcast/mpsp-k1/01-strategija-in-storitve.m4a', sec: 692 },
+  { id: 'mpsp-ep2', n: 2, title: 'Analiza procesa: zmogljivost, ozko grlo, TPČ', sub: 'Zakaj več zaposlenih ne pohitri procesa', file: 'podcast/mpsp-k1/02-analiza-procesa.m4a', sec: 1236 },
+  { id: 'mpsp-ep3', n: 3, title: 'Razmestitev: linija in CRAFT', sub: 'Uravnoteženje proizvodne linije in metoda CRAFT', file: 'podcast/mpsp-k1/03-razmestitev.m4a', sec: 933 },
+  { id: 'mpsp-ep4', n: 4, title: 'Napovedovanje povpraševanja', sub: 'Zakaj je vsaka napoved povpraševanja napačna', file: 'podcast/mpsp-k1/04-napovedovanje.m4a', sec: 1159 },
+];
+const dod = require('./mpsp-k1-dodatno');   // dodatna vprašanja (27. 11. 2026), lastni primeri
+dod.rac.forEach((q) => { q.calc = true; });
 
 module.exports = {
   id: 'mpsp',
   parts: [
     {
-      id: 'k1', name: '1. kolokvij', type: 'kolokvij', date: '2026-12-01T17:30',
+      id: 'k1', name: '1. kolokvij', type: 'kolokvij', date: '2026-12-01T17:30', audio: AUDIO,
       notes: {
         file: '2. letnik (2026-27)/1. semester/Management proizvodnih in storitvenih procesov/Vaje/ZAPISKI.md',
         skip: ['plakat', 'predstavitev'],
@@ -113,13 +122,15 @@ module.exports = {
         { id: 'mpsp-v3-rac', name: 'Računske: linija, CRAFT, napovedi', calc: true, questions: v3.rac },
         { id: 'mpsp-maja', name: 'Napovedovanje povpraševanja: dopolnilo', questions: maja.teorija },
         { id: 'mpsp-maja-rac', name: 'Računske: regresija in PANN', calc: true, questions: maja.rac },
+        { id: 'mpsp-k1-teorija-vec', name: 'Več vprašanj: strategija, procesi, razmestitev, napovedi', questions: dod.teorija },
+        { id: 'mpsp-k1-rac-vec', name: 'Več računskih: Little, kritje, ozko grlo, linija, CRAFT, napovedi', calc: true, questions: dod.rac },
       ],
       flashcards: [{ id: 'mpsp-c-1', name: 'Ključni pojmi', cards: kartice.map(([front, back]) => ({ front, back })) },
         { id: 'mpsp-c-2', name: 'Analiza procesa', cards: v2.kartice.map(([front, back]) => ({ front, back })) },
         { id: 'mpsp-c-3', name: 'Razmestitev in napovedovanje', cards: v3.kartice.map(([front, back]) => ({ front, back })) }],
     },
     { id: 'k2', name: '2. kolokvij', type: 'kolokvij' },
-    { id: 'izpit', name: 'Izpit', type: 'izpit', decks: [{ id: 'mpsp-izpit', name: 'Vaje v slogu izpita', questions: izpit },
+    { id: 'izpit', name: 'Izpit', type: 'izpit', audio: AUDIO, decks: [{ id: 'mpsp-izpit', name: 'Vaje v slogu izpita', questions: izpit },
       { id: 'mpsp-v56-drevo', name: 'Drevo odločanja (dopolni drevo)', questions: v56.drevo },
       { id: 'mpsp-v56-teorija', name: 'Planiranje zmogljivosti, simulacija, lokacija (ni za kolokvij)', questions: v56.teorija },
       { id: 'mpsp-v56-rac', name: 'Računske: prelomne točke, zamenjava stroja, drevo, simulacija, lokacija', calc: true, questions: v56.rac }, { id: 'mpsp-izpit3', name: 'Vaje v slogu izpita (2. sklop)', questions: require('./mpsp-stari2') }, { id: 'mpsp-izpit2', name: 'Vaje v slogu izpita: zaloge, MRP, planiranje, kakovost', questions: require('./mpsp-stari') }] },
