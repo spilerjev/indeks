@@ -29,14 +29,10 @@ const teorija = [
     'Večji α = večja odzivnost na zadnje povpraševanje; manjši α = več glajenja (stabilnost).')),
   withId('q1d9w3rv', Q('Po čem izberemo zanesljivejšo metodo napovedovanja?', ['Po najvišji napovedi', 'Po nižji povprečni absolutni napaki (PANN / MAD)', 'Po kumulativni napaki 0', 'Po najmanjšem α'], 1,
     'PANN meri velikost odstopanj; kumulativna napaka (KNN) pove smer.')),
-  withId('qn6oycv', { q: "Regresija prodaje toplotnih črpalk na izdana gradbena dovoljenja da r² = 0,92. Kaj to pomeni?",
-      options: ["92 % napovedi je točno pravilnih","≈ 92 % variabilnosti prodaje pojasnijo izdana dovoljenja","Korelacijski koeficient je 0,92","Napaka napovedi je približno 8 %"],
-      correct: 1,
-      explanation: "r = √0,92 = 0,96 pomeni močno pozitivno povezavo; preostalih 8 % variabilnosti pojasnjujejo drugi dejavniki." }),
-  withId('q753lv6', { q: "Zakaj je napoved prodaje toplotnih črpalk z regresijo za x = 250 dovoljenj (opazovano 120-210) manj zanesljiva?",
-      options: ["Ker je korelacija r premajhna","Ker gre za ekstrapolacijo","Ker je naklon b negativen","Ker je vzorec n premajhen"],
-      correct: 1,
-      explanation: "Zveza zunaj opazovanih vrednosti morda ne velja." }),
+  withId('qn6oycv', Q('Regresija porabe plina za ogrevanje na zunanjo temperaturo da r² = 0,85. Kaj to pomeni?', ['85 % napovedi je točno pravilnih', 'Približno 85 % variabilnosti porabe pojasni temperatura', 'Korelacijski koeficient je 0,85', 'Napaka napovedi je približno 15 %'], 1,
+    'r² je determinacijski koeficient: delež variabilnosti y, ki ga pojasni x. Korelacijski koeficient je |r| = √0,85 ≈ 0,92.')),
+  withId('q753lv6', Q('Sladoledarna je regresijo prodaje na temperaturo ocenila na dneh z 20 do 30 °C. Zakaj je napoved za 40 °C manj zanesljiva?', ['Ker je korelacija r premajhna', 'Ker gre za ekstrapolacijo', 'Ker je naklon b negativen', 'Ker je vzorec n premajhen'], 1,
+    '40 °C je zunaj opazovanega razpona. Ne vemo, ali linearna povezava tam še velja (npr. ob vročini ljudje ostanejo doma).')),
 ];
 
 const rac = calc([
@@ -90,10 +86,10 @@ const rac = calc([
       correct: 0,
       explanation: "F₃ = 120 + 0,3 · (100 − 120) = 114. Pri α = 0,5 bi bila 110 (bolj odzivna). 106 dobimo z utežjo 0,7, 126 z napačnim predznakom.",
       calc: true }),
-  withId('q38posv', { q: "Regresija prodaje toplotnih črpalk (v sto kosih) na število izdanih gradbenih dovoljenj x v regiji: ŷ = 0,739 + 0,07705 · x. Kolikšna je napoved prodaje, če bo izdanih x = 250 dovoljenj?",
-      options: ["≈ 20,0 sto kosov","≈ 19,3 sto kosov","≈ 16,9 sto kosov","≈ 13,5 sto kosov"],
-      correct: 0,
-      explanation: "0,739 + 0,0771 · 250 = 0,739 + 19,275 = 20,0 sto kosov (≈ 2.000 črpalk). Ker je opazovani razpon x 120-210, gre za ekstrapolacijo. 19,3 = brez odseka a; 16,9 = napoved za x = 210; 13,5 = povprečje ȳ.",
+  withId('q38posv', { q: "Spletna trgovina: regresija tedenskih naročil y na stroške oglaševanja x (v sto €) je ŷ = 150 + 3,2 · x. Kolikšna je napoved naročil pri x = 40?",
+      options: ["128","190","278","312"],
+      correct: 2,
+      explanation: "ŷ = 150 + 3,2 · 40 = 150 + 128 = 278 naročil.",
       calc: true }),
 ]);
 

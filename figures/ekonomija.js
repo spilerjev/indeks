@@ -483,11 +483,11 @@ function mreza() {
     f.text(x, y, t, { cls: 'tv', dy: -1 }); f.text(x, y, d + ' min', { dy: 11 });
   };
   const L = (x1, y1, x2, y2, crit) => f.arrow(x1, y1, x2, y2, crit ? 'cS' : 'ar');
-  box(9, 20, 'O1', 25, 1); box(37, 32, 'O2', 35, 1); box(37, 8, 'O3', 20, 0); box(64, 20, 'O4', 30, 1); box(90, 20, 'O5', 40, 1);
-  L(16.5, 22, 29, 31, 1); L(16.5, 18, 29, 9, 0); L(44.5, 31, 56, 22, 1); L(44.5, 9, 56, 18, 0); L(71.5, 20, 82, 20, 1);
-  f.legend('a2', 'kritična pot O1→O2→O4→O5: 25 + 35 + 30 + 40 = 130 min');
-  f.legend('a0', 'O3: pot je 15 min krajša → rezerva 15 min');
-  f.legend(null, 'daljši O3 podaljša TPČ šele, ko preseže rezervo');
+  box(12, 32, 'O1', 20, 0); box(45, 32, 'O2', 30, 0); box(12, 8, 'O3', 25, 1); box(45, 8, 'O4', 35, 1); box(85, 20, 'O5', 15, 1);
+  L(19.5, 32, 37.5, 32, 0); L(19.5, 8, 37.5, 8, 1); L(52.5, 31, 77.5, 22, 0); L(52.5, 9, 77.5, 18, 1);
+  f.legend('a2', 'kritična pot O3→O4→O5: 25 + 35 + 15 = 75 min');
+  f.legend('a0', 'O1→O2→O5: 65 min → rezerva 10 min');
+  f.legend(null, 'daljši O1 ali O2 podaljša TPČ šele, ko preseže rezervo');
   return f.svg();
 }
 function dom() {
@@ -698,8 +698,8 @@ const attach = [
     ['Projekta A in B se medsebojno izključujeta in se razlikujeta po obsegu', 'pf-npv'],
   ]),
   ...A('mpsp', [
-    ['Mizarska delavnica: trije delavci, 5 operacij', 'mp-mreza'],
-    ['Mizarska delavnica: kritična pot O1 → O2 → O4 → O5 = 130 min', 'mp-mreza'],
+    ['Izdelava kolesarske prikolice: veji O1', 'mp-mreza'],
+    ['Kolesarska prikolica: poti O1-O2-O5', 'mp-mreza'],
     ['Kolesarnica Vrtiljak', 'mp-dom'],
     ['Tiskarna Črkolik', 'mp-zamenjava'],
     ['Zelenko: lokacija 1 ima večjo', 'mp-hamburger'],
