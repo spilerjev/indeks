@@ -50,19 +50,19 @@ function carina() {
   return { svg: f.svg(), slots };
 }
 
-/* 3) MPSP: izbira postopka po prelomnih točkah. Kolesarnica Vrtiljak: TC = 12.000 + 640Q (ročni), 30.000 + 565Q (polavtomatski),
-   72.000 + 445Q (robotski) → prelomni točki 240 in 350. */
+/* 3) MPSP: izbira postopka po prelomnih točkah (nakup / ročna izdelava / avtomatizirana celica),
+   TC = 52Q, 24.000 + 36Q, 90.000 + 21Q → prelomni točki 1.500 in 4.400. */
 function prelomna() {
-  const R = (q) => 12000 + 640 * q, M = (q) => 30000 + 565 * q, A = (q) => 72000 + 445 * q;
-  const f = new Fig({ qmin: 150, qmax: 470, pmin: 90000, pmax: 320000, xl: 'Q', yl: 'TC', title: 'Izbira postopka (prelomne točke)', ml: 58, mr: 104, mb: 34 });
-  f.fn(R, 150, 450, 'cS').fn(M, 150, 450, 'c4').fn(A, 150, 450, 'cD');
-  f.guideV(240, R(240)).guideV(350, A(350)).dot(240, R(240)).dot(350, A(350));
-  tickX(f, 240); tickX(f, 350);
-  f.legend(null, 'TC = FC + AVC · Q; FC 12.000 / 30.000 / 72.000 €, AVC 640 / 565 / 445 €');
+  const R = (q) => 52 * q, M = (q) => 24000 + 36 * q, A = (q) => 90000 + 21 * q;
+  const f = new Fig({ qmin: 0, qmax: 6600, pmin: 0, pmax: 330000, xl: 'Q', yl: 'TC', title: 'Nakup ali lastna izdelava (prelomne točke)', ml: 58, mr: 104, mb: 34 });
+  f.fn(R, 0, 6000, 'cS').fn(M, 0, 6000, 'c4').fn(A, 0, 6000, 'cD');
+  f.guideV(1500, R(1500)).guideV(4400, M(4400)).dot(1500, R(1500)).dot(4400, M(4400));
+  tickX(f, 1500); tickX(f, 4400);
+  f.legend(null, 'TC = FC + AVC · Q; FC 0 / 24.000 / 90.000 €, AVC 52 / 36 / 21 €');
   f.legend(null, 'vstavi prelomni točki in ime postopka ob vsaki premici');
-  // imena ob desnem koncu premic (tam je vrstni red jasen: ročni zgoraj, robotski spodaj); pika poveže mesto s premico
-  [[R, 'cS'], [M, 'c4'], [A, 'cD']].forEach(([fn]) => f.dot(450, fn(450)));
-  const slots = [atX(f, 240, 'b1'), atX(f, 350, 'b2'), at(f, 450, R(450), 'r', 46, -14), at(f, 450, M(450), 'm', 46, 2), at(f, 450, A(450), 'a', 46, 18)];
+  // imena ob desnem koncu premic (tam je vrstni red jasen: nakup zgoraj, celica spodaj); pika poveže mesto s premico
+  [[R, 'cS'], [M, 'c4'], [A, 'cD']].forEach(([fn]) => f.dot(6000, fn(6000)));
+  const slots = [atX(f, 1500, 'b1'), atX(f, 4400, 'b2'), at(f, 6000, R(6000), 'r', 46, -14), at(f, 6000, M(6000), 'm', 46, 2), at(f, 6000, A(6000), 'a', 46, 18)];
   return { svg: f.svg(), slots };
 }
 

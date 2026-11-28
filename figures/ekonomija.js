@@ -491,43 +491,42 @@ function mreza() {
   return f.svg();
 }
 function dom() {
-  const f = new Fig({ qmin: 150, qmax: 460, pmin: 90000, pmax: 310000, xl: 'Q', yl: 'TC', title: 'Kolesarnica Vrtiljak: izbira postopka', ml: 56, mr: 74 });
-  const R = (q) => 12000 + 640 * q, M = (q) => 30000 + 565 * q, A = (q) => 72000 + 445 * q;
-  f.fn(R, 150, 450, 'cS').fn(M, 150, 450, 'c4').fn(A, 150, 450, 'cD');
-  f.path([[150, R(150)], [240, R(240)]], 'cS thick').path([[240, M(240)], [350, M(350)]], 'c4 thick').path([[350, A(350)], [450, A(450)]], 'cD thick');
-  f.text(450, R(450), 'ročni', { anchor: 'start', dx: 4, dy: 0, cls: 'tS' }); f.text(450, M(450), 'polavtomat.', { anchor: 'start', dx: 4, dy: 4, cls: 'tc' }); f.text(450, A(450), 'robotski', { anchor: 'start', dx: 4, dy: 8, cls: 'tD' });
-  f.guideV(240, R(240)).guideV(350, A(350)).dot(240, R(240)).dot(350, A(350));
-  [200, 400].forEach((q) => f.vline(q, 90000, 305000, 'gd'));
-  f.xtick(200, '200').xtick(240, '240').xtick(350, '350').xtick(400, '400').ytick(140000, '140.000').ytick(250000, '250.000');
-  f.legend(null, 'TC = FC + AVC · Q (FC 12.000 / 30.000 / 72.000; AVC 640 / 565 / 445)');
-  f.legend(null, 'Q < 240: ročni; 240–350: polavtomatski; Q > 350: robotski');
+  const f = new Fig({ qmin: 0, qmax: 6200, pmin: 0, pmax: 330000, xl: 'Q (kosov na leto)', yl: 'TC', title: 'Ohišje baterije: nakup ali lastna izdelava', ml: 56, mr: 74 });
+  const N = (q) => 52 * q, R = (q) => 24000 + 36 * q, A = (q) => 90000 + 21 * q;
+  f.fn(N, 0, 6000, 'cS').fn(R, 0, 6000, 'c4').fn(A, 0, 6000, 'cD');
+  f.path([[0, N(0)], [1500, N(1500)]], 'cS thick').path([[1500, R(1500)], [4400, R(4400)]], 'c4 thick').path([[4400, A(4400)], [6000, A(6000)]], 'cD thick');
+  f.text(6000, N(6000), 'nakup', { anchor: 'start', dx: 4, dy: 0, cls: 'tS' }); f.text(6000, R(6000), 'ročna', { anchor: 'start', dx: 4, dy: 2, cls: 'tc' }); f.text(6000, A(6000), 'celica', { anchor: 'start', dx: 4, dy: 10, cls: 'tD' });
+  f.guideV(1500, N(1500)).guideV(4400, R(4400)).dot(1500, N(1500)).dot(4400, R(4400));
+  f.xtick(1500, '1.500').xtick(4400, '4.400').ytick(90000, '90.000').ytick(24000, '24.000');
+  f.legend(null, 'TC = FC + AVC · Q (FC 0 / 24.000 / 90.000; AVC 52 / 36 / 21)');
+  f.legend(null, 'Q < 1.500: nakup; 1.500–4.400: ročna izdelava; Q > 4.400: celica');
   f.legend(null, 'prelomna točka = razlika FC / razlika AVC');
   return f.svg();
 }
+
 function zamenjava() {
-  const yrs = [1, 2, 3, 4], inv = [200, 150, 120, 130], vzd = [40, 50, 63.3, 97.5], izz = [0, 10, 20, 45], tot = [240, 210, 203.3, 272.5];
-  const f = new Fig({ qmax: 4.6, pmax: 300, xl: 'leta', yl: 'AC (tisoč €)', title: 'Tiskarna Črkolik: kdaj zamenjati stroj', mr: 64 });
-  const line = (arr, cls, name, dy = 4) => { f.path(yrs.map((y, k) => [y, arr[k]]), cls); yrs.forEach((y, k) => f.dot(y, arr[k])); f.text(4, arr[3], name, { anchor: 'start', dx: 6, dy, cls: cls === 'c3' ? 'tc' : 't' }); };
-  line(inv, 'c4', 'investicija'); line(vzd, 'cS', 'vzdrževanje', 10); line(izz, 'c5', 'izzivalec'); line(tot, 'c3', 'skupaj AC');
-  f.guideV(3, 203.3).pt(3, 203.3, '203,3 (min)', 0, -9);
+  const yrs = [1, 2, 3, 4, 5], inv = [10, 9, 8.33, 7.75, 7.2], vzd = [2, 2.5, 3.33, 4.5, 6], tot = [12, 11.5, 11.67, 12.25, 13.2];
+  const f = new Fig({ qmax: 5.6, pmax: 15, xl: 'leta', yl: 'AC (tisoč €)', title: 'Dostavni kombi: kdaj ga zamenjati', mr: 64 });
+  const line = (arr, cls, name, dy = 4) => { f.path(yrs.map((y, k) => [y, arr[k]]), cls); yrs.forEach((y, k) => f.dot(y, arr[k])); f.text(5, arr[4], name, { anchor: 'start', dx: 6, dy, cls: cls === 'c3' ? 'tc' : 't' }); };
+  line(inv, 'c4', 'investicija'); line(vzd, 'cS', 'vzdrževanje'); line(tot, 'c3', 'skupaj AC', -2);
+  f.guideV(2, 11.5).pt(2, 11.5, '11,5 (min)', 0, -9);
   yrs.forEach((y) => f.xtick(y, String(y)));
-  f.legend(null, 'AC = (600 − preostala vr.)/n + vzdrževanje/n + izzivalec/n');
-  f.legend(null, 'investicija na leto pada, ostalo raste → oblika U');
-  f.legend(null, 'najnižji AC po 3 letih (203,3) → takrat zamenjamo');
+  f.legend(null, 'AC = (40 − preostala vr.)/n + vzdrževanje/n');
+  f.legend(null, 'investicija na leto pada, vzdrževanje raste → oblika U');
+  f.legend(null, 'najnižji AC po 2 letih (11,5) → takrat zamenjamo');
   return f.svg();
 }
+
 function hamburger() {
-  const f = new Fig({ qmin: 60000, qmax: 155000, pmax: 1500000, pmin: -900000, xl: 'Q', yl: 'dobiček', title: 'Zelenko: dve lokaciji', ml: 66, mr: 30 });
-  const L1 = (q) => 18 * q - 1710000, L2 = (q) => 24 * q - 2160000;
-  f.hline(0, 60000, 150000, 'gd');
-  f.fn(L1, 60000, 150000, 'c4').fn(L2, 60000, 150000, 'cS');
-  f.text(150000, L1(150000), 'L1', { anchor: 'start', dx: 4, dy: 8, cls: 'tc' }); f.text(150000, L2(150000), 'L2', { anchor: 'start', dx: 4, dy: -2, cls: 'tS' });
-  f.dot(95000, 0).dot(90000, 0).text(95000, 0, '95k', { dy: 14 }).text(90000, 0, '90k', { dy: -6 });
-  f.pt(145000, L1(145000), '', 0, 0).pt(130000, L2(130000), '', 0, 0).guideV(145000, L1(145000)).guideV(130000, L2(130000));
-  f.ytick(L1(145000), '900.000').ytick(L2(130000), '960.000').ytick(0, '0').xtick(130000, '130k').xtick(145000, '145k');
-  f.legend(null, 'π = (PC − VC) · Q − FC; naklon = prispevek za kritje');
-  f.legend(null, 'L1: 18 · 145.000 − 1,71 mio = 900.000; prag 95.000');
-  f.legend(null, 'L2: 24 · 130.000 − 2,16 mio = 960.000; prag 90.000 → L2');
+  const f = new Fig({ qmin: 0, qmax: 100000, pmin: 0, pmax: 250000, xl: 'Q (kav na leto)', yl: '€', title: 'Kavarna: prelomna točka', ml: 60, mr: 74 });
+  const TR = (q) => 2.4 * q, TC = (q) => 84000 + 0.9 * q;
+  f.fn(TR, 0, 95000, 'cS').fn(TC, 0, 95000, 'c4');
+  f.text(95000, TR(95000), 'prihodki', { anchor: 'start', dx: 4, dy: 0, cls: 'tS' }); f.text(95000, TC(95000), 'stroški', { anchor: 'start', dx: 4, dy: 8, cls: 'tc' });
+  f.guideV(56000, TR(56000)).dot(56000, TR(56000)).guideV(76000, TR(76000)).dot(76000, TR(76000)).dot(76000, TC(76000));
+  f.xtick(56000, '56.000').xtick(76000, '76.000').ytick(84000, '84.000');
+  f.legend(null, 'prelomna točka: 84.000 / (2,40 − 0,90) = 56.000 kav');
+  f.legend(null, 'za 30.000 € dobička: (84.000 + 30.000) / 1,5 = 76.000 kav');
+  f.legend(null, 'razdalja med premicama desno od prelomne točke = dobiček');
   return f.svg();
 }
 
@@ -700,11 +699,9 @@ const attach = [
   ...A('mpsp', [
     ['Izdelava kolesarske prikolice: veji O1', 'mp-mreza'],
     ['Kolesarska prikolica: poti O1-O2-O5', 'mp-mreza'],
-    ['Kolesarnica Vrtiljak', 'mp-dom'],
-    ['Tiskarna Črkolik', 'mp-zamenjava'],
-    ['Zelenko: lokacija 1 ima večjo', 'mp-hamburger'],
-    ['Zelenko izbira lokacijo nove trgovine (podatki v tabeli, enota = vreča substrata). Kolikšni sta prelomni', 'mp-hamburger'],
-    ['Zelenko izbira lokacijo nove trgovine (podatki v tabeli, enota = vreča substrata). Kolikšen je dobiček', 'mp-hamburger'],
+    ['Ohišje baterije', 'mp-dom'],
+    ['Dostavni kombi', 'mp-zamenjava'],
+    ['Kavarna ob avtobusni postaji', 'mp-hamburger'],
   ]),
 ];
 
