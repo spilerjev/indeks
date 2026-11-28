@@ -96,10 +96,10 @@ const maja = require('./mpsp-maja');
 const v56 = require('./mpsp-v56');
 // Poslušaj: podcasti (Gemini Notebook, viri docs/podcast-src/mpsp-k1, lastni primeri); ista snov tudi za izpit
 const AUDIO = [
-  { id: 'mpsp-ep1', n: 1, title: 'Strategija, storitve in prispevek za kritje', sub: 'Večji dobiček brez novih strank', file: 'podcast/mpsp-k1/01-strategija-in-storitve.m4a', sec: 692 },
-  { id: 'mpsp-ep2', n: 2, title: 'Analiza procesa: zmogljivost, ozko grlo, TPČ', sub: 'Zakaj več zaposlenih ne pohitri procesa', file: 'podcast/mpsp-k1/02-analiza-procesa.m4a', sec: 1236 },
+  { id: 'mpsp-ep1b', n: 1, title: 'Strategija, storitve in prispevek za kritje', sub: 'Kako dva odstotka prihranka nadomestita rast prodaje', file: 'podcast/mpsp-k1/01b-strategija-in-storitve.m4a', sec: 1477 },
+  { id: 'mpsp-ep2b', n: 2, title: 'Analiza procesa: zmogljivost, ozko grlo, TPČ', sub: 'Kako ozka grla določajo hitrost procesov', file: 'podcast/mpsp-k1/02b-analiza-procesa.m4a', sec: 1220 },
   { id: 'mpsp-ep3', n: 3, title: 'Razmestitev: linija in CRAFT', sub: 'Uravnoteženje proizvodne linije in metoda CRAFT', file: 'podcast/mpsp-k1/03-razmestitev.m4a', sec: 933 },
-  { id: 'mpsp-ep4', n: 4, title: 'Napovedovanje povpraševanja', sub: 'Zakaj je vsaka napoved povpraševanja napačna', file: 'podcast/mpsp-k1/04-napovedovanje.m4a', sec: 1159 },
+  { id: 'mpsp-ep4b', n: 4, title: 'Napovedovanje povpraševanja', sub: 'Zakaj so napovedi povpraševanja vedno napačne', file: 'podcast/mpsp-k1/04b-napovedovanje.m4a', sec: 1426 },
 ];
 const dod = require('./mpsp-k1-dodatno');   // dodatna vprašanja (27. 11. 2026), lastni primeri
 dod.rac.forEach((q) => { q.calc = true; });
